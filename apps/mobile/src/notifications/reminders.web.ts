@@ -11,10 +11,11 @@ export async function getPermission(): Promise<PermissionState> {
 export async function requestPermission(): Promise<PermissionState> {
   return 'unsupported';
 }
-export function reminderCopy(day: DaySnapshot) {
-  return { title: 'Pax', body: day.name };
-}
-export async function rescheduleReminders(_prefs: NotificationPrefs, _days: DaySnapshot[]) {
+export async function rescheduleReminders(
+  _prefs: NotificationPrefs,
+  _days: DaySnapshot[],
+  _opts: { today: string; doneToday: boolean },
+) {
   return 0;
 }
 export function addNotificationTapListener(_open: (url: string) => void) {

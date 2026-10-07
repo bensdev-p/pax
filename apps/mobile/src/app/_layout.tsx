@@ -36,16 +36,6 @@ function Root({ fontsLoaded }: { fontsLoaded: boolean }) {
     if (loaded) void SplashScreen.hideAsync();
   }, [loaded]);
 
-  // A tapped reminder opens the screen it links to (paxapp://today, paxapp://prayer/angelus).
-  useEffect(
-    () =>
-      addNotificationTapListener((url) => {
-        const path = url.replace(/^paxapp:\/\//, '/');
-        router.push(path as never);
-      }),
-    [],
-  );
-
   if (!loaded) return null;
   return (
     <ThemeProvider
@@ -63,6 +53,17 @@ function Root({ fontsLoaded }: { fontsLoaded: boolean }) {
 
 function Navigator() {
   const t = useTheme();
+
+  // A tapped notification opens the screen it links to (paxapp://today, paxapp://prayer/angelus),
+  // including the tap that launched the app. Registered here so the navigator already exists.
+  useEffect(
+    () =>
+      addNotificationTapListener((url) => {
+        const path = url.replace(/^paxapp:\/\//, '/');
+        router.push(path as never);
+      }),
+    [],
+  );
   return (
     <>
       <StatusBar style={t.scheme === 'dark' ? 'light' : 'dark'} />

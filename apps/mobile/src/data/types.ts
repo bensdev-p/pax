@@ -28,14 +28,20 @@ export interface ContentStore {
   mysteries(set: RosaryMystery['mystery_set']): Promise<RosaryMystery[]>;
 }
 
-export type ReminderSlot = 'evening' | 'morning';
+export type ReminderSlot = 'morning' | 'evening';
+
+export interface ReminderTime {
+  enabled: boolean;
+  /** HH:MM, 24-hour, local time. */
+  time: string;
+}
 
 /** Mirrors the `notification_prefs` rows (SPEC: Data model). */
 export interface NotificationPrefs {
-  dailyReminder: boolean;
-  slot: ReminderSlot;
-  /** HH:MM, local time. */
-  localTime: string;
+  morning: ReminderTime;
+  evening: ReminderTime;
+  /** Built-in nudges at fixed times, only on days nothing is done yet. */
+  nudges: boolean;
   angelus: boolean;
 }
 
@@ -78,16 +84,23 @@ export const DEFAULT_SETTINGS: Settings = {
   contentVersion: null,
 };
 
-export const REMINDER_TIMES: Record<ReminderSlot, string> = {
-  evening: '20:00',
-  morning: '07:30',
-};
-
 export const DEFAULT_NOTIFICATION_PREFS: NotificationPrefs = {
-  dailyReminder: false,
-  slot: 'evening',
-  localTime: REMINDER_TIMES.evening,
+  morning: { enabled: false, time: '07:30' },
+  evening: { enabled: false, time: '20:00' },
+  nudges: false,
   angelus: false,
 };
+
+/** The prefs the Pax screen starts from the first time: evening reminder and nudges on. */
+export const SUGGESTED_NOTIFICATION_PREFS: NotificationPrefs = {
+  morning: { enabled: false, time: '07:30' },
+  evening: { enabled: true, time: '20:00' },
+  nudges: true,
+  angelus: false,
+};
+
+export function anyNotificationsOn(p: NotificationPrefs): boolean {
+  return p.morning.enabled || p.evening.enabled || p.nudges || p.angelus;
+}
 
 export const GRACE_DAYS_PER_MONTH = 2;

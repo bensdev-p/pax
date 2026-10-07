@@ -9,6 +9,7 @@ import {
   type ActivityKind,
   type NotificationPrefs,
   type Progress,
+  type ReminderTime,
   type Settings,
   type UserStore,
 } from './types';
@@ -76,7 +77,7 @@ const MIGRATIONS: string[] = [
 
   CREATE TABLE notification_prefs (
     user_id    TEXT NOT NULL DEFAULT 'local',
-    type       TEXT NOT NULL,             -- daily_reminder, angelus
+    type       TEXT NOT NULL,             -- morning_reminder, evening_reminder, streak_nudge, angelus
     enabled    INTEGER NOT NULL,
     local_time TEXT,
     PRIMARY KEY (user_id, type)
@@ -90,6 +91,13 @@ const MIGRATIONS: string[] = [
     op         TEXT NOT NULL,
     queued_at  TEXT NOT NULL
   );
+  `,
+  // 2: one daily reminder became separate morning and evening reminders, plus streak nudges.
+  `
+  INSERT OR IGNORE INTO notification_prefs (user_id, type, enabled, local_time)
+    SELECT user_id, CASE WHEN local_time < '12:00' THEN 'morning_reminder' ELSE 'evening_reminder' END, enabled, local_time
+    FROM notification_prefs WHERE type = 'daily_reminder';
+  DELETE FROM notification_prefs WHERE type = 'daily_reminder';
   `,
 ];
 
@@ -151,29 +159,33 @@ export const userStore: UserStore = {
     const rows = await db.getAllAsync<{ type: string; enabled: number; local_time: string | null }>(
       "SELECT type, enabled, local_time FROM notification_prefs WHERE user_id = 'local'",
     );
-    const daily = rows.find((r) => r.type === 'daily_reminder');
-    const angelus = rows.find((r) => r.type === 'angelus');
-    const localTime = daily?.local_time ?? DEFAULT_NOTIFICATION_PREFS.localTime;
+    const row = (type: string) => rows.find((r) => r.type === type);
+    const time = (type: string, fallback: ReminderTime) => ({
+      enabled: !!row(type)?.enabled,
+      time: row(type)?.local_time ?? fallback.time,
+    });
     return {
-      dailyReminder: !!daily?.enabled,
-      localTime,
-      slot: localTime < '12:00' ? 'morning' : 'evening',
-      angelus: !!angelus?.enabled,
+      morning: time('morning_reminder', DEFAULT_NOTIFICATION_PREFS.morning),
+      evening: time('evening_reminder', DEFAULT_NOTIFICATION_PREFS.evening),
+      nudges: !!row('streak_nudge')?.enabled,
+      angelus: !!row('angelus')?.enabled,
     };
   },
 
   async setNotificationPrefs(prefs: NotificationPrefs) {
     const db = await userDb();
+    const upsert = (type: string, enabled: boolean, localTime: string | null) =>
+      db.runAsync(
+        "INSERT OR REPLACE INTO notification_prefs (user_id, type, enabled, local_time) VALUES ('local', ?, ?, ?)",
+        type,
+        enabled ? 1 : 0,
+        localTime,
+      );
     await db.withTransactionAsync(async () => {
-      await db.runAsync(
-        "INSERT OR REPLACE INTO notification_prefs (user_id, type, enabled, local_time) VALUES ('local', 'daily_reminder', ?, ?)",
-        prefs.dailyReminder ? 1 : 0,
-        prefs.localTime,
-      );
-      await db.runAsync(
-        "INSERT OR REPLACE INTO notification_prefs (user_id, type, enabled, local_time) VALUES ('local', 'angelus', ?, '12:00')",
-        prefs.angelus ? 1 : 0,
-      );
+      await upsert('morning_reminder', prefs.morning.enabled, prefs.morning.time);
+      await upsert('evening_reminder', prefs.evening.enabled, prefs.evening.time);
+      await upsert('streak_nudge', prefs.nudges, null);
+      await upsert('angelus', prefs.angelus, '12:00');
       await db.runAsync(
         "INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('notification_prefs', 'local', 'upsert', ?)",
         now(),

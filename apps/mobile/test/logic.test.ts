@@ -2,7 +2,7 @@ import { getDaySnapshots } from '@pax/liturgy';
 import { describe, expect, it } from 'vitest';
 
 import { computeStreak } from '@/data/streak';
-import { cycleLine, paxGreeting } from '@/lib/format';
+import { cycleLine, paxGreeting, paxMoodFor } from '@/lib/format';
 import { rosarySteps } from '@/lib/rosary';
 import { buildWidgetFeed } from '@/widgets/widgetFeed';
 import type { RosaryMystery } from '@/data/types';
@@ -70,5 +70,14 @@ describe('Today copy', () => {
     const [day] = await getDaySnapshots('2026-10-17', 1);
     expect(paxGreeting(day!, { doneToday: false, hour: 9 })).toMatch(/^Saint Ignatius of Antioch gave everything/);
     expect(cycleLine(day!)).toBe('Memorial · Year II');
+  });
+});
+
+describe('paxMoodFor', () => {
+  it('follows the day like the widget timeline', () => {
+    expect(paxMoodFor({ doneToday: false, hour: 8 })).toBe('hello');
+    expect(paxMoodFor({ doneToday: false, hour: 19 })).toBe('encouraging');
+    expect(paxMoodFor({ doneToday: false, hour: 23 })).toBe('asleep');
+    expect(paxMoodFor({ doneToday: true, hour: 23 })).toBe('happy');
   });
 });

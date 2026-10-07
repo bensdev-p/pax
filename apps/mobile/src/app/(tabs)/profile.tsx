@@ -8,6 +8,7 @@ import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
+import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
 
 const APPEARANCES: { value: Appearance; label: string }[] = [
@@ -20,13 +21,14 @@ export default function ProfileScreen() {
   const t = useTheme();
   const { today, progress, settings, notificationPrefs, updateSettings } = useAppState();
 
-  const reminderLine = !notificationPrefs?.dailyReminder
-    ? notificationPrefs?.angelus
-      ? 'Angelus at noon'
-      : 'Off'
-    : `${notificationPrefs.slot === 'morning' ? 'Every morning at 7:30 AM' : 'Every evening at 8:00 PM'}${
-        notificationPrefs.angelus ? ' · Angelus' : ''
-      }`;
+  const reminderLine = (() => {
+    const p = notificationPrefs;
+    if (!p) return 'Off';
+    const parts = [p.morning, p.evening].filter((r) => r.enabled).map((r) => formatTime(r.time));
+    if (p.nudges) parts.push('nudges');
+    if (p.angelus) parts.push('Angelus');
+    return parts.length ? parts.join(' · ') : 'Off';
+  })();
 
   return (
     <Screen>

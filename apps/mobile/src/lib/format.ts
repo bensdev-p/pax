@@ -1,5 +1,7 @@
 import type { DaySnapshot } from '@pax/liturgy';
 
+import type { PaxMood } from '@/components/Pax';
+
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -61,4 +63,15 @@ export function paxGreeting(day: DaySnapshot, opts: { doneToday: boolean; hour: 
 /** "Saint Ignatius of Antioch, Bishop and Martyr" → "Saint Ignatius of Antioch". */
 export function shortName(name: string): string {
   return name.split(',')[0]!.trim();
+}
+
+/**
+ * Pax's mood on Today, matching the widget timeline: hello in the morning, encouraging in the
+ * evening, asleep at night, and happy as soon as today is done.
+ */
+export function paxMoodFor(opts: { doneToday: boolean; hour: number }): PaxMood {
+  if (opts.doneToday) return 'happy';
+  if (opts.hour >= 22 || opts.hour < 5) return 'asleep';
+  if (opts.hour >= 18) return 'encouraging';
+  return 'hello';
 }

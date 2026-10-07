@@ -208,7 +208,12 @@ The game mechanics should build a habit of prayer and study, not turn the faith 
 
 Build in four phases, and don't start the next until the current one works on your own phone. Phase 1 gives you something you'll open daily within the first few sessions.
 
-&#91;embedded content: roadmap · 4 phases, 4 gates\]
+| Phase | What it includes | Gate |
+| --- | --- | --- |
+| 1. Foundation | Expo Go on your iPhone, Supabase setup. Today from romcal, theming, Rosary, reminders | Today shows the correct feast, readings, and color |
+| 2. Library | Douay-Rheims reader, Church Fathers library. Offline full-text search, verse to CCC to Fathers links | Any verse opens its CCC and Fathers links offline |
+| 3. Learn | OCIA units, lessons, quizzes; Apple account, first widget. Streaks, XP, spaced review, sync, streak reminders | You use the first full unit through a week of OCIA |
+| 4. Polish and share | Full widget set, push, saint badges, feast quests. TestFlight and Play beta for your OCIA group | Licensing decided before any public release |
 
 You are the first user. Testing it during your own OCIA year is the best quality check this app could get.
 
