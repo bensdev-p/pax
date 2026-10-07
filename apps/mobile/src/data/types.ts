@@ -20,12 +20,71 @@ export interface RosaryMystery {
   meditation: string;
 }
 
-/** Read-only content from content.db (native) or content.json (web). */
+export interface SaintFact {
+  value: string;
+  label: string;
+}
+
+/** A saint or feast of the US calendar, keyed by its romcal celebration key. Own-words text. */
+export interface Saint {
+  romcal_key: string;
+  name: string;
+  kind: 'saint' | 'saints' | 'mary' | 'lord' | 'angels' | 'church';
+  subtitle: string | null;
+  dates: string | null;
+  patronage: string | null;
+  summary: string | null;
+  bio: string | null;
+  quote: string | null;
+  quote_source: string | null;
+  facts: SaintFact[];
+  /** Church Fathers library authors whose writings are this saint's. */
+  fathers: string[];
+  /** MM-DD for fixed feasts, null for movable ones. */
+  month_day: string | null;
+}
+
+/** One screen of a guided devotion. */
+export type DevotionStep =
+  | { type: 'prayer'; slug: string; note?: string }
+  | { type: 'text'; title: string; text: string; note?: string }
+  | { type: 'repeat'; title: string; text: string; count: number; note?: string }
+  | { type: 'station'; number: number; title: string; citation: string | null; text: string }
+  | { type: 'litany'; title: string; groups: { response: string; calls: string[] }[] }
+  | { type: 'day' };
+
+export interface NovenaDay {
+  title: string;
+  intention: string;
+  text: string;
+}
+
+export interface Devotion {
+  slug: string;
+  title: string;
+  kind: 'chaplet' | 'stations' | 'litany' | 'novena';
+  summary: string;
+  intro: string;
+  /** Season to feature it in: LENT, EASTER or ADVENT. */
+  season: string | null;
+  minutes: number | null;
+  /** Novenas: romcal key of the feast the nine days lead up to. */
+  anchor: string | null;
+  steps: DevotionStep[];
+  days: NovenaDay[] | null;
+  sort_order: number;
+}
+
+/** Read-only content from content.db. */
 export interface ContentStore {
   version: string;
   prayers(): Promise<Prayer[]>;
   prayer(slug: string): Promise<Prayer | null>;
   mysteries(set: RosaryMystery['mystery_set']): Promise<RosaryMystery[]>;
+  saint(key: string): Promise<Saint | null>;
+  saints(): Promise<Saint[]>;
+  devotions(): Promise<Devotion[]>;
+  devotion(slug: string): Promise<Devotion | null>;
 }
 
 export type ReminderSlot = 'morning' | 'evening';
@@ -57,6 +116,25 @@ export interface FathersPackInstall {
   files: string[];
 }
 
+/** Which of the day's readings were read in the app, so the check marks survive a restart. */
+export interface ReadingsRead {
+  date: string;
+  parts: string[];
+}
+
+/** A novena in progress (user.db `novena_progress`). */
+export interface NovenaProgress {
+  slug: string;
+  /** The devotion's title, kept so reminders can name it. */
+  title: string;
+  startedOn: string;
+  /** Days prayed so far, 0–9. */
+  daysDone: number;
+  lastPrayedOn: string | null;
+  /** HH:MM daily reminder, or null for none. */
+  reminderTime: string | null;
+}
+
 export interface Settings {
   appearance: Appearance;
   /** A fixed palette, or null to follow the Church year. */
@@ -66,6 +144,7 @@ export interface Settings {
   /** Where the Bible reader was last open (for "Continue reading"). */
   lastRead: ReadingPosition | null;
   fathersPack: FathersPackInstall | null;
+  readingsRead: ReadingsRead | null;
 }
 
 export type ActivityKind = 'lesson' | 'readings' | 'prayer';
@@ -91,6 +170,9 @@ export interface UserStore {
   setNotificationPrefs(prefs: NotificationPrefs): Promise<void>;
   recordActivity(localDate: string, kind: ActivityKind, xp?: number): Promise<void>;
   getProgress(localDate: string): Promise<Progress>;
+  getNovenas(): Promise<NovenaProgress[]>;
+  saveNovena(novena: NovenaProgress): Promise<void>;
+  removeNovena(slug: string): Promise<void>;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -99,6 +181,7 @@ export const DEFAULT_SETTINGS: Settings = {
   contentVersion: null,
   lastRead: null,
   fathersPack: null,
+  readingsRead: null,
 };
 
 export function parseJson<T>(raw: string | null | undefined): T | null {

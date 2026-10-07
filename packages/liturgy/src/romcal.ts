@@ -21,11 +21,20 @@ export function calendarFor(year: number): Promise<LiturgicalCalendar> {
   return cal;
 }
 
-/** The celebration of the day: romcal lists the default one first, then optional memorials. */
-export async function romcalDay(iso: string): Promise<LiturgicalDay> {
+/** Every celebration on a date: romcal lists the default one first, then optional memorials. */
+export async function romcalDays(iso: string): Promise<LiturgicalDay[]> {
   const year = Number(iso.slice(0, 4));
   const cal = await calendarFor(year);
-  const day = cal[iso]?.[0];
-  if (!day) throw new Error(`romcal returned no celebration for ${iso}`);
-  return day;
+  const days = cal[iso] ?? [];
+  if (!days.length) throw new Error(`romcal returned no celebration for ${iso}`);
+  return days;
+}
+
+/** The date (YYYY-MM-DD) a celebration falls on in a civil year, or null if it is impeded. */
+export async function dateOfCelebration(key: string, year: number): Promise<string | null> {
+  const cal = await calendarFor(year);
+  for (const [date, list] of Object.entries(cal)) {
+    if (list.some((d) => d.id === key)) return date;
+  }
+  return null;
 }

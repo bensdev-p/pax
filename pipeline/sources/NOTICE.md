@@ -32,3 +32,16 @@ Mopsuestia, condemned in 553 but not flagged upstream); no Reformation or modern
 excerpts whose source is a public-domain translation (Schaff's ANF/NPNF and similar, via
 historicalchristian.faith, New Advent, CCEL, Internet Archive). Excerpts without a source or from
 Google Books are dropped because they may be under copyright.
+
+## Prayers, devotions and saints (`seed/`)
+
+- `prayers.json`: traditional prayers in public-domain English wording (no ICEL texts). The
+  Litany of Loreto and Litany of Saint Joseph include the titles added by the Holy See in 2018,
+  2020 and 2021.
+- `devotions.json`: the Divine Mercy Chaplet's short prayers as taught by Saint Faustina (their
+  wording is freely reproduced; nothing else is taken from her Diary), traditional litanies, and
+  Stations meditations, novena intentions and novena prayers written for Pax.
+- `saints.json`: bios, summaries and facts written for Pax. Quotations are Douay-Rheims verses or
+  come from public-domain translations (Ante-Nicene and Nicene Fathers, Pusey's Confessions,
+  Longfellow's translation of Saint Teresa's bookmark, and the like).
+

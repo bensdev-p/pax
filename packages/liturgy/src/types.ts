@@ -53,6 +53,8 @@ export interface DaySnapshot {
   saintKey: string | null;
   /** All saints honored by the celebration (Peter and Paul has two). */
   saintKeys: string[];
+  /** Optional memorials a parish may keep instead of the weekday, e.g. Saint Faustina on Oct 5. */
+  optionalMemorials: { key: string; name: string }[];
   isMartyr: boolean;
   /** Key of the underlying weekday when a memorial replaces it, e.g. `ordinary_time_28_saturday`. */
   weekdayKey: string | null;

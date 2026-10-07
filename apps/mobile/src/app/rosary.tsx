@@ -7,6 +7,7 @@ import { Platform, Pressable, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Beads } from '@/components/Beads';
 import { CloseIcon, FlameIcon, RosaryIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton } from '@/components/Raised';
@@ -156,34 +157,6 @@ function StepView({ step, prayers, bead, set }: { step: RosaryStep; prayers: Rec
       {step.kind === 'beads' ? <Beads count={step.count} current={bead} /> : null}
       <Text variant="scripture">{prayer?.text ?? ''}</Text>
     </Animated.View>
-  );
-}
-
-function Beads({ count, current }: { count: number; current: number }) {
-  const t = useTheme();
-  return (
-    <View
-      accessibilityLabel={`Hail Mary ${current + 1} of ${count}`}
-      style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingVertical: 4 }}>
-      {Array.from({ length: count }, (_, i) => {
-        const done = i < current;
-        const now = i === current;
-        return (
-          <View
-            key={i}
-            style={{
-              width: 24,
-              height: 24,
-              borderRadius: 12,
-              backgroundColor: done || now ? t.accent.accent : t.neutral.surface,
-              borderWidth: now ? 4 : t.border.width,
-              borderColor: now ? t.accent.tint : done ? t.accent.accent : t.neutral.border,
-              transform: [{ scale: now ? 1.15 : 1 }],
-            }}
-          />
-        );
-      })}
-    </View>
   );
 }
 

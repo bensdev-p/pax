@@ -32,6 +32,7 @@ async function main() {
         sundayCycle: day.cycles.sundayCycle.replace('YEAR_', ''),
         weekdayCycle: day.cycles.weekdayCycle === 'YEAR_1' ? 'I' : 'II',
         saintKeys: day.martyrology.map((m) => m.id),
+        optional: list.slice(1).map((d) => d.id),
       };
     }
   }

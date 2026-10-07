@@ -93,18 +93,29 @@ CREATE TABLE father_passages (
   text        TEXT NOT NULL
 );
 
+-- One row per celebration in the US calendar that honors a saint, Mary, the angels or a
+-- feast with a story (keyed by the romcal celebration key, so joint memorials such as Basil and
+-- Gregory have one row). Every text field is in Pax's own words.
 CREATE TABLE saints (
-  romcal_key TEXT PRIMARY KEY,
-  name       TEXT NOT NULL,
-  dates      TEXT,
-  patronage  TEXT,
-  bio        TEXT                        -- own words
+  romcal_key   TEXT PRIMARY KEY,
+  name         TEXT NOT NULL,
+  kind         TEXT NOT NULL,             -- saint, saints, mary, lord, angels, church
+  subtitle     TEXT,                      -- e.g. Bishop · died c. 107 in Rome
+  dates        TEXT,
+  patronage    TEXT,
+  summary      TEXT,                      -- one sentence
+  bio          TEXT,
+  quote        TEXT,                      -- public-domain wording only
+  quote_source TEXT,
+  facts        TEXT NOT NULL DEFAULT '[]',-- JSON [{value, label}] x 3
+  fathers      TEXT NOT NULL DEFAULT '[]',-- JSON list of father_authors slugs
+  month_day    TEXT                       -- MM-DD for fixed dates, NULL for movable feasts
 ) WITHOUT ROWID;
 
 CREATE TABLE prayers (
   slug       TEXT PRIMARY KEY,
   title      TEXT NOT NULL,
-  category   TEXT NOT NULL,              -- essentials, rosary, marian, daily
+  category   TEXT NOT NULL,              -- essentials, daily, marian, eucharist, saints, departed, rosary
   text       TEXT NOT NULL,
   latin_text TEXT,
   sort_order INTEGER NOT NULL
@@ -120,6 +131,22 @@ CREATE TABLE rosary_mysteries (
   scripture_display TEXT NOT NULL,
   meditation        TEXT NOT NULL,       -- own words
   UNIQUE (mystery_set, number)
+) WITHOUT ROWID;
+
+-- Guided devotions: chaplets, the Stations of the Cross, litanies and novenas. `steps` is a JSON
+-- list the app walks through one screen at a time (see apps/mobile/src/data/types.ts).
+CREATE TABLE devotions (
+  slug       TEXT PRIMARY KEY,
+  title      TEXT NOT NULL,
+  kind       TEXT NOT NULL,              -- chaplet, stations, litany, novena
+  summary    TEXT NOT NULL,
+  intro      TEXT NOT NULL,
+  season     TEXT,                       -- LENT, EASTER, ADVENT: when to feature it
+  minutes    INTEGER,
+  anchor     TEXT,                       -- novenas: romcal key of the feast the nine days lead up to
+  steps      TEXT NOT NULL,              -- JSON
+  days       TEXT,                       -- novenas: JSON [{title, intention, text}] x 9
+  sort_order INTEGER NOT NULL
 ) WITHOUT ROWID;
 
 CREATE TABLE units (
@@ -174,7 +201,7 @@ CREATE TABLE lectionary (
 -- it is. Text is read back from the source tables.
 CREATE TABLE search_docs (
   rowid INTEGER PRIMARY KEY,
-  kind  TEXT NOT NULL,                   -- verse, prayer, ccc, father
+  kind  TEXT NOT NULL,                   -- verse, prayer, ccc, father, saint, devotion
   key   TEXT NOT NULL,
   title TEXT NOT NULL
 );

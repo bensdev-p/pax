@@ -1,6 +1,6 @@
 import type { DaySnapshot } from '@pax/liturgy';
 
-import type { NotificationPrefs } from '@/data/types';
+import type { NotificationPrefs, NovenaProgress } from '@/data/types';
 
 /**
  * Which local notifications to schedule, as plain data (no Expo imports, so it is testable).
@@ -8,6 +8,8 @@ import type { NotificationPrefs } from '@/data/types';
  * - Morning and evening reminders at the user's own times.
  * - Built-in nudges at fixed times, only on days nothing is done yet (SPEC: streak at risk).
  * - The Angelus at noon, every day, when switched on.
+ * - A daily reminder for each novena in progress that has one, until its ninth day; skipped on
+ *   a day that novena was already prayed.
  *
  * Once today counts (a lesson, the readings or a prayer), today's reminders and nudges are
  * dropped; the app reschedules whenever something is finished. iOS keeps at most 64 pending
@@ -18,7 +20,8 @@ export const MAX_PENDING = 60;
 /** A nudge this close to the user's own reminder is skipped so Pax doesn't double up. */
 const NUDGE_GAP_MINUTES = 45;
 
-export type NotificationKind = 'morning_reminder' | 'evening_reminder' | 'streak_nudge' | 'angelus';
+export type NotificationKind = 'morning_reminder' | 'evening_reminder' | 'streak_nudge' | 'angelus' | 'novena';
+
 
 export interface PlannedNotification {
   kind: NotificationKind;
@@ -33,9 +36,28 @@ export interface PlannedNotification {
 export function planNotifications(
   prefs: NotificationPrefs,
   days: DaySnapshot[],
-  opts: { now: Date; today: string; doneToday: boolean },
+  opts: { now: Date; today: string; doneToday: boolean; novenas?: NovenaProgress[] },
 ): PlannedNotification[] {
   const plan: PlannedNotification[] = [];
+  for (const novena of opts.novenas ?? []) {
+    if (!novena.reminderTime) continue;
+    const prayedToday = novena.lastPrayedOn === opts.today;
+    // Day numbers still to pray, starting today or, if today's is done, tomorrow.
+    const remaining = 9 - novena.daysDone;
+    const first = prayedToday ? 1 : 0;
+    days.slice(first, first + remaining).forEach((day, i) => {
+      const number = novena.daysDone + i + 1;
+      plan.push({
+        kind: 'novena',
+        date: day.date,
+        time: novena.reminderTime!,
+        at: localDate(day.date, novena.reminderTime!),
+        title: `${novena.title} · Day ${number}`,
+        body: number === 9 ? 'The last day of your novena. Pray it with me?' : 'Your novena prayer for today is ready.',
+        url: `paxapp://devotion/${novena.slug}`,
+      });
+    });
+  }
   for (const day of days.slice(0, 14)) {
     const done = day.date === opts.today && opts.doneToday;
     const add = (kind: NotificationKind, time: string, copy: { title: string; body: string }, url = 'paxapp://today') =>

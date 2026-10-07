@@ -10,7 +10,9 @@ import {
   type ActivityKind,
   type FathersPackInstall,
   type NotificationPrefs,
+  type NovenaProgress,
   type ReadingPosition,
+  type ReadingsRead,
   type Progress,
   type ReminderTime,
   type Settings,
@@ -102,6 +104,19 @@ const MIGRATIONS: string[] = [
     FROM notification_prefs WHERE type = 'daily_reminder';
   DELETE FROM notification_prefs WHERE type = 'daily_reminder';
   `,
+  // 3: novenas in progress, with an optional daily reminder.
+  `
+  CREATE TABLE novena_progress (
+    user_id        TEXT NOT NULL DEFAULT 'local',
+    slug           TEXT NOT NULL,         -- devotions.slug in content.db
+    title          TEXT NOT NULL,         -- for the reminder text
+    started_on     TEXT NOT NULL,
+    days_done      INTEGER NOT NULL DEFAULT 0,
+    last_prayed_on TEXT,
+    reminder_time  TEXT,                  -- HH:MM, or NULL for no reminder
+    PRIMARY KEY (user_id, slug)
+  ) WITHOUT ROWID;
+  `,
 ];
 
 async function migrate(db: SQLite.SQLiteDatabase) {
@@ -139,6 +154,7 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     contentVersion: map.contentVersion ?? null,
     lastRead: parseJson<ReadingPosition>(map.lastRead),
     fathersPack: parseJson<FathersPackInstall>(map.fathersPack),
+    readingsRead: parseJson<ReadingsRead>(map.readingsRead),
   };
 }
 
@@ -269,5 +285,44 @@ export const userStore: UserStore = {
       reviewsDue: due?.n ?? 0,
       graceDaysLeft: streakRow?.grace_days_left ?? GRACE_DAYS_PER_MONTH,
     };
+  },
+
+  async getNovenas() {
+    const db = await userDb();
+    const rows = await db.getAllAsync<{
+      slug: string;
+      title: string;
+      started_on: string;
+      days_done: number;
+      last_prayed_on: string | null;
+      reminder_time: string | null;
+    }>("SELECT slug, title, started_on, days_done, last_prayed_on, reminder_time FROM novena_progress WHERE user_id = 'local' ORDER BY started_on");
+    return rows.map((r) => ({
+      slug: r.slug,
+      title: r.title,
+      startedOn: r.started_on,
+      daysDone: r.days_done,
+      lastPrayedOn: r.last_prayed_on,
+      reminderTime: r.reminder_time,
+    }));
+  },
+
+  async saveNovena(n: NovenaProgress) {
+    const db = await userDb();
+    await db.runAsync(
+      `INSERT OR REPLACE INTO novena_progress (user_id, slug, title, started_on, days_done, last_prayed_on, reminder_time)
+       VALUES ('local', ?, ?, ?, ?, ?, ?)`,
+      n.slug,
+      n.title,
+      n.startedOn,
+      n.daysDone,
+      n.lastPrayedOn,
+      n.reminderTime,
+    );
+  },
+
+  async removeNovena(slug: string) {
+    const db = await userDb();
+    await db.runAsync("DELETE FROM novena_progress WHERE user_id = 'local' AND slug = ?", slug);
   },
 };
