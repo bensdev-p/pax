@@ -79,6 +79,20 @@ export default function ProfileScreen() {
         <ChevronIcon color={t.neutral.textSubtle} />
       </Card>
 
+      <Card contentStyle={rowStyle}>
+        <IconTile color="#2FA4E7">
+          <CloudIcon />
+        </IconTile>
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+            Cloud
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            {cloudLine}
+          </Text>
+        </View>
+      </Card>
+
       <Card contentStyle={[rowStyle, { flexDirection: 'column', alignItems: 'stretch', gap: 12 }]}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
           <IconTile color="#2FA4E7">
@@ -125,19 +139,6 @@ export default function ProfileScreen() {
               onPress={() => void updateSettings({ lockedColor: name })}
             />
           ))}
-        </View>
-      </Card>
-      <Card contentStyle={rowStyle}>
-        <IconTile color="#2FA4E7">
-          <CloudIcon />
-        </IconTile>
-        <View style={{ flex: 1 }}>
-          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
-            Cloud
-          </Text>
-          <Text variant="small" color={t.neutral.textMuted}>
-            {cloudLine}
-          </Text>
         </View>
       </Card>
     </Screen>

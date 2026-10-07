@@ -1,6 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 import { supabaseConfig } from './supabaseConfig';
 
+let client: SupabaseClient | null = null;
+
 // The browser keeps the session in localStorage (supabase-js default).
-export const supabase = createClient(supabaseConfig.url ?? '', supabaseConfig.anonKey ?? '');
+export function getSupabase(): SupabaseClient {
+  client ??= createClient(supabaseConfig.url, supabaseConfig.anonKey);
+  return client;
+}
