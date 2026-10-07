@@ -1,8 +1,9 @@
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, TextInput, View } from 'react-native';
+import { Platform, Pressable, TextInput, View } from 'react-native';
 
+import { tidy } from '@/components/FatherCard';
 import { Header } from '@/components/Header';
 import { SearchIcon } from '@/components/Icons';
 import { SectionLabel } from '@/components/LibraryBits';
@@ -11,6 +12,9 @@ import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import type { SearchHit, SearchKind } from '@/data/library';
 import { openVerse } from '@/lib/libraryLinks';
+
+// The field already has a focus border; drop the browser's own outline on web.
+const WEB_NO_OUTLINE = Platform.OS === 'web' ? ({ outlineWidth: 0 } as object) : null;
 
 const GROUPS: { kind: SearchKind; label: string }[] = [
   { kind: 'verse', label: 'Scripture' },
@@ -72,7 +76,7 @@ export default function SearchScreen() {
           placeholderTextColor={t.neutral.textSubtle}
           returnKeyType="search"
           accessibilityLabel="Search the library"
-          style={{ flex: 1, fontFamily: 'Nunito_700Bold', fontSize: 16, color: t.neutral.text }}
+          style={[{ flex: 1, fontFamily: 'Nunito_700Bold', fontSize: 16, color: t.neutral.text }, WEB_NO_OUTLINE]}
         />
       </View>
 
@@ -105,7 +109,7 @@ export default function SearchScreen() {
                   {h.title}
                 </Text>
                 <Text variant="small" color={t.neutral.textMuted} numberOfLines={3}>
-                  {h.snippet}
+                  {h.kind === 'ccc' ? h.snippet.split(' · ').map(tidy).join(' · ') : h.snippet}
                 </Text>
               </Pressable>
             ))}

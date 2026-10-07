@@ -45,8 +45,15 @@ export function FatherCard({ excerpt, showRef }: { excerpt: FatherExcerpt; showR
 /** The scraped headings are upper case ("SECTION TWO I. THE CREEDS"); soften them for reading. */
 export function tidy(heading: string): string {
   const letters = heading.replace(/[^A-Za-z]/g, '');
-  if (letters && letters === letters.toUpperCase()) {
-    return heading.toLowerCase().replace(/(^|[\s"'(:-])([a-z])/g, (_, a: string, b: string) => a + b.toUpperCase());
-  }
-  return heading;
+  if (!letters || letters !== letters.toUpperCase()) return heading;
+  const small = new Set(['a', 'an', 'and', 'as', 'at', 'by', 'for', 'in', 'of', 'on', 'or', 'the', 'to', 'with']);
+  return heading
+    .toLowerCase()
+    .split(' ')
+    .map((word, i) => {
+      if (/^(i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii)\.?$/.test(word)) return word.toUpperCase();
+      if (i > 0 && small.has(word)) return word;
+      return word.replace(/^([("']?)([a-z])/, (_, p: string, c: string) => p + c.toUpperCase());
+    })
+    .join(' ');
 }

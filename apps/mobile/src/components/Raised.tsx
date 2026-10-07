@@ -1,7 +1,7 @@
 import { useTheme } from '@pax/tokens/react';
 import * as Haptics from 'expo-haptics';
 import type { ReactNode } from 'react';
-import { Platform, Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Text } from './Text';
 
@@ -71,6 +71,7 @@ export function RaisedSurface({
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       disabled={disabled}
+      style={flexOf(style)}
       onPress={() => {
         if (haptic && Platform.OS !== 'web') void Haptics.selectionAsync();
         onPress();
@@ -78,6 +79,12 @@ export function RaisedSurface({
       {({ pressed }) => body(pressed && !disabled)}
     </Pressable>
   );
+}
+
+/** Lets a pressable surface take part in a row layout (flex: 1) like its inner view. */
+function flexOf(style: StyleProp<ViewStyle>): ViewStyle | undefined {
+  const flat = StyleSheet.flatten(style);
+  return flat?.flex !== undefined ? { flex: flat.flex } : undefined;
 }
 
 type ButtonKind = 'accent' | 'white' | 'neutral' | 'ghost';

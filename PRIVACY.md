@@ -1,7 +1,7 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 8, 2026 · matches user.db schema version 2 and Supabase migrations
-through `20261008000000_split_reminders`._
+_Last updated: October 8, 2026 · matches user.db schema version 2 (plus the Library settings) and
+Supabase migrations through `20261008000000_split_reminders`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
@@ -24,15 +24,22 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 
 Pax keeps two separate databases on the phone.
 
-**content.db** holds the app's reading content: prayers, Rosary mysteries, lectionary citations,
-Scripture verses, Catechism summaries and saints. It ships inside the app, is the same for every
-user, and contains nothing about you.
+**content.db** holds the app's reading content: the Douay-Rheims Bible, prayers, Rosary
+mysteries, lectionary citations, Catechism references, a starter set of Church Fathers excerpts
+and saints. It ships inside the app, is the same for every user, and contains nothing about you.
+Reading and searching it happens entirely on the phone.
+
+**The Church Fathers library** is an optional download (about 120 MB) from Pax's public Supabase
+Storage bucket. Pax asks for the files only when you tap Download; the request carries no personal
+data, though, like any download, it reveals your IP address to Supabase. The files are the same
+for everyone, contain nothing about you, and are deleted when you tap Remove download or delete
+the app.
 
 **user.db** holds your own data. It stays on the phone and is never sent anywhere in this version.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed | To show the app the way you asked |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed | To show the app the way you asked and offer "Continue reading" |
 | `daily_activity` | For each local date: whether you finished a lesson, the day's readings, or a prayer (such as the Rosary), XP earned, and whether a grace day was used | To count your streak and color the liturgical calendar |
 | `streaks` | Current and longest streak, last active date, grace days left | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
@@ -57,8 +64,10 @@ and its own widgets can read (the iOS App Group `group.com.benbrunson.pax`, or A
 storage). Widgets show this on your home and lock screen, where anyone holding your phone can see
 it. In Expo Go, Pax writes nothing for widgets.
 
-**On the web.** The web version keeps the same settings, activity and reminder choices in your
-browser's local storage, under the key `pax.user.v1`. The web version has no reminders.
+**On the web.** The web version keeps the same settings, activity, reminder choices and last
+reading position in your browser's local storage, under the key `pax.user.v1`. It loads the same
+content.db into the browser to read and search it there. The web version has no reminders and no
+Fathers download.
 
 ## What Pax stores in Supabase (the cloud)
 
@@ -105,9 +114,10 @@ Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and
   look at personal rows except to fix a problem you report.
 - **No one else.** Pax has no advertisers, analytics companies or data brokers.
 
-**Links that leave Pax.** "Full texts on USCCB.org" opens the USCCB's daily readings page in an
-in-app browser. The USCCB's own privacy policy applies there. Pax sends nothing to it except the
-page request for that date.
+**Links that leave Pax.** "Full texts on USCCB.org" opens the USCCB's daily readings page,
+"Read it on vatican.va" opens a Catechism page, and "Read the source" on a Father's excerpt opens
+the public-domain translation it came from, each in an in-app browser. Those sites' own privacy
+policies apply there. Pax sends them nothing except the request for that page.
 
 **While in development.** Pax currently runs inside Expo Go, Expo's development app, which has its
 own privacy policy. Fonts and all content are bundled with the app and are not fetched from

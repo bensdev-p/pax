@@ -33,7 +33,7 @@ export default function CccParagraphScreen() {
     <Screen header={<Header title={`CCC ${number}`} subtitle={para ? tidy(para.part) : ''} />}>
       {para ? (
         <View style={{ gap: 4 }}>
-          <SectionLabel color={t.accent.text}>{tidy(para.section)}</SectionLabel>
+          {para.section !== para.heading ? <SectionLabel color={t.accent.text}>{tidy(para.section)}</SectionLabel> : null}
           <Text variant="headline">{tidy(para.heading)}</Text>
         </View>
       ) : null}

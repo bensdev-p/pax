@@ -21,6 +21,7 @@ export interface ChapterVerse {
   verse: number;
   douay_verse: number;
   text: string;
+  /** Catechism paragraphs citing the verse (the Fathers cover nearly every verse, so aren't counted). */
   links: number;
   notes: number;
 }
@@ -159,7 +160,7 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
       );
       const verses = await content.all<ChapterVerse>(
         `SELECT v.ref, v.chapter, v.verse, v.douay_verse, v.text,
-                (SELECT count(*) FROM cross_refs c WHERE c.to_type = 'verse' AND c.to_key = v.ref AND c.from_type IN ('ccc', 'father')) AS links,
+                (SELECT count(*) FROM cross_refs c WHERE c.to_type = 'verse' AND c.to_key = v.ref AND c.from_type = 'ccc') AS links,
                 (SELECT count(*) FROM bible_notes n WHERE n.ref = v.ref) AS notes
          FROM bible_verses v WHERE v.book = ? AND v.douay_chapter = ? ORDER BY v.douay_verse`,
         [osis, douayChapter],
