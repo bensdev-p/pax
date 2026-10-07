@@ -25,6 +25,9 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import gzip
+
+import bible_drc
 from verse_map import verse_map_rows
 
 PIPELINE = Path(__file__).resolve().parent
@@ -293,6 +296,12 @@ def content_version(paths: list[Path]) -> str:
     return f"{SCHEMA_VERSION}.{h.hexdigest()[:10]}"
 
 
+def era(year: int) -> str:
+    if year >= 9999:
+        return "date unknown"
+    return f"c. AD {year}" if year > 0 else f"c. {-year} BC"
+
+
 def osis_parts(ref: str) -> tuple[str, int, int]:
     book, chapter, verse = ref.rsplit(".", 2)
     return book, int(chapter), int(verse)
@@ -314,22 +323,35 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     romcal_days = load_json(romcal_path)["days"]
 
     inputs = [p for p in SEED.rglob("*.json")] + [p for p in SOURCES.rglob("*.json")]
-    inputs += [PIPELINE / "schema.sql", Path(__file__).resolve(), PIPELINE / "verse_map.py"]
+    inputs += list(SOURCES.rglob("*.usfm")) + list(SOURCES.rglob("*.json.gz"))
+    inputs += [PIPELINE / n for n in ("schema.sql", "verse_map.py", "bible_drc.py")]
+    inputs += [Path(__file__).resolve()]
     version = content_version(inputs)
 
     prayers = load_json(SEED / "prayers.json")["prayers"]
     mysteries = load_json(SEED / "rosary_mysteries.json")["mysteries"]
-    verses = load_json(SEED / "bible_verses.json")["verses"]
-    ccc = load_json(SEED / "ccc_paragraphs.json")["paragraphs"]
+    bible = bible_drc.parse(SOURCES / "drc1750")
+    ccc_summaries = {c["number"]: c["summary"] for c in load_json(SEED / "ccc_paragraphs.json")["paragraphs"]}
+    ccc_index = load_json(SOURCES / "ccc" / "ccc_index.json")["paragraphs"]
+    with gzip.open(SOURCES / "fathers" / "starter.json.gz", "rt", encoding="utf-8") as fh:
+        fathers_starter = json.load(fh)
+    # Keep only excerpts that point at a verse the Douay text has (a few King James-style
+    # numbers run past the end of a Douay chapter).
+    known_refs = {v.ref for v in bible.verses}
+    fathers_starter["passages"] = [
+        {**p, "refs": [r for r in p["refs"] if r in known_refs]}
+        for p in fathers_starter["passages"]
+        if any(r in known_refs for r in p["refs"])
+    ]
+    used_works = {p["work_slug"] for p in fathers_starter["passages"]}
+    fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
     saints = load_json(SEED / "saints.json")["saints"]
     cross_refs = load_json(SEED / "cross_refs.json")["cross_refs"]
     learn = load_json(SEED / "lessons.json")
-    fathers = load_json(SEED / "fathers.json")
 
     check_unique(prayers, "slug", "prayer")
     check_unique(mysteries, "slug", "mystery")
-    check_unique(verses, "ref", "verse")
-    check_unique(ccc, "number", "CCC")
+    check_unique([v.__dict__ for v in bible.verses], "ref", "verse")
     check_unique(saints, "romcal_key", "saint")
 
     report = [
@@ -349,25 +371,60 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     built_at = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
     db.execute("INSERT INTO content_meta VALUES (?, ?)", (version, built_at))
 
-    for v in verses:
-        book, chapter, verse = osis_parts(v["ref"])
-        db.execute(
-            "INSERT INTO bible_verses (ref, book, chapter, verse, text) VALUES (?, ?, ?, ?, ?)",
-            (v["ref"], book, chapter, verse, v["text"]),
-        )
+    db.executemany(
+        "INSERT INTO bible_books VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [(b.osis, b.name, b.name_douay, b.testament, b.order, b.chapters, b.intro or None) for b in bible.books],
+    )
+    db.executemany(
+        "INSERT INTO bible_verses (ref, book, chapter, verse, douay_chapter, douay_verse, text) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [(v.ref, v.book, v.chapter, v.verse, v.douay_chapter, v.douay_verse, v.text) for v in bible.verses],
+    )
+    db.executemany(
+        "INSERT INTO bible_chapters VALUES (?, ?, ?, ?, ?)",
+        [(c.book, c.douay_chapter, c.title or None, c.incipit or None, c.summary or None) for c in bible.chapters],
+    )
+    db.executemany(
+        "INSERT INTO bible_notes VALUES (?, ?, ?, ?)",
+        [(n.ref, n.seq, n.keyword or None, n.text) for n in bible.notes],
+    )
     db.executemany("INSERT INTO verse_map VALUES (?, ?)", verse_map_rows())
     db.executemany(
-        "INSERT INTO ccc_paragraphs VALUES (?, ?, ?, ?, ?)",
-        [(c["number"], c["part"], c["section"], c["summary"], VATICAN_CCC_URL) for c in ccc],
+        "INSERT INTO ccc_paragraphs VALUES (?, ?, ?, ?, ?, ?)",
+        [
+            (int(n), c["part"], c["section"], c["heading"], ccc_summaries.get(int(n)), c["url"])
+            for n, c in ccc_index.items()
+        ],
     )
     db.executemany(
-        "INSERT INTO father_works VALUES (:slug, :author, :title, :era, :source_volume)",
-        fathers["works"],
+        "INSERT INTO father_authors VALUES (:slug, :name, :year, :category, :wiki)",
+        fathers_starter["authors"],
+    )
+    names = {a["slug"]: a for a in fathers_starter["authors"]}
+    db.executemany(
+        "INSERT INTO father_works VALUES (?, ?, ?, ?, ?, ?)",
+        [
+            (w["slug"], w["author_slug"], names[w["author_slug"]]["name"], w["title"],
+             era(names[w["author_slug"]]["year"]), w["source_url"])
+            for w in fathers_starter["works"]
+        ],
     )
     db.executemany(
-        "INSERT INTO father_passages VALUES (:slug, :work_slug, :chapter, :text)",
-        fathers["passages"],
+        "INSERT INTO father_passages VALUES (?, ?, ?, ?, NULL, ?)",
+        [(p["slug"], p["work_slug"], p["author_slug"], p["year"], p["text"]) for p in fathers_starter["passages"]],
     )
+    verse_refs = {v.ref for v in bible.verses}
+    cross_refs += [
+        {"from_type": "ccc", "from_key": n, "to_type": "verse", "to_key": r}
+        for n, c in ccc_index.items()
+        for r in c["refs"]
+        if r in verse_refs
+    ]
+    cross_refs += [
+        {"from_type": "father", "from_key": p["slug"], "to_type": "verse", "to_key": r}
+        for p in fathers_starter["passages"]
+        for r in p["refs"]
+        if r in verse_refs
+    ]
     db.executemany(
         "INSERT INTO saints VALUES (:romcal_key, :name, :dates, :patronage, :bio)", saints
     )
@@ -405,7 +462,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             (q["slug"], q["lesson_slug"], q["type"], q["prompt"], json.dumps(q["answers"])),
         )
     db.executemany(
-        "INSERT INTO cross_refs VALUES (:from_type, :from_key, :to_type, :to_key)", cross_refs
+        "INSERT OR IGNORE INTO cross_refs VALUES (:from_type, :from_key, :to_type, :to_key)", cross_refs
     )
     db.executemany(
         "INSERT INTO lectionary VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -414,10 +471,23 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             for r in sorted(rows.values(), key=lambda r: (r.key, r.cycle))
         ],
     )
-    db.executemany(
-        "INSERT INTO search_index VALUES (?, ?, ?, ?)",
+    book_names = {b.osis: b.name_douay for b in bible.books}
+    docs = (
         [("prayer", p["slug"], p["title"], p["text"]) for p in prayers]
-        + [("verse", v["ref"], v["ref"], v["text"]) for v in verses],
+        + [("verse", v.ref, f"{book_names[v.book]} {v.douay_chapter}:{v.douay_verse}", v.text) for v in bible.verses]
+        + [("ccc", n, f"CCC {n}", f"{c['section']} · {c['heading']}") for n, c in ccc_index.items()]
+        + [
+            ("father", p["slug"], names[p["author_slug"]]["name"], p["text"])
+            for p in fathers_starter["passages"]
+        ]
+    )
+    db.executemany(
+        "INSERT INTO search_docs (rowid, kind, key, title) VALUES (?, ?, ?, ?)",
+        [(i, kind, key, title) for i, (kind, key, title, _) in enumerate(docs, 1)],
+    )
+    db.executemany(
+        "INSERT INTO search_index (rowid, title, body) VALUES (?, ?, ?)",
+        [(i, title, body) for i, (_, _, title, body) in enumerate(docs, 1)],
     )
     db.commit()
     db.execute("VACUUM")
@@ -448,7 +518,14 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     out_report.parent.mkdir(parents=True, exist_ok=True)
     out_report.write_text("\n".join(report) + "\n", encoding="utf-8")
 
-    return {"version": version, "lectionary_rows": len(rows), "prayers": len(prayers)}
+    return {
+        "version": version,
+        "lectionary_rows": len(rows),
+        "prayers": len(prayers),
+        "verses": len(bible.verses),
+        "ccc_links": sum(1 for r in cross_refs if r["from_type"] == "ccc"),
+        "father_passages": len(fathers_starter["passages"]),
+    }
 
 
 def main(argv: list[str]) -> int:
@@ -460,8 +537,10 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv)
     result = build(args.db, args.lectionary, args.web, args.report)
     print(
-        f"content {result['version']}: {result['lectionary_rows']} lectionary rows, "
-        f"{result['prayers']} prayers -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db}"
+        f"content {result['version']}: {result['verses']} verses, {result['ccc_links']} CCC links, "
+        f"{result['father_passages']} Fathers excerpts, {result['lectionary_rows']} lectionary rows, "
+        f"{result['prayers']} prayers -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db} "
+        f"({args.db.stat().st_size / 1e6:.1f} MB)"
     )
     return 0
 

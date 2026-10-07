@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import build_content  # noqa: E402
-from verse_map import hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
+from verse_map import douay_to_standard, english_to_standard, hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
 
 
 class VerseMapTest(unittest.TestCase):
@@ -36,6 +36,23 @@ class VerseMapTest(unittest.TestCase):
         self.assertEqual(len(keys), len(set(keys)))
         self.assertIn(("Ps.23", "Ps.22"), rows)
         self.assertIn(("Ps.10.18", "Ps.9.39"), rows)
+
+
+class VersificationTest(unittest.TestCase):
+    def test_douay_to_standard(self):
+        self.assertEqual(douay_to_standard("Ps", 22, 1), (23, 1))
+        self.assertEqual(douay_to_standard("Ps", 9, 22), (10, 1))
+        self.assertEqual(douay_to_standard("Ps", 113, 9), (115, 1))
+        self.assertEqual(douay_to_standard("Ps", 115, 10), (116, 10))
+        self.assertEqual(douay_to_standard("Mal", 4, 2), (3, 20))
+        self.assertEqual(douay_to_standard("Joel", 2, 28), (3, 1))
+        self.assertEqual(douay_to_standard("John", 1, 14), (1, 14))
+
+    def test_english_psalm_titles(self):
+        self.assertEqual(english_to_standard("Ps", 22, 1), (22, 2))  # "My God, my God"
+        self.assertEqual(english_to_standard("Ps", 51, 1), (51, 3))  # "Have mercy on me"
+        self.assertEqual(english_to_standard("Ps", 23, 1), (23, 1))  # no title verse
+        self.assertEqual(english_to_standard("Matt", 5, 3), (5, 3))
 
 
 class CitationTest(unittest.TestCase):
@@ -116,7 +133,10 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(self.db.execute("SELECT count(*) FROM rosary_mysteries").fetchone()[0], 20)
         title = self.db.execute("SELECT title FROM prayers WHERE slug='hail-mary'").fetchone()[0]
         self.assertEqual(title, "Hail Mary")
-        hits = self.db.execute("SELECT key FROM search_index WHERE search_index MATCH 'grace'").fetchall()
+        hits = self.db.execute(
+            "SELECT d.key FROM search_index JOIN search_docs d ON d.rowid = search_index.rowid"
+            " WHERE search_index MATCH 'grace'"
+        ).fetchall()
         self.assertIn(("hail-mary",), hits)
 
     def test_lectionary_json_matches_db(self):
@@ -125,10 +145,44 @@ class BuildTest(unittest.TestCase):
         count = self.db.execute("SELECT count(*) FROM lectionary").fetchone()[0]
         self.assertEqual(len(data["entries"]), count)
 
-    def test_douay_psalm_lookup_through_verse_map(self):
+    def test_psalm_23_is_douay_psalm_22(self):
+        row = self.db.execute(
+            "SELECT douay_chapter, douay_verse, text FROM bible_verses WHERE ref='Ps.23.1'"
+        ).fetchone()
+        self.assertEqual(row[:2], (22, 1))
+        self.assertIn("The Lord ruleth me", row[2])
         vulgate = self.db.execute("SELECT ref_vulgate FROM verse_map WHERE ref_hebrew='Ps.23'").fetchone()[0]
-        text = self.db.execute("SELECT text FROM bible_verses WHERE ref=?", (vulgate + ".1",)).fetchone()[0]
-        self.assertIn("The Lord ruleth me", text)
+        self.assertEqual(vulgate, "Ps.22")
+
+    def test_whole_douay_rheims_bible(self):
+        self.assertEqual(self.db.execute("SELECT count(*) FROM bible_books").fetchone()[0], 73)
+        self.assertEqual(self.db.execute("SELECT count(*) FROM bible_verses").fetchone()[0], 35812)
+        name = self.db.execute("SELECT name_douay FROM bible_books WHERE osis='1Kgs'").fetchone()[0]
+        self.assertEqual(name, "3 Kings")
+        note = self.db.execute("SELECT keyword FROM bible_notes WHERE ref='Ps.23.1'").fetchone()[0]
+        self.assertEqual(note, "Ruleth me")
+        summary = self.db.execute(
+            "SELECT summary FROM bible_chapters WHERE book='Ps' AND douay_chapter=22"
+        ).fetchone()[0]
+        self.assertIn("spiritual benefits", summary)
+
+    def test_verse_links_to_catechism_and_fathers(self):
+        ccc = self.db.execute(
+            "SELECT from_key FROM cross_refs WHERE from_type='ccc' AND to_type='verse' AND to_key='Matt.6.9'"
+        ).fetchall()
+        self.assertIn(("2759",), ccc)
+        url = self.db.execute("SELECT vatican_url FROM ccc_paragraphs WHERE number=2759").fetchone()[0]
+        self.assertTrue(url.startswith("https://www.vatican.va/archive/ENG0015/"))
+        fathers = self.db.execute(
+            "SELECT count(*) FROM cross_refs WHERE from_type='father' AND to_key='John.1.1'"
+        ).fetchone()[0]
+        self.assertGreaterEqual(fathers, 1)
+        # Every link points at a verse that exists.
+        dangling = self.db.execute(
+            "SELECT count(*) FROM cross_refs c LEFT JOIN bible_verses v ON v.ref = c.to_key"
+            " WHERE c.to_type='verse' AND c.from_type IN ('ccc','father') AND v.ref IS NULL"
+        ).fetchone()[0]
+        self.assertEqual(dangling, 0)
 
 
 if __name__ == "__main__":

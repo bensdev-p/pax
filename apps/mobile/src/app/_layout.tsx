@@ -72,6 +72,7 @@ function Navigator() {
         <Stack.Screen name="rosary" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="reminders" options={{ presentation: 'modal' }} />
         <Stack.Screen name="prayer/[slug]" />
+        <Stack.Screen name="verse/[ref]" options={{ presentation: 'modal' }} />
       </Stack>
     </>
   );

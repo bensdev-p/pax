@@ -48,6 +48,8 @@ function settingsOf(data: WebData): Settings {
     appearance: s.appearance ?? DEFAULT_SETTINGS.appearance,
     lockedColor: isPaletteName(s.lockedColor) ? s.lockedColor : null,
     contentVersion: s.contentVersion ?? null,
+    lastRead: s.lastRead ?? null,
+    fathersPack: null,
   };
 }
 

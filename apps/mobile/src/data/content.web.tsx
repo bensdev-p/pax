@@ -1,24 +1,45 @@
-import { createContext, useContext, type ReactNode } from 'react';
+import { Asset } from 'expo-asset';
+import { useEffect, useState, type ReactNode } from 'react';
+import initSqlJs from 'sql.js/dist/sql-wasm-browser.js';
 
-import type { ContentStore, Prayer, RosaryMystery } from './types';
+import { ContentStores } from './contentContext';
+import type { ReadDb, SqlParam } from './db';
 
-// A browser can't hold the bundled SQLite databases, so the web build reads the same rows from
-// content.json. Supabase Postgres replaces this when the web version reads live content.
-const data = require('../../assets/content/content.json') as {
-  contentVersion: string;
-  prayers: Prayer[];
-  rosary_mysteries: RosaryMystery[];
-};
+export { useContent, useFathersPack, useLibrary } from './contentContext';
 
-const store: ContentStore = {
-  version: data.contentVersion,
-  prayers: async () => [...data.prayers].sort((a, b) => a.sort_order - b.sort_order),
-  prayer: async (slug) => data.prayers.find((p) => p.slug === slug) ?? null,
-  mysteries: async (set) =>
-    data.rosary_mysteries.filter((m) => m.mystery_set === set).sort((a, b) => a.number - b.number),
-};
+// The web build loads the same content.db into memory with sql.js (SQLite compiled to
+// WebAssembly; no FTS5, so search falls back to LIKE). The web version moves to Supabase later.
+const CONTENT_DB = require('../../assets/content/content.db');
+const SQL_WASM = require('sql.js/dist/sql-wasm-browser.wasm');
+const BUNDLED = require('../../assets/content/content.json') as { contentVersion: string };
 
-const ContentContext = createContext<ContentStore>(store);
+let loading: Promise<ReadDb> | null = null;
+
+function loadContent(): Promise<ReadDb> {
+  loading ??= (async () => {
+    const [wasm, file] = [Asset.fromModule(SQL_WASM), Asset.fromModule(CONTENT_DB)];
+    const SQL = await initSqlJs({ locateFile: () => wasm.uri });
+    const bytes = new Uint8Array(await (await fetch(file.uri)).arrayBuffer());
+    const db: initSqlJs.Database = new SQL.Database(bytes);
+    const run = <T,>(sql: string, params: SqlParam[] = []): T[] => {
+      const stmt = db.prepare(sql);
+      try {
+        stmt.bind(params);
+        const rows: T[] = [];
+        while (stmt.step()) rows.push(stmt.getAsObject() as T);
+        return rows;
+      } finally {
+        stmt.free();
+      }
+    };
+    return {
+      all: async <T,>(sql: string, params?: SqlParam[]) => run<T>(sql, params),
+      first: async <T,>(sql: string, params?: SqlParam[]) => run<T>(sql, params)[0] ?? null,
+      hasFts: false,
+    };
+  })();
+  return loading;
+}
 
 export function ContentProvider({
   children,
@@ -27,9 +48,14 @@ export function ContentProvider({
   onInstalled: (version: string) => void;
   children: ReactNode;
 }) {
-  return <ContentContext.Provider value={store}>{children}</ContentContext.Provider>;
-}
-
-export function useContent(): ContentStore {
-  return useContext(ContentContext);
+  const [db, setDb] = useState<ReadDb | null>(null);
+  useEffect(() => {
+    void loadContent().then(setDb);
+  }, []);
+  if (!db) return null;
+  return (
+    <ContentStores db={db} version={BUNDLED.contentVersion}>
+      {children}
+    </ContentStores>
+  );
 }

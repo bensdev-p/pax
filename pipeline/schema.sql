@@ -7,13 +7,46 @@ CREATE TABLE content_meta (
   built_at        TEXT NOT NULL
 );
 
+CREATE TABLE bible_books (
+  osis          TEXT PRIMARY KEY,        -- e.g. 1Sam
+  name          TEXT NOT NULL,           -- common name, e.g. 1 Samuel
+  name_douay    TEXT NOT NULL,           -- Douay-Rheims name, e.g. 1 Kings
+  testament     TEXT NOT NULL CHECK (testament IN ('OT', 'NT')),
+  sort_order    INTEGER NOT NULL,
+  chapter_count INTEGER NOT NULL,        -- in Douay numbering
+  intro         TEXT                     -- Challoner's introduction
+) WITHOUT ROWID;
+
+-- Verse keys use standard (Hebrew/NABRE) numbering, the numbering the lectionary, the Catechism
+-- and the Fathers cite, so user notes survive a later switch to another translation. The Douay
+-- chapter and verse are kept for reading the text in its own order.
 CREATE TABLE bible_verses (
-  ref         TEXT PRIMARY KEY,          -- OSIS, Douay/Vulgate numbering, e.g. Ps.22.1
-  book        TEXT NOT NULL,             -- OSIS book id, e.g. Ps
-  chapter     INTEGER NOT NULL,
-  verse       INTEGER NOT NULL,
-  text        TEXT NOT NULL,             -- Douay-Rheims (Challoner)
-  translation TEXT NOT NULL DEFAULT 'DRC'
+  ref           TEXT PRIMARY KEY,        -- OSIS, standard numbering, e.g. Ps.23.1
+  book          TEXT NOT NULL,
+  chapter       INTEGER NOT NULL,
+  verse         INTEGER NOT NULL,
+  douay_chapter INTEGER NOT NULL,        -- e.g. 22 for Ps.23.1
+  douay_verse   INTEGER NOT NULL,
+  text          TEXT NOT NULL,           -- Douay-Rheims (Challoner, 1750 revision)
+  translation   TEXT NOT NULL DEFAULT 'DRC'
+) WITHOUT ROWID;
+CREATE INDEX bible_verses_douay ON bible_verses (book, douay_chapter, douay_verse);
+
+CREATE TABLE bible_chapters (
+  book          TEXT NOT NULL,
+  douay_chapter INTEGER NOT NULL,
+  title         TEXT,                    -- e.g. Psalm 22
+  incipit       TEXT,                    -- Latin opening words of a Psalm, e.g. Dominus regit me
+  summary       TEXT,                    -- Challoner's chapter summary
+  PRIMARY KEY (book, douay_chapter)
+) WITHOUT ROWID;
+
+CREATE TABLE bible_notes (
+  ref     TEXT NOT NULL,                 -- verse, standard numbering
+  seq     INTEGER NOT NULL,
+  keyword TEXT,
+  text    TEXT NOT NULL,                 -- Challoner's annotation
+  PRIMARY KEY (ref, seq)
 ) WITHOUT ROWID;
 
 -- Maps lectionary (Hebrew) numbering to Douay-Rheims (Vulgate) numbering. A chapter-level row
@@ -27,24 +60,38 @@ CREATE TABLE ccc_paragraphs (
   number      INTEGER PRIMARY KEY,
   part        TEXT NOT NULL,
   section     TEXT NOT NULL,
-  summary     TEXT NOT NULL,             -- own words, not the Catechism text
-  vatican_url TEXT NOT NULL
+  heading     TEXT NOT NULL,             -- the nearest heading above the paragraph
+  summary     TEXT,                      -- own words, not the Catechism text; filled in over time
+  vatican_url TEXT NOT NULL              -- the Vatican page the paragraph is on
 );
+
+-- Church Fathers starter set: a few short excerpts per verse of the Gospels and Psalms. The full
+-- library is a separate download pack with the same tables.
+CREATE TABLE father_authors (
+  slug     TEXT PRIMARY KEY,
+  name     TEXT NOT NULL,
+  year     INTEGER,
+  category TEXT,
+  wiki     TEXT
+) WITHOUT ROWID;
 
 CREATE TABLE father_works (
   slug          TEXT PRIMARY KEY,
+  author_slug   TEXT NOT NULL,
   author        TEXT NOT NULL,
   title         TEXT NOT NULL,
   era           TEXT,
-  source_volume TEXT
+  source_volume TEXT                     -- where the public-domain translation can be read
 ) WITHOUT ROWID;
 
 CREATE TABLE father_passages (
-  slug      TEXT PRIMARY KEY,
-  work_slug TEXT NOT NULL REFERENCES father_works(slug),
-  chapter   TEXT,
-  text      TEXT NOT NULL
-) WITHOUT ROWID;
+  slug        TEXT PRIMARY KEY,
+  work_slug   TEXT NOT NULL REFERENCES father_works(slug),
+  author_slug TEXT NOT NULL,
+  year        INTEGER,
+  chapter     TEXT,
+  text        TEXT NOT NULL
+);
 
 CREATE TABLE saints (
   romcal_key TEXT PRIMARY KEY,
@@ -122,5 +169,13 @@ CREATE TABLE lectionary (
   PRIMARY KEY (romcal_key, cycle)
 ) WITHOUT ROWID;
 
--- Full-text search over prayers and verses (FTS5 ships with expo-sqlite).
-CREATE VIRTUAL TABLE search_index USING fts5 (kind UNINDEXED, key UNINDEXED, title, body);
+-- Full-text search (FTS5 ships with expo-sqlite). The index is contentless to keep content.db
+-- small: a match gives a rowid, and search_docs says which verse, prayer, paragraph or excerpt
+-- it is. Text is read back from the source tables.
+CREATE TABLE search_docs (
+  rowid INTEGER PRIMARY KEY,
+  kind  TEXT NOT NULL,                   -- verse, prayer, ccc, father
+  key   TEXT NOT NULL,
+  title TEXT NOT NULL
+);
+CREATE VIRTUAL TABLE search_index USING fts5 (title, body, content='', detail=column);
