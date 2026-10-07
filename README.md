@@ -54,8 +54,10 @@ and no paid Apple account are needed until the widgets.
 - **Profile**: reminders, appearance (Light, Dark or System) and the theme lock. Learn and Library
   are placeholders.
 - **Reminders**: Profile → Reminders opens the Pax permission screen from the canvas. It asks for
-  permission only there, then schedules the next 14 days of local reminders (plus an optional
-  Angelus at noon) and reschedules them each time the app opens.
+  permission only there. Morning and evening reminders each have their own time. Optional
+  built-in nudges come at 1:00 PM, 5:30 PM and 9:00 PM, and an optional Angelus at noon. Once
+  today counts, Pax stays quiet until tomorrow (except the Angelus). Up to 60 notifications are
+  scheduled ahead and rescheduled when the app opens or something is finished.
 - **Theme**: the accent follows the day's liturgical color (a martyr's memorial turns a weekday
   red; Gaudete and Laetare are rose). It can be locked to one color in Profile.
 - **Widget feed**: `writeWidgetFeed(snapshots, progress)` builds the 14-day feed and the Pax mood
@@ -68,7 +70,9 @@ and no paid Apple account are needed until the widgets.
   from cpbjr/catholic-readings-api (MIT, scraped from USCCB). Both are vendored in
   `pipeline/sources/`.
 - **Notification prompt**: opened from Profile only until Learn has lessons. The spec's rule of
-  asking after the first finished lesson applies from Phase 2.
+  asking after the first finished lesson applies once Learn exists (Phase 3).
+- **Reminders**: custom morning and evening times, plus fixed-time nudges on days nothing is
+  done yet (they replace the spec's single "streak at risk" notification).
 - **Rosary on Sundays**: seasonal, as above.
 - **Dark mode**: light by default, with a System, Light or Dark switch. Dark neutrals are derived
   in `design/tokens.json`.
@@ -82,6 +86,8 @@ and no paid Apple account are needed until the widgets.
   `pipeline/reports/lectionary.md`.
 - Reading text: citations only, plus a link to USCCB. Douay-Rheims text is seeded for a few verses
   so far.
+- In Expo Go, tapping a notification opens Expo Go rather than Pax itself. A development build
+  (Phase 3, with the Apple account) opens Pax directly to the linked screen.
 - user.db and the notification code run only on a device. They type-check and bundle for
   iOS and Android, but they were not run on a phone while being built. The web build was tested in
   a browser.

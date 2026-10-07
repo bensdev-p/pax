@@ -8,38 +8,41 @@ import { CheckIcon, FlameIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { RaisedButton } from '@/components/Raised';
 import { Text } from '@/components/Text';
-import { DEFAULT_NOTIFICATION_PREFS, REMINDER_TIMES, type ReminderSlot } from '@/data/types';
+import { TimePicker } from '@/components/TimePicker';
+import {
+  anyNotificationsOn,
+  DEFAULT_NOTIFICATION_PREFS,
+  SUGGESTED_NOTIFICATION_PREFS,
+  type NotificationPrefs,
+  type ReminderSlot,
+} from '@/data/types';
+import { formatTime, NUDGE_TIMES } from '@/notifications/plan';
 import { requestPermission } from '@/notifications/reminders';
 import { useAppState } from '@/state/AppState';
 
-const SLOTS: { slot: ReminderSlot; label: string; time: string }[] = [
-  { slot: 'evening', label: 'Every evening', time: '8:00 PM' },
-  { slot: 'morning', label: 'Every morning', time: '7:30 AM' },
-];
-
 /**
  * The Pax screen that explains reminders before the system prompt (SPEC: Notifications rule 2).
- * Opened from Profile in Phase 1; after the first finished lesson once Learn exists.
+ * Opened from Profile for now; after the first finished lesson once Learn exists.
  */
 export default function RemindersScreen() {
   const t = useTheme();
   const { notificationPrefs, updateNotificationPrefs } = useAppState();
-  const current = notificationPrefs ?? DEFAULT_NOTIFICATION_PREFS;
-  const [slot, setSlot] = useState<ReminderSlot>(current.slot);
-  const [angelus, setAngelus] = useState(current.angelus);
+  const saved = notificationPrefs ?? DEFAULT_NOTIFICATION_PREFS;
+  const wasOn = anyNotificationsOn(saved);
+  const [prefs, setPrefs] = useState<NotificationPrefs>(wasOn ? saved : SUGGESTED_NOTIFICATION_PREFS);
+  const [editing, setEditing] = useState<ReminderSlot | null>(null);
   const [denied, setDenied] = useState(false);
   const [busy, setBusy] = useState(false);
-  const enabled = current.dailyReminder || current.angelus;
+  const web = Platform.OS === 'web';
 
-  const turnOn = async () => {
+  const save = async () => {
     setBusy(true);
     try {
-      const permission = await requestPermission();
-      if (permission !== 'granted') {
+      if (anyNotificationsOn(prefs) && (await requestPermission()) !== 'granted') {
         setDenied(true);
         return;
       }
-      await updateNotificationPrefs({ dailyReminder: true, slot, localTime: REMINDER_TIMES[slot], angelus });
+      await updateNotificationPrefs(prefs);
       router.back();
     } finally {
       setBusy(false);
@@ -47,15 +50,76 @@ export default function RemindersScreen() {
   };
 
   const turnOff = async () => {
-    await updateNotificationPrefs({ ...current, dailyReminder: false, angelus: false });
+    await updateNotificationPrefs({
+      ...prefs,
+      morning: { ...prefs.morning, enabled: false },
+      evening: { ...prefs.evening, enabled: false },
+      nudges: false,
+      angelus: false,
+    });
     router.back();
   };
+
+  const slot = (key: ReminderSlot, label: string) => {
+    const r = prefs[key];
+    const open = editing === key;
+    return (
+      <View style={{ gap: 8 }}>
+        <View
+          style={{
+            minHeight: t.size.rowHeight,
+            borderRadius: t.radius.tile,
+            borderWidth: t.border.width,
+            borderColor: r.enabled ? t.accent.accent : t.neutral.border,
+            backgroundColor: r.enabled ? t.accent.tint : t.neutral.surface,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Pressable
+            accessibilityRole="checkbox"
+            accessibilityState={{ checked: r.enabled }}
+            accessibilityLabel={label}
+            onPress={() => setPrefs({ ...prefs, [key]: { ...r, enabled: !r.enabled } })}
+            style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 12, paddingLeft: 14, paddingVertical: 12 }}>
+            <Box checked={r.enabled} />
+            <Text variant="bodyStrong">{label}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Change ${label.toLowerCase()} time, now ${formatTime(r.time)}`}
+            onPress={() => {
+              setEditing(open ? null : key);
+              if (!r.enabled) setPrefs({ ...prefs, [key]: { ...r, enabled: true } });
+            }}
+            style={{
+              marginRight: 8,
+              paddingHorizontal: 12,
+              height: 36,
+              borderRadius: t.radius.chip,
+              justifyContent: 'center',
+              borderWidth: t.border.width,
+              borderColor: open ? t.accent.accent : 'transparent',
+              backgroundColor: open ? t.neutral.surface : 'transparent',
+            }}>
+            <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }} color={r.enabled ? t.accent.text : t.neutral.textMuted}>
+              {formatTime(r.time)}
+            </Text>
+          </Pressable>
+        </View>
+        {open ? (
+          <TimePicker value={r.time} onChange={(time) => setPrefs({ ...prefs, [key]: { enabled: true, time } })} />
+        ) : null}
+      </View>
+    );
+  };
+
+  const nudgeTimes = NUDGE_TIMES.map(formatTime).join(', ').replace(/, ([^,]*)$/, ' and $1');
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.neutral.background }}>
       <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 24, paddingBottom: 12, gap: 20 }}>
         <View style={{ alignItems: 'center', gap: 4 }}>
-          <Pax mood="happy" size={170} shadow={false} />
+          <Pax mood="happy" size={150} shadow={false} />
           <Text variant="display" align="center" accessibilityRole="header">
             Want a nudge from Pax?
           </Text>
@@ -77,14 +141,7 @@ export default function RemindersScreen() {
             paddingHorizontal: 14,
           }}>
           <View
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: 10,
-              backgroundColor: t.accent.accent,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+            style={{ width: 38, height: 38, borderRadius: 10, backgroundColor: t.accent.accent, alignItems: 'center', justifyContent: 'center' }}>
             <FlameIcon size={22} color={t.accent.onAccent} />
           </View>
           <View style={{ flex: 1, gap: 2 }}>
@@ -101,31 +158,18 @@ export default function RemindersScreen() {
           <Text variant="body" style={{ fontFamily: 'Nunito_900Black', marginBottom: 2 }}>
             Remind me
           </Text>
-          {SLOTS.map((s) => {
-            const on = s.slot === slot;
-            return (
-              <Option key={s.slot} selected={on} onPress={() => setSlot(s.slot)} role="radio" label={s.label}>
-                <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }} color={on ? t.accent.text : t.neutral.textMuted}>
-                  {s.time}
-                </Text>
-              </Option>
-            );
-          })}
-          <Option selected={false} onPress={() => setAngelus(!angelus)} role="checkbox" checked={angelus} label="Also pray the Angelus at noon">
-            <View
-              style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
-                borderWidth: t.border.width,
-                borderColor: angelus ? t.accent.accent : t.neutral.textSubtle,
-                backgroundColor: angelus ? t.accent.accent : 'transparent',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              {angelus ? <CheckIcon size={14} color={t.accent.onAccent} /> : null}
-            </View>
-          </Option>
+          {slot('morning', 'Every morning')}
+          {slot('evening', 'Every evening')}
+          <Check
+            label="Nudge me if I haven’t prayed yet"
+            detail={`Around ${nudgeTimes}, only on days you haven’t read or prayed yet.`}
+            checked={prefs.nudges}
+            onPress={() => setPrefs({ ...prefs, nudges: !prefs.nudges })}
+          />
+          <Check label="Also pray the Angelus at noon" checked={prefs.angelus} onPress={() => setPrefs({ ...prefs, angelus: !prefs.angelus })} />
+          <Text variant="small" color={t.neutral.textMuted}>
+            Once you’ve read or prayed for the day, I’ll stay quiet until tomorrow.
+          </Text>
         </View>
 
         {denied ? (
@@ -133,64 +177,75 @@ export default function RemindersScreen() {
             <Text variant="body" color={t.neutral.textMuted} align="center">
               Notifications are turned off for Pax. You can turn them on in Settings whenever you like.
             </Text>
-            {Platform.OS !== 'web' ? (
-              <Pressable accessibilityRole="link" onPress={() => void Linking.openSettings()} style={{ alignSelf: 'center', padding: 6 }}>
-                <Text variant="body" color={t.accent.text} style={{ textDecorationLine: 'underline', fontFamily: 'Nunito_800ExtraBold' }}>
-                  Open Settings
-                </Text>
-              </Pressable>
-            ) : null}
+            <Pressable accessibilityRole="link" onPress={() => void Linking.openSettings()} style={{ alignSelf: 'center', padding: 6 }}>
+              <Text variant="body" color={t.accent.text} style={{ textDecorationLine: 'underline', fontFamily: 'Nunito_800ExtraBold' }}>
+                Open Settings
+              </Text>
+            </Pressable>
           </View>
         ) : null}
-        {Platform.OS === 'web' ? (
+        {web ? (
           <Text variant="small" color={t.neutral.textMuted} align="center">
             Reminders are scheduled on your phone, so they aren’t available on the web.
           </Text>
         ) : null}
       </ScrollView>
       <View style={{ paddingHorizontal: 20, paddingBottom: 16, gap: 12 }}>
-        <RaisedButton label={enabled ? 'Save reminders' : 'Turn on reminders'} onPress={() => void turnOn()} disabled={busy || Platform.OS === 'web'} />
-        <RaisedButton kind="ghost" label={enabled ? 'Turn off reminders' : 'Not now'} onPress={() => (enabled ? void turnOff() : router.back())} />
+        <RaisedButton label={wasOn ? 'Save reminders' : 'Turn on reminders'} onPress={() => void save()} disabled={busy || web} />
+        <RaisedButton kind="ghost" label={wasOn ? 'Turn off all reminders' : 'Not now'} onPress={() => (wasOn ? void turnOff() : router.back())} />
       </View>
     </SafeAreaView>
   );
 }
 
-function Option({
-  label,
-  selected,
-  onPress,
-  role,
-  checked,
-  children,
-}: {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-  role: 'radio' | 'checkbox';
-  checked?: boolean;
-  children: React.ReactNode;
-}) {
+function Box({ checked }: { checked: boolean }) {
+  const t = useTheme();
+  return (
+    <View
+      style={{
+        width: 24,
+        height: 24,
+        borderRadius: 6,
+        borderWidth: t.border.width,
+        borderColor: checked ? t.accent.accent : t.neutral.textSubtle,
+        backgroundColor: checked ? t.accent.accent : 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      {checked ? <CheckIcon size={14} color={t.accent.onAccent} /> : null}
+    </View>
+  );
+}
+
+function Check({ label, detail, checked, onPress }: { label: string; detail?: string; checked: boolean; onPress: () => void }) {
   const t = useTheme();
   return (
     <Pressable
-      accessibilityRole={role}
-      accessibilityState={role === 'radio' ? { selected } : { checked }}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked }}
       accessibilityLabel={label}
       onPress={onPress}
       style={{
-        height: t.size.rowHeight,
+        minHeight: t.size.rowHeight,
         borderRadius: t.radius.tile,
         borderWidth: t.border.width,
-        borderColor: selected ? t.accent.accent : t.neutral.border,
-        backgroundColor: selected ? t.accent.tint : t.neutral.surface,
-        paddingHorizontal: 16,
+        borderColor: checked ? t.accent.accent : t.neutral.border,
+        backgroundColor: checked ? t.accent.tint : t.neutral.surface,
+        paddingHorizontal: 14,
+        paddingVertical: 12,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        gap: 12,
       }}>
-      <Text variant="bodyStrong">{label}</Text>
-      {children}
+      <Box checked={checked} />
+      <View style={{ flex: 1, gap: 2 }}>
+        <Text variant="bodyStrong">{label}</Text>
+        {detail ? (
+          <Text variant="small" color={t.neutral.textMuted}>
+            {detail}
+          </Text>
+        ) : null}
+      </View>
     </Pressable>
   );
 }

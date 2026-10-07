@@ -45,7 +45,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       xpGoal: DAILY_XP_GOAL,
     });
     const prefs = prefsRef.current;
-    if (opts.reschedule && prefs) await rescheduleReminders(prefs, feed);
+    if (opts.reschedule && prefs) {
+      await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday });
+    }
   }, []);
 
   useEffect(() => {
@@ -84,16 +86,16 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       await userStore.setNotificationPrefs(prefs);
       prefsRef.current = prefs;
       setNotificationPrefs(prefs);
-      const date = toIsoDate(new Date());
-      await rescheduleReminders(prefs, await getDaySnapshots(date, 14));
+      await refresh({ reschedule: true });
     },
-    [],
+    [refresh],
   );
 
   const recordActivity = useCallback(
     async (kind: ActivityKind, xp = 0) => {
       await userStore.recordActivity(toIsoDate(new Date()), kind, xp);
-      await refresh({ reschedule: false });
+      // Today now counts, so today's reminders and nudges are dropped.
+      await refresh({ reschedule: true });
     },
     [refresh],
   );

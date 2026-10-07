@@ -62,7 +62,9 @@ export const userStore: UserStore = {
     return settingsOf(data);
   },
   async getNotificationPrefs() {
-    return load().prefs;
+    const prefs = load().prefs as Partial<NotificationPrefs>;
+    // Older shape (one daily reminder) or missing: start from the defaults.
+    return prefs?.morning && prefs.evening ? (prefs as NotificationPrefs) : DEFAULT_NOTIFICATION_PREFS;
   },
   async setNotificationPrefs(prefs) {
     const data = load();

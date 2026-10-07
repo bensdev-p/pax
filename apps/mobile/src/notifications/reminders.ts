@@ -4,10 +4,11 @@ import { Platform } from 'react-native';
 
 import type { NotificationPrefs } from '@/data/types';
 
+import { planNotifications } from './plan';
+
 /**
- * Local reminders, scheduled on the phone so they work offline (SPEC: Notifications).
- * iOS keeps at most 64 pending notifications per app, so we schedule the next 14 days and
- * reschedule each time the app opens (rule 1). Copy is in Pax's voice: warm, never guilt (rule 3).
+ * Local notifications, scheduled on the phone so they work offline (SPEC: Notifications).
+ * What to schedule lives in ./plan; this file talks to expo-notifications.
  */
 const CHANNEL_ID = 'reminders';
 
@@ -48,67 +49,36 @@ export async function requestPermission(): Promise<PermissionState> {
   return status === 'granted' ? 'granted' : 'denied';
 }
 
-export function reminderCopy(day: DaySnapshot, slot: 'morning' | 'evening'): { title: string; body: string } {
-  const isFeast = day.rank === 'SOLEMNITY' || day.rank === 'FEAST' || day.rank === 'MEMORIAL';
-  if (slot === 'morning') {
-    return isFeast
-      ? { title: `Good morning! It's ${day.name}`, body: 'Two minutes with today’s readings? I saved you a spot.' }
-      : { title: 'Good morning from Pax', body: `It’s ${day.seasonName}. Two minutes with today’s readings?` };
-  }
-  return isFeast
-    ? { title: 'Still time today', body: `Today the Church celebrates ${day.name}. A short prayer before bed?` }
-    : { title: 'Still time today', body: 'A decade of the Rosary or today’s Gospel. I’ll keep you company.' };
-}
-
-function at(date: string, hhmm: string): Date {
-  const [y, m, d] = date.split('-').map(Number) as [number, number, number];
-  const [hh, mm] = hhmm.split(':').map(Number) as [number, number];
-  return new Date(y, m - 1, d, hh, mm);
-}
-
-/** Cancels Pax's pending reminders and schedules the next 14 days from the snapshot feed. */
-export async function rescheduleReminders(prefs: NotificationPrefs, days: DaySnapshot[]): Promise<number> {
+/** Cancels Pax's pending notifications and schedules the plan for the coming days. */
+export async function rescheduleReminders(
+  prefs: NotificationPrefs,
+  days: DaySnapshot[],
+  opts: { today: string; doneToday: boolean },
+): Promise<number> {
   await Notifications.cancelAllScheduledNotificationsAsync();
-  if (!prefs.dailyReminder && !prefs.angelus) return 0;
-  if ((await getPermission()) !== 'granted') return 0;
+  const plan = planNotifications(prefs, days, { now: new Date(), ...opts });
+  if (!plan.length || (await getPermission()) !== 'granted') return 0;
   await ensureChannel();
-
-  const now = Date.now();
-  let count = 0;
-  for (const day of days.slice(0, 14)) {
-    if (prefs.dailyReminder) {
-      const when = at(day.date, prefs.localTime);
-      if (when.getTime() > now) {
-        await Notifications.scheduleNotificationAsync({
-          content: { ...reminderCopy(day, prefs.slot), data: { kind: 'daily_reminder', url: 'paxapp://today' } },
-          trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: when, channelId: CHANNEL_ID },
-        });
-        count++;
-      }
-    }
-    if (prefs.angelus) {
-      const when = at(day.date, '12:00');
-      if (when.getTime() > now) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: 'The Angelus',
-            body: 'The Angel of the Lord declared unto Mary… Pray it with me?',
-            data: { kind: 'angelus', url: 'paxapp://prayer/angelus' },
-          },
-          trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: when, channelId: CHANNEL_ID },
-        });
-        count++;
-      }
-    }
+  for (const n of plan) {
+    await Notifications.scheduleNotificationAsync({
+      content: { title: n.title, body: n.body, data: { kind: n.kind, url: n.url } },
+      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: n.at, channelId: CHANNEL_ID },
+    });
   }
-  return count;
+  return plan.length;
 }
 
-/** Opens the deep link carried by a tapped notification. */
+/**
+ * Opens the screen a tapped notification links to, including the tap that launched the app.
+ * In Expo Go the phone opens Expo Go itself; a development build opens Pax directly.
+ */
 export function addNotificationTapListener(open: (url: string) => void) {
-  const sub = Notifications.addNotificationResponseReceivedListener((response) => {
-    const url = response.notification.request.content.data?.url;
+  const handle = (response: Notifications.NotificationResponse | null) => {
+    const url = response?.notification.request.content.data?.url;
     if (typeof url === 'string') open(url);
-  });
+  };
+  handle(Notifications.getLastNotificationResponse());
+  Notifications.clearLastNotificationResponse();
+  const sub = Notifications.addNotificationResponseReceivedListener(handle);
   return () => sub.remove();
 }

@@ -1,7 +1,7 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 7, 2026 · matches user.db schema version 1 and Supabase migration
-`20261007000000_initial_schema`._
+_Last updated: October 8, 2026 · matches user.db schema version 2 and Supabase migrations
+through `20261008000000_split_reminders`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
@@ -33,7 +33,7 @@ user, and contains nothing about you.
 | `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed | To show the app the way you asked |
 | `daily_activity` | For each local date: whether you finished a lesson, the day's readings, or a prayer (such as the Rosary), XP earned, and whether a grace day was used | To count your streak and color the liturgical calendar |
 | `streaks` | Current and longest streak, last active date, grace days left | Same as above |
-| `notification_prefs` | Whether the daily reminder and the Angelus reminder are on, and the time you picked | To schedule reminders |
+| `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
 | `lesson_progress`, `review_cards`, `notes` | Empty for now. Later: finished lessons and scores, spaced-review cards, and your highlights and notes | Learning progress and your own annotations |
 | `sync_queue` | A list of changed rows waiting to be uploaded. Nothing reads it yet | Prepared for future sync |
 
@@ -41,10 +41,13 @@ Your notes and highlights will point at content by stable keys (a verse referenc
 `Ps.23.1`, a Catechism number, or a prayer name), not by your identity.
 
 **Reminders.** If you turn on reminders, Pax asks your phone's permission first, on its own Pax
-screen and never at first launch. It then schedules up to 14 days of local notifications with the
-phone's operating system. Their text names the day's feast (for example, "Today the Church
-celebrates Saint Ignatius of Antioch") and can appear on your lock screen. They are created and
-delivered on the phone; no server is involved. Turning reminders off in Profile cancels them all.
+screen and never at first launch. It then schedules the coming days' local notifications with the
+phone's operating system (at most 60 at a time): your morning and evening reminders, the optional
+Angelus at noon, and, if you keep them on, nudges at fixed times in the afternoon, evening and
+night. To skip the rest of a day's reminders and nudges once you have read or prayed, Pax uses its
+own record of what you did that day; nothing leaves the phone. Notification text can name the
+day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius of Antioch") and
+can appear on your lock screen. Turning reminders off in Profile cancels them all.
 
 **Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
 the liturgical calendar, your current streak, and whether today is done into storage that only Pax
