@@ -51,7 +51,7 @@ export default function ReaderScreen() {
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: t.neutral.background }}>
       <Header title={view ? `${view.book.name_douay} ${chapterNumber}` : ''} subtitle={subtitle} />
-      <ScrollView ref={scroll} contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40, gap: 14 }}>
+      <ScrollView ref={scroll} contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 4, paddingBottom: 40, gap: 14 }}>
         {view?.summary || view?.incipit ? (
           <View
             style={{
@@ -73,7 +73,7 @@ export default function ReaderScreen() {
           </View>
         ) : null}
 
-        <View>
+        <View style={{ gap: 2 }}>
           {view?.verses.map((v) => {
             const marked = highlight.length > 0 && rangesInclude(highlight, book, v.chapter, v.verse);
             const linked = v.links > 0 || v.notes > 0;
@@ -84,10 +84,12 @@ export default function ReaderScreen() {
                 accessibilityLabel={`Verse ${v.douay_verse}${linked ? ', has notes or links' : ''}`}
                 onPress={() => openVerse(v.ref)}
                 onLayout={(e) => {
-                  offsets.current[v.ref] = e.nativeEvent.layout.y;
+                  // Read the layout now: React reuses the event object once this handler returns.
+                  const y = e.nativeEvent.layout.y;
+                  offsets.current[v.ref] = y;
                   if (!scrolled.current && params.verse === v.ref) {
                     scrolled.current = true;
-                    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, e.nativeEvent.layout.y - 12), animated: false }), 0);
+                    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, y - 12), animated: false }), 0);
                   }
                 }}
                 style={({ pressed }) => ({
@@ -98,7 +100,9 @@ export default function ReaderScreen() {
                   backgroundColor: pressed ? t.neutral.surfaceMuted : marked ? t.accent.tint : 'transparent',
                 })}>
                 <Text variant="scripture">
-                  <Text variant="label" color={t.accent.text} style={{ fontSize: 12 }}>
+                  {/* iOS lays the whole paragraph out with this span's line height, so it must match the
+                      verse text's; a smaller one clips the tops of letters and cuts off the last line. */}
+                  <Text variant="label" color={t.accent.text} style={{ fontSize: 12, lineHeight: t.font.size.scripture * 1.5 }}>
                     {v.douay_verse}
                     {linked ? ' •' : ''}
                     {'  '}

@@ -54,6 +54,8 @@ export function RaisedSurface({
       <View
         style={[
           {
+            // Fill the outer box when a row stretches it, so the edge never shows as extra height.
+            flexGrow: 1,
             backgroundColor: color,
             borderRadius: r,
             borderWidth: borderColor ? t.border.width : 0,
