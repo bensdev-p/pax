@@ -252,3 +252,12 @@ export function ShieldIcon({ size = 22 }: IconProps) {
     </Svg>
   );
 }
+
+export function CloudIcon({ size = 22 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M7 19a5 5 0 0 1-.6-9.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1 0 10z" fill="#7CC6F2" />
+      <Path d="M9 19a4 4 0 0 1 1.5-7.7A5 5 0 0 1 19.5 13 3 3 0 0 1 18 19z" fill="#2FA4E7" />
+    </Svg>
+  );
+}
