@@ -1,13 +1,15 @@
 import { PALETTE_NAMES, paletteLabel, tokens, type Appearance, type PaletteName } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { BellIcon, BoltIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
+import { BellIcon, BoltIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
+import { checkCloud, type CloudStatus } from '@/lib/cloudStatus';
 import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
 
@@ -20,6 +22,17 @@ const APPEARANCES: { value: Appearance; label: string }[] = [
 export default function ProfileScreen() {
   const t = useTheme();
   const { today, progress, settings, notificationPrefs, updateSettings } = useAppState();
+
+  const [cloud, setCloud] = useState<CloudStatus>('checking');
+  useEffect(() => {
+    void checkCloud().then(setCloud);
+  }, []);
+  const cloudLine = {
+    checking: 'Checking…',
+    ready: 'Connected. Sync arrives with Learn.',
+    'schema-missing': 'Connected, but the database tables aren’t set up yet.',
+    offline: 'Can’t reach Supabase right now.',
+  }[cloud];
 
   const reminderLine = (() => {
     const p = notificationPrefs;
@@ -112,6 +125,19 @@ export default function ProfileScreen() {
               onPress={() => void updateSettings({ lockedColor: name })}
             />
           ))}
+        </View>
+      </Card>
+      <Card contentStyle={rowStyle}>
+        <IconTile color="#2FA4E7">
+          <CloudIcon />
+        </IconTile>
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+            Cloud
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            {cloudLine}
+          </Text>
         </View>
       </Card>
     </Screen>

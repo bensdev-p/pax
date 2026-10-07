@@ -10,7 +10,7 @@ A daily Catholic companion where the liturgical year drives everything. This rep
 | `packages/liturgy` | Pure TypeScript around romcal v3 (US calendar): `getDaySnapshot(date)` |
 | `packages/tokens` | Theme generated from `design/tokens.json`, plus the liturgical `ThemeProvider` |
 | `pipeline` | Python script that builds `content.db` from JSON seeds |
-| `supabase` | Postgres schema with row-level security (not connected yet) |
+| `supabase` | Postgres schema with row-level security, and how to apply it |
 | `design` | The Next Screens canvas and `tokens.json` |
 
 ## Run it on your iPhone (Expo Go)
@@ -91,4 +91,5 @@ and no paid Apple account are needed until the widgets.
 - user.db and the notification code run only on a device. They type-check and bundle for
   iOS and Android, but they were not run on a phone while being built. The web build was tested in
   a browser.
-- Supabase: schema only. No sign-in or sync yet.
+- Supabase: the app is connected to the project but doesn't sign in or sync yet. Apply the
+  schema as described in `supabase/README.md`; Profile → Cloud confirms it.

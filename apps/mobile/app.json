@@ -54,6 +54,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "supabase": {
+        "url": "https://wufwcvokotpdyvttcuga.supabase.co",
+        "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1Zndjdm9rb3RwZHl2dHRjdWdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzODEwNzUsImV4cCI6MjEwNjk1NzA3NX0.vD6xwA-QW94SKVkD8fxsg16lpnhifCVX7lBjMrfocfo"
+      }
     }
   }
 }
