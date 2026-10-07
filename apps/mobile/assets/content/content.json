@@ -1,0 +1,327 @@
+{
+ "contentVersion": "1.646cb1f1c3",
+ "prayers": [
+  {
+   "slug": "sign-of-the-cross",
+   "title": "Sign of the Cross",
+   "category": "essentials",
+   "text": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
+   "latin_text": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+   "sort_order": 0
+  },
+  {
+   "slug": "our-father",
+   "title": "Our Father",
+   "category": "essentials",
+   "text": "Our Father, who art in heaven, hallowed be thy name; thy kingdom come; thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.",
+   "latin_text": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra, sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
+   "sort_order": 1
+  },
+  {
+   "slug": "hail-mary",
+   "title": "Hail Mary",
+   "category": "essentials",
+   "text": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+   "latin_text": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+   "sort_order": 2
+  },
+  {
+   "slug": "glory-be",
+   "title": "Glory Be",
+   "category": "essentials",
+   "text": "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.",
+   "latin_text": "Gloria Patri, et Filio, et Spiritui Sancto. Sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+   "sort_order": 3
+  },
+  {
+   "slug": "apostles-creed",
+   "title": "Apostles' Creed",
+   "category": "essentials",
+   "text": "I believe in God, the Father Almighty, Creator of heaven and earth; and in Jesus Christ, his only Son, our Lord; who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried. He descended into hell; the third day he rose again from the dead; he ascended into heaven, and sits at the right hand of God, the Father Almighty; from thence he shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.",
+   "latin_text": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae. Et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus, descendit ad inferos, tertia die resurrexit a mortuis, ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis, inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.",
+   "sort_order": 4
+  },
+  {
+   "slug": "fatima-prayer",
+   "title": "Fatima Prayer",
+   "category": "rosary",
+   "text": "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those most in need of thy mercy. Amen.",
+   "latin_text": null,
+   "sort_order": 5
+  },
+  {
+   "slug": "hail-holy-queen",
+   "title": "Hail, Holy Queen",
+   "category": "marian",
+   "text": "Hail, holy Queen, Mother of mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.\n\nV. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.",
+   "latin_text": "Salve, Regina, Mater misericordiae, vita, dulcedo, et spes nostra, salve. Ad te clamamus, exsules filii Hevae. Ad te suspiramus, gementes et flentes in hac lacrimarum valle. Eia, ergo, advocata nostra, illos tuos misericordes oculos ad nos converte. Et Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende. O clemens, O pia, O dulcis Virgo Maria.",
+   "sort_order": 6
+  },
+  {
+   "slug": "rosary-closing-prayer",
+   "title": "Closing Prayer of the Rosary",
+   "category": "rosary",
+   "text": "Let us pray. O God, whose only begotten Son, by his life, death, and resurrection, has purchased for us the rewards of eternal life; grant, we beseech thee, that meditating upon these mysteries of the Most Holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen.",
+   "latin_text": null,
+   "sort_order": 7
+  },
+  {
+   "slug": "memorare",
+   "title": "Memorare",
+   "category": "marian",
+   "text": "Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection, implored thy help, or sought thine intercession was left unaided. Inspired by this confidence, I fly unto thee, O Virgin of virgins, my Mother. To thee do I come, before thee I stand, sinful and sorrowful. O Mother of the Word Incarnate, despise not my petitions, but in thy mercy hear and answer me. Amen.",
+   "latin_text": "Memorare, O piissima Virgo Maria, non esse auditum a saeculo, quemquam ad tua currentem praesidia, tua implorantem auxilia, tua petentem suffragia, esse derelictum. Ego tali animatus confidentia, ad te, Virgo Virginum, Mater, curro, ad te venio, coram te gemens peccator assisto. Noli, Mater Verbi, verba mea despicere; sed audi propitia et exaudi. Amen.",
+   "sort_order": 8
+  },
+  {
+   "slug": "angelus",
+   "title": "The Angelus",
+   "category": "marian",
+   "text": "V. The Angel of the Lord declared unto Mary.\nR. And she conceived of the Holy Spirit.\nHail Mary…\n\nV. Behold the handmaid of the Lord.\nR. Be it done unto me according to thy word.\nHail Mary…\n\nV. And the Word was made flesh.\nR. And dwelt among us.\nHail Mary…\n\nV. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray. Pour forth, we beseech thee, O Lord, thy grace into our hearts, that we, to whom the Incarnation of Christ, thy Son, was made known by the message of an angel, may by his Passion and Cross be brought to the glory of his Resurrection. Through the same Christ our Lord. Amen.",
+   "latin_text": "V. Angelus Domini nuntiavit Mariae.\nR. Et concepit de Spiritu Sancto.\nAve Maria…\n\nV. Ecce ancilla Domini.\nR. Fiat mihi secundum verbum tuum.\nAve Maria…\n\nV. Et Verbum caro factum est.\nR. Et habitavit in nobis.\nAve Maria…\n\nV. Ora pro nobis, sancta Dei Genetrix.\nR. Ut digni efficiamur promissionibus Christi.\n\nOremus. Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus, per passionem eius et crucem ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
+   "sort_order": 9
+  },
+  {
+   "slug": "saint-michael",
+   "title": "Prayer to Saint Michael",
+   "category": "daily",
+   "text": "Saint Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do thou, O Prince of the heavenly host, by the power of God, cast into hell Satan and all the evil spirits who prowl about the world seeking the ruin of souls. Amen.",
+   "latin_text": "Sancte Michael Archangele, defende nos in proelio; contra nequitiam et insidias diaboli esto praesidium. Imperet illi Deus, supplices deprecamur: tuque, Princeps militiae caelestis, Satanam aliosque spiritus malignos, qui ad perditionem animarum pervagantur in mundo, divina virtute in infernum detrude. Amen.",
+   "sort_order": 10
+  },
+  {
+   "slug": "guardian-angel",
+   "title": "Guardian Angel Prayer",
+   "category": "daily",
+   "text": "Angel of God, my guardian dear, to whom God's love commits me here, ever this day be at my side, to light and guard, to rule and guide. Amen.",
+   "latin_text": "Angele Dei, qui custos es mei, me, tibi commissum pietate superna, illumina, custodi, rege et guberna. Amen.",
+   "sort_order": 11
+  },
+  {
+   "slug": "morning-offering",
+   "title": "Morning Offering",
+   "category": "daily",
+   "text": "O Jesus, through the Immaculate Heart of Mary, I offer you my prayers, works, joys, and sufferings of this day for all the intentions of your Sacred Heart, in union with the Holy Sacrifice of the Mass throughout the world, for the salvation of souls, the reparation of sins, the reunion of all Christians, and in particular for the intentions of the Holy Father this month. Amen.",
+   "latin_text": null,
+   "sort_order": 12
+  },
+  {
+   "slug": "come-holy-spirit",
+   "title": "Come, Holy Spirit",
+   "category": "daily",
+   "text": "Come, Holy Spirit, fill the hearts of thy faithful and kindle in them the fire of thy love.\n\nV. Send forth thy Spirit and they shall be created.\nR. And thou shalt renew the face of the earth.\n\nLet us pray. O God, who by the light of the Holy Spirit didst instruct the hearts of the faithful, grant that by the same Holy Spirit we may be truly wise and ever enjoy his consolations. Through Christ our Lord. Amen.",
+   "latin_text": null,
+   "sort_order": 13
+  },
+  {
+   "slug": "act-of-contrition",
+   "title": "Act of Contrition",
+   "category": "daily",
+   "text": "O my God, I am heartily sorry for having offended thee, and I detest all my sins because of thy just punishments, but most of all because they offend thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of thy grace, to sin no more and to avoid the near occasion of sin. Amen.",
+   "latin_text": null,
+   "sort_order": 14
+  }
+ ],
+ "rosary_mysteries": [
+  {
+   "slug": "joyful-1-annunciation",
+   "mystery_set": "joyful",
+   "number": 1,
+   "title": "The Annunciation",
+   "fruit": "Humility",
+   "scripture_ref": "Luke.1.26-Luke.1.38",
+   "scripture_display": "Luke 1:26–38",
+   "meditation": "Gabriel brings God's invitation, and Mary answers with her whole life: let it be done to me."
+  },
+  {
+   "slug": "joyful-2-visitation",
+   "mystery_set": "joyful",
+   "number": 2,
+   "title": "The Visitation",
+   "fruit": "Love of neighbor",
+   "scripture_ref": "Luke.1.39-Luke.1.56",
+   "scripture_display": "Luke 1:39–56",
+   "meditation": "Mary hurries to help Elizabeth, and the child in Elizabeth's womb leaps for joy."
+  },
+  {
+   "slug": "joyful-3-nativity",
+   "mystery_set": "joyful",
+   "number": 3,
+   "title": "The Nativity",
+   "fruit": "Poverty of spirit",
+   "scripture_ref": "Luke.2.1-Luke.2.20",
+   "scripture_display": "Luke 2:1–20",
+   "meditation": "The Son of God is born in a stable, and the first to hear the news are shepherds."
+  },
+  {
+   "slug": "joyful-4-presentation",
+   "mystery_set": "joyful",
+   "number": 4,
+   "title": "The Presentation in the Temple",
+   "fruit": "Obedience",
+   "scripture_ref": "Luke.2.22-Luke.2.38",
+   "scripture_display": "Luke 2:22–38",
+   "meditation": "Simeon takes the child in his arms and knows he has seen the salvation God promised."
+  },
+  {
+   "slug": "joyful-5-finding",
+   "mystery_set": "joyful",
+   "number": 5,
+   "title": "The Finding in the Temple",
+   "fruit": "Joy in finding Jesus",
+   "scripture_ref": "Luke.2.41-Luke.2.52",
+   "scripture_display": "Luke 2:41–52",
+   "meditation": "After three days of searching, Mary and Joseph find Jesus in his Father's house."
+  },
+  {
+   "slug": "luminous-1-baptism",
+   "mystery_set": "luminous",
+   "number": 1,
+   "title": "The Baptism of the Lord",
+   "fruit": "Openness to the Holy Spirit",
+   "scripture_ref": "Matt.3.13-Matt.3.17",
+   "scripture_display": "Matthew 3:13–17",
+   "meditation": "The heavens open over the Jordan and the Father calls Jesus his beloved Son."
+  },
+  {
+   "slug": "luminous-2-cana",
+   "mystery_set": "luminous",
+   "number": 2,
+   "title": "The Wedding at Cana",
+   "fruit": "To Jesus through Mary",
+   "scripture_ref": "John.2.1-John.2.11",
+   "scripture_display": "John 2:1–11",
+   "meditation": "Mary notices what is missing and tells the servants: do whatever he tells you."
+  },
+  {
+   "slug": "luminous-3-proclamation",
+   "mystery_set": "luminous",
+   "number": 3,
+   "title": "The Proclamation of the Kingdom",
+   "fruit": "Repentance and trust in God",
+   "scripture_ref": "Mark.1.14-Mark.1.15",
+   "scripture_display": "Mark 1:14–15",
+   "meditation": "Jesus announces that the kingdom of God is at hand and calls everyone to repent and believe."
+  },
+  {
+   "slug": "luminous-4-transfiguration",
+   "mystery_set": "luminous",
+   "number": 4,
+   "title": "The Transfiguration",
+   "fruit": "Desire for holiness",
+   "scripture_ref": "Matt.17.1-Matt.17.8",
+   "scripture_display": "Matthew 17:1–8",
+   "meditation": "On the mountain the disciples glimpse Jesus' glory and hear the Father say: listen to him."
+  },
+  {
+   "slug": "luminous-5-eucharist",
+   "mystery_set": "luminous",
+   "number": 5,
+   "title": "The Institution of the Eucharist",
+   "fruit": "Adoration",
+   "scripture_ref": "Luke.22.14-Luke.22.20",
+   "scripture_display": "Luke 22:14–20",
+   "meditation": "At the Last Supper Jesus gives himself to us: this is my body, given for you."
+  },
+  {
+   "slug": "sorrowful-1-agony",
+   "mystery_set": "sorrowful",
+   "number": 1,
+   "title": "The Agony in the Garden",
+   "fruit": "Sorrow for sin",
+   "scripture_ref": "Matt.26.36-Matt.26.46",
+   "scripture_display": "Matthew 26:36–46",
+   "meditation": "In Gethsemane Jesus prays in anguish and still says to the Father: your will be done."
+  },
+  {
+   "slug": "sorrowful-2-scourging",
+   "mystery_set": "sorrowful",
+   "number": 2,
+   "title": "The Scourging at the Pillar",
+   "fruit": "Purity",
+   "scripture_ref": "John.19.1",
+   "scripture_display": "John 19:1",
+   "meditation": "Jesus bears the scourging in silence, carrying the weight of our sins."
+  },
+  {
+   "slug": "sorrowful-3-crowning",
+   "mystery_set": "sorrowful",
+   "number": 3,
+   "title": "The Crowning with Thorns",
+   "fruit": "Courage",
+   "scripture_ref": "Matt.27.27-Matt.27.31",
+   "scripture_display": "Matthew 27:27–31",
+   "meditation": "The soldiers mock the true King with a crown of thorns, and he does not strike back."
+  },
+  {
+   "slug": "sorrowful-4-carrying",
+   "mystery_set": "sorrowful",
+   "number": 4,
+   "title": "The Carrying of the Cross",
+   "fruit": "Patience",
+   "scripture_ref": "Luke.23.26-Luke.23.32",
+   "scripture_display": "Luke 23:26–32",
+   "meditation": "Simon of Cyrene helps Jesus carry the cross along the road to Calvary."
+  },
+  {
+   "slug": "sorrowful-5-crucifixion",
+   "mystery_set": "sorrowful",
+   "number": 5,
+   "title": "The Crucifixion",
+   "fruit": "Perseverance",
+   "scripture_ref": "Luke.23.33-Luke.23.46",
+   "scripture_display": "Luke 23:33–46",
+   "meditation": "Jesus forgives his executioners and commends his spirit into the Father's hands."
+  },
+  {
+   "slug": "glorious-1-resurrection",
+   "mystery_set": "glorious",
+   "number": 1,
+   "title": "The Resurrection",
+   "fruit": "Faith",
+   "scripture_ref": "Matt.28.1-Matt.28.10",
+   "scripture_display": "Matthew 28:1–10",
+   "meditation": "The tomb is empty. He is not here; he has been raised, just as he said."
+  },
+  {
+   "slug": "glorious-2-ascension",
+   "mystery_set": "glorious",
+   "number": 2,
+   "title": "The Ascension",
+   "fruit": "Hope",
+   "scripture_ref": "Acts.1.6-Acts.1.11",
+   "scripture_display": "Acts 1:6–11",
+   "meditation": "Jesus returns to the Father and promises the Spirit, sending the disciples to the ends of the earth."
+  },
+  {
+   "slug": "glorious-3-descent-of-the-spirit",
+   "mystery_set": "glorious",
+   "number": 3,
+   "title": "The Descent of the Holy Spirit",
+   "fruit": "Love of God",
+   "scripture_ref": "Acts.2.1-Acts.2.13",
+   "scripture_display": "Acts 2:1–13",
+   "meditation": "At Pentecost the Spirit comes like wind and fire, and the frightened disciples speak boldly."
+  },
+  {
+   "slug": "glorious-4-assumption",
+   "mystery_set": "glorious",
+   "number": 4,
+   "title": "The Assumption of Mary",
+   "fruit": "Grace of a happy death",
+   "scripture_ref": null,
+   "scripture_display": "CCC 966",
+   "meditation": "At the end of her earthly life Mary is taken up, body and soul, into heavenly glory."
+  },
+  {
+   "slug": "glorious-5-coronation",
+   "mystery_set": "glorious",
+   "number": 5,
+   "title": "The Coronation of Mary",
+   "fruit": "Trust in Mary's intercession",
+   "scripture_ref": "Rev.12.1",
+   "scripture_display": "Revelation 12:1",
+   "meditation": "Mary is honored as Queen of heaven and earth, and she still points us to her Son."
+  }
+ ]
+}
