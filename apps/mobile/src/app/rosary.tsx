@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, Pressable, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CloseIcon, FlameIcon, RosaryIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
@@ -19,6 +19,7 @@ import { useAppState } from '@/state/AppState';
 
 export default function RosaryScreen() {
   const t = useTheme();
+  const insets = useSafeAreaInsets();
   const content = useContent();
   const { today, progress, recordActivity } = useAppState();
   const set = today ? mysteriesForDay(today) : 'joyful';
@@ -27,7 +28,7 @@ export default function RosaryScreen() {
   const [index, setIndex] = useState(0);
   const [bead, setBead] = useState(0);
   const [finishedIn, setFinishedIn] = useState<number | null>(null);
-  const startedAt = useRef(Date.now());
+  const [startedAt] = useState(() => Date.now());
   const recorded = useRef(false);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function RosaryScreen() {
       setIndex(index + 1);
     } else {
       if (Platform.OS !== 'web') void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setFinishedIn(Math.round((Date.now() - startedAt.current) / 1000));
+      setFinishedIn(Math.round((Date.now() - startedAt) / 1000));
       if (!recorded.current) {
         recorded.current = true;
         // A finished prayer counts the day for the streak (SPEC: Gamification). Prayer earns no XP.
@@ -65,8 +66,9 @@ export default function RosaryScreen() {
   const fraction = steps.length ? (index + (step?.kind === 'beads' ? bead / step.count : 0)) / steps.length : 0;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: t.neutral.background }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 8 }}>
+    // Padding from the window's insets: SafeAreaView can measure zero inside a full-screen modal on iOS.
+    <View style={{ flex: 1, backgroundColor: t.neutral.background, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12 }}>
         <Pressable accessibilityRole="button" accessibilityLabel="Close" hitSlop={8} onPress={() => router.back()}>
           <CloseIcon color={t.neutral.textSubtle} />
         </Pressable>
@@ -93,7 +95,7 @@ export default function RosaryScreen() {
       <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}>
         <RaisedButton label={buttonLabel(step, bead)} onPress={next} disabled={!step} />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -189,8 +191,17 @@ function Complete({ set, seconds, streak }: { set: string; seconds: number; stre
   const t = useTheme();
   const minutes = Math.floor(seconds / 60);
   const time = `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: t.neutral.background, padding: 20, gap: 18 }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: t.neutral.background,
+        padding: 20,
+        paddingTop: insets.top + 20,
+        paddingBottom: insets.bottom + 20,
+        gap: 18,
+      }}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <Animated.View entering={ZoomIn.springify().damping(9)}>
           <Pax mood="celebrating" size={200} />
@@ -208,7 +219,7 @@ function Complete({ set, seconds, streak }: { set: string; seconds: number; stre
         </View>
       </View>
       <RaisedButton label="Done" onPress={() => router.back()} />
-    </SafeAreaView>
+    </View>
   );
 }
 

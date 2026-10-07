@@ -64,7 +64,7 @@ export function ShelfTile({
       radius={t.radius.card}
       style={{ flex: 1 }}
       accessibilityLabel={title}
-      contentStyle={{ padding: 14, gap: 8, minHeight: 132 }}>
+      contentStyle={{ padding: 14, gap: 8, minHeight: 150 }}>
       <View
         style={{
           width: 48,
@@ -76,10 +76,10 @@ export function ShelfTile({
         }}>
         {icon}
       </View>
-      <Text variant="title" style={{ fontSize: 18 }}>
+      <Text variant="title" style={{ fontSize: 18 }} numberOfLines={1} adjustsFontSizeToFit>
         {title}
       </Text>
-      <Text variant="small" color={t.neutral.textMuted}>
+      <Text variant="small" color={t.neutral.textMuted} numberOfLines={2}>
         {subtitle}
       </Text>
     </Card>

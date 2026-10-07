@@ -84,10 +84,12 @@ export default function ReaderScreen() {
                 accessibilityLabel={`Verse ${v.douay_verse}${linked ? ', has notes or links' : ''}`}
                 onPress={() => openVerse(v.ref)}
                 onLayout={(e) => {
-                  offsets.current[v.ref] = e.nativeEvent.layout.y;
+                  // Read the layout now: React reuses the event object once this handler returns.
+                  const y = e.nativeEvent.layout.y;
+                  offsets.current[v.ref] = y;
                   if (!scrolled.current && params.verse === v.ref) {
                     scrolled.current = true;
-                    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, e.nativeEvent.layout.y - 12), animated: false }), 0);
+                    setTimeout(() => scroll.current?.scrollTo({ y: Math.max(0, y - 12), animated: false }), 0);
                   }
                 }}
                 style={({ pressed }) => ({
@@ -98,7 +100,8 @@ export default function ReaderScreen() {
                   backgroundColor: pressed ? t.neutral.surfaceMuted : marked ? t.accent.tint : 'transparent',
                 })}>
                 <Text variant="scripture">
-                  <Text variant="label" color={t.accent.text} style={{ fontSize: 12 }}>
+                  {/* Keep the paragraph's line height; a smaller one here squeezes the lines on iOS. */}
+                  <Text variant="label" color={t.accent.text} style={{ fontSize: 12, lineHeight: t.font.size.scripture * 1.5 }}>
                     {v.douay_verse}
                     {linked ? ' •' : ''}
                     {'  '}

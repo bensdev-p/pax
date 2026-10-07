@@ -30,14 +30,15 @@ export default function FathersScreen() {
     void library.fatherAuthors().then(setAuthors);
   }, [library]);
 
-  const grouped = useMemo(() => {
-    let from = -Infinity;
-    return ERAS.map((era) => {
-      const list = authors.filter((a) => (a.year ?? 9999) > from && (a.year ?? 9999) <= era.until);
-      from = era.until;
-      return { ...era, list };
-    }).filter((g) => g.list.length);
-  }, [authors]);
+  const grouped = useMemo(
+    () =>
+      ERAS.map((era, i) => {
+        const from = i === 0 ? -Infinity : ERAS[i - 1].until;
+        const list = authors.filter((a) => (a.year ?? 9999) > from && (a.year ?? 9999) <= era.until);
+        return { ...era, list };
+      }).filter((g) => g.list.length),
+    [authors],
+  );
 
   const mb = Math.round((pack.totalBytes || 122_000_000) / 1_000_000);
 

@@ -27,13 +27,13 @@ export default function SearchScreen() {
   const t = useTheme();
   const library = useLibrary();
   const [query, setQuery] = useState('');
-  const [hits, setHits] = useState<SearchHit[] | null>(null);
+  const [found, setHits] = useState<SearchHit[] | null>(null);
+
+  const searching = query.trim().length >= 2;
+  const hits = searching ? found : null;
 
   useEffect(() => {
-    if (query.trim().length < 2) {
-      setHits(null);
-      return;
-    }
+    if (!searching) return;
     let cancelled = false;
     const timer = setTimeout(() => {
       void library.search(query).then((h) => !cancelled && setHits(h));
@@ -42,7 +42,7 @@ export default function SearchScreen() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [library, query]);
+  }, [library, query, searching]);
 
   const open = async (hit: SearchHit) => {
     if (hit.kind === 'verse') openVerse(hit.key);
