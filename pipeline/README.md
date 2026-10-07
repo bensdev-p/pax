@@ -8,10 +8,27 @@ python3 pipeline/build_content.py      # rebuild only (seeds changed, calendar d
 python3 -m unittest discover -s pipeline/tests
 ```
 
+## Library sources (Phase 2)
+
+The Douay-Rheims text is vendored. The Catechism index and the Fathers starter set are
+derived files committed in `sources/`; regenerate them, or build the full Fathers pack, from the
+pinned upstream sources:
+
+```sh
+python3 pipeline/fetch_sources.py        # downloads into pipeline/build/cache (not committed)
+python3 pipeline/extract_ccc.py          # -> sources/ccc/ccc_index.json
+python3 pipeline/fathers.py starter      # -> sources/fathers/starter.json.gz
+python3 pipeline/fathers.py pack 1       # -> build/fathers-pack/ (4 parts + manifest.json, ~122 MB)
+```
+
+Then upload `build/fathers-pack/*` to Supabase Storage as described in `supabase/README.md`.
+
 ## Inputs
 
-- `seed/*.json`: prayers, Rosary mysteries, Douay-Rheims seed verses (OSIS keys), CCC
-  summaries, saints, cross-references, and empty Learn and Fathers files. Every row has a stable
+- `seed/*.json`: prayers, Rosary mysteries, a few own-words CCC summaries, saints,
+  cross-references, and an empty Learn file.
+- `sources/drc1750/*.usfm`: the Douay-Rheims Bible, parsed by `bible_drc.py`.
+- `sources/ccc/ccc_index.json` and `sources/fathers/starter.json.gz`: see above. Every row has a stable
   key (slug, OSIS ref, CCC number or romcal key).
 - `sources/`: vendored lectionary citations. See `sources/NOTICE.md` for sources, licenses and
   commits.
@@ -28,8 +45,17 @@ python3 -m unittest discover -s pipeline/tests
 The content version is a hash of every input, so an unchanged build keeps the same version. The
 app re-copies content.db only when the version changes.
 
-## Psalm numbering
+## Verse keys and numbering
 
-`verse_map.py` maps the lectionary's Hebrew Psalm numbers to the Vulgate numbers Douay-Rheims
-uses (Ps 23 → Ps 22, with verse-level rows for the split Psalms 9–10, 114–116 and 147). Book names
-are OSIS ids, so "4 Kings" and "2 Kings" are both `2Kgs`; only the display name differs.
+Every verse key is an OSIS ref in standard (Hebrew/NABRE) numbering, e.g. `Ps.23.1`, because
+the lectionary, the Catechism and the Fathers all cite that numbering and user notes must survive
+a later switch to NABRE or RSV-2CE. `bible_verses` stores the Douay-Rheims text under that key,
+with its own Douay chapter and verse beside it for reading (Psalm 23 is Douay Psalm 22).
+
+`verse_map.py` holds the mappings:
+- Douay → standard: Psalms (including the split Psalms 9–10, 113–116 and 146–147), Joel 2:28–3:21
+  and Malachi 4. Esther, Tobit and Sirach follow the Vulgate and only roughly line up.
+- King James-style → standard, for the Fathers database: Psalms whose titles count as verses in
+  Hebrew (51, 52, 54 and 60 shift by two, most titled Psalms by one).
+
+Book names are OSIS ids, so "4 Kings" and "2 Kings" are both `2Kgs`; only the display name differs.

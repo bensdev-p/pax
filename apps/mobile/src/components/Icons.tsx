@@ -261,3 +261,40 @@ export function CloudIcon({ size = 22 }: IconProps) {
     </Svg>
   );
 }
+
+export function SearchIcon({ size = 22, color = '#8A8A8A' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Circle cx="11" cy="11" r="6.5" stroke={color} strokeWidth="3" />
+      <Path d="M16 16l5 5" stroke={color} strokeWidth="3" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+/** A scroll page, the Church Fathers shelf. */
+export function ScrollIcon({ size = 28 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M6 3h9l3 3v15H6z" fill="#FFC107" />
+      <Path d="M9 10h6M9 14h6M9 18h4" stroke="#B07800" strokeWidth="2" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function SaintIcon({ size = 28 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Circle cx="12" cy="8" r="5" fill="none" stroke="#F5B400" strokeWidth="2.4" />
+      <Circle cx="12" cy="9" r="3" fill="#8E5CF6" />
+      <Path d="M5 22c0-5 3-8 7-8s7 3 7 8z" fill="#8E5CF6" />
+    </Svg>
+  );
+}
+
+export function DownloadIcon({ size = 22, color = '#FFFFFF' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path d="M12 4v11M7 10l5 5 5-5M5 20h14" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}

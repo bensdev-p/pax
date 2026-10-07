@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { AppState as RNAppState } from 'react-native';
 
 import { userStore } from '@/data/userStore';
-import type { ActivityKind, NotificationPrefs, Progress, Settings } from '@/data/types';
+import { DEFAULT_SETTINGS, type ActivityKind, type NotificationPrefs, type Progress, type Settings } from '@/data/types';
 import { rescheduleReminders } from '@/notifications/reminders';
 import { DAILY_XP_GOAL, writeWidgetFeed } from '@/widgets/widgetFeed';
 
@@ -25,7 +25,7 @@ const Ctx = createContext<AppStateValue | null>(null);
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [today, setToday] = useState<DaySnapshot | null>(null);
-  const [settings, setSettings] = useState<Settings>({ appearance: 'light', lockedColor: null, contentVersion: null });
+  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [notificationPrefs, setNotificationPrefs] = useState<NotificationPrefs | null>(null);
   const prefsRef = useRef<NotificationPrefs | null>(null);

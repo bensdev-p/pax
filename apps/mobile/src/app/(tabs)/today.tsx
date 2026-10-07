@@ -11,12 +11,15 @@ import { Card, RaisedButton, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { StatsBar } from '@/components/StatsBar';
 import { Text } from '@/components/Text';
+import { useLibrary } from '@/data/content';
 import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting, paxMoodFor } from '@/lib/format';
+import { openCitation } from '@/lib/libraryLinks';
 import { useAppState } from '@/state/AppState';
 
 export default function TodayScreen() {
   const t = useTheme();
   const { today, progress, recordActivity } = useAppState();
+  const library = useLibrary();
   if (!today) return null;
 
   const openUsccb = () => void WebBrowser.openBrowserAsync(today.usccbUrl);
@@ -55,7 +58,10 @@ export default function TodayScreen() {
           />
         </View>
         {today.readings ? (
-          <ReadingRows readings={today.readings} onPress={openUsccb} />
+          <ReadingRows
+            readings={today.readings}
+            onPress={(citation) => void openCitation(library, citation).then((ok) => !ok && openUsccb())}
+          />
         ) : (
           <Card contentStyle={{ padding: 14, gap: 4 }}>
             <Text variant="label" caps color={t.neutral.textMuted}>
@@ -154,7 +160,8 @@ const READING_LABELS: [keyof ReadingCitations, string][] = [
   ['gospel', 'Gospel'],
 ];
 
-function ReadingRows({ readings, onPress }: { readings: ReadingCitations; onPress: () => void }) {
+/** Each reading opens in the Douay-Rheims reader, with the cited verses highlighted. */
+function ReadingRows({ readings, onPress }: { readings: ReadingCitations; onPress: (citation: string) => void }) {
   const t = useTheme();
   return (
     <View style={{ gap: 10 }}>
@@ -164,7 +171,7 @@ function ReadingRows({ readings, onPress }: { readings: ReadingCitations; onPres
           <Card
             key={key}
             tinted={gospel}
-            onPress={onPress}
+            onPress={() => onPress(readings[key]!)}
             accessibilityLabel={`${label}: ${readings[key]}`}
             contentStyle={{ paddingVertical: 12, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
             <View

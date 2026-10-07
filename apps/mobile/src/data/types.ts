@@ -45,12 +45,27 @@ export interface NotificationPrefs {
   angelus: boolean;
 }
 
+export interface ReadingPosition {
+  book: string;
+  /** Douay chapter. */
+  chapter: number;
+}
+
+/** The installed Church Fathers pack: its version and part files. */
+export interface FathersPackInstall {
+  version: string;
+  files: string[];
+}
+
 export interface Settings {
   appearance: Appearance;
   /** A fixed palette, or null to follow the Church year. */
   lockedColor: PaletteName | null;
   /** content.db version last copied to the device. */
   contentVersion: string | null;
+  /** Where the Bible reader was last open (for "Continue reading"). */
+  lastRead: ReadingPosition | null;
+  fathersPack: FathersPackInstall | null;
 }
 
 export type ActivityKind = 'lesson' | 'readings' | 'prayer';
@@ -82,7 +97,18 @@ export const DEFAULT_SETTINGS: Settings = {
   appearance: 'light',
   lockedColor: null,
   contentVersion: null,
+  lastRead: null,
+  fathersPack: null,
 };
+
+export function parseJson<T>(raw: string | null | undefined): T | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return null;
+  }
+}
 
 export const DEFAULT_NOTIFICATION_PREFS: NotificationPrefs = {
   morning: { enabled: false, time: '07:30' },

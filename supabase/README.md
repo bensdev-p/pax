@@ -26,3 +26,20 @@ and leaves no data behind.
 
 Run locally with the Supabase CLI (`npx supabase start`, then `npx supabase db reset`).
 When this schema changes, update `PRIVACY.md` in the same commit.
+
+## Fathers library pack (Storage)
+
+The full Church Fathers library is downloaded by the app from a public Storage bucket, then used
+offline. To publish it:
+
+1. On a computer with Python 3.10+, from the repo root:
+   `python3 pipeline/fetch_sources.py && python3 pipeline/fathers.py pack 1`
+2. In the dashboard: **Storage → New bucket**, name `packs`, and turn on **Public bucket**.
+3. Open `packs`, create a folder `fathers`, and upload everything in
+   `pipeline/build/fathers-pack/`: `manifest.json` and the four `fathers-1-*.db` parts (each
+   under the free plan's 50 MB limit).
+4. In Pax: Library → Church Fathers → Download.
+
+The app reads `https://wufwcvokotpdyvttcuga.supabase.co/storage/v1/object/public/packs/fathers/manifest.json`.
+A new pack version (`fathers.py pack 2`) uses new file names, so installed copies keep working.
+To switch a phone to the new version, remove the download in the app and download it again.

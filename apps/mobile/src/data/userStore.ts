@@ -6,8 +6,11 @@ import {
   DEFAULT_NOTIFICATION_PREFS,
   DEFAULT_SETTINGS,
   GRACE_DAYS_PER_MONTH,
+  parseJson,
   type ActivityKind,
+  type FathersPackInstall,
   type NotificationPrefs,
+  type ReadingPosition,
   type Progress,
   type ReminderTime,
   type Settings,
@@ -134,6 +137,8 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
       map.appearance === 'dark' || map.appearance === 'system' ? map.appearance : DEFAULT_SETTINGS.appearance,
     lockedColor: isPaletteName(map.lockedColor) ? map.lockedColor : null,
     contentVersion: map.contentVersion ?? null,
+    lastRead: parseJson<ReadingPosition>(map.lastRead),
+    fathersPack: parseJson<FathersPackInstall>(map.fathersPack),
   };
 }
 
@@ -148,7 +153,8 @@ export const userStore: UserStore = {
       if (value === null || value === undefined) {
         await db.runAsync('DELETE FROM settings WHERE key = ?', key);
       } else {
-        await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, String(value));
+        const stored = typeof value === 'object' ? JSON.stringify(value) : String(value);
+        await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, stored);
       }
     }
     return readSettings(db);

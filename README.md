@@ -64,6 +64,23 @@ and no paid Apple account are needed until the widgets.
   timeline behind a `WidgetFeedWriter` interface. In Expo Go the writer does nothing; an App Group
   writer replaces it with the first EAS development build.
 
+## What Phase 2 (Library) adds
+
+- **Douay-Rheims reader**: all 73 books in the Challoner text, with traditional book names
+  (3 Kings, Isaias, Apocalypse), Challoner's chapter summaries and Latin Psalm openings. Verses
+  are keyed in modern numbering (Psalm 23) and shown in Douay numbering (Psalm 22).
+- **Verse panel**, offline: tap any verse for Challoner's note, the Catechism paragraphs that
+  cite it, and what the Fathers said about it (the Phase 2 gate).
+- **Catechism**: the outline and every paragraph's heading, the Scripture it cites, and a link to
+  its page on vatican.va. No Catechism text is copied.
+- **Church Fathers**: a starter set of about 11,800 excerpts on the Gospels and Psalms ships in
+  the app; the full library (about 70,000 excerpts, Fathers and medieval Doctors to 1300) is a
+  one-time download from Supabase Storage, see `supabase/README.md`.
+- **Search** across Scripture, the Catechism, the Fathers and prayers (full-text search on the
+  phone, a simpler word match on web).
+- **Today's readings** now open in the reader with the cited verses highlighted.
+- **Web**: the same content.db loads in the browser with sql.js, so the Library works on web too.
+
 ## Decisions made with Ben during Phase 1
 
 - **Weekday readings**: lectio-api has only Sundays and major feasts, so weekday citations come
@@ -78,7 +95,24 @@ and no paid Apple account are needed until the widgets.
   in `design/tokens.json`.
 - **Package manager**: npm workspaces.
 
+## Decisions made with Ben during Phase 2
+
+- **Bible**: BibleCorps' Challoner Douay-Rheims (public domain), with Challoner's notes.
+- **Fathers**: the Fathers plus medieval Doctors up to 1300, from HistoricalChristianFaith's
+  Commentaries-Database; public-domain sources only, nobody condemned by a council.
+- **Fathers delivery**: a starter set bundled in the app, plus the full library as a download.
+- **Catechism**: number, heading and a vatican.va link; summaries in our own words added over time.
+
 ## Known gaps
+
+- **Library versification**: Esther, Tobit and Sirach follow the Vulgate and only roughly line up
+  with modern numbering. A few Fathers' Psalm references may be a verse off where the Vulgate
+  divides verses differently. Some Catechism footnotes are lost at page boundaries in the scraped
+  data (CCC 1, for one).
+- **Not yet run on a phone**: the Fathers download and FTS search. Search falls back to a word
+  match if the phone's SQLite lacks FTS5.
+- **content.db** is now 28 MB and committed to git; each content rebuild adds a new copy to the
+  history. Git LFS would be worth setting up before it grows further.
 
 - Lectionary citations cover Aug 2025 to Dec 2027 fully (one 2027 date is missing a psalm
   upstream). 2028 is missing some Ordinary Time weekdays, and the vigil, midnight and dawn Masses
