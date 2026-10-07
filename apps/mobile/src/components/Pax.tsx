@@ -540,30 +540,3 @@ export function Pax({
     </Svg>
   );
 }
-
-/** The small side-view Pax used beside speech bubbles on Today and Readings. */
-export function PaxMini({ size = 72 }: { size?: number }) {
-  const t = useTheme();
-  const scarf = t.accent.accent;
-  const scarfEdge = t.accent.edge;
-  const shadow = t.neutral.paxShadow;
-  return (
-    <Svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      accessibilityLabel="Pax the dove in a scarf">
-      <Ellipse cx="50" cy="92" rx="30" ry="5" fill={shadow} />
-      <Path d="M14 62l-12 6 14 4z" fill="#CFE0F2" />
-      <Ellipse cx="44" cy="62" rx="32" ry="24" fill="#EAF3FC" />
-      <Circle cx="64" cy="36" r="19" fill="#EAF3FC" />
-      <Path d="M30 56c10-14 30-14 34 2-12-4-22 2-34-2z" fill="#CFE0F2" />
-      <Circle cx="69" cy="33" r="5" fill="#3C3C3C" />
-      <Circle cx="71" cy="31" r="1.8" fill="#FFFFFF" />
-      <Path d="M81 37l13 4-13 5z" fill="#FF9F1C" />
-      <Path d="M48 50c8 6 22 6 30-2l2 6c-8 8-24 8-34 2z" fill={scarf} />
-      <Path d="M54 56l-4 14 6-2 2-12z" fill={scarfEdge} />
-      <Path d="M40 84v6M50 84v6" stroke="#FF9F1C" strokeWidth="3" strokeLinecap="round" />
-    </Svg>
-  );
-}

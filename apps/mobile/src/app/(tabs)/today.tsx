@@ -6,12 +6,12 @@ import * as WebBrowser from 'expo-web-browser';
 import { Pressable, View } from 'react-native';
 
 import { AdventWreath, BookIcon, CandleIcon, CheckIcon, PrayerCardIcon, RosaryIcon } from '@/components/Icons';
-import { PaxMini } from '@/components/Pax';
+import { Pax } from '@/components/Pax';
 import { Card, RaisedButton, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { StatsBar } from '@/components/StatsBar';
 import { Text } from '@/components/Text';
-import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting } from '@/lib/format';
+import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting, paxMoodFor } from '@/lib/format';
 import { useAppState } from '@/state/AppState';
 
 export default function TodayScreen() {
@@ -21,13 +21,14 @@ export default function TodayScreen() {
 
   const openUsccb = () => void WebBrowser.openBrowserAsync(today.usccbUrl);
   const mysteries = mysteriesForDay(today);
+  const mood = { doneToday: !!progress?.doneToday, hour: new Date().getHours() };
 
   return (
     <Screen header={<StatsBar today={today} progress={progress} />}>
       <FeastCard day={today} />
 
-      <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
-        <PaxMini size={72} />
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        <Pax mood={paxMoodFor(mood)} size={96} />
         <View
           style={{
             flex: 1,
@@ -38,7 +39,7 @@ export default function TodayScreen() {
             paddingHorizontal: 14,
           }}>
           <Text variant="body">
-            {paxGreeting(today, { doneToday: !!progress?.doneToday, hour: new Date().getHours() })}
+            {paxGreeting(today, mood)}
           </Text>
         </View>
       </View>
