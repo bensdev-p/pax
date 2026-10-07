@@ -1,0 +1,19 @@
+{
+  "name": "pax-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "npm run start -w @pax/mobile",
+    "test": "npm run test --workspaces --if-present && python3 -m unittest discover -s pipeline/tests",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "tokens": "npm run build -w @pax/tokens",
+    "liturgy:dump": "npm run dump-calendar -w @pax/liturgy",
+    "content": "npm run liturgy:dump && python3 pipeline/build_content.py"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

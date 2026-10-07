@@ -1,0 +1,12 @@
+{
+  "$description": "Saints keyed by romcal martyrology key. Bios are original writing.",
+  "saints": [
+    {
+      "romcal_key": "ignatius_of_antioch_bishop",
+      "name": "Saint Ignatius of Antioch",
+      "dates": "Died c. 107",
+      "patronage": "The Church in the eastern Mediterranean",
+      "bio": "Ignatius was bishop of Antioch, one of the first great centers of the Church. Arrested and taken to Rome to die in the arena, he wrote seven letters to churches along the way. They are among the earliest Christian writings after the New Testament, full of love for the Eucharist, for the unity of the Church around its bishop, and for Christ, whom he longed to meet. He is the first known writer to call the Church \"catholic\"."
+    }
+  ]
+}

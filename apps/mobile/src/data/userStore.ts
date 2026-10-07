@@ -1,0 +1,255 @@
+import { isPaletteName } from '@pax/tokens';
+import * as SQLite from 'expo-sqlite';
+
+import { computeStreak } from './streak';
+import {
+  DEFAULT_NOTIFICATION_PREFS,
+  DEFAULT_SETTINGS,
+  GRACE_DAYS_PER_MONTH,
+  type ActivityKind,
+  type NotificationPrefs,
+  type Progress,
+  type Settings,
+  type UserStore,
+} from './types';
+
+/**
+ * user.db lives only on this phone, apart from content.db so content updates never touch it.
+ * Tables mirror the synced tables in SPEC.md; `user_id` stays 'local' until Supabase sign-in
+ * (anonymous first) arrives with sync.
+ */
+const MIGRATIONS: string[] = [
+  `
+  CREATE TABLE settings (
+    key   TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+  ) WITHOUT ROWID;
+
+  CREATE TABLE daily_activity (
+    user_id        TEXT NOT NULL DEFAULT 'local',
+    local_date     TEXT NOT NULL,
+    did_lesson     INTEGER NOT NULL DEFAULT 0,
+    did_readings   INTEGER NOT NULL DEFAULT 0,
+    did_prayer     INTEGER NOT NULL DEFAULT 0,
+    xp             INTEGER NOT NULL DEFAULT 0,
+    used_grace_day INTEGER NOT NULL DEFAULT 0,
+    updated_at     TEXT NOT NULL,
+    PRIMARY KEY (user_id, local_date)
+  ) WITHOUT ROWID;
+
+  CREATE TABLE lesson_progress (
+    user_id      TEXT NOT NULL DEFAULT 'local',
+    lesson_slug  TEXT NOT NULL,
+    completed_at TEXT NOT NULL,
+    score        REAL,
+    xp           INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, lesson_slug)
+  ) WITHOUT ROWID;
+
+  CREATE TABLE review_cards (
+    user_id       TEXT NOT NULL DEFAULT 'local',
+    question_slug TEXT NOT NULL,
+    ease          REAL NOT NULL DEFAULT 2.5,
+    interval_days INTEGER NOT NULL DEFAULT 0,
+    due_at        TEXT NOT NULL,
+    PRIMARY KEY (user_id, question_slug)
+  ) WITHOUT ROWID;
+
+  CREATE TABLE streaks (
+    user_id          TEXT PRIMARY KEY DEFAULT 'local',
+    current          INTEGER NOT NULL DEFAULT 0,
+    longest          INTEGER NOT NULL DEFAULT 0,
+    last_active_date TEXT,
+    grace_days_left  INTEGER NOT NULL DEFAULT ${GRACE_DAYS_PER_MONTH}
+  ) WITHOUT ROWID;
+
+  CREATE TABLE notes (
+    user_id         TEXT NOT NULL DEFAULT 'local',
+    id              TEXT NOT NULL,        -- client-generated UUID
+    target_type     TEXT NOT NULL,        -- verse, ccc, father, prayer
+    target_key      TEXT NOT NULL,        -- OSIS ref, CCC number or slug
+    highlight_color TEXT,
+    body            TEXT,
+    updated_at      TEXT NOT NULL,
+    PRIMARY KEY (user_id, id)
+  ) WITHOUT ROWID;
+
+  CREATE TABLE notification_prefs (
+    user_id    TEXT NOT NULL DEFAULT 'local',
+    type       TEXT NOT NULL,             -- daily_reminder, angelus
+    enabled    INTEGER NOT NULL,
+    local_time TEXT,
+    PRIMARY KEY (user_id, type)
+  ) WITHOUT ROWID;
+
+  -- Changes waiting to be pushed to Supabase. Nothing is sent until sync is built.
+  CREATE TABLE sync_queue (
+    seq        INTEGER PRIMARY KEY AUTOINCREMENT,
+    table_name TEXT NOT NULL,
+    row_key    TEXT NOT NULL,
+    op         TEXT NOT NULL,
+    queued_at  TEXT NOT NULL
+  );
+  `,
+];
+
+async function migrate(db: SQLite.SQLiteDatabase) {
+  await db.execAsync('PRAGMA journal_mode = WAL;');
+  const row = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
+  let version = row?.user_version ?? 0;
+  while (version < MIGRATIONS.length) {
+    const sql = MIGRATIONS[version]!;
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(sql);
+    });
+    version++;
+    await db.execAsync(`PRAGMA user_version = ${version}`);
+  }
+}
+
+let opening: Promise<SQLite.SQLiteDatabase> | null = null;
+function userDb() {
+  opening ??= SQLite.openDatabaseAsync('user.db').then(async (db) => {
+    await migrate(db);
+    return db;
+  });
+  return opening;
+}
+
+const now = () => new Date().toISOString();
+
+async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
+  const rows = await db.getAllAsync<{ key: string; value: string }>('SELECT key, value FROM settings');
+  const map = Object.fromEntries(rows.map((r) => [r.key, r.value]));
+  return {
+    appearance:
+      map.appearance === 'dark' || map.appearance === 'system' ? map.appearance : DEFAULT_SETTINGS.appearance,
+    lockedColor: isPaletteName(map.lockedColor) ? map.lockedColor : null,
+    contentVersion: map.contentVersion ?? null,
+  };
+}
+
+export const userStore: UserStore = {
+  async getSettings() {
+    return readSettings(await userDb());
+  },
+
+  async setSettings(patch) {
+    const db = await userDb();
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === null || value === undefined) {
+        await db.runAsync('DELETE FROM settings WHERE key = ?', key);
+      } else {
+        await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, String(value));
+      }
+    }
+    return readSettings(db);
+  },
+
+  async getNotificationPrefs() {
+    const db = await userDb();
+    const rows = await db.getAllAsync<{ type: string; enabled: number; local_time: string | null }>(
+      "SELECT type, enabled, local_time FROM notification_prefs WHERE user_id = 'local'",
+    );
+    const daily = rows.find((r) => r.type === 'daily_reminder');
+    const angelus = rows.find((r) => r.type === 'angelus');
+    const localTime = daily?.local_time ?? DEFAULT_NOTIFICATION_PREFS.localTime;
+    return {
+      dailyReminder: !!daily?.enabled,
+      localTime,
+      slot: localTime < '12:00' ? 'morning' : 'evening',
+      angelus: !!angelus?.enabled,
+    };
+  },
+
+  async setNotificationPrefs(prefs: NotificationPrefs) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync(
+        "INSERT OR REPLACE INTO notification_prefs (user_id, type, enabled, local_time) VALUES ('local', 'daily_reminder', ?, ?)",
+        prefs.dailyReminder ? 1 : 0,
+        prefs.localTime,
+      );
+      await db.runAsync(
+        "INSERT OR REPLACE INTO notification_prefs (user_id, type, enabled, local_time) VALUES ('local', 'angelus', ?, '12:00')",
+        prefs.angelus ? 1 : 0,
+      );
+      await db.runAsync(
+        "INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('notification_prefs', 'local', 'upsert', ?)",
+        now(),
+      );
+    });
+  },
+
+  async recordActivity(localDate: string, kind: ActivityKind, xp = 0) {
+    const db = await userDb();
+    const column = { lesson: 'did_lesson', readings: 'did_readings', prayer: 'did_prayer' }[kind];
+    await db.withTransactionAsync(async () => {
+      await db.runAsync(
+        `INSERT INTO daily_activity (user_id, local_date, ${column}, xp, updated_at)
+         VALUES ('local', ?, 1, ?, ?)
+         ON CONFLICT (user_id, local_date) DO UPDATE SET ${column} = 1, xp = xp + excluded.xp, updated_at = excluded.updated_at`,
+        localDate,
+        xp,
+        now(),
+      );
+      const dates = await db.getAllAsync<{ local_date: string }>(
+        "SELECT local_date FROM daily_activity WHERE user_id = 'local' AND (did_lesson OR did_readings OR did_prayer OR used_grace_day)",
+      );
+      const { current, longest } = computeStreak(
+        dates.map((d) => d.local_date),
+        localDate,
+      );
+      await db.runAsync(
+        `INSERT INTO streaks (user_id, current, longest, last_active_date) VALUES ('local', ?, ?, ?)
+         ON CONFLICT (user_id) DO UPDATE SET current = excluded.current, longest = MAX(longest, excluded.longest), last_active_date = excluded.last_active_date`,
+        current,
+        longest,
+        localDate,
+      );
+      await db.runAsync(
+        "INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('daily_activity', ?, 'upsert', ?)",
+        localDate,
+        now(),
+      );
+    });
+  },
+
+  async getProgress(localDate: string): Promise<Progress> {
+    const db = await userDb();
+    const dates = await db.getAllAsync<{ local_date: string; xp: number }>(
+      "SELECT local_date, xp FROM daily_activity WHERE user_id = 'local' AND (did_lesson OR did_readings OR did_prayer OR used_grace_day)",
+    );
+    const xp = await db.getFirstAsync<{ total: number | null; today: number | null }>(
+      "SELECT SUM(xp) AS total, SUM(CASE WHEN local_date = ? THEN xp ELSE 0 END) AS today FROM daily_activity WHERE user_id = 'local'",
+      localDate,
+    );
+    const due = await db.getFirstAsync<{ n: number }>(
+      "SELECT COUNT(*) AS n FROM review_cards WHERE user_id = 'local' AND due_at <= ?",
+      now(),
+    );
+    const todayRow = await db.getFirstAsync<{ did_readings: number; did_prayer: number }>(
+      "SELECT did_readings, did_prayer FROM daily_activity WHERE user_id = 'local' AND local_date = ?",
+      localDate,
+    );
+    const streakRow = await db.getFirstAsync<{ longest: number; grace_days_left: number }>(
+      "SELECT longest, grace_days_left FROM streaks WHERE user_id = 'local'",
+    );
+    const { current, longest } = computeStreak(
+      dates.map((d) => d.local_date),
+      localDate,
+    );
+    return {
+      today: localDate,
+      doneToday: dates.some((d) => d.local_date === localDate),
+      didReadingsToday: !!todayRow?.did_readings,
+      didPrayerToday: !!todayRow?.did_prayer,
+      currentStreak: current,
+      longestStreak: Math.max(longest, streakRow?.longest ?? 0),
+      xpToday: xp?.today ?? 0,
+      xpTotal: xp?.total ?? 0,
+      reviewsDue: due?.n ?? 0,
+      graceDaysLeft: streakRow?.grace_days_left ?? GRACE_DAYS_PER_MONTH,
+    };
+  },
+};

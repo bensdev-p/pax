@@ -1,0 +1,23 @@
+{
+  "name": "@pax/liturgy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pure TypeScript liturgical calendar for Pax: DaySnapshot built on romcal v3 (US calendar).",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "dump-calendar": "tsx scripts/dump-calendar.ts"
+  },
+  "dependencies": {
+    "@romcal/calendar.united-states": "3.0.0-dev.140",
+    "romcal": "3.0.0-dev.140"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "~6.0.3",
+    "vitest": "^3.2.0"
+  }
+}

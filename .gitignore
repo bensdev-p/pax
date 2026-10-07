@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.venv/
+pipeline/build/
+.env
+.env*.local
+supabase/.temp/

@@ -1,0 +1,47 @@
+{
+  "$description": "Links between content keys: verse (OSIS ref or range), ccc (paragraph number), prayer (slug), mystery (slug), saint (romcal key).",
+  "cross_refs": [
+    {
+      "from_type": "prayer",
+      "from_key": "hail-mary",
+      "to_type": "verse",
+      "to_key": "Luke.1.28"
+    },
+    {
+      "from_type": "prayer",
+      "from_key": "hail-mary",
+      "to_type": "verse",
+      "to_key": "Luke.1.42"
+    },
+    {
+      "from_type": "prayer",
+      "from_key": "our-father",
+      "to_type": "verse",
+      "to_key": "Matt.6.9-Matt.6.13"
+    },
+    {
+      "from_type": "prayer",
+      "from_key": "angelus",
+      "to_type": "verse",
+      "to_key": "John.1.14"
+    },
+    {
+      "from_type": "prayer",
+      "from_key": "angelus",
+      "to_type": "verse",
+      "to_key": "Luke.1.28"
+    },
+    {
+      "from_type": "mystery",
+      "from_key": "glorious-4-assumption",
+      "to_type": "ccc",
+      "to_key": "966"
+    },
+    {
+      "from_type": "ccc",
+      "from_key": "971",
+      "to_type": "prayer",
+      "to_key": "hail-mary"
+    }
+  ]
+}

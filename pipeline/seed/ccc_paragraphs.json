@@ -1,0 +1,8 @@
+{
+  "$description": "CCC paragraph numbers with summaries in our own words (the Catechism text itself is not reproduced). vatican_url points to the Vatican's online Catechism.",
+  "paragraphs": [
+    { "number": 966, "part": "Part One: The Profession of Faith", "section": "Section Two: The Profession of the Christian Faith", "summary": "Mary, kept free from original sin, was taken up body and soul into heavenly glory when her earthly life ended. Her Assumption is a unique share in her Son's Resurrection and a sign of the resurrection promised to all Christians." },
+    { "number": 971, "part": "Part One: The Profession of Faith", "section": "Section Two: The Profession of the Christian Faith", "summary": "Honoring Mary belongs to Christian worship, but it differs in kind from the adoration given to God alone. Marian feasts and prayers such as the Rosary, which sums up the whole Gospel, express this devotion." },
+    { "number": 2678, "part": "Part Four: Christian Prayer", "section": "Section One: Prayer in the Christian Life", "summary": "In the medieval West the Rosary grew up as a popular form of prayer for people who could not pray the Liturgy of the Hours." }
+  ]
+}

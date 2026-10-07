@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "fontFamily": "Nunito",
+  "neutral": {
+    "light": {
+      "background": "#FFFFFF",
+      "surface": "#FFFFFF",
+      "surfaceMuted": "#F7F7F7",
+      "locked": "#F2F2F2",
+      "border": "#E5E5E5",
+      "divider": "#ECECEC",
+      "text": "#3C3C3C",
+      "textMuted": "#6B6B6B",
+      "textSubtle": "#AFAFAF",
+      "paxShadow": "#E6ECF2"
+    },
+    "dark": {
+      "background": "#10171C",
+      "surface": "#17222A",
+      "surfaceMuted": "#1D2A33",
+      "locked": "#22303A",
+      "border": "#2E3D47",
+      "divider": "#24323B",
+      "text": "#EEF2F5",
+      "textMuted": "#A3B1BA",
+      "textSubtle": "#6F808B",
+      "paxShadow": "#22303A"
+    }
+  },
+  "game": {
+    "streak": "#FF9F1C",
+    "streakText": "#F08A00",
+    "streakLight": "#FFD25E",
+    "xp": "#FFC107",
+    "xpText": "#D99A00",
+    "review": "#2FA4E7",
+    "reviewText": "#1E88C8",
+    "reviewLight": "#7CC6F2",
+    "correct": "#58A700",
+    "correctBackground": "#D7FFB8",
+    "incorrect": "#EA2B2B",
+    "incorrectBackground": "#FFDFE0",
+    "incorrectButton": "#C81E1E"
+  },
+  "palettes": {
+    "green": {
+      "label": "Green",
+      "light": {
+        "accent": "#24913C",
+        "edge": "#1B6E2E",
+        "onAccent": "#FFFFFF",
+        "tint": "#E5F2E8",
+        "text": "#1B6E2E"
+      },
+      "dark": {
+        "accent": "#2EA84A",
+        "edge": "#238038",
+        "onAccent": "#FFFFFF",
+        "tint": "#173726",
+        "text": "#77C689"
+      }
+    },
+    "violet": {
+      "label": "Violet",
+      "light": {
+        "accent": "#7C4DDB",
+        "edge": "#5E3AA6",
+        "onAccent": "#FFFFFF",
+        "tint": "#EFEAFB",
+        "text": "#5E3AA6"
+      },
+      "dark": {
+        "accent": "#8E5CF6",
+        "edge": "#6C46BB",
+        "onAccent": "#FFFFFF",
+        "tint": "#2C264C",
+        "text": "#B695F9"
+      }
+    },
+    "rose": {
+      "label": "Rose",
+      "light": {
+        "accent": "#C2185B",
+        "edge": "#931245",
+        "onAccent": "#FFFFFF",
+        "tint": "#F8E3EB",
+        "text": "#931245"
+      },
+      "dark": {
+        "accent": "#D63A73",
+        "edge": "#A32C58",
+        "onAccent": "#FFFFFF",
+        "tint": "#3C1F2F",
+        "text": "#E47FA4"
+      }
+    },
+    "white": {
+      "label": "White and gold",
+      "light": {
+        "accent": "#F2B705",
+        "edge": "#B88B04",
+        "onAccent": "#3B2A00",
+        "tint": "#FDF6E1",
+        "text": "#B88B04"
+      },
+      "dark": {
+        "accent": "#F2B705",
+        "edge": "#B88B04",
+        "onAccent": "#3B2A00",
+        "tint": "#423A17",
+        "text": "#F7D05D"
+      }
+    },
+    "red": {
+      "label": "Red",
+      "light": {
+        "accent": "#D12F33",
+        "edge": "#9F2427",
+        "onAccent": "#FFFFFF",
+        "tint": "#F9E6E7",
+        "text": "#9F2427"
+      },
+      "dark": {
+        "accent": "#E0474B",
+        "edge": "#AA3639",
+        "onAccent": "#FFFFFF",
+        "tint": "#3E2226",
+        "text": "#EB878A"
+      }
+    },
+    "black": {
+      "label": "Black",
+      "light": {
+        "accent": "#3C3C3C",
+        "edge": "#1F1F1F",
+        "onAccent": "#FFFFFF",
+        "tint": "#E8E8E8",
+        "text": "#1F1F1F"
+      },
+      "dark": {
+        "accent": "#6E6E6E",
+        "edge": "#535353",
+        "onAccent": "#FFFFFF",
+        "tint": "#252A2E",
+        "text": "#A1A1A1"
+      }
+    }
+  }
+}

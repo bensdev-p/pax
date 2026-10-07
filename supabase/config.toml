@@ -1,0 +1,8 @@
+# Supabase CLI project config. Unset keys use the CLI defaults.
+# Local stack: `npx supabase start`; apply migrations: `npx supabase db reset`.
+project_id = "pax"
+
+[auth]
+enabled = true
+# Anonymous sign-in first; email, Apple and Google get linked later (SPEC: Backend).
+enable_anonymous_sign_ins = true
