@@ -2,21 +2,19 @@ import { toIsoDate } from '@pax/liturgy';
 import { useTheme } from '@pax/tokens/react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Header } from '@/components/Header';
-import { BellIcon, CheckIcon } from '@/components/Icons';
+import { DailyReminder } from '@/components/DailyReminder';
+import { CheckIcon } from '@/components/Icons';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
-import { TimePicker } from '@/components/TimePicker';
 import { useContent } from '@/data/content';
 import type { Devotion } from '@/data/types';
 import { KIND_LABELS, NOVENA_DAYS, novenaWindow } from '@/lib/devotions';
 import { shortDate } from '@/lib/saints';
-import { formatTime } from '@/notifications/plan';
-import { requestPermission } from '@/notifications/reminders';
 import { useAppState } from '@/state/AppState';
 
 /** Pre-renders every devotion page for the static web build. */
@@ -34,8 +32,6 @@ export default function DevotionScreen() {
   const { novenas, saveNovena } = useAppState();
   const [devotion, setDevotion] = useState<Devotion | null | undefined>(undefined);
   const [dates, setDates] = useState<{ start: string; end: string; feast: string } | null>(null);
-  const [editingTime, setEditingTime] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
   const today = toIsoDate(new Date());
 
   useEffect(() => {
@@ -60,16 +56,6 @@ export default function DevotionScreen() {
   const finished = !!progress && progress.daysDone >= NOVENA_DAYS;
   const prayedToday = progress?.lastPrayedOn === today;
   const pray = () => router.push({ pathname: '/devotion/[slug]/pray', params: { slug: devotion.slug } });
-
-  const setReminder = async (time: string | null) => {
-    if (!progress) return;
-    setNotice(null);
-    if (time && Platform.OS !== 'web' && (await requestPermission()) !== 'granted') {
-      setNotice('Notifications are off for Pax. You can turn them on in your phone’s Settings.');
-      return;
-    }
-    await saveNovena(devotion.slug, { ...progress, reminderTime: time });
-  };
 
   const buttonLabel = !novena
     ? 'Begin'
@@ -145,34 +131,7 @@ export default function DevotionScreen() {
                   : 'Pray one day at a time, nine days in a row.'}
           </Text>
           {progress && !finished ? (
-            <View style={{ gap: 8 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                <BellIcon />
-                <Text variant="bodyStrong" style={{ flex: 1 }}>
-                  {progress.reminderTime ? `Reminder at ${formatTime(progress.reminderTime)}` : 'Daily reminder'}
-                </Text>
-                {progress.reminderTime ? (
-                  <Pressable accessibilityRole="button" onPress={() => void setReminder(null)} hitSlop={8}>
-                    <Text variant="label" caps color={t.neutral.textMuted}>
-                      Turn off
-                    </Text>
-                  </Pressable>
-                ) : null}
-                <Pressable accessibilityRole="button" onPress={() => setEditingTime(!editingTime)} hitSlop={8}>
-                  <Text variant="label" caps color={t.accent.text}>
-                    {editingTime ? 'Done' : progress.reminderTime ? 'Change' : 'Set'}
-                  </Text>
-                </Pressable>
-              </View>
-              {editingTime ? (
-                <TimePicker value={progress.reminderTime ?? '19:00'} onChange={(time) => void setReminder(time)} />
-              ) : null}
-              {notice ? (
-                <Text variant="small" color={t.neutral.textMuted}>
-                  {notice}
-                </Text>
-              ) : null}
-            </View>
+            <DailyReminder time={progress.reminderTime} onChange={(time) => saveNovena(devotion.slug, { ...progress, reminderTime: time })} />
           ) : null}
           {progress ? (
             <Pressable accessibilityRole="button" onPress={() => void saveNovena(devotion.slug, null)} style={{ alignSelf: 'flex-start' }}>

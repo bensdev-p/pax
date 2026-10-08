@@ -92,7 +92,7 @@ export interface FatherAuthor {
   excerpts: number;
 }
 
-export type SearchKind = 'verse' | 'ccc' | 'father' | 'prayer' | 'saint' | 'devotion';
+export type SearchKind = 'verse' | 'ccc' | 'father' | 'prayer' | 'saint' | 'devotion' | 'course';
 
 export interface SearchHit {
   kind: SearchKind;
@@ -357,7 +357,9 @@ async function snippetFor(db: ReadDb, kind: SearchKind, key: string): Promise<st
             ? await db.first<{ t: string }>('SELECT summary AS t FROM saints WHERE romcal_key = ?', [key])
             : kind === 'devotion'
               ? await db.first<{ t: string }>('SELECT summary AS t FROM devotions WHERE slug = ?', [key])
-              : await db.first<{ t: string }>('SELECT text AS t FROM prayers WHERE slug = ?', [key]);
+              : kind === 'course'
+                ? await db.first<{ t: string }>('SELECT summary AS t FROM courses WHERE slug = ?', [key])
+                : await db.first<{ t: string }>('SELECT text AS t FROM prayers WHERE slug = ?', [key]);
   return clip(row?.t ?? '');
 }
 
@@ -394,7 +396,12 @@ async function likeSearch(db: ReadDb, query: string, limit: number): Promise<Sea
     `SELECT slug AS key, title, summary AS snippet FROM devotions WHERE ${like("(title || ' ' || summary || ' ' || intro)")} LIMIT ?`,
     [...params, limit],
   );
+  const courses = await db.all<{ key: string; title: string; snippet: string }>(
+    `SELECT slug AS key, title, summary AS snippet FROM courses WHERE ${like("(title || ' ' || summary || ' ' || intro)")} LIMIT ?`,
+    [...params, limit],
+  );
   return [
+    ...courses.map((h) => ({ ...h, kind: 'course' as const })),
     ...saints.map((h) => ({ ...h, kind: 'saint' as const })),
     ...devotions.map((h) => ({ ...h, kind: 'devotion' as const })),
     ...verses.map((h) => ({ ...h, kind: 'verse' as const, snippet: clip(h.snippet, words[0]) })),

@@ -7,6 +7,7 @@ import {
   GRACE_DAYS_PER_MONTH,
   type ActivityKind,
   type NotificationPrefs,
+  type CourseProgress,
   type NovenaProgress,
   type Progress,
   type Settings,
@@ -22,6 +23,7 @@ interface WebData {
   prefs: NotificationPrefs;
   activity: Record<string, { lesson: boolean; readings: boolean; prayer: boolean; xp: number }>;
   novenas?: Record<string, NovenaProgress>;
+  courses?: Record<string, CourseProgress>;
 }
 
 const KEY = 'pax.user.v1';
@@ -115,6 +117,19 @@ export const userStore: UserStore = {
   async removeNovena(slug) {
     const data = load();
     if (data.novenas) delete data.novenas[slug];
+    save(data);
+  },
+  async getCourses() {
+    return Object.values(load().courses ?? {}).sort((a, b) => a.startedOn.localeCompare(b.startedOn));
+  },
+  async saveCourse(c) {
+    const data = load();
+    data.courses = { ...data.courses, [c.slug]: c };
+    save(data);
+  },
+  async removeCourse(slug) {
+    const data = load();
+    if (data.courses) delete data.courses[slug];
     save(data);
   },
 };

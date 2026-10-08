@@ -14,7 +14,7 @@ export async function requestPermission(): Promise<PermissionState> {
 export async function rescheduleReminders(
   _prefs: NotificationPrefs,
   _days: DaySnapshot[],
-  _opts: { today: string; doneToday: boolean; novenas?: unknown[] },
+  _opts: { today: string; doneToday: boolean; daily?: unknown[] },
 ) {
   return 0;
 }

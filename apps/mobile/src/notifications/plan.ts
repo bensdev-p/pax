@@ -1,6 +1,6 @@
 import type { DaySnapshot } from '@pax/liturgy';
 
-import type { NotificationPrefs, NovenaProgress } from '@/data/types';
+import type { CourseProgress, NotificationPrefs, NovenaProgress } from '@/data/types';
 
 /**
  * Which local notifications to schedule, as plain data (no Expo imports, so it is testable).
@@ -8,8 +8,8 @@ import type { NotificationPrefs, NovenaProgress } from '@/data/types';
  * - Morning and evening reminders at the user's own times.
  * - Built-in nudges at fixed times, only on days nothing is done yet (SPEC: streak at risk).
  * - The Angelus at noon, every day, when switched on.
- * - A daily reminder for each novena in progress that has one, until its ninth day; skipped on
- *   a day that novena was already prayed.
+ * - A daily reminder for each novena or reading plan in progress that has one, until its last
+ *   day; skipped on a day it was already done.
  *
  * Once today counts (a lesson, the readings or a prayer), today's reminders and nudges are
  * dropped; the app reschedules whenever something is finished. iOS keeps at most 64 pending
@@ -20,7 +20,39 @@ export const MAX_PENDING = 60;
 /** A nudge this close to the user's own reminder is skipped so Pax doesn't double up. */
 const NUDGE_GAP_MINUTES = 45;
 
-export type NotificationKind = 'morning_reminder' | 'evening_reminder' | 'streak_nudge' | 'angelus' | 'novena';
+export type NotificationKind = 'morning_reminder' | 'evening_reminder' | 'streak_nudge' | 'angelus' | 'novena' | 'course';
+
+/** A novena or reading plan with its own daily reminder. */
+export interface DailyReminder {
+  kind: 'novena' | 'course';
+  slug: string;
+  title: string;
+  /** Days in the novena (9) or plan. */
+  total: number;
+  daysDone: number;
+  lastDoneOn: string | null;
+  reminderTime: string | null;
+}
+
+export const novenaReminder = (n: NovenaProgress): DailyReminder => ({
+  kind: 'novena',
+  slug: n.slug,
+  title: n.title,
+  total: 9,
+  daysDone: n.daysDone,
+  lastDoneOn: n.lastPrayedOn,
+  reminderTime: n.reminderTime,
+});
+
+export const courseReminder = (c: CourseProgress): DailyReminder => ({
+  kind: 'course',
+  slug: c.slug,
+  title: c.title,
+  total: c.days,
+  daysDone: c.daysDone,
+  lastDoneOn: c.lastDoneOn,
+  reminderTime: c.reminderTime,
+});
 
 
 export interface PlannedNotification {
@@ -36,25 +68,32 @@ export interface PlannedNotification {
 export function planNotifications(
   prefs: NotificationPrefs,
   days: DaySnapshot[],
-  opts: { now: Date; today: string; doneToday: boolean; novenas?: NovenaProgress[] },
+  opts: { now: Date; today: string; doneToday: boolean; daily?: DailyReminder[] },
 ): PlannedNotification[] {
   const plan: PlannedNotification[] = [];
-  for (const novena of opts.novenas ?? []) {
-    if (!novena.reminderTime) continue;
-    const prayedToday = novena.lastPrayedOn === opts.today;
-    // Day numbers still to pray, starting today or, if today's is done, tomorrow.
-    const remaining = 9 - novena.daysDone;
-    const first = prayedToday ? 1 : 0;
+  for (const item of opts.daily ?? []) {
+    if (!item.reminderTime) continue;
+    // Day numbers still to do, one a day, starting today or, if today's is done, tomorrow.
+    const remaining = item.total - item.daysDone;
+    const first = item.lastDoneOn === opts.today ? 1 : 0;
     days.slice(first, first + remaining).forEach((day, i) => {
-      const number = novena.daysDone + i + 1;
+      const number = item.daysDone + i + 1;
+      const last = number === item.total;
+      const novena = item.kind === 'novena';
       plan.push({
-        kind: 'novena',
+        kind: item.kind,
         date: day.date,
-        time: novena.reminderTime!,
-        at: localDate(day.date, novena.reminderTime!),
-        title: `${novena.title} · Day ${number}`,
-        body: number === 9 ? 'The last day of your novena. Pray it with me?' : 'Your novena prayer for today is ready.',
-        url: `paxapp://devotion/${novena.slug}`,
+        time: item.reminderTime!,
+        at: localDate(day.date, item.reminderTime!),
+        title: `${item.title} · Day ${number}`,
+        body: novena
+          ? last
+            ? 'The last day of your novena. Pray it with me?'
+            : 'Your novena prayer for today is ready.'
+          : last
+            ? 'The last day of your plan. Let’s finish it together!'
+            : 'Today’s reading is ready when you are.',
+        url: novena ? `paxapp://devotion/${item.slug}` : `paxapp://course/${item.slug}`,
       });
     });
   }

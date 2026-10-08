@@ -17,6 +17,7 @@ import { openVerse } from '@/lib/libraryLinks';
 const WEB_NO_OUTLINE = Platform.OS === 'web' ? ({ outlineWidth: 0 } as object) : null;
 
 const GROUPS: { kind: SearchKind; label: string }[] = [
+  { kind: 'course', label: 'Reading plans' },
   { kind: 'saint', label: 'Saints and feasts' },
   { kind: 'devotion', label: 'Devotions' },
   { kind: 'verse', label: 'Scripture' },
@@ -52,6 +53,7 @@ export default function SearchScreen() {
     else if (hit.kind === 'prayer') router.push({ pathname: '/prayer/[slug]', params: { slug: hit.key } });
     else if (hit.kind === 'saint') router.push({ pathname: '/saint/[key]', params: { key: hit.key } });
     else if (hit.kind === 'devotion') router.push({ pathname: '/devotion/[slug]', params: { slug: hit.key } });
+    else if (hit.kind === 'course') router.push({ pathname: '/course/[slug]', params: { slug: hit.key } });
     else {
       router.push({ pathname: '/fathers/[author]', params: { author: hit.key.replace(/-[0-9a-f]{10}$/, ''), name: hit.title } });
     }

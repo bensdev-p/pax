@@ -1,5 +1,5 @@
 {
- "contentVersion": "2.95f0227122",
+ "contentVersion": "2.2113cf3348",
  "prayers": [
   {
    "slug": "sign-of-the-cross",
@@ -686,5 +686,12 @@
   "novena-to-saint-joseph",
   "novena-to-the-immaculate-conception",
   "christmas-novena"
- ]
+ ],
+ "courses": {
+  "bible-in-a-year": 365,
+  "catechism-in-a-year": 365,
+  "mark-in-16-days": 16,
+  "psalms-in-30-days": 30,
+  "acts-in-28-days": 28
+ }
 }

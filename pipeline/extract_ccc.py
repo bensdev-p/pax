@@ -34,6 +34,8 @@ ABBREV = {
     "1 Tim": "1Tim", "2 Tim": "2Tim", "Titus": "Titus", "Philem": "Phlm", "Heb": "Heb",
     "Jas": "Jas", "1 Pet": "1Pet", "2 Pet": "2Pet", "1 Jn": "1John", "2 Jn": "2John",
     "3 Jn": "3John", "Jude": "Jude", "Rev": "Rev",
+    # Variants the scraped footnotes also use.
+    "1 Pt": "1Pet", "2 Pt": "2Pet", "1 Th": "1Thess", "2 Th": "2Thess", "1 John": "1John",
 }
 _BOOK = "|".join(re.escape(a) for a in sorted(ABBREV, key=len, reverse=True))
 _REF = re.compile(rf"(?<![A-Za-z])({_BOOK})\.?\s+(\d+)\s*[:\s]\s*(\d+)(?:\s*[-–]\s*(\d+))?")
@@ -42,7 +44,19 @@ _CONT = re.compile(r"^\s*;?\s*(\d+)\s*:\s*(\d+)(?:\s*[-–]\s*(\d+))?")
 MAX_RANGE = 30
 
 
+# Numbered books are sometimes written with a Roman numeral ("I Cor") or with the link arrow
+# between the number and the book ("1 \u21d2 Jn", "I \u21d2 Jn"); without this, "I Jn 4:10" reads as John 4:10.
+_NUMBERED = r"(?:Jn|John|Cor|Pt|Pet|Th|Thes|Thess|Tim|Sam|Kings|Chr|Macc)\b"
+_ROMAN = {"I": "1", "II": "2", "III": "3"}
+_PREFIX = re.compile(rf"(?<![A-Za-z0-9])(III|II|I|1|2|3)\s*(?:\u21d2\s*)?(?={_NUMBERED})")
+
+
+def _normalize(text: str) -> str:
+    return _PREFIX.sub(lambda m: _ROMAN.get(m.group(1), m.group(1)) + " ", text)
+
+
 def parse_refs(text: str) -> list[str]:
+    text = _normalize(text)
     refs: list[str] = []
     for chunk in re.split(r";", text):
         m = _REF.search(chunk)

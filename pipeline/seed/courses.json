@@ -1,0 +1,2374 @@
+{
+ "$description": "Reading plans on the Learn tab. The day splits are computed by pipeline/courses.py; `days` holds the words for each computed day, in order (written for Pax). Keep slugs stable.",
+ "courses": [
+  {
+   "slug": "bible-in-a-year",
+   "title": "Bible in a Year",
+   "kind": "bible",
+   "summary": "The whole story of salvation, about 15 minutes a day",
+   "intro": "Read all 73 books of the Bible in a year, in the order the story unfolds: from creation through the patriarchs, the exodus, the kingdom, exile and return, to Jesus and the early Church. Each day has a passage of about three chapters, plus a Psalm or a few Proverbs to pray with. Start any day. If you miss a day, the plan simply waits for you.",
+   "minutes": 15,
+   "sections": [
+    {
+     "name": "Beginnings",
+     "intro": "Creation, the fall, the flood and Babel: the opening chapters of Genesis set the stage for everything that follows. God makes a good world, we break it, and God begins at once to rescue us."
+    },
+    {
+     "name": "The Patriarchs",
+     "intro": "God calls Abraham and promises that through his family all nations will be blessed. The promise passes to Isaac, Jacob and Joseph, through rivalry, famine and forgiveness. Job, a story set in the same ancient world, asks why the innocent suffer."
+    },
+    {
+     "name": "Egypt and the Exodus",
+     "intro": "Abraham's descendants are slaves in Egypt. God frees them through Moses, makes a covenant with them at Sinai, gives them the Law and the way to worship, and leads them through forty years in the desert to the edge of the promised land."
+    },
+    {
+     "name": "The Promised Land",
+     "intro": "Joshua leads Israel into Canaan. Then comes the age of the judges, a cycle of forgetting God, suffering and being rescued, and the quiet faithfulness of Ruth, the great-grandmother of King David."
+    },
+    {
+     "name": "The Kingdom",
+     "intro": "Israel asks for a king. Saul, David and Solomon reign over a united kingdom, and God promises David a son whose kingdom will last forever. Solomon builds the Temple. The Song of Songs and Ecclesiastes come from the wisdom of this age."
+    },
+    {
+     "name": "A Kingdom Divided",
+     "intro": "After Solomon the kingdom splits in two, Israel in the north and Judah in the south. Kings rise and fall, and prophets such as Elijah, Isaiah and Jeremiah call the people back to God. Assyria destroys the north; Babylon takes Jerusalem."
+    },
+    {
+     "name": "Exile",
+     "intro": "In Babylon, far from the Temple, God does not abandon his people. Ezekiel sees God's glory, Daniel stays faithful at a pagan court, and the second half of Isaiah announces comfort, a new exodus and a suffering servant."
+    },
+    {
+     "name": "Return",
+     "intro": "Persia lets the exiles go home. They rebuild the Temple and the walls of Jerusalem under Ezra and Nehemiah, encouraged by the last prophets. Esther and Judith show God protecting his people through unlikely heroes."
+    },
+    {
+     "name": "The Maccabees and Wisdom",
+     "intro": "Greek rulers try to stamp out the faith, and the Maccabee family leads a revolt to save the Temple. Wisdom and Sirach gather Israel's wisdom on the eve of Christ's coming, and even hint at life after death."
+    },
+    {
+     "name": "The Messiah",
+     "intro": "The four Gospels tell how God's promises come true in Jesus: his birth, his teaching and miracles, his death and resurrection. Read them as four portraits of one Lord."
+    },
+    {
+     "name": "The Church",
+     "intro": "The risen Jesus sends the Holy Spirit, and the Church spreads from Jerusalem to Rome. Acts tells the story, and the letters of Paul, Peter, James, John and Jude are read where they fit in it. Revelation closes the Bible with the victory of the Lamb."
+    }
+   ],
+   "days": [
+    {
+     "title": "Creation and the Fall",
+     "intro": "God speaks and creation comes to be, good in every part, with man and woman made in his image. Then come the serpent’s lie, the first sin and exile from the garden. Watch for God’s promise of victory over the serpent, and for Cain’s jealousy turning to murder.",
+     "question": "Where do you most need to trust God’s goodness instead of grasping for control?"
+    },
+    {
+     "title": "Noah and the Flood",
+     "intro": "A long family line runs from Adam to Noah, including Enoch, who walked with God. As wickedness fills the earth, God tells Noah to build an ark. The waters rise and fall, a dove returns with an olive leaf, and Noah offers sacrifice.",
+     "question": "What helps you stay faithful when the people around you are not?"
+    },
+    {
+     "title": "The Rainbow and Babel",
+     "intro": "God blesses Noah and makes a covenant with every living thing, sealed by the rainbow. Noah’s sons spread across the earth. At Babel people try to build a tower reaching heaven, and God scatters their languages. The reading ends with Abram’s family line.",
+     "question": "Where are you tempted to make a name for yourself rather than seek God?"
+    },
+    {
+     "title": "Abram Is Called",
+     "intro": "God calls Abram to leave home and promises him land, descendants and blessing for all nations. Abram parts from Lot, rescues him, and receives bread and wine from Melchizedek. He believes God, yet he and Sarai try to hurry the promise through Hagar.",
+     "question": "What is God asking you to leave behind in order to follow him?"
+    },
+    {
+     "title": "The Covenant and Sodom",
+     "intro": "God renames Abram and Sarai as Abraham and Sarah and gives circumcision as the sign of his covenant. Three visitors promise a son, and Sarah laughs. Abraham bargains with God for Sodom. Angels rescue Lot’s family, but Lot’s wife looks back.",
+     "question": "For whom could you plead with God, boldly, as Abraham did?"
+    },
+    {
+     "title": "The Testing of Abraham",
+     "intro": "Isaac is finally born and Sarah laughs for joy, while Hagar and Ishmael are sent away yet cared for by God. Then God tests Abraham, asking for his beloved son on a mountain. Watch Abraham’s trust and God’s provision of a ram. Sarah dies and is buried.",
+     "question": "What gift from God do you find hardest to hold with open hands?"
+    },
+    {
+     "title": "A Wife for Isaac",
+     "intro": "Abraham’s servant travels to Abraham’s kin to find a wife for Isaac, praying for a sign at the well. Rebekah answers with generous kindness and agrees to go. Abraham dies. Rebekah bears twins, Esau and Jacob, and Esau trades his birthright for a bowl of stew.",
+     "question": "When have you seen God answer a simple, honest prayer for guidance?"
+    },
+    {
+     "title": "Jacob Takes the Blessing",
+     "intro": "God renews his promise to Isaac, who digs wells and makes peace with Abimelech after quarrels over water. Then, urged by Rebekah, Jacob disguises himself as Esau to receive his blind father’s blessing. Esau’s grief turns to rage, and Jacob must flee.",
+     "question": "Where are you tempted to grab what God might give in his own time?"
+    },
+    {
+     "title": "Jacob’s Ladder",
+     "intro": "Fleeing Esau, Jacob dreams of a ladder reaching heaven with angels on it, and God renews the promise to him at Bethel. In Haran he loves Rachel, but Laban tricks him into marrying Leah first. Rivalry between the sisters fills the house with children.",
+     "question": "Where has God met you in a place you did not expect him?"
+    },
+    {
+     "title": "Jacob Wrestles with God",
+     "intro": "Jacob slips away from Laban with his family and flocks, while Rachel hides her father’s idols. Laban overtakes them, and they make a covenant. Afraid of meeting Esau, Jacob prays and sends gifts ahead. At night he wrestles until dawn and receives the name Israel.",
+     "question": "What struggle with God are you being asked to stay with until morning?"
+    },
+    {
+     "title": "Brothers Reconciled",
+     "intro": "Esau runs to embrace Jacob, and the brothers make peace. At Shechem, Dinah is violated, and Simeon and Levi take brutal revenge. God sends Jacob back to Bethel, and the family puts away its idols. Rachel dies giving birth to Benjamin, and Isaac dies.",
+     "question": "Is there someone you need to meet with forgiveness, as Esau met Jacob?"
+    },
+    {
+     "title": "Joseph Sold by His Brothers",
+     "intro": "A record of Esau’s descendants, the people of Edom, comes first. Then the story turns to Joseph, Jacob’s favorite son, with his special coat and his dreams. His jealous brothers plot against him, throw him into a pit and sell him to traders bound for Egypt.",
+     "question": "Where has envy or favoritism caused harm in your family or friendships?"
+    },
+    {
+     "title": "Judah, Tamar and Joseph",
+     "intro": "Judah wrongs his daughter-in-law Tamar, who bears twins, Perez and Zerah, and Judah admits she is more just than he is. In Egypt, Joseph serves Potiphar faithfully, refuses his master’s wife, and is jailed on a false charge. There he explains two dreams, then is forgotten.",
+     "question": "How do you stay faithful when doing right seems to bring only trouble?"
+    },
+    {
+     "title": "Joseph Rules Egypt",
+     "intro": "Pharaoh’s dreams of fat and thin cows trouble him, and Joseph explains them: seven years of plenty, then seven of famine. Pharaoh sets him over Egypt. When famine reaches Canaan, Joseph’s brothers come to buy grain and bow before him, not knowing who he is.",
+     "question": "How has God used a hard season to prepare you for something later?"
+    },
+    {
+     "title": "Benjamin and the Silver Cup",
+     "intro": "The brothers return to Egypt with Benjamin, and Joseph hosts them, weeping in private. He hides his silver cup in Benjamin’s sack to test them. Watch Judah, who once urged selling Joseph, now offer himself as a slave in his young brother’s place.",
+     "question": "Where could you offer yourself for someone else’s good, as Judah did?"
+    },
+    {
+     "title": "Joseph Reveals Himself",
+     "intro": "Joseph can hold back no longer and tells his brothers who he is, saying God sent him ahead to save lives. Jacob, encouraged by God in a vision, brings the whole family to Egypt. They settle in Goshen, while the famine drives the Egyptians to sell their land to Pharaoh.",
+     "question": "What past pain might God be weaving into a story of rescue?"
+    },
+    {
+     "title": "Jacob’s Blessing and Joseph’s Mercy",
+     "intro": "Jacob blesses Joseph’s sons, crossing his hands to favor the younger. On his deathbed he speaks over each of his twelve sons, promising that the scepter will not leave Judah. After his burial, Joseph assures his fearful brothers that God turned their evil into good.",
+     "question": "Is there someone you need to reassure of your forgiveness, as Joseph did?"
+    },
+    {
+     "title": "Job Loses Everything",
+     "intro": "Job is upright and richly blessed. Satan claims Job serves God only for gain, and God permits him to be tested. Job loses his children, goods and health, yet does not curse God. His friends sit with him in silence, then Job curses his birth and Eliphaz replies.",
+     "question": "What would remain of your faith if your comforts were taken away?"
+    },
+    {
+     "title": "Eliphaz and Job’s Reply",
+     "intro": "Eliphaz urges Job to accept God’s correction and repent, sure that suffering must point to sin. Job insists he has done nothing to deserve this and says his friends have let him down. Then he speaks straight to God about the misery of his days.",
+     "question": "When someone you love suffers, do you rush to explain, or simply stay with them?"
+    },
+    {
+     "title": "Who Can Stand Before God?",
+     "intro": "Bildad tells Job that God never twists justice, so Job’s children must have sinned. Job agrees that no one can win an argument with God, and he longs for someone to stand between them. Then he asks God why he made him with such care only to afflict him.",
+     "question": "What questions would you honestly bring to God if you were not afraid?"
+    },
+    {
+     "title": "Job Clings to Hope",
+     "intro": "Zophar bluntly calls Job to repent. Job answers that he knows God’s power as well as they do, and that their defense of God is false. He says he will trust God even if God slays him. He reflects on life’s shortness and asks whether the dead will live again.",
+     "question": "What helps you keep hoping in God when his ways make no sense?"
+    },
+    {
+     "title": "My Witness Is in Heaven",
+     "intro": "Eliphaz and Bildad return with harsher words, describing the dark fate of the wicked and implying Job is one of them. Job calls them troublesome comforters. Yet even near despair, he declares that his witness is in heaven and turns his tear-filled eyes to God.",
+     "question": "Who has been a true comforter to you, and how could you be one?"
+    },
+    {
+     "title": "I Know My Redeemer Lives",
+     "intro": "Job feels abandoned by family, friends and servants, and begs his friends for pity. Then comes his great confession: he knows his Redeemer lives and that in his flesh he will see God. Zophar describes the ruin of the wicked, and Job answers that the wicked often prosper.",
+     "question": "What difference does it make to you today that your Redeemer lives?"
+    },
+    {
+     "title": "Where Can I Find God?",
+     "intro": "Eliphaz now falsely accuses Job of cruelty to the poor. Job longs to find God and lay out his case, trusting that God has tried him like gold. He grieves at injustice that seems to go unpunished. Bildad’s short speech asks how any mortal can be just before God.",
+     "question": "When God feels hidden, what keeps you seeking him?"
+    },
+    {
+     "title": "Where Is Wisdom Found?",
+     "intro": "Job praises God’s power over earth and sky, calling it only a small part of his ways, and refuses to give up his integrity. A poem follows: people dig deep for gold and gems, but wisdom comes from God, and fearing the Lord is wisdom. Then he recalls happier days.",
+     "question": "Where do you go looking for wisdom before you go to God?"
+    },
+    {
+     "title": "Job’s Final Defense",
+     "intro": "Job contrasts his old honor with the scorn he now endures, even from young men. He swears he has been pure, honest, generous to the poor and free of idolatry, and asks God to answer him. Then young Elihu, angry at Job and his friends, begins to speak.",
+     "question": "If you honestly examined your conscience, what would you want to set right?"
+    },
+    {
+     "title": "Elihu Speaks",
+     "intro": "Elihu says God speaks to people in dreams and through sickness, to turn them from pride and spare them from the grave. He insists that God never acts wickedly or unjustly, and he rebukes Job for speaking as if being righteous gains a person nothing.",
+     "question": "How might God be speaking to you through a difficulty right now?"
+    },
+    {
+     "title": "The Lord Answers Job",
+     "intro": "Elihu finishes by praising God’s greatness in rain, thunder and snow. Then the Lord himself answers Job out of a whirlwind. He does not explain Job’s suffering. Instead he asks where Job was when the earth was founded and leads him through the wonders of sea, light and sky.",
+     "question": "What in creation reminds you that God is greater than your understanding?"
+    },
+    {
+     "title": "Job Is Restored",
+     "intro": "God keeps showing Job the wild creatures he made, from the eagle to Behemoth and Leviathan. Job falls silent and repents in dust and ashes. God says the friends did not speak rightly of him and asks Job to pray for them. Job’s fortunes are restored twice over.",
+     "question": "Who might God be asking you to pray for, even after they hurt you?"
+    },
+    {
+     "title": "The Burning Bush",
+     "intro": "Jacob’s family has grown into a people, and a new Pharaoh enslaves them and orders their baby boys killed. Moses is saved by his mother and Pharaoh’s daughter, then flees to Midian. At a burning bush, God calls him to free Israel and reveals his name.",
+     "question": "Where is God calling you that you would rather not go?"
+    },
+    {
+     "title": "Moses Before Pharaoh",
+     "intro": "Moses raises objections, and God gives him signs and his brother Aaron as spokesman. Pharaoh refuses to let the people go and makes them gather their own straw for bricks. The Israelites blame Moses, but God renews his promise to bring them out and make them his people.",
+     "question": "What excuses do you give God when he asks something hard of you?"
+    },
+    {
+     "title": "The Plagues Begin",
+     "intro": "Aaron’s staff becomes a serpent, and the plagues start: the Nile turned to blood, then frogs, gnats, flies, dead livestock, boils and hail. Pharaoh’s magicians keep up at first but soon fail. Watch Pharaoh promise to release Israel, then harden his heart again and again.",
+     "question": "Have you promised God a change, then hardened your heart once relief came?"
+    },
+    {
+     "title": "The First Passover",
+     "intro": "Locusts and darkness fall on Egypt, and Pharaoh still refuses. God gives Israel the Passover: a lamb without blemish, its blood on the doorposts, eaten in haste with unleavened bread. At midnight the firstborn of Egypt die, and Israel finally leaves.",
+     "question": "How does the Passover lamb deepen the way you approach the Eucharist?"
+    },
+    {
+     "title": "Crossing the Red Sea",
+     "intro": "Israel leaves Egypt led by a pillar of cloud by day and fire by night, carrying Joseph’s bones. Pharaoh’s army chases them to the sea. Moses stretches out his hand, the waters part, and Israel crosses on dry ground. Moses and Miriam lead songs of praise.",
+     "question": "What Red Sea has God already brought you through?"
+    },
+    {
+     "title": "Manna in the Desert",
+     "intro": "The people grumble in the wilderness, so God sends quail and daily manna, with a double portion before the sabbath. Water flows from a rock, and Israel defeats Amalek while Moses’ arms are held up. Jethro advises Moses to share the work. Today’s shepherd psalm fits well.",
+     "question": "What are you anxious about, and can you trust God with just today?"
+    },
+    {
+     "title": "The Ten Commandments",
+     "intro": "At Sinai, God offers Israel a covenant: they will be his own people, a kingdom of priests. Amid thunder he speaks the Ten Commandments, and the frightened people beg Moses to speak to them. Laws on altars, servants and injuries follow. The psalm asks who may climb the Lord’s mountain.",
+     "question": "Which commandment is God inviting you to live more fully this week?"
+    },
+    {
+     "title": "The Covenant Sealed",
+     "intro": "More laws guard property, protect the stranger, widow and orphan, and set the yearly feasts. God promises an angel to guide Israel. Then Moses reads the book of the covenant, the people pledge to obey, and he sprinkles them with blood. The elders see God and eat and drink.",
+     "question": "Who is the stranger, widow or orphan God has placed near you?"
+    },
+    {
+     "title": "Plans for the Tabernacle",
+     "intro": "On the mountain God gives Moses the pattern for a sanctuary, so that he can dwell among his people. Watch for the ark of the covenant with its golden mercy seat and cherubim, the table for the bread of the Presence, the lampstand, the curtains, the altar and the court.",
+     "question": "How do you make room for God to dwell in your daily life?"
+    },
+    {
+     "title": "Garments for the Priests",
+     "intro": "God orders sacred garments for Aaron and his sons: an ephod, a breastpiece set with twelve stones for the tribes, and a gold plate engraved Holy to the Lord. He then describes the seven days of ordination and the daily offering of a lamb each morning and evening.",
+     "question": "What habit of prayer, morning and evening, could anchor your day?"
+    },
+    {
+     "title": "The Golden Calf",
+     "intro": "God finishes his instructions: an altar of incense, a basin for washing, holy oil, and Bezalel, filled with God’s spirit, to do the craftwork. Moses receives the stone tablets. Meanwhile the people make a golden calf. Moses pleads for them, breaks the tablets and confronts Aaron.",
+     "question": "What golden calf tempts you when God seems slow or far away?"
+    },
+    {
+     "title": "Moses Sees God’s Glory",
+     "intro": "After the calf, God speaks with Moses face to face, as with a friend. Moses asks to see his glory and is hidden in a rock as God passes by, proclaiming his mercy. The covenant is renewed, Moses’ face shines, and the people bring gifts for the sanctuary.",
+     "question": "How would your prayer change if you spoke to God as a friend?"
+    },
+    {
+     "title": "Building the Sanctuary",
+     "intro": "Bezalel, Oholiab and the skilled workers begin. The people give so much that Moses must tell them to stop. Chapter by chapter the plans become real: curtains and boards, the veil, the ark and mercy seat, the table, lampstand, altars and court, with a tally of the metals offered.",
+     "question": "What gift or skill could you offer generously for God’s work?"
+    },
+    {
+     "title": "The Glory Fills the Tabernacle",
+     "intro": "The priestly garments are finished, and Moses inspects the work and blesses the people. On the first day of the new year the tabernacle is set up and anointed. Then the cloud covers it and the glory of the Lord fills it, so that even Moses cannot enter.",
+     "question": "When have you sensed God’s presence filling an ordinary place?"
+    },
+    {
+     "title": "Laws of Offerings",
+     "intro": "From the tabernacle God teaches Moses how Israel is to draw near with offerings: whole burnt offerings, grain offerings seasoned with salt, peace offerings shared in fellowship, and sin offerings for wrongs done unknowingly. Notice the worshiper laying a hand on the animal’s head.",
+     "question": "What would it mean to give God your whole self, holding nothing back?"
+    },
+    {
+     "title": "Making Things Right",
+     "intro": "More offerings cover sins such as failing to testify, touching what is unclean, rash oaths and cheating a neighbor. Wrongs against others require repayment plus a fifth more. Priests learn their share, the altar fire must never go out, and no fat or blood may be eaten.",
+     "question": "Is there a wrong you need not only to confess, but also to repair?"
+    },
+    {
+     "title": "Aaron’s Ordination",
+     "intro": "Moses washes, clothes and anoints Aaron and his sons, and they stay at the tent for seven days. When Aaron offers his first sacrifices, fire from the Lord consumes them and the people fall on their faces. Then Nadab and Abihu offer unauthorized fire and are struck dead.",
+     "question": "How do you approach holy things, like the Mass, with reverence?"
+    },
+    {
+     "title": "Clean and Unclean",
+     "intro": "God sets out which animals Israel may eat, calling them to be holy because he is holy. A mother brings an offering after childbirth, with turtledoves allowed for the poor. Then come detailed tests for leprosy in skin and garments, which the priest must examine.",
+     "question": "What does being holy as God is holy look like in your ordinary day?"
+    },
+    {
+     "title": "Cleansing the Leper",
+     "intro": "A healed leper is restored to the community through a rite with two birds, cedar, scarlet and hyssop, followed by offerings. Rules follow for leprosy in houses and for bodily discharges. These laws keep Israel mindful that God dwells in their midst.",
+     "question": "Who has been left on the edges, and how could you help bring them back?"
+    },
+    {
+     "title": "The Day of Atonement",
+     "intro": "Once a year the high priest enters the holy of holies with blood to make atonement. One goat is sacrificed, and the other carries the people’s sins away into the wilderness. Blood, the life of the flesh, must not be eaten. Laws on marriage and sexual conduct follow.",
+     "question": "What do you need to let God carry away from you today?"
+    },
+    {
+     "title": "Be Holy, Love Your Neighbor",
+     "intro": "God calls Israel to be holy as he is holy, and shows what that looks like: leave gleanings for the poor, pay wages promptly, judge fairly, love your neighbor as yourself, and love the stranger too. Penalties for grave sins follow, then special rules for priests.",
+     "question": "Which neighbor are you being asked to love as yourself today?"
+    },
+    {
+     "title": "Israel’s Holy Feasts",
+     "intro": "Offerings must be without blemish. Then God sets Israel’s calendar: the sabbath, Passover and Unleavened Bread, firstfruits, the feast of Weeks, Trumpets, the Day of Atonement and Tabernacles. Oil keeps the lamp burning, twelve loaves lie before the Lord, and a blasphemer is judged.",
+     "question": "How do you keep Sunday and the Church’s feasts holy?"
+    },
+    {
+     "title": "The Year of Jubilee",
+     "intro": "Every seventh year the land rests, and every fiftieth year is a jubilee, when land returns to its families and Israelites sold into service go free, for the land belongs to God. Then come blessings for obedience, warnings for rebellion, and God’s promise to remember his covenant when they repent.",
+     "question": "What would it look like to treat what you own as belonging to God?"
+    },
+    {
+     "title": "Vows and the First Census",
+     "intro": "Leviticus closes with rules for vows, for redeeming what has been dedicated to God, and for the tithe. Numbers opens in the wilderness of Sinai, as Moses counts the men able to fight, tribe by tribe. The Levites are set apart to care for the tabernacle.",
+     "question": "What promise you made to God needs renewing?"
+    },
+    {
+     "title": "The Camp Around the Tabernacle",
+     "intro": "The tribes camp in order on four sides of the tabernacle, with Judah on the east, so God’s dwelling stands at the center. Aaron’s sons serve as priests. The Levites are counted and given their duties, and God takes them in place of Israel’s firstborn.",
+     "question": "What would change if God were truly at the center of your life?"
+    },
+    {
+     "title": "The Priestly Blessing",
+     "intro": "Levite clans receive their tasks for carrying the tabernacle, with the holiest things covered first. Laws follow on confession and repayment, a husband’s jealousy, and the Nazirite vow of special dedication. The day ends with the blessing Aaron speaks over Israel: the Lord bless you and keep you.",
+     "question": "Who could you bless today, in word or in prayer?"
+    },
+    {
+     "title": "Gifts for the Altar",
+     "intro": "When the tabernacle is anointed, the twelve tribal leaders bring offerings, one leader each day for twelve days. Each gift is the same, yet each is recorded in full. At the end, Moses hears God speaking to him from above the mercy seat.",
+     "question": "How does it feel to know God sees even your small, repeated offerings?"
+    },
+    {
+     "title": "Israel Sets Out",
+     "intro": "The lamps are set up, and the Levites are cleansed and presented to God. Israel keeps the Passover, with a later date for those who were unclean. The cloud over the tabernacle tells the camp when to stay and when to move. Silver trumpets sound, and the people leave Sinai.",
+     "question": "How do you discern when God is asking you to stay or to move?"
+    },
+    {
+     "title": "Grumbling and the Spies",
+     "intro": "The people crave meat, and Moses feels his burden is too heavy. God shares his spirit with seventy elders and sends quail, followed by a plague. Miriam and Aaron challenge Moses, and Miriam is struck with leprosy. Twelve spies scout Canaan and return with a huge cluster of grapes.",
+     "question": "What do you grumble about that might actually be a gift?"
+    },
+    {
+     "title": "Forty Years in the Wilderness",
+     "intro": "Frightened by the spies’ report, the people want to go back to Egypt. Only Joshua and Caleb urge trust in God. Moses pleads, and God pardons yet decrees that this generation will wander forty years and die in the desert. Laws follow, including tassels to recall the commandments.",
+     "question": "Where has fear kept you from stepping into what God has promised?"
+    },
+    {
+     "title": "Korah’s Rebellion",
+     "intro": "Korah, Dathan and Abiram rise against Moses and Aaron, and the earth swallows them. When the people grumble again, Aaron stands with his censer between the dead and the living until the plague stops. Aaron’s staff buds and bears almonds, and the duties of priests and Levites are set.",
+     "question": "How do you respond when you envy someone else’s role or calling?"
+    },
+    {
+     "title": "The Bronze Serpent",
+     "intro": "A red heifer’s ashes make water for purification. Miriam dies. At Meribah, Moses strikes the rock twice, and God says he will not lead the people into the land. Aaron dies on Mount Hor. When serpents bite the people, those who look at a bronze serpent live.",
+     "question": "When you are wounded by sin, where do you turn your eyes?"
+    },
+    {
+     "title": "Balaam’s Blessings",
+     "intro": "Balak, king of Moab, hires the seer Balaam to curse Israel. On the way, Balaam’s donkey sees an angel blocking the road and speaks. Three times Balaam tries to curse, and each time only blessing comes out. He foresees a star rising out of Jacob.",
+     "question": "How might God be trying to get your attention, as he did with Balaam?"
+    },
+    {
+     "title": "Sin at Peor",
+     "intro": "At Peor, Israelite men are drawn into immorality and the worship of Baal by Moabite women, and a plague breaks out until Phinehas acts in zeal. A new census follows on the plains of Moab. Of those counted at Sinai, only Caleb and Joshua remain.",
+     "question": "What small compromise could lead you away from God if left unchecked?"
+    },
+    {
+     "title": "Joshua Is Chosen",
+     "intro": "The daughters of Zelophehad ask for their father’s inheritance, and God agrees. Moses sees the promised land from a mountain and asks for a shepherd for the people, and Joshua is commissioned by the laying on of hands. Then come the offerings for each day, sabbath and feast.",
+     "question": "Who has God given you to guide, and who is guiding you?"
+    },
+    {
+     "title": "Vows and War with Midian",
+     "intro": "Laws on vows explain when a father or husband may cancel a woman’s vow. Then Israel goes to war against Midian for leading the people into sin at Peor. Balaam is killed among the Midianites, and the spoils are divided, with a share set aside for the Lord.",
+     "question": "How seriously do you take the promises you make to God and others?"
+    },
+    {
+     "title": "Settling East of the Jordan",
+     "intro": "Reuben, Gad and half of Manasseh want to settle the good grazing land east of the Jordan. Moses fears they are abandoning their brothers, but they promise to fight alongside them first. Then comes a list of every stage of Israel’s journey from Egypt.",
+     "question": "Looking back over your own journey, where do you see God’s guidance?"
+    },
+    {
+     "title": "Cities of Refuge",
+     "intro": "God sets the borders of Canaan and names the leaders who will divide it. The Levites receive towns, six of them cities of refuge where someone who killed without intent may flee. Numbers ends with the daughters of Zelophehad marrying within their tribe to keep the inheritance.",
+     "question": "Who needs you to be a place of refuge for them right now?"
+    },
+    {
+     "title": "Moses Remembers the Journey",
+     "intro": "On the plains of Moab, Moses begins his farewell speeches. He recalls choosing judges, sending the spies and the people’s refusal to enter the land. He reviews the long wandering, God’s order to pass Edom, Moab and Ammon in peace, and the victory over Sihon.",
+     "question": "What lesson from your own past do you most need to remember?"
+    },
+    {
+     "title": "A God So Near",
+     "intro": "Moses recalls defeating Og and settling the land east of the Jordan. He may see Canaan but not enter it. He urges Israel to keep the commandments and shun idols, since at Horeb they saw no form, only heard a voice. Whoever seeks God wholeheartedly will find him.",
+     "question": "How near does God feel to you today, and why?"
+    },
+    {
+     "title": "Hear, O Israel",
+     "intro": "Moses repeats the Ten Commandments given at Horeb. Then comes the great command: love the Lord your God with all your heart, soul and strength, and teach these words to your children. God chose Israel not because they were many, but because he loved them.",
+     "question": "How are you passing on your love of God to those around you?"
+    },
+    {
+     "title": "Not by Bread Alone",
+     "intro": "Moses reminds Israel that God fed them with manna to teach that man does not live by bread alone. He warns them not to forget God when they prosper, nor to think they earned the land. Recalling the golden calf, he asks them to love God and circumcise their hearts.",
+     "question": "When life is comfortable, how do you keep from forgetting God?"
+    },
+    {
+     "title": "One Place of Worship",
+     "intro": "Israel must destroy the shrines of other gods and bring sacrifices only to the place God will choose. False prophets and anyone urging idolatry must not be followed, even if their signs come true. Rules on clean food follow, and tithes that feed the Levite, stranger, orphan and widow.",
+     "question": "What voices pull you away from God, even when they sound convincing?"
+    },
+    {
+     "title": "A Prophet Like Moses",
+     "intro": "Every seventh year debts are released, and Israel must open its hand to the poor. The great feasts are repeated, judges must be fair, and a future king must copy and study God’s law. Moses forbids fortune-telling and promises that God will raise up a prophet like him.",
+     "question": "Where could you open your hand more generously to someone in need?"
+    },
+    {
+     "title": "Justice in the Land",
+     "intro": "Moses keeps laying out how Israel should live once settled. Cities of refuge protect someone who kills by accident. Then come rules for honest witnesses, warfare, unsolved murders and family life, plus everyday kindness: bring back a neighbor’s stray ox, and put a railing around your roof.",
+     "question": "Whose safety or belongings could you look out for this week, as Moses asks Israel to?"
+    },
+    {
+     "title": "Firstfruits and Fair Dealing",
+     "intro": "More laws touch daily life: pay a poor worker before sunset, leave gleanings for the widow, orphan and stranger, and keep honest weights. In chapter 26 the farmer brings his firstfruits and recalls aloud how God led Israel out of Egypt into a land flowing with milk and honey.",
+     "question": "What firstfruits of your time or money could you give God first, rather than last?"
+    },
+    {
+     "title": "Blessings and Curses",
+     "intro": "Moses tells Israel to write the law on plastered stones once they cross the Jordan, and to proclaim blessings and curses from Mount Gerizim and Mount Ebal. Chapter 28 spells out both at length: abundance for faithfulness, and frightening ruin, even exile, for turning away.",
+     "question": "Which of God’s commands do you find hardest to see as a blessing rather than a burden?"
+    },
+    {
+     "title": "Choose Life",
+     "intro": "The covenant is renewed in the land of Moab. God promises mercy to those who return to him, even from exile, and says his command is not far off but very near. Then comes the great choice: life or death. Moses, now 120, hands leadership to Joshua.",
+     "question": "What small choice today could be your way of choosing life?"
+    },
+    {
+     "title": "The Death of Moses",
+     "intro": "Moses sings a long song recalling God’s faithfulness and Israel’s fickleness, then blesses each tribe in turn. From Mount Nebo he sees the whole promised land he will not enter. He dies there, the Lord buries him, and no prophet like Moses arises again.",
+     "question": "How do you respond when you work toward something you may not live to see finished?"
+    },
+    {
+     "title": "Crossing the Jordan",
+     "intro": "God tells Joshua again and again to be strong and take courage. Rahab hides two spies in Jericho and asks for mercy. The priests carry the ark into the Jordan, its waters stop, and Israel crosses on dry ground. At Gilgal they keep the Passover, and the manna ends.",
+     "question": "Where is God asking you to step forward before the way ahead looks clear?"
+    },
+    {
+     "title": "The Walls of Jericho",
+     "intro": "Israel marches around Jericho for seven days, and the walls fall at the trumpet blast and the people’s shout. Rahab and her family are spared. Then one man’s hidden theft brings defeat at Ai, until Achan is found out. Ai is taken, and the law is read aloud.",
+     "question": "Is there something hidden in your life that weighs on others more than you realize?"
+    },
+    {
+     "title": "The Sun Stands Still",
+     "intro": "The Gibeonites trick Israel with worn-out shoes and dry, crumbling bread, and Joshua makes a treaty without consulting the Lord. When five kings attack Gibeon, Joshua defends it: hailstones fall, and at his prayer the sun and moon stand still. The northern kings fall next.",
+     "question": "What decision are you facing that you have not yet brought to God in prayer?"
+    },
+    {
+     "title": "Caleb Claims Hebron",
+     "intro": "Chapter 12 lists the kings defeated under Moses and Joshua. God then tells the aging Joshua to divide the land, starting with the tribes east of the Jordan, while Levi receives no land of its own. Caleb, now 85 and still strong, asks for Hebron.",
+     "question": "What promise of God are you still waiting on, like Caleb, after many years?"
+    },
+    {
+     "title": "Judah and Joseph’s Lands",
+     "intro": "The borders and towns of Judah fill chapter 15, with a lively scene: Caleb’s daughter asks her father for springs of water. Then come the lands of Ephraim and Manasseh. Zelophehad’s daughters receive their promised share, and Joseph’s sons are told to clear the forest.",
+     "question": "What do you need to ask God for plainly, the way Caleb’s daughter asked her father?"
+    },
+    {
+     "title": "Shiloh and Cities of Refuge",
+     "intro": "The tabernacle is set up at Shiloh. Seven tribes still lack land, so Joshua sends men to map it and casts lots before the Lord. Benjamin, Simeon, Zebulun and the rest receive their portions, Joshua receives his town last, and six cities of refuge are named.",
+     "question": "Who could find refuge with you after making a mistake?"
+    },
+    {
+     "title": "Not One Promise Failed",
+     "intro": "The Levites receive towns scattered among all the tribes, and the narrator pauses: not one of God’s promises failed. The eastern tribes go home and build a large altar by the Jordan, nearly starting a war until they explain it. Old Joshua urges Israel to stay faithful.",
+     "question": "Looking back, which of God’s promises have you seen come true in your own life?"
+    },
+    {
+     "title": "As for Me and My House",
+     "intro": "At Shechem Joshua retells Israel’s story and puts the choice before them: he and his house will serve the Lord. The people agree, and Joshua dies. Judges then shows tribes leaving Canaanites in place, and a pattern begins: sin, oppression, crying out, rescue.",
+     "question": "What would it look like for your household to choose, together, to serve the Lord?"
+    },
+    {
+     "title": "Ehud, Deborah and Jael",
+     "intro": "The cycle turns again and again. Othniel rescues Israel, Ehud kills Eglon king of Moab with a hidden sword, and Shamgar fights with a plowshare. The prophetess Deborah sends Barak into battle, but Jael, a woman in a tent, strikes down the enemy general Sisera. Deborah sings of victory.",
+     "question": "When have you been surprised by whom God chose to use?"
+    },
+    {
+     "title": "Gideon and the Three Hundred",
+     "intro": "An angel finds Gideon threshing wheat in hiding and calls him most valiant. Hesitant, Gideon asks for signs with a fleece. God trims his army to three hundred, who rout Midian with trumpets, jars and lamps. Gideon refuses a crown, yet the ephod he makes becomes a snare.",
+     "question": "Where do you feel too small for what God asks, as Gideon did?"
+    },
+    {
+     "title": "Abimelech’s Grab for Power",
+     "intro": "Gideon’s son Abimelech murders his seventy brothers to rule Shechem. The one survivor, Jotham, tells a parable of trees choosing a bramble for king. Betrayal turns to bloodshed until a woman drops a millstone on Abimelech. Israel strays again, then repents, and God is moved by their misery.",
+     "question": "Where are you tempted to grab for control instead of waiting on God?"
+    },
+    {
+     "title": "Jephthah’s Vow, Samson’s Birth",
+     "intro": "Jephthah, an outcast, leads Gilead against Ammon and makes a rash vow that costs him his only daughter. A bitter fight with Ephraim follows. Then an angel announces Samson’s birth to a childless woman. Samson grows strong, kills a lion, and poses a riddle at his wedding.",
+     "question": "Have you ever made a hasty promise? What did it teach you about speaking carefully?"
+    },
+    {
+     "title": "Samson and Delilah",
+     "intro": "Samson’s feud with the Philistines escalates: burned fields, a jawbone, a thousand dead. Delilah pries out the secret of his strength, and he is blinded and chained. In the temple of Dagon he prays once more. Then Micah sets up an idol, and the tribe of Dan steals it.",
+     "question": "What weakness do you keep returning to, even when you know where it leads?"
+    },
+    {
+     "title": "Israel Without a King",
+     "intro": "A dark ending. A Levite’s wife is abused and killed at Gibeah in Benjamin, and the tribes go to war. Benjamin is nearly wiped out, and Israel scrambles to find wives for the survivors. The book’s refrain sums it up: everyone did what seemed right to himself.",
+     "question": "Who helps you see what is truly right, not just what seems right to you?"
+    },
+    {
+     "title": "Ruth’s Faithful Love",
+     "intro": "Naomi loses her husband and sons in Moab and returns home bitter. Her daughter-in-law Ruth refuses to leave her: your people will be my people, and your God my God. Ruth gleans in the field of Boaz, who marries her. Their son Obed is David’s grandfather.",
+     "question": "Who has stayed loyal to you in hard times, and how can you thank them?"
+    },
+    {
+     "title": "Hannah’s Prayer, Samuel’s Call",
+     "intro": "Childless Hannah pours out her heart at Shiloh, and God gives her Samuel, whom she gives back to serve him. Her song praises a God who lifts up the lowly. Eli’s sons are corrupt. The boy Samuel hears God calling at night. Then the Philistines capture the ark.",
+     "question": "How could you make a little quiet today to hear what God may be saying?"
+    },
+    {
+     "title": "The People Want a King",
+     "intro": "The captured ark topples the idol Dagon and brings plagues, so the Philistines send it back on a cart. Samuel leads Israel to put away idols and win victory. When his sons prove unjust, the people demand a king. Then Saul, looking for lost donkeys, meets Samuel.",
+     "question": "Where are you tempted to want to be just like everyone else around you?"
+    },
+    {
+     "title": "Saul Becomes King",
+     "intro": "Samuel anoints Saul, who is given another heart and prophesies. Chosen by lot, he is found hiding at home. He rescues Jabesh-gilead from the Ammonites, and Samuel warns the people to stay faithful. But facing the Philistines, Saul grows impatient and offers sacrifice without waiting for Samuel.",
+     "question": "When waiting on God feels too slow, what do you tend to do instead?"
+    },
+    {
+     "title": "Obedience Over Sacrifice",
+     "intro": "Jonathan and his armor-bearer climb a cliff and set the Philistines running. Saul’s rash oath nearly costs Jonathan his life. Sent against Amalek, Saul spares King Agag and the best livestock. Samuel tells him that obedience is better than sacrifice, and the Lord rejects Saul as king.",
+     "question": "Is there a partial obedience in your life that you call good enough?"
+    },
+    {
+     "title": "David and Goliath",
+     "intro": "Samuel goes to Bethlehem and anoints Jesse’s youngest son, the shepherd David, because the Lord looks at the heart. David soothes Saul with his harp. Then the giant Goliath taunts Israel, and David faces him with a sling and five smooth stones, trusting in the Lord.",
+     "question": "What giant are you facing, and what would trusting God with it look like?"
+    },
+    {
+     "title": "Jonathan’s Friendship",
+     "intro": "Jonathan loves David as his own soul and makes a covenant with him. As women sing David’s praises, Saul’s jealousy turns murderous: a thrown spear, a trap through marriage to Michal, soldiers at the door. Jonathan warns David with arrows shot in a field, and they part in tears.",
+     "question": "Who is a friend who helps you stay close to God, and how can you be one?"
+    },
+    {
+     "title": "David Spares Saul",
+     "intro": "On the run, David receives holy bread from Ahimelech and pretends to be mad before a Philistine king. Saul has the priests of Nob slaughtered. In a cave at En-gedi, David could kill Saul but only cuts the hem of his robe, refusing to harm the Lord’s anointed.",
+     "question": "When someone wrongs you, what would it look like to leave justice to God?"
+    },
+    {
+     "title": "Abigail’s Wise Words",
+     "intro": "Samuel dies. When the rich fool Nabal insults David’s men, David sets out for revenge, but Nabal’s wife Abigail meets him with gifts and wise words, and David thanks God for stopping him. Again he spares the sleeping Saul, then takes refuge among the Philistines.",
+     "question": "Who has talked you out of a decision you would have regretted?"
+    },
+    {
+     "title": "Saul’s Last Battle",
+     "intro": "With God silent, a desperate Saul consults a medium at Endor, and Samuel foretells his death. The Philistine commanders send David away. Raiders burn Ziklag, but David takes courage in the Lord and recovers everything. On Mount Gilboa, Saul and his sons fall.",
+     "question": "When God seems silent, where do you turn first?"
+    },
+    {
+     "title": "David Mourns Saul and Jonathan",
+     "intro": "David grieves for Saul and Jonathan in a moving lament: how are the valiant fallen. Judah anoints him king at Hebron, while Saul’s son Ish-bosheth rules the rest of Israel. A long war follows. Abner, Saul’s general, comes over to David, but Joab murders him, and David mourns openly.",
+     "question": "How do you grieve someone who hurt you, yet whom you also loved?"
+    },
+    {
+     "title": "A House Forever",
+     "intro": "David becomes king over all Israel, takes Jerusalem, and brings up the ark, dancing before the Lord with all his might. When he wants to build God a house, Nathan brings a greater promise: God will build David a house, and his throne will stand forever.",
+     "question": "What would it look like to worship God with your whole self, without worrying who is watching?"
+    },
+    {
+     "title": "David and Bathsheba",
+     "intro": "David shows kindness to Jonathan’s lame son Mephibosheth. Then, staying home from war, he takes Bathsheba and arranges her husband Uriah’s death to hide it. Nathan tells a story about a poor man’s lamb and says: you are the man. David confesses and is forgiven, yet suffers the consequences.",
+     "question": "Is there a sin you have explained away that you need to name honestly, as David did?"
+    },
+    {
+     "title": "Absalom’s Rebellion",
+     "intro": "Trouble grows inside David’s family. Amnon violates his half-sister Tamar, and her brother Absalom kills him and flees. Brought back, Absalom wins the people’s hearts at the city gate and declares himself king. David leaves Jerusalem barefoot, weeping as he climbs the Mount of Olives.",
+     "question": "Where does a rift in your family need attention before it grows worse?"
+    },
+    {
+     "title": "O My Son Absalom",
+     "intro": "As David flees, Shimei curses him and throws stones, and David lets him be. Ahithophel gives Absalom shrewd advice, but David’s friend Hushai undoes it. In the forest battle Absalom is caught in a tree and killed by Joab. David weeps, wishing he had died instead.",
+     "question": "How do you respond when someone criticizes you unfairly, as Shimei did David?"
+    },
+    {
+     "title": "The King Returns",
+     "intro": "Joab shakes David out of his grief. On the way back to Jerusalem, David pardons Shimei, hears out Mephibosheth, and honors old Barzillai. Tribal rivalry flares into Sheba’s revolt, which a wise woman ends. A famine is traced to Saul’s wrong against the Gibeonites.",
+     "question": "Whom do you need to forgive or welcome back for a fresh start?"
+    },
+    {
+     "title": "The Lord Is My Rock",
+     "intro": "David sings his thanks for rescue from all his enemies; the song closely matches Psalm 17 (18). Then come his last words about a just ruler, and a roll of his mighty warriors, including three who risked their lives to bring him water from the well at Bethlehem.",
+     "question": "Which rescue in your life would you put in your own song of thanks?"
+    },
+    {
+     "title": "David’s Census, Adam’s Line",
+     "intro": "David orders a count of his fighting men and then sees his sin. A plague follows, stopped when he builds an altar on Araunah’s threshing floor, refusing to offer God what costs him nothing. First Chronicles then begins, tracing the human family from Adam to Abraham and Esau.",
+     "question": "What would it mean to give God something that truly costs you?"
+    },
+    {
+     "title": "The Line of Judah and David",
+     "intro": "Chronicles begins its retelling of Israel’s story with names. Today’s lists trace the tribe of Judah down to Jesse and David, then David’s sons and the royal line of kings that followed, on past the exile. These names point toward Jesus, the Son of David.",
+     "question": "Whose faith in your family helped pass the faith on to you?"
+    },
+    {
+     "title": "The Prayer of Jabez",
+     "intro": "More family lists, from Judah, Simeon and the tribes east of the Jordan. Watch for Jabez, more honored than his brothers, who asks God for blessing and protection and receives it. The eastern tribes win when they call on God in battle, but later turn to idols and are exiled.",
+     "question": "What would you ask God for today if you prayed as boldly as Jabez?"
+    },
+    {
+     "title": "The Tribe of Levi",
+     "intro": "One long chapter on Levi, the priestly tribe: the high priests descended from Aaron, the Levite families, and the singers David put in charge of music before the ark, such as Heman and Asaph. It closes with the towns given to the Levites throughout Israel.",
+     "question": "How does music or song help you pray?"
+    },
+    {
+     "title": "Families of the Tribes",
+     "intro": "The lists continue with Issachar, Benjamin, Naphtali, Manasseh, Ephraim and Asher, often counting their warriors; Joshua appears among Ephraim’s descendants. Chapter 8 traces Benjamin again, down to Saul and his family. Names that seem dry still witness that God remembers every family.",
+     "question": "When did you last sense that God knows you by name?"
+    },
+    {
+     "title": "David Takes Zion",
+     "intro": "Chapter 9 lists those who lived in Jerusalem after the exile, including gatekeepers who guarded the house of God. Chronicles then tells Saul’s death briefly, naming his unfaithfulness as the cause. All Israel makes David king, he captures the fortress of Zion, and his mighty men are listed.",
+     "question": "What small unfaithfulness might be quietly shaping the direction of your life?"
+    },
+    {
+     "title": "The Ark Comes to Jerusalem",
+     "intro": "Warriors from every tribe rally to David, including men of Issachar who understood the times. The first attempt to move the ark ends with Uzzah’s death. After three months with Obed-edom, the Levites carry it properly, and David leads the celebration with music and dancing.",
+     "question": "What would it mean for you to understand the times and know what to do?"
+    },
+    {
+     "title": "David’s Song of Thanks",
+     "intro": "With the ark in its tent, David appoints Levites to praise God and gives them a song of thanks that echoes several Psalms. Nathan then brings God’s promise that David’s son will build a house and that his kingdom will last forever. Victories over neighboring nations follow.",
+     "question": "What is one thing you could thank God for out loud today?"
+    },
+    {
+     "title": "Preparing for the Temple",
+     "intro": "After the census and plague, David buys Ornan’s threshing floor and names it the site of God’s house. Barred from building because he shed much blood, he gathers materials, charges young Solomon to build, and organizes the Levites. Today’s Psalm prays for the king’s son.",
+     "question": "What could you prepare now so that someone after you can build something good?"
+    },
+    {
+     "title": "Priests, Singers, Gatekeepers",
+     "intro": "David organizes temple service. The priests are divided by lot into twenty-four groups; the eighth, Abijah, is the group Zechariah belongs to in Luke’s Gospel. Singers are set apart to prophesy with harps and cymbals, and gatekeepers and treasurers receive their posts.",
+     "question": "What small, steady service could you offer your parish?"
+    },
+    {
+     "title": "David’s Last Gifts",
+     "intro": "After lists of army divisions and officials, David gathers the leaders and hands Solomon the plans for the temple. He gives generously from his own treasure, and the people gladly follow. His prayer confesses that everything comes from God’s hand. Then David dies, full of days.",
+     "question": "What would change if you saw everything you own as received from God’s hand?"
+    },
+    {
+     "title": "Solomon Takes the Throne",
+     "intro": "As David grows old, his son Adonijah declares himself king. Nathan and Bathsheba remind David of his promise, and Solomon is anointed. David charges Solomon to walk in God’s ways, then dies. Solomon secures his throne, removing Adonijah, Joab and Shimei.",
+     "question": "What charge would you want to hand on to those who come after you?"
+    },
+    {
+     "title": "Solomon Asks for Wisdom",
+     "intro": "At Gibeon God invites Solomon to ask for anything, and he asks for an understanding heart to judge the people. God gives him wisdom, and riches and honor besides. Two women claim one baby, and Solomon’s ruling reveals the true mother. Hiram of Tyre agrees to supply cedar.",
+     "question": "If God offered you anything, what would you ask for, and why?"
+    },
+    {
+     "title": "Building the Temple",
+     "intro": "Detail after detail: the temple’s size, its cedar and gold, the inner sanctuary with two great cherubim. The stones were readied beforehand, so no hammer or axe was heard as it rose. Solomon’s palace follows, then the bronze pillars and the great basin called the sea.",
+     "question": "How do you prepare your heart before entering a church?"
+    },
+    {
+     "title": "The Glory Fills the Temple",
+     "intro": "The ark is brought in, and a cloud fills the house of the Lord. Solomon prays: heaven cannot contain God, much less this temple, yet may he hear every prayer made toward it, even a foreigner’s. God answers with a promise and a warning against turning away.",
+     "question": "Where do you most sense God’s presence close to you?"
+    },
+    {
+     "title": "Solomon’s Heart Turns",
+     "intro": "The Queen of Sheba tests Solomon with hard questions and leaves amazed. His wealth is staggering. But in old age his many foreign wives turn his heart to their gods. God raises up enemies, and the prophet Ahijah tears a new cloak to promise Jeroboam ten tribes.",
+     "question": "What good gift in your life could slowly pull your heart away from God?"
+    },
+    {
+     "title": "The Temple on Moriah",
+     "intro": "Chronicles retells Solomon’s reign with the temple at its center. He builds on Mount Moriah, where the Lord had appeared to David. When the ark is placed inside and the singers praise God’s everlasting mercy, a cloud fills the house. Today’s Psalm celebrates God dwelling in Zion.",
+     "question": "When has praising God with others made him feel especially near?"
+    },
+    {
+     "title": "I Will Heal Their Land",
+     "intro": "Solomon prays at the temple’s dedication, and fire falls from heaven on the sacrifices. God appears at night with a promise: if his people pray, seek his face, and turn from their wicked ways, he will hear, forgive their sins and heal their land. Solomon’s building projects follow.",
+     "question": "What turning from sin would most help heal your home or community?"
+    },
+    {
+     "title": "The Song of Songs Begins",
+     "intro": "Chronicles closes Solomon’s story with the Queen of Sheba’s visit and his death. Then the Song of Songs begins, a love poem between bride and bridegroom. The Church has long read it as a picture of God’s love for his people and for each soul. Listen for longing and delight.",
+     "question": "How might your prayer change if you believed God truly delights in you?"
+    },
+    {
+     "title": "Love Strong as Death",
+     "intro": "The Song ends with the bride searching for her beloved and declaring that love is strong as death; many waters cannot quench it. Then Ecclesiastes opens with a sigh: vanity of vanities. Its writer tries pleasure, great works and wealth, and finds them empty.",
+     "question": "What have you chased hoping it would satisfy you, only to find it empty?"
+    },
+    {
+     "title": "A Time for Everything",
+     "intro": "Ecclesiastes keeps looking honestly at life under the sun. There is a time to be born and a time to die. Two are better than one. Let your words before God be few, and keep your vows. The lover of money is never satisfied.",
+     "question": "What season of life are you in, and what might God be asking of you in it?"
+    },
+    {
+     "title": "Remember Your Creator",
+     "intro": "Ecclesiastes admits we cannot fully grasp God’s ways, but urges us to eat our bread with joy, do earnestly whatever our hands can do, and give generously while there is time. It ends by calling us to remember our Creator in youth, to fear God and keep his commandments.",
+     "question": "What good work could you do today rather than putting it off?"
+    },
+    {
+     "title": "The Kingdom Splits",
+     "intro": "Rehoboam ignores his elders and promises a heavier yoke, so ten tribes break away under Jeroboam. To keep his people from going to Jerusalem, Jeroboam sets up golden calves at Bethel and Dan. A man of God from Judah confronts him, and Egypt’s king plunders the temple.",
+     "question": "Whose wise advice have you brushed aside because it was not what you wanted?"
+    },
+    {
+     "title": "Elijah and the Widow",
+     "intro": "Kings come and go quickly. Asa of Judah does right, while Israel’s throne passes through plots and murders to Omri and his son Ahab, who serves Baal with his wife Jezebel. Then the prophet Elijah announces a drought, is fed by ravens, and raises a widow’s son.",
+     "question": "When have you given from very little, like the widow, and found God provided?"
+    },
+    {
+     "title": "Fire on Mount Carmel",
+     "intro": "On Mount Carmel Elijah asks the people how long they will waver between two sides, and faces the prophets of Baal. Fire falls from heaven, then rain. Yet threatened by Jezebel, he flees in despair. An angel feeds him, and at Horeb the Lord comes in a gentle breeze.",
+     "question": "Where might God be speaking to you quietly while you wait for something louder?"
+    },
+    {
+     "title": "Naboth’s Vineyard",
+     "intro": "Ahab wants Naboth’s vineyard, and when Naboth will not sell his family inheritance, Jezebel has him falsely accused and stoned. Elijah pronounces judgment, and Ahab humbles himself. Later the prophet Micaiah alone tells Ahab the truth, and Ahab dies in battle despite his disguise.",
+     "question": "Is there a truth you avoid hearing because it might ask something of you?"
+    },
+    {
+     "title": "Elijah Taken Up",
+     "intro": "King Ahaziah sends to consult a foreign god, and Elijah foretells his death. Then Elijah crosses the Jordan with Elisha and is taken up by a whirlwind as a chariot of fire appears. Elisha receives a double share of his spirit and begins his own works.",
+     "question": "Whose faith would you most like to inherit, and why?"
+    },
+    {
+     "title": "Naaman Is Healed",
+     "intro": "Elisha’s miracles meet ordinary needs: a widow’s oil keeps flowing, a generous woman receives a son and later sees him raised, and a little bread feeds a hundred men. Naaman, a Syrian general, grudgingly washes seven times in the Jordan and is healed, while greedy Gehazi is struck with leprosy.",
+     "question": "Where does pride keep you from accepting a simple remedy God offers?"
+    },
+    {
+     "title": "Chariots of Fire Around Elisha",
+     "intro": "An axe head floats. When Syrian troops surround Elisha, his frightened servant’s eyes are opened to see the mountain full of horses and chariots of fire. Later Samaria starves under siege, until four lepers find the enemy camp deserted. Elisha foresees Hazael’s cruelty.",
+     "question": "What would change if you could see God’s help around you right now?"
+    },
+    {
+     "title": "Jehu and Queen Athaliah",
+     "intro": "A young prophet anoints Jehu, who drives furiously to wipe out Ahab’s house: two kings and Jezebel die. He destroys Baal worship but keeps Jeroboam’s calves. In Judah, Athaliah seizes power, but the boy Joash is hidden in the temple for six years and then crowned.",
+     "question": "Where are you zealous against others’ faults but easy on your own?"
+    },
+    {
+     "title": "Jonah Runs Away",
+     "intro": "Joash repairs the temple. Elisha dies, and a dead man who touches his bones comes back to life. Under Jeroboam II, a word spoken by the prophet Jonah son of Amittai comes true. Then the Book of Jonah begins: sent to Nineveh, Jonah sails the other way.",
+     "question": "Where are you heading the other way from something God has asked of you?"
+    },
+    {
+     "title": "Nineveh Repents",
+     "intro": "From inside the fish Jonah prays, and he is cast out onto dry land. He preaches, and all Nineveh repents. Jonah sulks, and God shows him his care for the city. Amos then opens with judgments on Israel’s neighbors, and on Israel for selling the poor.",
+     "question": "Is there someone you find it hard to wish God’s mercy for?"
+    },
+    {
+     "title": "Seek the Lord and Live",
+     "intro": "Amos calls Israel to seek the Lord and live. God rejects their feasts while justice is trampled. Amos sees visions of coming judgment and is told to leave Bethel. Yet the book ends with hope: David’s fallen tabernacle will rise. Today’s Psalm also calls rulers to defend the poor.",
+     "question": "Where could your faith show itself in fairness toward someone poor or overlooked?"
+    },
+    {
+     "title": "Hosea’s Unfaithful Wife",
+     "intro": "God tells Hosea to marry Gomer, an unfaithful wife, as a living sign of Israel’s unfaithfulness to the Lord. Their children’s names announce judgment. Yet God promises to lead his people into the wilderness and speak to their heart, and says he desires mercy, not sacrifice.",
+     "question": "How has God kept loving you through times when you were unfaithful?"
+    },
+    {
+     "title": "Drawn with Bands of Love",
+     "intro": "Hosea grieves over Israel’s idols and empty alliances: they sow the wind and reap a whirlwind. Then God speaks like a parent: he called his son out of Egypt, carried him in his arms, and drew him with bands of love. He will not destroy him utterly.",
+     "question": "How have you felt God’s patient, fatherly love drawing you back?"
+    },
+    {
+     "title": "Return to the Lord",
+     "intro": "Hosea ends with judgment and hope: God will redeem his people from death itself, and he pleads, return, O Israel, promising to heal them. Back in Kings, Israel’s rulers are murdered one after another, and Judah’s King Ahaz copies a pagan altar for the temple.",
+     "question": "What would returning to the Lord look like for you this week?"
+    },
+    {
+     "title": "Israel Exiled, Tobit Faithful",
+     "intro": "Samaria falls to Assyria, and the northern tribes are carried into exile because they abandoned the Lord. Newcomers mix his worship with their own gods. Then we meet Tobit, an exile in Nineveh who stays faithful, gives alms and buries the dead, until he is suddenly blinded.",
+     "question": "How could you practice mercy quietly, as Tobit did, even when it costs you?"
+    },
+    {
+     "title": "Two Prayers Heard at Once",
+     "intro": "On the same day, blind Tobit and Sarah, a young woman in Media who has lost seven husbands, pour out their grief to God. God hears both and sends the angel Raphael. Tobit gives his son Tobiah wise counsel, and a stranger offers to guide him.",
+     "question": "When have you brought your deepest discouragement honestly to God in prayer?"
+    },
+    {
+     "title": "Tobiah and Sarah Marry",
+     "intro": "Guided by Raphael, Tobiah catches a fish that leaps at him and keeps its heart, liver and gall. At Raguel’s house he marries Sarah, and the two pray together on their wedding night. Back home, his mother Anna fears he is lost.",
+     "question": "How could prayer shape your closest relationships more deeply?"
+    },
+    {
+     "title": "Raphael Reveals Himself",
+     "intro": "Tobiah comes home and heals his father’s eyes with the fish’s gall. Raphael then reveals who he is: one of the seven who stand before the Lord, who brought their prayers to God. Tobit sings God’s praise and, before dying, urges his family to stay faithful.",
+     "question": "Looking back, where can you see God guiding you when you did not recognize it?"
+    },
+    {
+     "title": "Do Justice, Love Mercy",
+     "intro": "Micah condemns the rich who seize fields, prophets who preach for pay, and judges who take bribes. Yet he sees nations streaming to God’s mountain and a ruler coming from little Bethlehem. In chapter 6, God says plainly what he asks of us.",
+     "question": "Which of Micah’s three requests, justice, mercy, or humility, is hardest for you right now?"
+    },
+    {
+     "title": "Scarlet Sins Made White",
+     "intro": "Isaiah opens with God’s case against Judah: sacrifices offered while widows and orphans are neglected. Yet God offers to make scarlet sins white as snow. In chapter 2 the nations go up to the Lord’s house and beat their swords into plowshares.",
+     "question": "Which injustice near you is God asking you to help set right?"
+    },
+    {
+     "title": "Isaiah’s Call and Emmanuel",
+     "intro": "A love song about a vineyard turns into judgment. In chapter 6 Isaiah sees the Lord enthroned, seraphim cry “Holy,” and a burning coal cleanses his lips. Then he offers King Ahaz a sign: a virgin will bear a son named Emmanuel.",
+     "question": "When you sense God asking, “Whom shall I send?”, how do you usually answer?"
+    },
+    {
+     "title": "A Child Is Born to Us",
+     "intro": "Light breaks on a people in darkness: a child is born, the Prince of Peace, to reign on David’s throne. Assyria is God’s rod but will fall for its pride. From the root of Jesse a shoot rises, filled with the Spirit, and the wolf lies down with the lamb.",
+     "question": "Where do you most long for the peace this promised King brings?"
+    },
+    {
+     "title": "Babylon’s Pride Brought Low",
+     "intro": "Isaiah now speaks to Judah’s neighbors: Babylon, Philistia, Moab, Damascus. At the center is a taunt over Babylon’s king, who wanted to climb above the stars and fell instead. Through it all the message holds steady: no empire can stand against the Lord.",
+     "question": "What ambitions in your life quietly try to climb above God?"
+    },
+    {
+     "title": "The Key of David",
+     "intro": "The oracles continue against Ethiopia, Egypt, Babylon, Edom and Arabia. Isaiah walks barefoot for three years as a sign. Surprisingly, Egypt will one day know the Lord. In chapter 22 the steward Shebna is replaced by Eliakim, who receives the key of David’s house.",
+     "question": "What responsibility has God placed on your shoulder, and how are you carrying it?"
+    },
+    {
+     "title": "A Feast on the Mountain",
+     "intro": "After an oracle on proud Tyre, the view widens to the whole earth under judgment. Then great hope breaks in: a rich banquet on God’s mountain for all peoples, death destroyed forever, tears wiped from every face, and songs of trust in God.",
+     "question": "Whose tears do you long to see God wipe away?"
+    },
+    {
+     "title": "Trusting God, Not Egypt",
+     "intro": "Isaiah rebukes leaders drunk on wine and on false confidence. God lays a tested cornerstone in Zion. The people honor him with their lips while their hearts are far away, and they run to Egypt for help instead of returning to him in quiet trust.",
+     "question": "Where are you tempted to seek security apart from God?"
+    },
+    {
+     "title": "The Desert Will Bloom",
+     "intro": "Again Isaiah warns against leaning on Egypt’s horses. He pictures a king who reigns in justice, and judgment falling on God’s enemies. The day ends in joy: the desert blossoms, the blind see, the lame leap, and a holy way leads the redeemed home.",
+     "question": "What dry place in your life needs God’s renewing water?"
+    },
+    {
+     "title": "Hezekiah’s Crisis and Prayer",
+     "intro": "Assyria’s King Sennacherib threatens Jerusalem, and his officer mocks Judah’s God. Hezekiah spreads the enemy’s letter before the Lord, and the Assyrian army is struck down. Later, gravely ill, Hezekiah weeps and is given fifteen more years, then foolishly shows his treasures to Babylon’s envoys.",
+     "question": "What threatening situation could you lay before the Lord today, as Hezekiah did?"
+    },
+    {
+     "title": "Jerusalem Delivered",
+     "intro": "These chapters tell Hezekiah’s story again, much as Isaiah did. Notice what is new: Hezekiah smashes the bronze serpent Moses made, because people were burning incense to it. Then come Sennacherib’s threats, the night of deliverance, the healing, and the warning about Babylon.",
+     "question": "Has something good in your life quietly become an idol?"
+    },
+    {
+     "title": "Josiah Finds the Law",
+     "intro": "Manasseh undoes his father’s reforms, filling Judah with idols and innocent blood. His grandson Josiah repairs the temple, where the book of the law is found. Josiah tears his garments, reads it to the people, renews the covenant, and clears idolatry from the land.",
+     "question": "What part of God’s word has recently cut you to the heart?"
+    },
+    {
+     "title": "Jerusalem Falls",
+     "intro": "Babylon carries King Jehoiachin away, then returns when Zedekiah rebels. The city and temple are burned and the people exiled. Chronicles then takes us back to the kingdom’s split under Rehoboam, retelling Judah’s story with special attention to the temple and its worship.",
+     "question": "When everything familiar falls apart, what keeps you anchored to God?"
+    },
+    {
+     "title": "Asa Seeks the Lord",
+     "intro": "Rehoboam abandons the law, and Egypt’s king plunders the temple. Abijah defeats Jeroboam by relying on God. King Asa begins well, removing idols and renewing the covenant after a prophet’s word. Late in life, though, he leans on Syria instead of God and turns harsh.",
+     "question": "How do you keep a good beginning with God from fading over time?"
+    },
+    {
+     "title": "The Battle Is God’s",
+     "intro": "Jehoshaphat sends teachers of the law through Judah and appoints honest judges. His alliance with Ahab nearly costs him his life. When a vast army comes, he leads the people in fasting and prayer, and singers march ahead of the troops. The enemies destroy one another.",
+     "question": "What battle are you fighting alone that you could hand over to God?"
+    },
+    {
+     "title": "Joash and Jehoiada",
+     "intro": "Jehoram and Ahaziah follow Ahab’s ways. Queen Athaliah seizes power, but a hidden child, Joash, survives. The priest Jehoiada crowns him, and Joash repairs the temple. After Jehoiada dies, Joash turns to idols and has the priest’s son Zechariah stoned.",
+     "question": "Who helps keep you faithful, and how would you stand without them?"
+    },
+    {
+     "title": "Pride Before a Fall",
+     "intro": "Amaziah starts well but ends badly. Uzziah grows strong, then proudly burns incense in the temple, a priest’s task, and is struck with leprosy. Jotham reigns faithfully. Ahaz sinks into idolatry, yet watch the prophet Oded persuade Israel’s army to free and care for Judah’s captives.",
+     "question": "When success comes, how do you guard against the pride that undid Uzziah?"
+    },
+    {
+     "title": "Hezekiah Restores Worship",
+     "intro": "Hezekiah reopens and cleanses the temple and restores its sacrifices. He invites all Israel, even the northern tribes, to keep the Passover in Jerusalem. The joy is so great that the feast runs a second week, and the people give generously for the priests and Levites.",
+     "question": "Is there a neglected place of prayer in your life that needs reopening?"
+    },
+    {
+     "title": "Manasseh Repents",
+     "intro": "Sennacherib’s invasion is retold briefly. Then comes something only Chronicles records: the wicked Manasseh, taken in chains to Babylon, humbles himself and prays. God hears him and brings him home, and he removes the idols. Later his grandson Josiah renews the covenant.",
+     "question": "Whom have you written off as beyond the reach of God’s mercy?"
+    },
+    {
+     "title": "Exile and Nineveh’s Fall",
+     "intro": "Josiah keeps a great Passover but dies in battle against Egypt’s king, and Jeremiah mourns him. Judah’s last kings fail and the people go into exile, yet Chronicles ends with Cyrus allowing a return. Nahum then announces the fall of Nineveh, Assyria’s proud capital.",
+     "question": "How does the hopeful ending of Chronicles speak to a loss you carry?"
+    },
+    {
+     "title": "The Just Shall Live by Faith",
+     "intro": "Zephaniah warns of the day of the Lord, then promises a humble remnant and a God who rejoices over his people with song. Habakkuk asks why God lets evil go unchecked. God answers that the vision will surely come, and the just one lives by faith.",
+     "question": "What question would you bring to God as boldly as Habakkuk did?"
+    },
+    {
+     "title": "Jeremiah Is Called",
+     "intro": "Habakkuk ends with a prayer: even if the fig tree fails and the fields yield nothing, he will rejoice in God. Then young Jeremiah is called, known by God before his birth. God accuses his people of leaving the fountain of living water for broken cisterns.",
+     "question": "What broken cistern do you sometimes drink from instead of God?"
+    },
+    {
+     "title": "Return, Faithless Children",
+     "intro": "God pictures Israel and Judah as an unfaithful wife, yet still pleads with them to come home and promises shepherds after his own heart. He asks for circumcised hearts, not just outward signs. Jeremiah searches Jerusalem’s streets for even one person who acts justly.",
+     "question": "What would returning to God with your whole heart look like this week?"
+    },
+    {
+     "title": "The Temple Sermon",
+     "intro": "False prophets cry peace when there is no peace. At the temple gate Jeremiah warns that the building will not protect people who steal, kill, and serve idols, then claim safety inside. God urges them to seek the ancient paths, and the prophet grieves over their refusal.",
+     "question": "Where might you be relying on religious habits without a changed heart?"
+    },
+    {
+     "title": "A Prophet Who Weeps",
+     "intro": "Jeremiah wishes his eyes were a fountain of tears for his people. God says to boast only in knowing him. Idols cannot speak or walk, but the Lord made the earth. Men from Jeremiah’s own town plot to kill him, and he asks God why the wicked prosper.",
+     "question": "When have you asked God why the wicked seem to prosper?"
+    },
+    {
+     "title": "The Ruined Loincloth",
+     "intro": "Jeremiah hides a linen loincloth by the Euphrates and later finds it ruined, a sign of Judah’s pride. Drought strikes and he pleads for his people, but God refuses. Jeremiah complains bitterly, yet finds joy in God’s words. He is told not to marry, a sign of coming loss.",
+     "question": "When have God’s words tasted sweet to you, and why?"
+    },
+    {
+     "title": "At the Potter’s House",
+     "intro": "Whoever trusts in human strength is like a desert shrub; whoever trusts in God is a tree by water. At the potter’s house Jeremiah learns that God can reshape his people. After smashing a clay jar as a sign, he is beaten and put in the stocks.",
+     "question": "What would it mean to let God reshape you like clay right now?"
+    },
+    {
+     "title": "The Righteous Branch",
+     "intro": "As Babylon besieges Jerusalem, King Zedekiah hopes for a miracle, but Jeremiah tells him the city will fall. He judges kings who built palaces through injustice. God condemns shepherds who scatter the flock and promises a righteous Branch from David who will reign wisely.",
+     "question": "Whom has God given you to shepherd, and how are you caring for them?"
+    },
+    {
+     "title": "Good Figs and Bad",
+     "intro": "Two baskets of figs show God’s care for the exiles already in Babylon. Jeremiah foretells seventy years of captivity. When he warns of the temple’s ruin, priests demand his death, but officials spare him. He then wears yoke straps to show the nations must serve Babylon.",
+     "question": "How do you respond when someone speaks a hard truth to you?"
+    },
+    {
+     "title": "Seek the City’s Peace",
+     "intro": "The prophet Hananiah breaks Jeremiah’s yoke and promises a quick return, but dies within the year. Jeremiah writes to the exiles: build houses, plant gardens, and pray for Babylon’s peace. After seventy years God will bring them home. Chapter 30 begins words of consolation.",
+     "question": "How can you seek the good of the place where you live now?"
+    },
+    {
+     "title": "A New Covenant",
+     "intro": "Rachel weeps for her children, but God promises their return. He will make a new covenant, writing his law on their hearts and remembering their sins no more. While confined during the siege, Jeremiah buys a field, a pledge that life will go on in the land.",
+     "question": "What would it mean for God’s law to be written on your heart?"
+    },
+    {
+     "title": "The Burned Scroll",
+     "intro": "God promises healing and a just Branch from David. Judah’s leaders free their slaves, then take them back. The Rechabites’ faithfulness to their ancestor’s rule shames Judah. When King Jehoiakim cuts up and burns Jeremiah’s scroll, Baruch writes it all down again.",
+     "question": "Which of God’s words would you rather cut away and forget?"
+    },
+    {
+     "title": "Jeremiah in the Cistern",
+     "intro": "Accused of deserting, Jeremiah is jailed, then lowered into a muddy cistern. Ebed-melech, an Ethiopian at the court, rescues him. Zedekiah secretly asks his counsel but will not obey. Jerusalem falls, Zedekiah is blinded, and Jeremiah is freed to stay with the governor Gedaliah.",
+     "question": "Who might need you to speak up for them when others stay silent?"
+    },
+    {
+     "title": "Flight into Egypt",
+     "intro": "Ishmael murders Gedaliah, and the frightened survivors ask Jeremiah to seek God’s will, promising to obey. God tells them to stay in Judah. They refuse, flee to Egypt, and take Jeremiah with them. There they go on burning incense to the queen of heaven.",
+     "question": "When have you asked for God’s guidance while already set on your own plan?"
+    },
+    {
+     "title": "A Word for Baruch",
+     "intro": "A short, tender word comes to Baruch: do not seek great things for yourself, and God will spare your life. Then the oracles against the nations begin: Egypt defeated at Carchemish, the Philistines, and proud Moab. Even so, God promises Moab a future restoration.",
+     "question": "What great things for yourself might God be asking you to let go of?"
+    },
+    {
+     "title": "Babylon Will Fall",
+     "intro": "Judgment comes on Ammon, Edom, Damascus, Kedar and Elam. Then Jeremiah turns to Babylon itself, the empire that crushed Judah. It will be overthrown, and the people of Israel and Judah will come back weeping, seeking the Lord and an everlasting covenant.",
+     "question": "Where do you need to trust God to set right what others have crushed?"
+    },
+    {
+     "title": "The Last Word on Jerusalem",
+     "intro": "Babylon’s idols will be shamed and its walls brought down. Jeremiah sends a scroll to Babylon to be read aloud and then sunk in the Euphrates. The book closes by retelling Jerusalem’s fall, with one small sign of hope: King Jehoiachin released from prison.",
+     "question": "What small sign of hope has God given you in a hard season?"
+    },
+    {
+     "title": "Great Is Your Faithfulness",
+     "intro": "Jeremiah sits weeping over the ruined city. These poems, arranged by the letters of the Hebrew alphabet, name grief honestly, and Jerusalem asks passersby if any sorrow is like hers. In chapter 3, at the darkest point, hope breaks through: God’s mercies are new every morning.",
+     "question": "What grief do you need to name honestly before God?"
+    },
+    {
+     "title": "Confession in Exile",
+     "intro": "Lamentations ends with a plea for God to turn his people back to himself. In Baruch, the exiles in Babylon weep, gather money, and send it to Jerusalem with a humble confession: justice belongs to God, shame to us. The psalm, too, confesses Israel’s sins.",
+     "question": "What would an honest confession of your own sins sound like today?"
+    },
+    {
+     "title": "Where Wisdom Is Found",
+     "intro": "The exiles ask why they live in a foreign land: they forsook the fountain of wisdom. A poem asks who has found wisdom. God alone knows her way and has given her to Israel in his law. Then Jerusalem speaks as a mother, promising her children’s return.",
+     "question": "Where are you looking for wisdom, and where does God want you to find it?"
+    },
+    {
+     "title": "Idols That Cannot Save",
+     "intro": "Jerusalem is told to take off her robe of mourning and watch her children return, as God levels the mountains before them. Chapter 6, the Letter of Jeremiah, mocks Babylon’s idols: they cannot speak or see, and must be guarded from rust and thieves.",
+     "question": "What powerless thing do you sometimes treat as if it could save you?"
+    },
+    {
+     "title": "Ezekiel Sees God’s Glory",
+     "intro": "By the river Chebar in Babylon, the priest Ezekiel sees storm and fire, four living creatures, wheels full of eyes, and the glory of the Lord on a throne. He eats a scroll sweet as honey, is made a watchman, and acts out Jerusalem’s siege.",
+     "question": "How do you respond when God’s word is both sweet and difficult?"
+    },
+    {
+     "title": "The Mark on the Forehead",
+     "intro": "Ezekiel shaves his head and divides the hair as a sign of coming judgment. In a vision he is carried to Jerusalem and shown idolatry inside the temple itself. A man with a writer’s case marks the foreheads of those who grieve over the city’s sins, and they are spared.",
+     "question": "Do the sins around you still grieve you, or have you grown used to them?"
+    },
+    {
+     "title": "A Heart of Flesh",
+     "intro": "The glory of the Lord rises from the temple and leaves the city, a terrible moment. Yet God promises the exiles a new spirit, replacing their heart of stone with a heart of flesh. Ezekiel packs an exile’s bag as a sign and condemns prophets who whitewash a flimsy wall.",
+     "question": "Where has your heart turned to stone, and how might God soften it?"
+    },
+    {
+     "title": "The Foundling Bride",
+     "intro": "Even Noah, Daniel and Job could not save this city by their goodness. Jerusalem is a vine fit only for burning. In a long, startling parable God finds Jerusalem as an abandoned newborn, raises and marries her, and grieves her unfaithfulness. Yet he promises an everlasting covenant.",
+     "question": "How has God cared for you since your earliest days?"
+    },
+    {
+     "title": "Turn and Live",
+     "intro": "A riddle of two eagles and a vine describes Judah’s broken loyalty, and God promises to plant a tender cedar shoot himself. Chapter 18 rejects the proverb that children pay for their parents’ sins: each person answers for their own life, and God desires no one’s death.",
+     "question": "What would it mean for you to turn and live today?"
+    },
+    {
+     "title": "For the Sake of His Name",
+     "intro": "When elders come to consult him, God retells Israel’s history of rebellion in Egypt and the desert. Again and again he spared them for the sake of his name. Then comes a song of a sharpened sword, and Babylon’s king choosing his road by divination.",
+     "question": "Looking at your own history, where has God been patient with you?"
+    },
+    {
+     "title": "Someone to Stand in the Gap",
+     "intro": "God lists Jerusalem’s crimes: bloodshed, contempt for parents, abuse of the stranger, orphan and widow. He will melt the city like metal to remove its dross. He sought one person to stand in the gap and found none. Two sisters, Oholah and Oholibah, picture Samaria and Jerusalem.",
+     "question": "For whom could you stand in the gap through prayer this week?"
+    },
+    {
+     "title": "The Death of Ezekiel’s Wife",
+     "intro": "As Babylon lays siege to Jerusalem, Ezekiel’s wife, the delight of his eyes, dies, and he is told not to mourn openly, a sign to the exiles. Oracles follow against Ammon, Moab, Edom and Philistia, then a lament for Tyre, pictured as a splendid ship that sinks.",
+     "question": "How do you bring your sorrow to God when life leaves no time to grieve?"
+    },
+    {
+     "title": "The King Who Called Himself God",
+     "intro": "The king of Tyre says, “I am a god,” and will fall. A lament pictures him once in Eden, perfect until pride corrupted him. Sidon is judged, Israel is promised a safe return, and Egypt, whose king boasts that the Nile is his own, will be laid waste.",
+     "question": "Where are you tempted to act as though your gifts were your own making?"
+    },
+    {
+     "title": "The Watchman’s Duty",
+     "intro": "Egypt is warned by the fate of Assyria, a great cedar felled for its pride. Ezekiel laments Pharaoh’s descent among the dead. Then he is again made a watchman. News comes that Jerusalem has fallen, yet people treat his words like a pleasant love song and do nothing.",
+     "question": "What word from God have you enjoyed hearing but not yet put into practice?"
+    },
+    {
+     "title": "I Will Shepherd My Sheep",
+     "intro": "God condemns shepherds who feed themselves and neglect the flock. He will seek the lost himself and set over them one shepherd, his servant David. Edom is judged. Then comes a great promise: clean water, a new heart, and a new spirit within his people.",
+     "question": "When has God come looking for you after you strayed?"
+    },
+    {
+     "title": "Dry Bones Live",
+     "intro": "In a valley of dry bones Ezekiel prophesies, and breath enters them: Israel will rise from the grave of exile. Two sticks joined in his hand show one people under one king. Gog of Magog attacks God’s restored people and is utterly defeated.",
+     "question": "What seems dead in your life that you could entrust to God’s Spirit?"
+    },
+    {
+     "title": "A Vision of the New Temple",
+     "intro": "Twenty-five years into exile, Ezekiel is brought in vision to a very high mountain. A man with a measuring reed leads him through a new temple, gate by gate and room by room. The careful measurements show that God’s dwelling is holy and set apart.",
+     "question": "What would it look like to set apart a holy time and space for God?"
+    },
+    {
+     "title": "The Glory Returns",
+     "intro": "The glory of the Lord that left the temple now returns through the east gate and fills the house. That gate must stay shut because the Lord entered by it; many Church Fathers saw here an image of Mary. Rules follow for the altar, priests, and land.",
+     "question": "How do you prepare to welcome the Lord when you come to Mass?"
+    },
+    {
+     "title": "The River from the Temple",
+     "intro": "After rules for the prince and the offerings, Ezekiel sees water flowing from the temple, rising from ankle-deep to a river. It makes salt waters fresh, and trees along it bear fruit every month. The land is divided among the tribes, and the city is named “The Lord Is There.”",
+     "question": "Where do you need God’s life to flow into what feels barren?"
+    },
+    {
+     "title": "Daniel and the King’s Dream",
+     "intro": "Daniel and his three friends, young exiles at Babylon’s court, refuse the king’s rich food and thrive on vegetables and water. When King Nebuchadnezzar demands that his wise men tell him his own dream, God reveals it to Daniel: a great statue shattered by a stone.",
+     "question": "Where might faithfulness ask you to quietly refuse what everyone else accepts?"
+    },
+    {
+     "title": "The Fiery Furnace",
+     "intro": "Shadrach, Meshach and Abednego refuse to worship the king’s golden statue and are thrown into a blazing furnace. Walking unharmed in the flames, they pray and sing a great hymn calling all creation to bless the Lord. The psalm mocks idols with ears that cannot hear.",
+     "question": "What would you refuse to bow down to, even under pressure?"
+    },
+    {
+     "title": "The Writing on the Wall",
+     "intro": "Nebuchadnezzar is humbled for his pride, living like a beast until he acknowledges God. Belshazzar drinks from the temple’s sacred vessels and sees a hand writing on the wall. Under Darius, Daniel keeps praying three times a day, is thrown to the lions, and comes out unharmed.",
+     "question": "What daily habit of prayer would you keep even if it cost you?"
+    },
+    {
+     "title": "One Like a Son of Man",
+     "intro": "Daniel sees four beasts rise from the sea, then the Ancient of Days on his throne, and one like a son of man receiving an everlasting kingdom. Jesus will take this title for himself. Daniel confesses his people’s sins, and Gabriel explains the seventy weeks.",
+     "question": "When the world seems ruled by beasts, how do you hold on to Christ’s kingship?"
+    },
+    {
+     "title": "Those Who Sleep Shall Wake",
+     "intro": "After three weeks of fasting, Daniel sees a man clothed in linen and is strengthened by an angel. A long vision traces wars between the kings of the north and south. At the end, Michael arises, and many who sleep in the dust will awake, the wise shining like stars.",
+     "question": "How does hope in the resurrection change the way you live today?"
+    },
+    {
+     "title": "Susanna and Bel",
+     "intro": "Two corrupt elders falsely accuse the virtuous Susanna, who trusts God rather than give in to them. Young Daniel questions them separately, and their stories about a tree do not match. Then Daniel exposes the priests of the idol Bel, kills a dragon, and survives the lions again.",
+     "question": "When have you been tempted to stay silent while someone was falsely accused?"
+    },
+    {
+     "title": "Comfort My People",
+     "intro": "Isaiah’s tone changes to comfort for the exiles. A voice cries to prepare the Lord’s way in the desert. God, who measures the oceans in his hand, renews the strength of those who hope in him. Chapter 42 introduces the gentle Servant who will not break a bruised reed.",
+     "question": "Where are you weary and in need of the strength God promises?"
+    },
+    {
+     "title": "Cyrus, God’s Anointed",
+     "intro": "God calls Israel by name: you are mine, and the waters will not overwhelm you. Isaiah mocks the craftsman who burns half a log to cook and carves an idol from the rest. God even names the Persian king Cyrus as his chosen instrument to free his people.",
+     "question": "What does it mean to you that God calls you by name?"
+    },
+    {
+     "title": "A Light to the Nations",
+     "intro": "Proud Babylon will sit in the dust. God refines his stubborn people for his name’s sake. The Servant is made a light to the nations, and God will never forget Zion, any more than a mother forgets her child. The Servant offers his back to those who strike him.",
+     "question": "Who in your life needs to hear that God has not forgotten them?"
+    },
+    {
+     "title": "The Suffering Servant",
+     "intro": "How beautiful are the feet of those who bring good news. Then the heart of the book: the Servant despised, wounded for our sins, led like a lamb to slaughter, whose suffering heals us. The Church reads it on Good Friday. Then God invites the thirsty to the waters.",
+     "question": "How do you respond to the Servant who was wounded for your sins?"
+    },
+    {
+     "title": "Good News to the Poor",
+     "intro": "God rejects fasting that ignores the hungry and oppressed: the true fast frees and feeds. Light dawns on Zion and the nations come to it. In chapter 61 the anointed one brings good news to the poor, words Jesus reads aloud in the synagogue at Nazareth.",
+     "question": "What kind of fasting is God inviting you to in this season?"
+    },
+    {
+     "title": "New Heavens and New Earth",
+     "intro": "Isaiah prays that God, our Father, will remember that we are clay in his hands. God promises new heavens and a new earth, and comforts Jerusalem as a mother comforts her child. Obadiah’s single chapter condemns Edom for gloating over Jerusalem’s fall.",
+     "question": "Where do you need God’s comfort the way a child needs a mother’s?"
+    },
+    {
+     "title": "The Return from Exile",
+     "intro": "King Cyrus lets the Jews return to Jerusalem and hands back the temple vessels. A long list names the families who go home. They rebuild the altar, keep the feast of Tabernacles, and lay the temple’s foundation, while elders who remember the first temple weep aloud.",
+     "question": "What new beginning is God offering you, even if it looks smaller than before?"
+    },
+    {
+     "title": "Building Through Opposition",
+     "intro": "Local enemies write to the Persian king, and work on the temple stops. The prophets Haggai and Zechariah stir the people to build again, and King Darius confirms Cyrus’s decree. The temple is finished. Then Ezra the scribe arrives, devoted to studying, living, and teaching God’s law.",
+     "question": "What opposition discourages you from the work God has given you?"
+    },
+    {
+     "title": "Ezra Leads a Second Return",
+     "intro": "Ezra brings a new group home from Babylon. He is ashamed to ask the king for soldiers, so the people fast and pray for a safe journey. In Jerusalem he grieves over marriages to idol worshippers and leads the people to repent.",
+     "question": "When have you trusted God enough to go ahead without the safety net you wanted?"
+    },
+    {
+     "title": "Build the Lord’s House",
+     "intro": "Haggai asks why the people live in fine houses while God’s house lies in ruins. Zerubbabel and Joshua the high priest start building. Zechariah then sees night visions: horsemen, a measuring line, and Joshua’s filthy garments replaced with clean ones.",
+     "question": "What have you put off for God while you tended to your own house?"
+    },
+    {
+     "title": "Not by Might but by Spirit",
+     "intro": "Zechariah’s visions continue: a golden lampstand between two olive trees, a flying scroll, four chariots, and a crown for Joshua the high priest. The temple will be finished not by army or strength but by God’s spirit. Watch for the humble king riding a donkey.",
+     "question": "Where are you relying on your own strength instead of on God’s Spirit?"
+    },
+    {
+     "title": "The Pierced One and Nehemiah’s Prayer",
+     "intro": "Zechariah’s last chapters speak of a shepherd valued at thirty pieces of silver, of one pierced and mourned, and of living waters flowing from Jerusalem. The Gospels echo these lines. Then Nehemiah, the Persian king’s cupbearer, hears of Jerusalem’s ruin and prays.",
+     "question": "What news about others has moved you to fast and pray?"
+    },
+    {
+     "title": "Rebuilding the Walls",
+     "intro": "Nehemiah gets the king’s leave, inspects the broken walls by night, and rallies the people. Family by family they rebuild. When Sanballat and Tobiah mock and threaten, the builders work with one hand and hold a sword with the other.",
+     "question": "What work has God given you that is worth guarding while you build it?"
+    },
+    {
+     "title": "The Wall Is Finished",
+     "intro": "Enemies try tricks, false prophets, and rumors to frighten Nehemiah into hiding. He refuses, and the wall is finished in fifty-two days. Nehemiah sets guards and finds the record of the families who first came home from Babylon.",
+     "question": "When fear tells you to stop, what helps you keep going?"
+    },
+    {
+     "title": "Ezra Reads the Law",
+     "intro": "The people gather and ask Ezra to read the Law aloud. They weep as they listen, but their leaders tell them the joy of the Lord is their strength. They keep the feast of Tabernacles, confess their history, and sign a covenant.",
+     "question": "When has hearing God’s word brought you both sorrow and joy?"
+    },
+    {
+     "title": "Jerusalem Is Dedicated",
+     "intro": "Lots are cast so that one family in ten will live in Jerusalem. Long lists name the residents, priests, and Levites. Then two great choirs walk along the new wall, and the joy of the city is heard far away.",
+     "question": "What lists, names, or people in your life deserve thanks today?"
+    },
+    {
+     "title": "Reforms and the Final Prophet",
+     "intro": "Nehemiah returns to find old abuses back: the temple misused and the Sabbath broken. He acts firmly. Malachi then rebukes careless priests, foresees a pure offering in every place, and promises a messenger and Elijah before the day of the Lord.",
+     "question": "What small faithful habit has slipped in your life and needs restoring?"
+    },
+    {
+     "title": "Rend Your Hearts",
+     "intro": "A plague of locusts strips the land, and Joel calls everyone to fast and pray. Rend your hearts, not your garments, he says. God then promises to pour out his spirit on all flesh, words Peter will quote at Pentecost.",
+     "question": "What would it look like for you to return to God with your whole heart?"
+    },
+    {
+     "title": "Esther Becomes Queen",
+     "intro": "In the Persian court, Queen Vashti is deposed and the Jewish orphan Esther takes her place. Mordecai uncovers a plot against the king, then angers the proud Haman, who wins a decree to destroy all the Jews. Esther must decide whether to risk her life.",
+     "question": "Where might God have placed you for such a time as this?"
+    },
+    {
+     "title": "Haman’s Plot Undone",
+     "intro": "On a sleepless night the king learns that Mordecai once saved his life. Haman is forced to honor the man he hates. At Esther’s banquet she exposes Haman, who dies on the gallows he built. The Jews are spared and Purim begins.",
+     "question": "When have you seen a situation turned around in a way you never expected?"
+    },
+    {
+     "title": "The Prayers of Esther",
+     "intro": "These chapters, kept in the Greek Esther, add what the Hebrew leaves unsaid: Mordecai’s dream, his prayer, and Esther’s prayer to the Lord who alone is king. Trembling, she goes before the king, and God changes his heart. Psalm 120 (121) fits her prayer well.",
+     "question": "What do you need courage for today, and have you asked God for it?"
+    },
+    {
+     "title": "Holofernes Marches West",
+     "intro": "Nebuchadnezzar sends his general Holofernes to crush the western nations, and city after city gives in. Israel alone prepares to resist and cries out to God. Achior, an Ammonite leader, warns Holofernes that Israel’s God protects his people when they are faithful.",
+     "question": "Who has spoken a hard truth to you that you did not want to hear?"
+    },
+    {
+     "title": "Bethulia Under Siege",
+     "intro": "Holofernes sends Achior bound to Bethulia, where the Israelites take him in. The Assyrians cut off the town’s water, and the desperate people agree to surrender in five days. Then we meet Judith, a devout widow who scolds the elders for putting God to the test.",
+     "question": "When have you tried to set a deadline for God to act?"
+    },
+    {
+     "title": "Judith Goes Out",
+     "intro": "Judith prays for strength, then dresses in her finery and walks with her maid into the enemy camp. Holofernes is charmed by her beauty and her words. Each night she goes out to pray, and on the fourth day he invites her to a banquet.",
+     "question": "How do you prepare in prayer before a hard conversation or task?"
+    },
+    {
+     "title": "Judith’s Victory Song",
+     "intro": "Alone with the drunken Holofernes, Judith prays and strikes him down, then brings his head back to Bethulia. The leaderless Assyrians flee. Achior comes to believe in Israel’s God, and Judith leads the people in a song of praise before living out a long, holy life.",
+     "question": "Where have you seen God work through someone the world overlooked?"
+    },
+    {
+     "title": "Antiochus Profanes the Temple",
+     "intro": "After Alexander the Great, his empire splits, and Antiochus Epiphanes comes to power. He loots the temple, sets up an idol on the altar, and outlaws the Law. Some Jews go along, but many choose death rather than break God’s covenant.",
+     "question": "What pressure do you feel to quietly set your faith aside?"
+    },
+    {
+     "title": "Mattathias Refuses",
+     "intro": "In the town of Modein, the priest Mattathias refuses the king’s order to sacrifice to idols and kills the apostate who steps forward. He and his sons flee to the hills. Before he dies, he urges them to remember the faithful heroes of Israel’s past.",
+     "question": "Whose faithful example from the past gives you strength today?"
+    },
+    {
+     "title": "Judas Rededicates the Temple",
+     "intro": "Judas Maccabeus takes his father’s place. With a small, outnumbered force he wins battle after battle, saying that strength comes from heaven, not from numbers. Then he cleanses the temple, builds a new altar, and begins the eight-day feast of dedication.",
+     "question": "What in your life needs cleansing and rededication to God?"
+    },
+    {
+     "title": "Rescue in Gilead and Galilee",
+     "intro": "Neighboring peoples turn on the Jews living among them. Judas and Jonathan march into Gilead while Simon goes to Galilee, freeing their kin and bringing them home. Two commanders who disobey orders to seek glory for themselves are badly defeated.",
+     "question": "Who in your life needs you to come to their aid right now?"
+    },
+    {
+     "title": "Antiochus Dies in Grief",
+     "intro": "In Persia, Antiochus hears of his defeats and dies in sorrow, admitting the evil he did in Jerusalem. His young son’s army returns with war elephants, and Eleazar gives his life to bring one down. In the end, the king makes peace with the Jews.",
+     "question": "What regret would you rather face now than at the end of your life?"
+    },
+    {
+     "title": "Nicanor Falls, Rome Is Allied",
+     "intro": "A new king, Demetrius, backs the false high priest Alcimus, who betrays the devout with a broken oath. Judas defeats the general Nicanor, and the day is kept as a feast. Hearing of Rome’s power, Judas makes a treaty with the Romans.",
+     "question": "Where are you tempted to put your trust in powerful people more than in God?"
+    },
+    {
+     "title": "The Death of Judas",
+     "intro": "Facing a huge army with only a few hundred men, Judas refuses to flee and falls in battle. All Israel mourns him. His brother Jonathan takes command, avenges their brother John, and wears down the enemy until Bacchides leaves the land.",
+     "question": "How do you carry on when someone you relied on is gone?"
+    },
+    {
+     "title": "Jonathan Becomes High Priest",
+     "intro": "Two rivals for the Syrian throne, Alexander and Demetrius, both try to win Jonathan over with gifts and promises. Jonathan sides with Alexander, who names him high priest and honors him. He then defeats the general Apollonius in battle.",
+     "question": "How do you tell the difference between real friendship and flattery?"
+    },
+    {
+     "title": "Kings Rise and Fall",
+     "intro": "Ptolemy turns on Alexander, and both kings soon die. The new king, Demetrius, is rescued by Jewish soldiers from his own people in Antioch, then breaks his promises. Jonathan sides with the young Antiochus and wins more victories.",
+     "question": "When someone breaks a promise to you, how do you respond?"
+    },
+    {
+     "title": "Jonathan Is Betrayed",
+     "intro": "Jonathan renews ties with Rome and Sparta. But Tryphon, who wants the throne, lures him into Ptolemais with false friendship and takes him captive. Simon, the last brother, takes command. Tryphon kills Jonathan, and Simon builds a family tomb at Modein.",
+     "question": "Who has God given you to carry on a good work someone else began?"
+    },
+    {
+     "title": "Peace Under Simon",
+     "intro": "Under Simon, Judea finally knows peace: everyone sits under his own vine and fig tree, with no one to fear. The people honor Simon on bronze tablets and make him leader and high priest. Then a new king, Antiochus, turns against him.",
+     "question": "What would real peace look like in your home this week?"
+    },
+    {
+     "title": "Simon’s Death and Two Letters",
+     "intro": "Simon’s sons defeat the king’s army, but Simon and two sons are murdered at a feast by his own son-in-law. Second Maccabees then opens with letters urging Egyptian Jews to keep the temple’s dedication feast and tells how Jeremiah hid the ark.",
+     "question": "How do you remember and celebrate what God has already done for you?"
+    },
+    {
+     "title": "Heliodorus and the Temple Treasury",
+     "intro": "An official named Heliodorus comes to seize the temple treasury, and the whole city prays. A rider and two shining young men strike him down, and he lives only through the high priest Onias’s prayer. Then ambitious men buy the high priesthood and push Greek ways.",
+     "question": "When have the prayers of others carried you through?"
+    },
+    {
+     "title": "Eleazar and the Seven Brothers",
+     "intro": "Antiochus plunders the temple and outlaws the Law. The aged scribe Eleazar refuses even to pretend to eat pork, so as not to mislead the young. A mother watches her seven sons die for their faith, urging them on with hope in the resurrection.",
+     "question": "Whose faith are you shaping by the example you set?"
+    },
+    {
+     "title": "Judas Fights Back",
+     "intro": "Judas gathers those who stayed faithful, and after prayer they defeat Nicanor’s army. Antiochus dies a painful death, his late vows unable to save him. The temple is purified, and in another battle five shining horsemen from heaven are seen leading the Jews.",
+     "question": "Before you face something hard, do you turn to prayer first or last?"
+    },
+    {
+     "title": "Prayer for the Fallen",
+     "intro": "Judas defeats Lysias, who seeks peace. Later, fallen soldiers are found wearing idol charms. Judas leads prayer and sends money for a sin offering. The book calls it a holy thought to pray for the dead. The Church sees here a root of praying for souls in purgatory.",
+     "question": "Who among the dead could you remember in prayer today?"
+    },
+    {
+     "title": "Judas’s Dream and Victory",
+     "intro": "Nicanor threatens to tear down the temple, and an elder named Razis dies rather than be captured. Before the final battle, Judas dreams of Onias and the prophet Jeremiah praying for the people. Strengthened, Judas defeats Nicanor, and the author humbly ends his account.",
+     "question": "Which saints do you ask to pray for you, and why them?"
+    },
+    {
+     "title": "The Souls of the Just",
+     "intro": "Wisdom opens by urging rulers to love justice. God did not make death; it came through the devil’s envy. The wicked plot against the just man who calls himself God’s son. But the souls of the just are in God’s hand, tested like gold in a furnace.",
+     "question": "Where is God refining you like gold right now?"
+    },
+    {
+     "title": "Seeking Lady Wisdom",
+     "intro": "The wicked look back with regret too late, while the just receive a crown from the Lord. Kings are urged to seek Wisdom, who is easily found by those who love her. The writer, speaking as Solomon, says he prayed for her and prized her above thrones and riches.",
+     "question": "What do you value more than wisdom, if you are honest?"
+    },
+    {
+     "title": "Solomon Prays for Wisdom",
+     "intro": "Solomon tells how he sought Wisdom as a bride and asked God for her in prayer. Then he traces her hand in history, guiding Adam, Noah, Abraham, Jacob, Joseph, and Israel in the Exodus. God loves all things he has made.",
+     "question": "How have you seen God’s guiding hand in your own story?"
+    },
+    {
+     "title": "God’s Patience and False Gods",
+     "intro": "God punished the Canaanites little by little, giving them room to repent. Then Wisdom turns to idolatry: people who admire the world’s beauty yet miss its Creator, and those who worship what their own hands have made. Watch for how idol worship first began.",
+     "question": "What created thing do you sometimes treat as if it were God?"
+    },
+    {
+     "title": "Plagues and Bread from Heaven",
+     "intro": "The book closes by retelling the Exodus as a series of contrasts. Where Egypt suffered plagues, Israel received gifts: manna, the bread from heaven, and light while Egypt sat in darkness. God’s almighty word leaps down from heaven on Passover night.",
+     "question": "How has something that seemed like a loss become a blessing for you?"
+    },
+    {
+     "title": "All Wisdom Comes from God",
+     "intro": "A grandson explains how he translated his grandfather’s book in Egypt. Then Sirach begins: all wisdom comes from the Lord, and fearing God is where it starts. Anyone who serves God should expect testing. Honor your father and mother, and stay humble.",
+     "question": "How are you honoring your parents in this season of your life?"
+    },
+    {
+     "title": "Mercy, Friends, and Firm Speech",
+     "intro": "Sirach urges kindness to the poor and orphans, and patience while Wisdom tests her children. Do not put off turning to God or count on his mercy while you keep sinning. A faithful friend is a strong shelter and a treasure beyond price.",
+     "question": "Who is a faithful friend to you, and have you told them so lately?"
+    },
+    {
+     "title": "Remember Your Last End",
+     "intro": "These chapters gather practical advice: do not chase high places, honor priests, help the poor, respect the elderly, and think before you lend or speak. Remember your last end and you will not sin. An old friend is like aged wine.",
+     "question": "How might remembering your death change how you live today?"
+    },
+    {
+     "title": "Pride and Humility",
+     "intro": "Sirach turns to people in power and the danger of pride, which begins when the heart turns away from its Maker. Do not judge by appearances: the bee is small, but its honey is the sweetest. Be generous to the good and wary of the wicked.",
+     "question": "Where is pride quietly steering your choices?"
+    },
+    {
+     "title": "Choose Your Company",
+     "intro": "Touch pitch and it sticks to you, so choose your companions well. Greed starves the soul, so do good with what you have while you live. God set fire and water before us and left us free to choose. He commands no one to sin.",
+     "question": "Which of your friendships draws you closer to God?"
+    },
+    {
+     "title": "God Sees and Shows Mercy",
+     "intro": "Do not think you can hide from God. Sirach recalls how the Lord formed us from earth, gave us understanding, and made a covenant with us. Our days are like a drop in the sea, so God is patient and pours out mercy. Turn back to him.",
+     "question": "What part of your life have you been hiding from God?"
+    },
+    {
+     "title": "Guard Your Tongue",
+     "intro": "If you hear something against your neighbor, let it die within you. Sirach praises timely silence and warns that a liar’s disgrace never leaves him. Flee from sin as from a snake. The wise and the foolish are known by how they speak.",
+     "question": "What word about someone else do you need to let die within you?"
+    },
+    {
+     "title": "A Prayer to Guard My Mouth",
+     "intro": "Sirach offers sayings about lazy and foolish people, and about friendships wounded by insults or betrayed secrets. Then he prays to God as Father and Lord of his life, asking for a guard on his mouth and protection from careless oaths and lust.",
+     "question": "What would you ask God to guard in you today?"
+    },
+    {
+     "title": "Wisdom Makes Her Home",
+     "intro": "Wisdom speaks in her own voice: she came forth from the mouth of the Most High and made her home in Israel, flourishing like a cedar and a vine. Christians hear Christ, God’s Word, in this song. Then come sayings on harmony and wise old age.",
+     "question": "Where has God chosen to dwell in your ordinary life?"
+    },
+    {
+     "title": "Words That Reveal the Heart",
+     "intro": "Sirach praises a good wife as a great gift. A sieve shows what is left behind, and a person’s words reveal the heart. Forgive your neighbor and your own sins will be forgiven when you pray. Many fall by the sword, but more by the tongue.",
+     "question": "Whom do you need to forgive before you pray tonight?"
+    },
+    {
+     "title": "Lending, Alms, and Health",
+     "intro": "Lend to a neighbor in need and repay on time. Store up almsgiving as a treasure, for it protects better than a shield. Sirach speaks of raising children, and says health and a glad heart are worth more than wealth. Riches can steal your sleep.",
+     "question": "What worry about money is costing you sleep or peace?"
+    },
+    {
+     "title": "Do Nothing Without Counsel",
+     "intro": "At the table, leaders should serve their guests and the young should listen more than they speak. Seek advice before you act. Like clay in the potter’s hand, we are in God’s hands. Dreams deceive, but those who fear the Lord have nothing to fear.",
+     "question": "Whose counsel do you seek before making big decisions?"
+    },
+    {
+     "title": "The Prayer of the Humble",
+     "intro": "Keeping the law is a pleasing sacrifice, and God cannot be bribed with gifts taken unjustly. The prayer of the humble pierces the clouds. Sirach prays for God to show mercy to his people, then praises a good wife and warns about choosing advisors.",
+     "question": "When did you last pray with real humility, holding nothing back?"
+    },
+    {
+     "title": "Physicians and Craftsmen",
+     "intro": "Honor the doctor, for the Lord created medicine from the earth; yet pray and repent when sick. Mourn the dead, but not without end. Farmers, smiths, and potters keep the world running, while the scribe gives himself to study, prayer, and praise of God.",
+     "question": "How can your daily work, whatever it is, become a form of prayer?"
+    },
+    {
+     "title": "Death and a Good Name",
+     "intro": "Every life has its toil and fear, from king to beggar, yet the fear of the Lord is like a garden of blessing. Death is bitter to the comfortable but welcome to the weary. A good name lasts. Sirach ends by praising God’s works.",
+     "question": "What kind of name do you hope to leave behind?"
+    },
+    {
+     "title": "Praise of Famous Men",
+     "intro": "After a hymn to the sun, moon, stars, snow, and sea, Sirach admits words fail: God is all. Then he begins praising the ancestors: Enoch, Noah, Abraham, Isaac, and Jacob, then Moses, Aaron in his splendid vestments, and Phinehas.",
+     "question": "Which ancestor in faith, family or saint, are you grateful for today?"
+    },
+    {
+     "title": "Judges, Kings, and Prophets",
+     "intro": "The roll of honor continues: Joshua and Caleb, Samuel, Nathan, and David, who sang God’s praise. Solomon’s wisdom and his fall are both remembered. Elijah rises like fire, followed by Elisha, King Hezekiah, and the prophet Isaiah.",
+     "question": "What part of your story would you want God to remember?"
+    },
+    {
+     "title": "Simon the High Priest",
+     "intro": "The list ends with Josiah, the prophets, and the builders of the second temple. Then Sirach paints the high priest Simon in glory at the altar. The book closes with a hymn of thanks and an invitation to seek Wisdom freely, as he did in youth.",
+     "question": "What first drew you to seek God, and how can you rekindle it?"
+    },
+    {
+     "title": "The Birth of the Messiah",
+     "intro": "Matthew opens with Jesus’ family tree from Abraham through David, then his birth of the Virgin Mary. Magi come to worship, and the family flees Herod into Egypt. John baptizes Jesus, who is tempted in the desert and calls his first disciples.",
+     "question": "What is Jesus calling you to leave behind so you can follow him?"
+    },
+    {
+     "title": "The Sermon on the Mount",
+     "intro": "On a mountain Jesus teaches the Beatitudes and calls his followers salt and light. He deepens the Law, asks us to love our enemies, and teaches the Our Father. Give, pray, and fast in secret, and seek first the kingdom of God.",
+     "question": "Which Beatitude do you most need to grow into?"
+    },
+    {
+     "title": "Words and Works of Power",
+     "intro": "Jesus finishes his sermon: do not judge, ask and you will receive, and build your house on rock. Then he acts, healing a leper, a centurion’s servant, and a paralytic, calming a storm, calling Matthew the tax collector, and raising a dead girl.",
+     "question": "Is your life built on rock, or on something that could wash away?"
+    },
+    {
+     "title": "The Twelve Are Sent",
+     "intro": "Jesus sends the twelve apostles out to preach and heal, warning that they will face hostility but need not fear. From prison, John the Baptist asks if Jesus is the one to come. Jesus invites all who are weary and burdened to come to him for rest.",
+     "question": "What burden do you need to bring to Jesus for rest?"
+    },
+    {
+     "title": "Parables of the Kingdom",
+     "intro": "The Pharisees accuse Jesus of driving out demons by Satan’s power, and he warns them. He says that whoever does God’s will is his brother, sister, and mother. Then he teaches in parables: the sower, the weeds, the mustard seed, the hidden treasure, and the pearl.",
+     "question": "What kind of soil is your heart for God’s word this week?"
+    },
+    {
+     "title": "You Are the Christ",
+     "intro": "Herod beheads John. Jesus feeds five thousand, walks on the sea, and lifts up a sinking Peter. A Canaanite woman’s faith wins healing for her daughter. Peter confesses Jesus as the Christ and receives the keys, but is rebuked when he resists the cross.",
+     "question": "Who do you say Jesus is, in the way you actually live?"
+    },
+    {
+     "title": "Transfiguration and Forgiveness",
+     "intro": "Jesus is transfigured in glory before Peter, James, and John. He teaches that the greatest is the one who becomes like a child, that the shepherd seeks the lost sheep, and that we must forgive seventy times seven. A rich young man walks away sad.",
+     "question": "What would it take for you to forgive one more time?"
+    },
+    {
+     "title": "The King Enters Jerusalem",
+     "intro": "In a parable, late workers receive the same wage as the first. James and John seek high places, but Jesus came to serve and give his life. He heals two blind men, rides into Jerusalem on a donkey as Zechariah foretold, and clears the temple.",
+     "question": "Where is Jesus asking you to serve rather than be served?"
+    },
+    {
+     "title": "The Greatest Commandment",
+     "intro": "In the temple, opponents try to trap Jesus with questions about taxes to Caesar and the resurrection. He names the greatest commandments: love God with your whole heart and your neighbor as yourself. Then he denounces hypocrisy and grieves over Jerusalem.",
+     "question": "Where do you find it hardest to love your neighbor as yourself?"
+    },
+    {
+     "title": "Watch and Be Ready",
+     "intro": "Jesus foretells the temple’s destruction and his coming at the end of time, urging his disciples to stay awake. Parables of the ten virgins and the talents follow. At the judgment, he says, whatever we did for the least of his brothers we did for him.",
+     "question": "Who is one of the least in your life you can serve this week?"
+    },
+    {
+     "title": "The Last Supper and Gethsemane",
+     "intro": "A woman anoints Jesus, and Judas agrees to betray him for thirty pieces of silver. At the Passover meal Jesus gives his Body and Blood. In Gethsemane he prays in anguish, is arrested, and is condemned before Caiaphas, while Peter denies him three times.",
+     "question": "When have you, like Peter, failed Jesus, and how did you return?"
+    },
+    {
+     "title": "Crucified and Risen",
+     "intro": "Jesus is handed to Pilate, mocked, and crucified between two thieves. The earth quakes and a centurion confesses him as Son of God. On the third day an angel announces he is risen, and Jesus sends his disciples to teach and baptize all nations.",
+     "question": "How will you live today knowing Jesus is with you always?"
+    },
+    {
+     "title": "Mark’s Gospel Begins",
+     "intro": "Mark moves fast. John baptizes Jesus, and Jesus begins preaching, calling fishermen, casting out demons, and healing many. Friends lower a paralyzed man through a roof. Jesus calls Levi, heals on the Sabbath, chooses the Twelve, and says his true family does God’s will.",
+     "question": "Whom could you carry to Jesus through your prayer and help?"
+    },
+    {
+     "title": "Who Is This Man?",
+     "intro": "Jesus teaches from a boat in parables of seeds. When a storm terrifies his disciples, he calms it with a word. He frees a man possessed by a legion of demons, heals a woman who touches his cloak, and raises a synagogue leader’s daughter.",
+     "question": "What storm in your life do you need to hand over to Jesus?"
+    },
+    {
+     "title": "Bread in the Wilderness",
+     "intro": "Jesus is rejected in his hometown, then sends out the Twelve. Herod has John beheaded. Jesus feeds five thousand and walks on the water. He teaches that what defiles comes from within, heals a Gentile woman’s daughter, and opens a deaf man’s ears.",
+     "question": "What does Jesus want to open in you that has been closed?"
+    },
+    {
+     "title": "Help My Unbelief",
+     "intro": "Jesus feeds four thousand and heals a blind man in two stages. Peter confesses him as the Christ, and Jesus foretells his passion. After the Transfiguration, a father cries, “I believe, help my unbelief,” and Jesus heals his son.",
+     "question": "Where do you need to pray, “I believe, help my unbelief”?"
+    },
+    {
+     "title": "The Road Into Jerusalem",
+     "intro": "Jesus teaches that marriage is lifelong, warns how riches can block the way to the kingdom, and tells James and John that greatness means serving. Blind Bartimaeus receives his sight. Then Jesus rides into Jerusalem, curses a fig tree, and clears the temple.",
+     "question": "What would it look like for you to serve rather than be served this week?"
+    },
+    {
+     "title": "Questions in the Temple",
+     "intro": "In the temple, Jesus tells the parable of the wicked tenants and answers traps about taxes and the resurrection. He names the greatest commandment and praises a poor widow’s gift. Then he foretells the temple’s fall and urges his disciples to stay awake.",
+     "question": "What small, hidden gift could you offer God today, like the widow’s two coins?"
+    },
+    {
+     "title": "Gethsemane and the Arrest",
+     "intro": "A woman anoints Jesus at Bethany, and Judas agrees to betray him. At the Passover meal Jesus gives his body and blood. He prays in agony in Gethsemane, is arrested, and stands before the high priest while Peter denies him three times.",
+     "question": "When have you, like Peter, found it hard to stand with Jesus in front of others?"
+    },
+    {
+     "title": "The Cross and the Empty Tomb",
+     "intro": "Pilate hands Jesus over to be crucified. Simon of Cyrene carries the cross, and a Roman centurion confesses him the Son of God. Joseph of Arimathea buries him. On the first day of the week, the women find the tomb empty and hear that he is risen.",
+     "question": "What does the empty tomb change about the way you face loss or fear?"
+    },
+    {
+     "title": "Two Births Foretold",
+     "intro": "Luke begins with two promised births. Gabriel announces John’s birth to Zechariah in the temple, then Jesus’ birth to Mary in Nazareth. Mary visits Elizabeth and sings the Magnificat. John is born, and Zechariah, his voice restored, praises God in the Benedictus.",
+     "question": "Where is God asking for your yes, as he asked Mary?"
+    },
+    {
+     "title": "The Birth of Jesus",
+     "intro": "Jesus is born in Bethlehem and laid in a manger, and shepherds come to see him. Simeon and Anna recognize him in the temple. At twelve he is found among the teachers. Years later John preaches repentance and baptizes Jesus, and Luke traces his family line.",
+     "question": "Like Mary, what do you need to ponder quietly in your heart right now?"
+    },
+    {
+     "title": "Nazareth and the Great Catch",
+     "intro": "After forty days of temptation in the desert, Jesus reads from Isaiah in the Nazareth synagogue, and his hometown rejects him. He heals many in Capernaum, fills Peter’s nets with fish, cleanses a leper, forgives and heals a paralyzed man, and calls Levi.",
+     "question": "Where might Jesus be asking you to put out into deeper water?"
+    },
+    {
+     "title": "The Sermon on the Plain",
+     "intro": "Jesus chooses the Twelve and teaches blessings and woes, love of enemies, and mercy without measure. He heals a centurion’s servant, raises a widow’s son at Nain, answers John’s disciples, and forgives a sinful woman who weeps at his feet.",
+     "question": "Who is the person you find hardest to love, and how could you show them mercy?"
+    },
+    {
+     "title": "Seed, Storm, and Transfiguration",
+     "intro": "Jesus tells the parable of the sower, calms a storm, frees a possessed man, heals a woman, and raises Jairus’ daughter. He sends out the Twelve and feeds five thousand. Peter confesses him the Christ, and Jesus is transfigured on the mountain.",
+     "question": "What kind of soil is your heart right now for God’s word?"
+    },
+    {
+     "title": "The Good Samaritan",
+     "intro": "Jesus sends out seventy-two disciples, then answers a lawyer with the parable of the Good Samaritan. Martha serves while Mary sits at his feet. He teaches the Our Father and urges persistent prayer, then confronts critics who say he casts out demons by Beelzebul.",
+     "question": "Who has God placed along your road this week who needs you to stop?"
+    },
+    {
+     "title": "Watchful and Ready",
+     "intro": "Jesus warns against hypocrisy, fear, and greed, telling of a rich fool who builds bigger barns. He urges servants to stay ready for their master’s return. He calls for repentance, heals a bent woman on the sabbath, and laments over Jerusalem.",
+     "question": "What are you storing up, and is it making you rich toward God?"
+    },
+    {
+     "title": "Lost and Found",
+     "intro": "At dinner Jesus teaches humility and tells of a great banquet. He counts the cost of discipleship. Then come three parables of the lost: a sheep, a coin, and a son welcomed home by his father. He ends with a shrewd steward and the rich man and Lazarus.",
+     "question": "Which character in the story of the prodigal son do you most resemble today?"
+    },
+    {
+     "title": "Ten Lepers and a Tax Collector",
+     "intro": "Jesus teaches forgiveness and faith. Ten lepers are healed, but only a Samaritan returns to give thanks. He speaks of the coming kingdom, the persistent widow, and the Pharisee and the tax collector. He blesses children, meets a rich ruler, and restores a blind man’s sight.",
+     "question": "For what gift have you forgotten to return and thank God?"
+    },
+    {
+     "title": "Zacchaeus and the King’s Arrival",
+     "intro": "Zacchaeus climbs a tree to see Jesus and gives half his goods to the poor. Jesus tells the parable of the pounds, enters Jerusalem to shouts of praise, weeps over the city, and cleanses the temple. Leaders challenge him with questions on taxes and resurrection.",
+     "question": "What would change if Jesus said he was coming to your house today?"
+    },
+    {
+     "title": "The Last Supper",
+     "intro": "A poor widow gives all she has, and Jesus warns of Jerusalem’s fall and the end of the age. At the Last Supper he gives his body and blood, prays for Peter, and agonizes on the Mount of Olives. He is arrested, and Peter denies him.",
+     "question": "How do you prepare your heart to receive the Eucharist?"
+    },
+    {
+     "title": "The Cross and Emmaus",
+     "intro": "Pilate and Herod find no guilt in Jesus, yet he is crucified. He forgives his executioners and promises paradise to a repentant thief. On Easter, two disciples walk to Emmaus with a stranger and recognize the risen Jesus in the breaking of the bread.",
+     "question": "Where have you recognized Jesus only after he had walked beside you a while?"
+    },
+    {
+     "title": "The Word Made Flesh",
+     "intro": "John opens with the eternal Word who becomes flesh. John the Baptist points to the Lamb of God, and the first disciples follow. At Cana Jesus turns water into wine, then clears the temple. By night Nicodemus learns he must be born of water and the Spirit.",
+     "question": "What would it mean for you to “come and see,” as the first disciples did?"
+    },
+    {
+     "title": "The Woman at the Well",
+     "intro": "At a well in Samaria, Jesus offers a woman living water, and her town comes to believe. He heals an official’s son from a distance. In Jerusalem he heals a man ill for thirty-eight years, then speaks of his work as one with the Father.",
+     "question": "What thirst in your life are you trying to satisfy apart from God?"
+    },
+    {
+     "title": "The Bread of Life",
+     "intro": "Jesus feeds five thousand and walks on the sea. In Capernaum he declares that he is the bread of life and that his flesh is true food. Many disciples leave, but Peter answers, “Lord, to whom shall we go?”",
+     "question": "What keeps you coming back to Jesus when his words are hard?"
+    },
+    {
+     "title": "Light of the World",
+     "intro": "At the Feast of Tabernacles, Jesus teaches in the temple and promises rivers of living water while the crowds argue over who he is. He refuses to condemn a woman caught in adultery, calls himself the light of the world, and says, “Before Abraham was, I am.”",
+     "question": "What darkness in your life do you want to bring into Christ’s light?"
+    },
+    {
+     "title": "The Good Shepherd",
+     "intro": "Jesus heals a man born blind, who is questioned and finally thrown out, yet comes to believe and worship. Jesus calls himself the door of the sheep and the good shepherd who lays down his life. He says, “I and the Father are one.”",
+     "question": "How do you recognize the Good Shepherd’s voice among all the others?"
+    },
+    {
+     "title": "Lazarus Comes Forth",
+     "intro": "Jesus weeps at the tomb of his friend Lazarus, then calls him out alive. The council plots to kill Jesus. Mary anoints his feet at Bethany, crowds welcome him into Jerusalem, and he speaks of the grain of wheat that must die to bear fruit.",
+     "question": "What in you needs to die like a grain of wheat so it can bear fruit?"
+    },
+    {
+     "title": "The Washing of Feet",
+     "intro": "At supper Jesus washes his disciples’ feet and gives the new commandment to love as he has loved. He foretells betrayal and denial. He calls himself the way, the truth, and the life, promises the Holy Spirit, and names himself the true vine.",
+     "question": "Whose feet is Jesus asking you to wash in your daily life?"
+    },
+    {
+     "title": "Jesus Prays for His Own",
+     "intro": "Jesus promises the Spirit of truth and says their sorrow will turn to joy. He prays to the Father for his disciples and for all who will believe, that they may be one. Then he is arrested, questioned by Annas and Pilate, and denied by Peter.",
+     "question": "How can you help answer Jesus’ prayer that his followers be one?"
+    },
+    {
+     "title": "He Is Risen",
+     "intro": "Jesus is crowned with thorns and crucified, entrusting his mother to the beloved disciple. Mary Magdalene meets the risen Lord, and Thomas confesses, “My Lord and my God.” By the sea, Jesus asks Peter three times, “Do you love me?” and tells him to feed his sheep.",
+     "question": "If Jesus asked you, “Do you love me?”, how would you answer today?"
+    },
+    {
+     "title": "The Spirit Comes at Pentecost",
+     "intro": "Jesus ascends, and the apostles choose Matthias to replace Judas. At Pentecost the Holy Spirit comes like wind and fire, Peter preaches, and about three thousand are baptized. Peter and John heal a lame man at the temple gate in Jesus’ name.",
+     "question": "Where do you need the Holy Spirit’s courage to speak or act?"
+    },
+    {
+     "title": "Bold Witness in Jerusalem",
+     "intro": "Peter and John refuse to stop preaching. The believers share everything, but Ananias and Sapphira lie and fall dead. The apostles are jailed, freed by an angel, and flogged, rejoicing to suffer for Jesus. Seven men are chosen to serve, among them Stephen.",
+     "question": "What would it cost you to speak of Jesus more openly?"
+    },
+    {
+     "title": "Stephen and Philip",
+     "intro": "Stephen retells Israel’s history before the council and is stoned, praying for his killers while young Saul looks on. Persecution scatters the believers. Philip preaches in Samaria, Peter and John lay hands on the converts, and Philip baptizes an Ethiopian official.",
+     "question": "Who do you need to forgive the way Stephen forgave?"
+    },
+    {
+     "title": "Saul Meets the Risen Christ",
+     "intro": "On the road to Damascus, Saul is blinded by the risen Christ and baptized by Ananias, then preaches Jesus boldly. Peter heals Aeneas and raises Tabitha. A vision teaches Peter that God shows no partiality, and the Spirit falls on the Gentile Cornelius and his household.",
+     "question": "Whom have you written off that God may be calling, as he called Saul?"
+    },
+    {
+     "title": "Peter Freed From Prison",
+     "intro": "Peter defends baptizing Gentiles, and at Antioch believers are first called Christians. Herod kills James, the brother of John, and jails Peter, but an angel leads him out while the church prays. Then the Letter of James begins: let trials make you steadfast, and be doers of the word.",
+     "question": "How is a trial you face now teaching you patience?"
+    },
+    {
+     "title": "Faith That Works",
+     "intro": "James warns against favoring the rich and insists that faith without works is dead. He shows how the tongue can bless or wound, contrasts earthly and heavenly wisdom, and calls for patience. He ends with the anointing of the sick and prayer for one another.",
+     "question": "Where could your faith become more visible in what you do this week?"
+    },
+    {
+     "title": "The First Missionary Journey",
+     "intro": "The Spirit sets apart Barnabas and Saul, now called Paul. They preach in Cyprus and Pisidian Antioch, turning to the Gentiles when many reject them. At Lystra a crowd calls them gods, then stones Paul. On the way back they appoint elders in each church.",
+     "question": "Where are you being sent, even in small ways, to share the faith?"
+    },
+    {
+     "title": "The Council of Jerusalem",
+     "intro": "Must Gentile believers be circumcised? The apostles and elders meet in Jerusalem, Peter and James speak, and the council sends its answer by letter. In Galatians Paul defends his gospel, recalls his call, and tells how he confronted Peter at Antioch.",
+     "question": "How do you seek the Church’s guidance when Christians disagree?"
+    },
+    {
+     "title": "Freedom in Christ",
+     "intro": "Paul argues that God’s promise to Abraham comes through faith, and that the law was a guardian until Christ came. In him there is neither Jew nor Greek, slave nor free. Christ has set us free, so live by the Spirit and bear its fruit.",
+     "question": "Which fruit of the Spirit do you most want to grow in you?"
+    },
+    {
+     "title": "The Gospel Reaches Europe",
+     "intro": "Paul closes Galatians: bear one another’s burdens, and glory only in the cross. In Acts, a vision calls him to Macedonia. Lydia is baptized at Philippi, and a jailer is converted after an earthquake. Paul preaches in Thessalonica, Berea, and Athens.",
+     "question": "Whose burden could you help carry this week?"
+    },
+    {
+     "title": "Corinth and Thessalonica",
+     "intro": "Paul works with Priscilla and Aquila in Corinth and stays a year and a half, and Apollos begins preaching. Writing to the Thessalonians, Paul thanks God for their faith, recalls his gentle care, urges holiness, and comforts them about those who have died.",
+     "question": "Who has nurtured your faith, and how might you thank them?"
+    },
+    {
+     "title": "Waiting for the Lord",
+     "intro": "The day of the Lord will come like a thief in the night, so stay awake, rejoice always, and pray without ceasing. In Second Thessalonians Paul corrects those who think that day has already come and tells idle believers to work quietly.",
+     "question": "What would praying without ceasing look like in your ordinary day?"
+    },
+    {
+     "title": "Riot in Ephesus",
+     "intro": "In Ephesus Paul baptizes disciples who then receive the Spirit, and former magicians burn their books. Silversmiths who make shrines of Artemis start a riot. At Troas young Eutychus falls from a window and is restored. Paul says a tearful farewell to the Ephesian elders.",
+     "question": "What might you need to give up, as the Ephesians burned their books?"
+    },
+    {
+     "title": "The Wisdom of the Cross",
+     "intro": "Paul writes to a church split into factions behind favorite preachers. The cross looks like foolishness, yet it is God’s power and wisdom. Paul and Apollos only plant and water, and God gives the growth. The community is God’s temple.",
+     "question": "Where are you tempted to boast in yourself rather than in God?"
+    },
+    {
+     "title": "Bodies, Marriage, and Idols",
+     "intro": "Paul confronts a case of incest and lawsuits among believers. The body is a temple of the Holy Spirit, so flee immorality. He gives counsel on marriage and virginity, and on food offered to idols: knowledge puffs up, but love builds up.",
+     "question": "How does treating your body as a temple of the Spirit change your choices?"
+    },
+    {
+     "title": "The Lord’s Supper",
+     "intro": "Paul gives up his rights for the gospel and runs to win an imperishable crown. He warns from Israel’s desert story and teaches that the cup and bread are a sharing in Christ. He hands on the Lord’s Supper and warns against receiving unworthily.",
+     "question": "How do you examine yourself before receiving the Body and Blood of Christ?"
+    },
+    {
+     "title": "The Greatest Is Love",
+     "intro": "There are many gifts but one Spirit, and many members but one body. Without love, even the greatest gifts are nothing. Love is patient and kind and never ends. Paul asks that prophecy and tongues build up the whole church and be done in good order.",
+     "question": "Which line of Paul’s hymn to love most challenges you today?"
+    },
+    {
+     "title": "Christ Is Risen",
+     "intro": "Paul hands on the core of the gospel: Christ died, was buried, and rose, appearing to many. If Christ is not raised, faith is in vain. But he is the firstfruits, and our bodies will be raised imperishable. Paul closes with the collection and greetings.",
+     "question": "How does hope in the resurrection shape the way you live now?"
+    },
+    {
+     "title": "Treasure in Clay Jars",
+     "intro": "Paul praises the God of all comfort and explains his changed travel plans. He urges forgiveness for one who sinned. As ministers of a new covenant, believers reflect the Lord’s glory. We carry this treasure in clay jars, afflicted but not crushed.",
+     "question": "How has God shown his strength through your weakness?"
+    },
+    {
+     "title": "Ambassadors for Christ",
+     "intro": "Paul longs for our heavenly dwelling and calls believers a new creation, entrusted with the ministry of reconciliation. He opens his heart to the Corinthians, rejoices that his hard letter led to repentance, and urges a generous gift for Jerusalem: God loves a cheerful giver.",
+     "question": "Where is God asking you to be an agent of reconciliation?"
+    },
+    {
+     "title": "Strength in Weakness",
+     "intro": "Paul defends his ministry against rivals who boast. He lists his sufferings, tells of being caught up to the third heaven, and speaks of a thorn in the flesh. Christ tells him, “My grace is sufficient for you, for power is made perfect in weakness.”",
+     "question": "What thorn in your life might become a place of grace?"
+    },
+    {
+     "title": "All Have Sinned",
+     "intro": "Paul is not ashamed of the gospel, the power of God for salvation. Gentiles who suppressed the truth and Jews who had the law alike stand in need of mercy, for all have sinned. Now God’s righteousness comes through faith in Jesus Christ.",
+     "question": "How do you respond to the truth that you need God’s mercy?"
+    },
+    {
+     "title": "Where Grace Abounds",
+     "intro": "Abraham believed God, and it was credited to him as righteousness. Justified by faith, we have peace with God. Where sin abounded, grace abounded more. In baptism we die and rise with Christ. Paul describes the struggle within: I do not do the good I want.",
+     "question": "What struggle within you do you need to hand over to Christ?"
+    },
+    {
+     "title": "Nothing Can Separate Us",
+     "intro": "Those in Christ are not condemned. The Spirit makes us children of God who cry, “Abba, Father,” and helps us in our weakness. All things work together for good for those who love God, and nothing can separate us from his love. Then Paul grieves for Israel.",
+     "question": "What fear would loosen its grip if you trusted that nothing can separate you from God’s love?"
+    },
+    {
+     "title": "A Living Sacrifice",
+     "intro": "Faith comes from hearing, and all who call on the Lord will be saved. Paul uses an olive tree to show that God has not rejected Israel. Then he urges: offer yourselves as a living sacrifice, use your gifts, love sincerely, and overcome evil with good.",
+     "question": "What part of your life have you not yet offered to God?"
+    },
+    {
+     "title": "Welcome One Another",
+     "intro": "Paul asks the strong not to despise the weak over food or feast days, but to build each other up. Christ welcomed us, so we should welcome one another. Paul shares his plans to visit Rome and Spain and greets many coworkers by name, including Phoebe, Prisca, and Aquila.",
+     "question": "Whom do you need to welcome more warmly, as Christ welcomed you?"
+    },
+    {
+     "title": "Paul Arrested in Jerusalem",
+     "intro": "Despite warnings, Paul goes up to Jerusalem. A mob seizes him in the temple, and Roman soldiers rescue him. He tells the story of his conversion and claims his Roman citizenship. Before the council he divides Pharisees and Sadducees, and a plot sends him to Caesarea.",
+     "question": "When have you kept going though you knew hardship was ahead?"
+    },
+    {
+     "title": "Paul Before Governors and King",
+     "intro": "In Caesarea Paul defends himself before the governor Felix, who leaves him in prison for two years. Before Festus he appeals to Caesar. To King Agrippa he tells again of meeting Christ, and Agrippa says Paul has almost persuaded him to be a Christian.",
+     "question": "Whom do you know who is almost persuaded, and how can you pray for them?"
+    },
+    {
+     "title": "Shipwreck and Rome",
+     "intro": "Paul sails for Rome under guard. A violent storm wrecks the ship, but Paul encourages everyone, and all reach shore on Malta. He survives a viper’s bite and heals the sick. At last in Rome, he lives under guard and preaches the kingdom of God openly.",
+     "question": "How have you seen God bring you safely through a storm?"
+    },
+    {
+     "title": "One Body, One Spirit",
+     "intro": "Paul blesses God, who chose us in Christ before the foundation of the world. Saved by grace through faith, Jews and Gentiles are made one, the wall between them broken down. Paul prays they may know Christ’s love and urges unity: one Lord, one faith, one baptism.",
+     "question": "How can you help keep the unity of the Spirit where you live and worship?"
+    },
+    {
+     "title": "The Armor of God",
+     "intro": "Paul urges walking as children of light and compares marriage to Christ’s love for the Church. He addresses children, parents, servants, and masters, then describes the armor of God. Philippians opens with thanks: for me to live is Christ, and to die is gain.",
+     "question": "Which piece of God’s armor do you most need today?"
+    },
+    {
+     "title": "The Mind of Christ",
+     "intro": "Paul quotes a hymn to Christ, who emptied himself and became obedient unto death on a cross. He praises Timothy and Epaphroditus, counts all things loss compared to knowing Christ, and urges joy: rejoice in the Lord always, and do not be anxious.",
+     "question": "What worries could you hand to God in prayer with thanksgiving today?"
+    },
+    {
+     "title": "Christ Above All",
+     "intro": "Paul presents Christ as the image of the invisible God, firstborn of all creation, and head of the body, the Church. He warns against empty philosophies and man-made rules. Raised with Christ, believers seek the things above and put on compassion, kindness, and love.",
+     "question": "What would it mean for you to set your mind on things above?"
+    },
+    {
+     "title": "A Brother, Not a Slave",
+     "intro": "Paul asks Philemon to welcome back Onesimus, a slave who had left him, as a beloved brother. Then he writes to Timothy at Ephesus: guard sound teaching, pray for all people, choose worthy bishops and deacons, and let no one despise your youth.",
+     "question": "Who do you need to see with fresh eyes, as a brother or sister?"
+    },
+    {
+     "title": "Guidance for Pastors",
+     "intro": "Paul counsels Timothy on caring for widows, honoring elders, and the danger of loving money: godliness with contentment is great gain. To Titus in Crete he describes good elders and urges sound teaching and good works, for the grace of God has appeared.",
+     "question": "Where could you practice more contentment with what you have?"
+    },
+    {
+     "title": "I Have Kept the Faith",
+     "intro": "Writing from prison, Paul tells Timothy to stir up the gift of God, guard the truth, and endure hardship like a good soldier. All Scripture is inspired by God. Near the end, Paul says he has fought the good fight, finished the race, and kept the faith.",
+     "question": "What gift of God in you needs stirring up again?"
+    },
+    {
+     "title": "Jesus Our High Priest",
+     "intro": "God once spoke through prophets but now speaks through his Son, greater than the angels and greater than Moses. Do not harden your hearts, but enter God’s rest. Jesus is a high priest who can sympathize with our weakness, tested in every way yet without sin.",
+     "question": "What weakness can you bring to Jesus, knowing he understands it?"
+    },
+    {
+     "title": "A Priest Like Melchizedek",
+     "intro": "The author urges readers on to maturity and steadfast hope, an anchor for the soul. Jesus is a priest forever in the order of Melchizedek. He mediates a new covenant and enters the true sanctuary with his own blood, once for all.",
+     "question": "Where do you need hope to be an anchor for your soul right now?"
+    },
+    {
+     "title": "The Heroes of Faith",
+     "intro": "Christ’s one sacrifice does what the old offerings could not. So hold fast, do not neglect meeting together, and endure. Then comes a roll call of faith: Abel, Noah, Abraham, Sarah, Moses, Rahab, and many more, who trusted God’s promises without yet seeing them fulfilled.",
+     "question": "Which hero of faith in this chapter speaks most to your own journey?"
+    },
+    {
+     "title": "Run the Race",
+     "intro": "Surrounded by a cloud of witnesses, run with perseverance, eyes fixed on Jesus. God disciplines those he loves. Show hospitality and remember prisoners, for Jesus Christ is the same yesterday, today, and forever. First Peter begins with a living hope and a call to holiness.",
+     "question": "What weight do you need to lay aside to run your race well?"
+    },
+    {
+     "title": "Living Stones",
+     "intro": "Believers are living stones built into a spiritual house, a royal priesthood. Peter urges good conduct among unbelievers, patience under unjust suffering after Christ’s example, and readiness to explain your hope. Elders must shepherd the flock willingly. Cast your cares on God.",
+     "question": "How would you explain the reason for your hope to someone who asked?"
+    },
+    {
+     "title": "Guard Against False Teachers",
+     "intro": "Peter urges growth in virtue and recalls the Transfiguration he witnessed. He warns of false teachers and scoffers who mock Christ’s return: with the Lord a day is like a thousand years. Jude likewise urges believers to contend for the faith and keep themselves in God’s love.",
+     "question": "Which virtue from Peter’s list do you most want to grow in?"
+    },
+    {
+     "title": "God Is Love",
+     "intro": "John writes of what he has seen and touched: the Word of life. God is light, and if we confess our sins he forgives. Do not love the world. Test the spirits. Love one another, for love is from God, and God is love.",
+     "question": "How has someone shown you God’s love in a concrete way?"
+    },
+    {
+     "title": "The Vision on Patmos",
+     "intro": "John ends his letter on the faith that overcomes the world, and his two short notes urge truth, love, and hospitality. Revelation opens on Patmos with a vision of the risen Christ among seven lampstands, then messages to Ephesus, Smyrna, Pergamum, and Thyatira.",
+     "question": "Have you, like the church at Ephesus, left the love you had at first?"
+    },
+    {
+     "title": "The Lamb and the Seals",
+     "intro": "Christ speaks to Sardis, Philadelphia, and lukewarm Laodicea: “I stand at the door and knock.” John sees God’s throne, worshiped day and night. Only the Lamb who was slain can open the scroll. As he breaks the seals, a great multitude stands in white robes.",
+     "question": "Where is Christ knocking at the door of your heart?"
+    },
+    {
+     "title": "The Woman and the Dragon",
+     "intro": "Trumpets sound and plagues fall, yet many refuse to repent. John eats a little scroll, and two witnesses prophesy, are killed, and rise. A woman clothed with the sun bears a child, and a dragon wars against her. Two beasts rise to deceive the world.",
+     "question": "Where do you need to stand firm against what the world worships?"
+    },
+    {
+     "title": "The Fall of Babylon",
+     "intro": "The Lamb stands on Mount Zion with the redeemed, and angels proclaim the eternal gospel and the harvest of the earth. Seven bowls of God’s wrath are poured out. A great harlot rides a beast, and Babylon, the proud city, falls while merchants mourn.",
+     "question": "What in your life rests on Babylon’s values rather than God’s?"
+    },
+    {
+     "title": "All Things New",
+     "intro": "Heaven rejoices at the marriage supper of the Lamb. Christ rides out as Faithful and True, Satan is bound, and the dead are judged. Then John sees a new heaven and a new earth, the holy city where God wipes away every tear. Come, Lord Jesus.",
+     "question": "What tears do you long for God to wipe away?"
+    }
+   ]
+  },
+  {
+   "slug": "catechism-in-a-year",
+   "title": "Catechism in a Year",
+   "kind": "catechism",
+   "summary": "What the Church believes, a few paragraphs a day",
+   "intro": "Walk through the whole Catechism of the Catholic Church in a year: what we believe, how we celebrate it in the sacraments, how we live it, and how we pray. Each day Pax sums up a few paragraphs in plain words, shows the Scripture they rest on, and links to the full text on vatican.va. Start any day, at your own pace.",
+   "minutes": 10,
+   "sections": [],
+   "days": []
+  },
+  {
+   "slug": "mark-in-16-days",
+   "title": "Mark in 16 Days",
+   "kind": "bible",
+   "summary": "The shortest Gospel, one chapter a day",
+   "intro": "Mark is the shortest and fastest of the four Gospels, full of action and the word \"immediately.\" Tradition says Mark wrote down the preaching of Saint Peter in Rome. One chapter a day takes you from the Jordan River to the empty tomb in about two weeks: a good first step into the Bible.",
+   "minutes": 8,
+   "sections": [],
+   "days": [
+    {
+     "title": "The Gospel Begins",
+     "intro": "Mark moves fast. John baptizes in the Jordan, the Spirit descends on Jesus, and he is tested in the desert. Then he calls four fishermen, drives out an unclean spirit, heals Peter’s mother-in-law and touches a leper.",
+     "question": "What would it take for you to leave your nets today?"
+    },
+    {
+     "title": "Friends Who Lower the Roof",
+     "intro": "Four friends lower a paralyzed man through a roof, and Jesus forgives his sins before healing him. He calls Levi the tax collector, eats with sinners, and answers critics about fasting and the Sabbath.",
+     "question": "Who has carried you to Jesus when you could not go yourself?"
+    },
+    {
+     "title": "Jesus Chooses the Twelve",
+     "intro": "Jesus heals a withered hand on the Sabbath, and his enemies start to plot. He chooses twelve apostles, answers the charge that he works by Beelzebub, and names as family all who do God’s will.",
+     "question": "Whom has Jesus called you to stand beside, as he called the Twelve?"
+    },
+    {
+     "title": "The Sower and the Storm",
+     "intro": "Jesus teaches in parables: the sower and four kinds of soil, a lamp on a stand, seed that grows while the farmer sleeps, and the tiny mustard seed. That evening he calms a storm, and the disciples ask who he is.",
+     "question": "What kind of soil is your heart offering God’s word right now?"
+    },
+    {
+     "title": "Power Over Death",
+     "intro": "Across the lake Jesus frees a man possessed by a legion of demons. Back home, a woman who has bled for twelve years touches his cloak and is healed, and he raises Jairus’s daughter with the words Talitha cumi.",
+     "question": "Where do you need to reach out and touch the hem of his cloak?"
+    },
+    {
+     "title": "Bread in the Wilderness",
+     "intro": "His hometown rejects the carpenter’s son. Jesus sends the Twelve out two by two, and Mark tells how Herod had John the Baptist beheaded. Then Jesus feeds five thousand with five loaves and walks on the water.",
+     "question": "What small thing could you place in his hands today?"
+    },
+    {
+     "title": "What Comes From the Heart",
+     "intro": "Jesus challenges traditions about washing, teaching that evil comes from within, not from food. A Gentile mother asks for crumbs from the table and her daughter is healed. He opens a deaf man’s ears: Ephphatha.",
+     "question": "What is Jesus asking to open in you: your ears, your lips, or your heart?"
+    },
+    {
+     "title": "Who Do You Say I Am?",
+     "intro": "Jesus feeds four thousand and heals a blind man in two stages. At Caesarea Philippi Peter names him the Christ, but Jesus foretells his suffering and death and calls every disciple to take up the cross.",
+     "question": "How would you answer if Jesus asked you, “Who do you say I am?”"
+    },
+    {
+     "title": "The Transfiguration",
+     "intro": "On a high mountain Jesus is transfigured before Peter, James and John, with Moses and Elijah. Below, a father cries, “I do believe; help my unbelief,” and his son is freed. Jesus teaches that the greatest must serve.",
+     "question": "Where do you need to pray, “Lord, help my unbelief”?"
+    },
+    {
+     "title": "The Last Will Be First",
+     "intro": "Jesus teaches that marriage is for life and welcomes the little children. A rich man walks away sad, James and John ask for places of honor, and Jesus says he came to serve. Blind Bartimaeus receives his sight.",
+     "question": "What are you still holding on to that keeps you from following freely?"
+    },
+    {
+     "title": "Jesus Enters Jerusalem",
+     "intro": "Jesus rides into Jerusalem on a colt as crowds shout Hosanna. He curses a fruitless fig tree, drives the merchants from the Temple, teaches about faith and forgiveness in prayer, and silences a challenge to his authority.",
+     "question": "What needs clearing out so your heart can be a house of prayer?"
+    },
+    {
+     "title": "The Greatest Commandment",
+     "intro": "In the Temple, Jesus tells the parable of the wicked tenants, answers questions about taxes to Caesar and the resurrection, and names the greatest commandments: love God and neighbor. A poor widow gives everything she has.",
+     "question": "What would it look like for you to give from your poverty, like the widow?"
+    },
+    {
+     "title": "Stay Awake",
+     "intro": "Leaving the Temple, Jesus foretells its destruction. He warns of false messiahs, wars and persecution, and speaks of the Son of Man coming on the clouds. No one knows the day or the hour, so his followers must keep watch.",
+     "question": "What helps you stay spiritually awake in ordinary days?"
+    },
+    {
+     "title": "The Supper and the Garden",
+     "intro": "A woman anoints Jesus at Bethany, and Judas agrees to betray him. At the Passover meal Jesus gives his Body and Blood. He prays in Gethsemane, is arrested, and is condemned by the council while Peter denies him three times.",
+     "question": "When have you, like Peter, failed Jesus, and how did he meet you afterward?"
+    },
+    {
+     "title": "The Crucifixion",
+     "intro": "Pilate hands Jesus over and frees Barabbas. Soldiers mock him with thorns, and Simon of Cyrene carries his cross. Jesus cries out to God and dies, the Temple veil is torn, and a centurion confesses him as Son of God.",
+     "question": "Standing at the foot of the cross today, what do you want to say to him?"
+    },
+    {
+     "title": "He Is Risen",
+     "intro": "At dawn the women find the stone rolled back and a young man in white: Jesus is risen. He appears to Mary Magdalene and the disciples, sends them to preach to all creation, and is taken up into heaven.",
+     "question": "Whom could you tell this week about the hope of the Resurrection?"
+    }
+   ]
+  },
+  {
+   "slug": "psalms-in-30-days",
+   "title": "Psalms in 30 Days",
+   "kind": "bible",
+   "summary": "The prayer book of the Bible in a month",
+   "intro": "The 150 Psalms are the prayers Jesus himself prayed, and the Church still prays them every day. They hold praise, thanks, sorrow, anger and hope. Pray about five a day and you will pass through all of them in a month. The Douay-Rheims numbers most Psalms one lower than modern Bibles, so both numbers are shown.",
+   "minutes": 12,
+   "sections": [],
+   "days": [
+    {
+     "title": "Two Ways and God’s Anointed",
+     "intro": "Psalm 1 sets out the two paths: the just who delight in God’s law and the wicked who blow away like chaff. Psalm 2 crowns God’s anointed king. In Psalms 3 to 7 David cries for help, rests in trust, and repents.",
+     "question": "Which of the two paths in Psalm 1 does your week most resemble?"
+    },
+    {
+     "title": "What Is Man?",
+     "intro": "Psalm 8 marvels that the Maker of the stars cares for human beings. Then come prayers of the poor and the hunted: “How long, O Lord?” in Psalm 12 (13), and the fool who says there is no God in Psalm 13 (14).",
+     "question": "When did you last stop and wonder at how God cares for you?"
+    },
+    {
+     "title": "The Lord Is My Portion",
+     "intro": "Psalm 14 (15) asks who may dwell with God. Psalm 15 (16) rejoices in the Lord as one’s portion; Peter later reads its hope beyond the grave as fulfilled in Jesus. Psalm 17 (18) is David’s great song of rescue.",
+     "question": "What would change if the Lord truly were your whole portion?"
+    },
+    {
+     "title": "Why Have You Forsaken Me?",
+     "intro": "The heavens declare God’s glory in Psalm 18 (19). Psalm 21 (22) begins with the cry Jesus prayed on the cross and ends in praise. Then comes the shepherd psalm, 22 (23), and the King of glory entering his gates.",
+     "question": "Where in your life does God feel far away, and can you still speak to him?"
+    },
+    {
+     "title": "The Lord Is My Light",
+     "intro": "Psalm 24 (25) asks God to teach his ways. Psalm 26 (27) declares, “The Lord is my light and my salvation.” Psalm 28 (29) hears God’s voice in the thunder, and Psalm 29 (30) gives thanks for mourning turned to joy.",
+     "question": "What fear could you hand over today to the Lord who is your light?"
+    },
+    {
+     "title": "Into Your Hands",
+     "intro": "Psalm 30 (31) gives the words Jesus spoke as he died: “Into your hands I commend my spirit.” Psalm 31 (32) rejoices in sins forgiven. Psalm 33 (34) invites us to taste and see that the Lord is good.",
+     "question": "What part of your life do you most need to place into God’s hands?"
+    },
+    {
+     "title": "Do Not Fret Over the Wicked",
+     "intro": "Psalm 34 (35) asks God to defend the innocent. Psalm 35 (36) contrasts human malice with God’s mercy, the fountain of life. Psalm 36 (37) counsels patience: the wicked fade, and the meek will inherit the land.",
+     "question": "Whose success or wrongdoing stirs up envy or anger in you right now?"
+    },
+    {
+     "title": "As the Deer Longs",
+     "intro": "Psalm 37 (38) is a raw prayer of repentance, and Psalm 38 (39) ponders how short life is. In Psalm 39 (40) the psalmist comes to do God’s will. Psalm 41 (42) longs for God like a deer panting for water.",
+     "question": "What are you thirsting for most deeply right now?"
+    },
+    {
+     "title": "God Is Our Refuge",
+     "intro": "Psalm 42 (43) longs to go to God’s altar. Psalm 43 (44) laments defeat, and Psalm 44 (45) sings at a royal wedding. Psalm 45 (46) says “Be still and see that I am God,” and Psalms 46 and 47 (47 and 48) hail the great King.",
+     "question": "Where could you make room today simply to be still before God?"
+    },
+    {
+     "title": "Have Mercy on Me, O God",
+     "intro": "Psalm 48 (49) warns that wealth cannot buy anyone out of death. In Psalm 49 (50) God asks for thanksgiving more than sacrifice. Psalm 50 (51) is David’s prayer after his sin with Bathsheba: “Create a clean heart in me.”",
+     "question": "What would you ask God to wash clean in you today?"
+    },
+    {
+     "title": "Cast Your Care on the Lord",
+     "intro": "These are prayers from danger, several tied to David’s flight from Saul. In Psalm 54 (55) a trusted friend has turned traitor, yet the psalmist hands his burden to God. Psalm 56 (57) wakes the dawn with song.",
+     "question": "What burden have you been carrying alone that you could give to God?"
+    },
+    {
+     "title": "My Soul Thirsts for You",
+     "intro": "Psalm 61 (62) finds rest in God alone. Psalm 62 (63) seeks God at daybreak like dry land longing for rain. Psalm 64 (65) thanks him for the harvest, and Psalm 65 (66) invites all to come and see what God has done.",
+     "question": "When in your day are you most aware of your thirst for God?"
+    },
+    {
+     "title": "Let God Arise",
+     "intro": "Psalm 66 (67) prays that all nations will know God. Psalm 67 (68) is a triumphal march. In Psalm 68 (69) the waters rise to the neck and the sufferer is given vinegar to drink. Psalm 69 (70) cries, “O God, come to my assistance.”",
+     "question": "Where do you need God to hurry to help you right now?"
+    },
+    {
+     "title": "From My Youth",
+     "intro": "Psalm 70 (71) is the prayer of someone growing old who has trusted God since youth. Psalm 71 (72) pictures a just king to whom all nations bring gifts. Asaph envies the wicked until he enters God’s sanctuary.",
+     "question": "Looking back over your life, where can you see God was faithful?"
+    },
+    {
+     "title": "Remember the Wonders of Old",
+     "intro": "Psalm 74 (75) says God alone judges. Psalm 76 (77) sinks into distress until the psalmist remembers how God led his people through the sea. Psalm 77 (78) begins retelling Israel’s story, with manna, the bread of angels.",
+     "question": "Which memory of God’s goodness could steady you in a hard season?"
+    },
+    {
+     "title": "Restore Us, O God",
+     "intro": "Psalm 77 (78) continues: Israel keeps forgetting, yet God keeps forgiving and finally chooses David to shepherd his people. Psalm 78 (79) mourns Jerusalem in ruins, and Psalm 79 (80) begs the Shepherd of Israel to restore his vine.",
+     "question": "Where do you see a pattern of forgetting God in your own story?"
+    },
+    {
+     "title": "How Lovely Is Your Dwelling",
+     "intro": "God judges unjust rulers in Psalm 81 (82). Psalm 83 (84) loves God’s house: one day in his courts is better than a thousand elsewhere. In Psalm 84 (85) mercy and truth meet, and justice and peace kiss.",
+     "question": "Where do you feel most at home with God?"
+    },
+    {
+     "title": "Teach Us to Number Our Days",
+     "intro": "Psalm 87 (88) is the darkest psalm, ending in darkness, yet it is still a prayer. Psalm 88 (89) holds God to his promise to David. Psalm 89 (90), a prayer of Moses, sets our brief lives against God’s eternity.",
+     "question": "If you numbered your days honestly, what would you spend them on?"
+    },
+    {
+     "title": "Under His Wings",
+     "intro": "Psalm 90 (91), prayed at Night Prayer, promises God’s shelter and his angels’ care. Psalms 91 to 93 (92 to 94) praise the Lord who reigns. Psalm 94 (95) warns, “Today if you hear his voice, harden not your hearts.”",
+     "question": "Is there a place where you are hardening your heart against God’s voice?"
+    },
+    {
+     "title": "Bless the Lord, My Soul",
+     "intro": "Psalms 96 to 99 (97 to 100) call all the earth to rejoice in the Lord who reigns. Psalm 101 (102) is a lament of fading days. Psalm 102 (103) blesses God, who removes our sins as far as east is from west.",
+     "question": "Which of God’s benefits to you could you name and thank him for today?"
+    },
+    {
+     "title": "Send Forth Your Spirit",
+     "intro": "Psalm 103 (104) celebrates creation: the sea, the beasts, the wine that gladdens the heart, and all life depending on God’s breath. The Church sings it at Pentecost. Psalm 104 (105) retells God’s faithfulness from Abraham to the Exodus.",
+     "question": "Where in creation have you sensed God’s breath giving life?"
+    },
+    {
+     "title": "His Mercy Endures",
+     "intro": "Psalm 105 (106) honestly confesses Israel’s sins, from the golden calf onward, and God’s mercy each time. Psalm 106 (107) tells of wanderers, prisoners, the sick and sailors in a storm, all rescued when they cried to the Lord.",
+     "question": "Which of the rescued in Psalm 106 (107) looks most like you?"
+    },
+    {
+     "title": "A Priest Forever",
+     "intro": "Psalm 108 (109) asks God to judge a false accuser. Psalm 109 (110), quoted often in the New Testament, calls the king a priest forever like Melchizedek. Psalms 110 to 112 (111 to 113) praise God who lifts up the poor.",
+     "question": "How does knowing Christ is your high priest change the way you pray?"
+    },
+    {
+     "title": "This Is the Day",
+     "intro": "Israel goes out of Egypt and the sea flees. “Not to us, O Lord, but to your name give glory.” The psalmist lifts the cup of salvation. Psalm 117 (118) sings of the rejected stone that became the cornerstone.",
+     "question": "What would it mean to treat today as the day the Lord has made?"
+    },
+    {
+     "title": "Your Word Is My Delight",
+     "intro": "Psalm 118 (119) is the longest psalm, an alphabet poem with an eight-verse stanza for each Hebrew letter. Nearly every verse praises God’s law, word or commands. Watch for how the psalmist turns love of the law into prayer.",
+     "question": "Which line in today’s verses could you carry with you as a prayer?"
+    },
+    {
+     "title": "A Lamp to My Feet",
+     "intro": "Psalm 118 (119) closes: “Your word is a lamp to my feet.” The psalmist praises God seven times a day, a verse behind the Church’s hours of prayer, and ends like a lost sheep asking the Shepherd to come and find him.",
+     "question": "What step ahead of you needs the lamp of God’s word?"
+    },
+    {
+     "title": "Songs on the Way Up",
+     "intro": "Psalms 119 to 130 (120 to 131) are Songs of Ascents, sung by pilgrims climbing to Jerusalem. Listen for the Lord who keeps you, the joy of going to his house, the cry from the depths, and a child resting with its mother.",
+     "question": "What would it look like to rest in God like a weaned child?"
+    },
+    {
+     "title": "By the Rivers of Babylon",
+     "intro": "Psalm 131 (132) recalls David’s vow to find a home for the ark. Psalm 132 (133) praises brothers living in unity. Psalm 135 (136) repeats “his mercy endures forever,” and Psalm 136 (137) weeps in exile by Babylon’s rivers.",
+     "question": "Where do you feel like an exile, and how do you still sing to God there?"
+    },
+    {
+     "title": "You Have Searched Me",
+     "intro": "Psalm 138 (139) marvels that God knows us completely and formed us in the womb. Psalm 140 (141) asks that prayer rise like incense. Psalm 141 (142) is prayed from a cave, and Psalm 142 (143) asks to be taught God’s will.",
+     "question": "How does it feel to be fully known by God, and still loved?"
+    },
+    {
+     "title": "Let Everything Praise the Lord",
+     "intro": "The Psalter ends in a crescendo of praise. Psalm 144 (145) says the eyes of all look to God for food. The psalmist trusts God, not princes. Sun, moon, sea creatures and kings join in, and Psalm 150 calls every breath to praise.",
+     "question": "What could you praise God for right now, out loud?"
+    }
+   ]
+  },
+  {
+   "slug": "acts-in-28-days",
+   "title": "Acts and the Early Church",
+   "kind": "bible",
+   "summary": "Acts in 28 days, with the Fathers who knew the apostles",
+   "intro": "The Acts of the Apostles tells how the Church began: Pentecost, Peter and the Twelve in Jerusalem, Stephen the first martyr, and Paul's journeys to Rome. Read one chapter a day. Along the way Pax points you to the first generation after the apostles, Clement of Rome, Ignatius of Antioch and Polycarp, whose writings are in the Library.",
+   "minutes": 8,
+   "sections": [],
+   "days": [
+    {
+     "title": "The Ascension and Matthias",
+     "intro": "Luke picks up where his Gospel ended. The risen Jesus promises the Holy Spirit and sends his followers to the ends of the earth, then ascends. The apostles pray with Mary and choose Matthias to replace Judas.",
+     "question": "Where is God sending you to be his witness right now?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "matthias_apostle",
+       "label": "Saint Matthias"
+      }
+     ]
+    },
+    {
+     "title": "The Spirit at Pentecost",
+     "intro": "Wind and tongues of fire fill the upper room, and the apostles speak in many languages. Peter preaches the risen Christ, about three thousand are baptized, and the first believers devote themselves to teaching, breaking bread and prayer.",
+     "question": "Which part of the first believers’ life do you most want in yours?"
+    },
+    {
+     "title": "In the Name of Jesus",
+     "intro": "At the Temple gate a man lame from birth asks for money. Peter says he has no silver or gold, but heals him in the name of Jesus. Then Peter calls the astonished crowd to repent.",
+     "question": "What do you have to give that is worth more than money?"
+    },
+    {
+     "title": "We Cannot Stop Speaking",
+     "intro": "Peter and John are arrested and stand before the council. Peter declares there is salvation in no other name, and they refuse to stop preaching. The believers pray for courage and share everything they own.",
+     "question": "What keeps you from speaking about Jesus, and what would give you courage?"
+    },
+    {
+     "title": "Obey God Rather Than Men",
+     "intro": "Ananias and Sapphira lie about their gift and fall dead. The apostles work many healings and are jailed, but an angel frees them. Gamaliel urges caution, and the beaten apostles rejoice to suffer for Jesus’ name.",
+     "question": "When has honesty before God cost you something?"
+    },
+    {
+     "title": "Seven Chosen to Serve",
+     "intro": "Greek-speaking widows are being overlooked, so the apostles have seven men chosen, Stephen and Philip among them, and lay hands on them. Stephen works wonders, faces false charges, and his face shines like an angel’s.",
+     "question": "Who in your community is being overlooked, and how could you serve them?"
+    },
+    {
+     "title": "Stephen, the First Martyr",
+     "intro": "Stephen retells Israel’s story from Abraham through Moses and charges the council with resisting the Holy Spirit. He sees Jesus standing at God’s right hand. As he is stoned, he forgives his killers, and a young man named Saul approves.",
+     "question": "Whom do you need to forgive, as Stephen forgave?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "stephen_the_first_martyr",
+       "label": "Saint Stephen"
+      }
+     ]
+    },
+    {
+     "title": "Philip and the Ethiopian",
+     "intro": "Persecution scatters the Church. Philip preaches in Samaria, where Simon the magician tries to buy the gift of the Spirit. Then Philip meets an Ethiopian official reading Isaiah, explains the passage, and baptizes him beside the road.",
+     "question": "Who has helped you understand the Scriptures, and whom might you help?"
+    },
+    {
+     "title": "Saul Meets the Risen Lord",
+     "intro": "On the road to Damascus a light strikes Saul down and Jesus asks why he is persecuting him. Blind, Saul is healed and baptized by Ananias and starts preaching. Peter heals Aeneas and raises Tabitha at Joppa.",
+     "question": "Where has God interrupted your plans to turn you toward him?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "conversion_of_saint_paul_the_apostle",
+       "label": "The Conversion of Saint Paul"
+      }
+     ]
+    },
+    {
+     "title": "Peter and Cornelius",
+     "intro": "A Roman centurion named Cornelius is told by an angel to send for Peter. Peter sees a vision of unclean animals: what God has cleansed is not unclean. As Peter preaches, the Spirit falls on these Gentiles and they are baptized.",
+     "question": "Whom might God be asking you to welcome that you have kept at a distance?"
+    },
+    {
+     "title": "First Called Christians",
+     "intro": "Peter explains to the Jerusalem church why he baptized Gentiles, and they praise God. In Antioch many Greeks believe. Barnabas comes, brings Saul from Tarsus, and there the disciples are first called Christians.",
+     "question": "What would make someone call you a Christian just by watching you?",
+     "see": [
+      {
+       "kind": "father",
+       "key": "ignatius-of-antioch",
+       "label": "Ignatius of Antioch"
+      }
+     ]
+    },
+    {
+     "title": "Peter Freed From Prison",
+     "intro": "King Herod kills James, the brother of John, and jails Peter. While the church prays, an angel leads Peter out past the guards. He knocks at Mary’s house, where Rhoda is too excited to open the door. Later Herod himself is struck down.",
+     "question": "Whom could you pray for today who is held captive in some way?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "james_apostle",
+       "label": "Saint James the Apostle"
+      }
+     ]
+    },
+    {
+     "title": "Barnabas and Saul Sent Out",
+     "intro": "The Spirit sets apart Barnabas and Saul, now called Paul, for mission. On Cyprus a sorcerer is struck blind and the governor believes. At Antioch in Pisidia Paul preaches in the synagogue, and many Gentiles rejoice.",
+     "question": "What might the Holy Spirit be setting you apart to do?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "barnabas_apostle",
+       "label": "Saint Barnabas"
+      }
+     ]
+    },
+    {
+     "title": "Hailed as Gods, Then Stoned",
+     "intro": "In Iconium and Lystra Paul heals a man lame from birth, and the crowd calls Barnabas Jupiter and Paul Mercury. Then Paul is stoned and left for dead. He gets up, and they appoint elders and return to Antioch.",
+     "question": "How do you respond when praise turns to rejection?"
+    },
+    {
+     "title": "The Council of Jerusalem",
+     "intro": "Must Gentile believers be circumcised and keep the Law of Moses? The apostles and elders meet. Peter and James speak, and a letter is sent with their decision. Afterward Paul and Barnabas part ways over John Mark.",
+     "question": "How do you handle disagreement with fellow believers?"
+    },
+    {
+     "title": "The Call to Macedonia",
+     "intro": "Timothy joins Paul. A vision calls them to Macedonia, where Lydia and her household are baptized at Philippi. Paul and Silas are beaten and jailed, sing at midnight, and after an earthquake baptize the jailer and his family.",
+     "question": "Could you praise God in your own midnight hour?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "timothy_of_ephesus_and_titus_of_crete_bishops",
+       "label": "Saints Timothy and Titus"
+      },
+      {
+       "kind": "father",
+       "key": "polycarp-of-smyrna",
+       "label": "Polycarp of Smyrna"
+      }
+     ]
+    },
+    {
+     "title": "The Unknown God",
+     "intro": "Paul’s preaching stirs up a riot in Thessalonica, while the Bereans search the Scriptures daily. In Athens Paul speaks on the Areopagus about an altar to an unknown god, the God in whom we live and move and have our being.",
+     "question": "Where in your culture do you see people searching for an unknown God?"
+    },
+    {
+     "title": "Paul in Corinth",
+     "intro": "Paul works as a tentmaker with Aquila and Priscilla and spends a year and a half in Corinth after the Lord tells him in a vision not to be afraid. Later Priscilla and Aquila teach the eloquent Apollos the way of God more accurately.",
+     "question": "Who has patiently taught you the faith more fully?",
+     "see": [
+      {
+       "kind": "father",
+       "key": "clement-of-rome",
+       "label": "Clement of Rome"
+      }
+     ]
+    },
+    {
+     "title": "The Riot at Ephesus",
+     "intro": "At Ephesus Paul lays hands on disciples who receive the Spirit, and people burn their books of magic. Demetrius the silversmith, fearing for the idol trade, stirs a crowd to shout, “Great is Diana of the Ephesians!”",
+     "question": "What might you need to burn or give up to follow Christ more fully?"
+    },
+    {
+     "title": "Farewell at Miletus",
+     "intro": "At Troas, during Paul’s long talk at the breaking of bread, Eutychus falls from a window and is restored. At Miletus Paul bids farewell to the Ephesian elders, charging them to guard the flock the Holy Spirit placed in their care.",
+     "question": "What flock has God placed in your care, at home or at work?",
+     "see": [
+      {
+       "kind": "father",
+       "key": "ignatius-of-antioch",
+       "label": "Ignatius of Antioch"
+      }
+     ]
+    },
+    {
+     "title": "Arrested in the Temple",
+     "intro": "Friends and the prophet Agabus warn Paul that chains await him in Jerusalem, but he is ready to die for Jesus. In the Temple a mob seizes him, and Roman soldiers carry him away. Paul asks to address the crowd.",
+     "question": "What are you willing to suffer for the sake of Jesus’ name?"
+    },
+    {
+     "title": "Paul Tells His Story",
+     "intro": "Speaking in Hebrew, Paul tells the crowd about his zeal as a persecutor, the light on the Damascus road, and his call to the Gentiles. The crowd erupts. About to be flogged, Paul reveals he is a Roman citizen.",
+     "question": "How would you tell the story of how you came to know Jesus?"
+    },
+    {
+     "title": "Take Courage",
+     "intro": "Before the council Paul divides Pharisees and Sadducees over the resurrection. That night the Lord stands by him and promises he will witness in Rome. Paul’s nephew uncovers a murder plot, and soldiers take Paul to Caesarea.",
+     "question": "Where do you need to hear Jesus say, “Take courage”?"
+    },
+    {
+     "title": "Paul Before Felix",
+     "intro": "Accused of stirring up riots, Paul calmly defends himself before the governor Felix and confesses his hope in the resurrection. When Paul speaks of justice, self-control and judgment, Felix grows afraid and keeps him in prison two years.",
+     "question": "Is there a hard truth you keep postponing until a convenient time?"
+    },
+    {
+     "title": "I Appeal to Caesar",
+     "intro": "The new governor Festus hears the case. To avoid a trial in Jerusalem, Paul appeals to Caesar. King Agrippa and Bernice arrive, and Festus explains the dispute over a dead man named Jesus, whom Paul says is alive.",
+     "question": "How do you explain to others that Jesus is alive?"
+    },
+    {
+     "title": "Almost a Christian",
+     "intro": "Paul tells King Agrippa of his life as a Pharisee, his persecution of believers, and his call to open the eyes of the Gentiles. Festus calls him mad. Agrippa answers that Paul almost persuades him to become a Christian.",
+     "question": "What keeps you from being fully persuaded rather than almost?"
+    },
+    {
+     "title": "Storm and Shipwreck",
+     "intro": "Sailing for Rome as a prisoner, Paul warns of danger but is ignored. A violent storm batters the ship for two weeks. An angel promises everyone will live, Paul gives thanks and breaks bread, and all 276 people reach shore.",
+     "question": "How might God use you to bring hope to others in a storm?"
+    },
+    {
+     "title": "Rome at Last",
+     "intro": "On Malta a viper bites Paul without harm, and he heals many. He finally reaches Rome, meets the Jewish leaders, and for two years welcomes all who come, proclaiming the kingdom of God boldly and without hindrance.",
+     "question": "How will you carry on the story of Acts in your own life?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "peter_and_paul_apostles",
+       "label": "Saints Peter and Paul"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -177,14 +177,19 @@
 "section": "VI. Necessary Adaptations",
 "heading": "VI. Necessary Adaptations",
 "url": "https://www.vatican.va/archive/ENG0015/__P7.HTM",
-"refs": []
+"refs": [
+"1Cor.9.22",
+"1Pet.2.2"
+]
 },
 "25": {
 "part": "PROLOGUE",
 "section": "VI. Necessary Adaptations",
 "heading": "VI. Necessary Adaptations",
 "url": "https://www.vatican.va/archive/ENG0015/__P7.HTM",
-"refs": []
+"refs": [
+"1Cor.13.8"
+]
 },
 "26": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -396,7 +401,8 @@
 "heading": "I. God Reveals His \"Plan of Loving Goodness\"",
 "url": "https://www.vatican.va/archive/ENG0015/__PF.HTM",
 "refs": [
-"Eph.1.9"
+"Eph.1.9",
+"2Pet.1.4"
 ]
 },
 "52": {
@@ -405,8 +411,7 @@
 "heading": "I. God Reveals His \"Plan of Loving Goodness\"",
 "url": "https://www.vatican.va/archive/ENG0015/__PF.HTM",
 "refs": [
-"Eph.1.4",
-"Eph.1.5"
+"1Tim.6.16"
 ]
 },
 "53": {
@@ -560,6 +565,7 @@
 "heading": "III. Christ Jesus -- \"Mediator and Fullness of All Revelation\"",
 "url": "https://www.vatican.va/archive/ENG0015/__PH.HTM",
 "refs": [
+"1Tim.6.14",
 "Titus.2.13"
 ]
 },
@@ -700,6 +706,7 @@
 "heading": "III. The Interpretation of the Heritage of Faith",
 "url": "https://www.vatican.va/archive/ENG0015/__PM.HTM",
 "refs": [
+"1Tim.6.20",
 "2Tim.1.12",
 "2Tim.1.13",
 "2Tim.1.14",
@@ -759,7 +766,7 @@
 "heading": "III. The Interpretation of the Heritage of Faith",
 "url": "https://www.vatican.va/archive/ENG0015/__PM.HTM",
 "refs": [
-"John.2.20",
+"1John.2.20",
 "John.16.13"
 ]
 },
@@ -868,7 +875,10 @@
 "url": "https://www.vatican.va/archive/ENG0015/__PP.HTM",
 "refs": [
 "John.20.31",
-"2Tim.3.16"
+"2Tim.3.16",
+"2Pet.1.19",
+"2Pet.1.20",
+"2Pet.1.21"
 ]
 },
 "106": {
@@ -963,6 +973,8 @@
 "heading": "III. The Holy Spirit, Interpreter of Scripture",
 "url": "https://www.vatican.va/archive/ENG0015/__PQ.HTM",
 "refs": [
+"1Cor.10.2",
+"1Cor.10.11",
 "Heb.3.1",
 "Rev.21.1"
 ]
@@ -1048,6 +1060,7 @@
 "heading": "IV. The Canon of Scripture",
 "url": "https://www.vatican.va/archive/ENG0015/__PR.HTM",
 "refs": [
+"1Cor.10.6",
 "Heb.10.1"
 ]
 },
@@ -1059,7 +1072,10 @@
 "refs": [
 "Mark.12.29",
 "Mark.12.30",
-"Mark.12.31"
+"Mark.12.31",
+"1Cor.5.6",
+"1Cor.5.7",
+"1Cor.5.8"
 ]
 },
 "130": {
@@ -1157,6 +1173,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__PU.HTM",
 "refs": [
 "Col.1.15",
+"1Tim.1.17",
 "Exod.33.11",
 "John.15.14",
 "John.15.15",
@@ -1267,7 +1284,11 @@
 "section": "SECTION ONE \"I BELIEVE\" - \"WE BELIEVE\"",
 "heading": "II. \"I Know Whom I Have Believed\"",
 "url": "https://www.vatican.va/archive/ENG0015/__PW.HTM",
-"refs": []
+"refs": [
+"1Cor.12.3",
+"1Cor.2.10",
+"1Cor.2.11"
+]
 },
 "153": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -1380,7 +1401,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__PX.HTM",
 "refs": [
 "1Cor.13.12",
-"John.3.2"
+"1John.3.2"
 ]
 },
 "164": {
@@ -1443,7 +1464,9 @@
 "section": "SECTION ONE \"I BELIEVE\" - \"WE BELIEVE\"",
 "heading": "II. The Language of Faith",
 "url": "https://www.vatican.va/archive/ENG0015/__P10.HTM",
-"refs": []
+"refs": [
+"1Tim.3.15"
+]
 },
 "172": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -1553,7 +1576,10 @@
 "heading": "SECTION TWO I. THE CREEDS",
 "url": "https://www.vatican.va/archive/ENG0015/__P14.HTM",
 "refs": [
-"Rom.10.9"
+"Rom.10.9",
+"1Cor.15.3",
+"1Cor.15.4",
+"1Cor.15.5"
 ]
 },
 "187": {
@@ -1726,8 +1752,8 @@
 "refs": [
 "Luke.5.8",
 "Hos.11.9",
-"John.3.19",
-"John.3.20"
+"1John.3.19",
+"1John.3.20"
 ]
 },
 "209": {
@@ -1787,7 +1813,7 @@
 "Exod.34.6",
 "Ps.138.2",
 "Ps.85.11",
-"John.1.5"
+"1John.1.5"
 ]
 },
 "215": {
@@ -1831,7 +1857,7 @@
 "refs": [
 "Mal.2.6",
 "John.18.37",
-"John.5.20",
+"1John.5.20",
 "John.17.3"
 ]
 },
@@ -1868,6 +1894,16 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P16.HTM",
 "refs": [
 "John.4.8",
+"1Cor.2.7",
+"1Cor.2.8",
+"1Cor.2.9",
+"1Cor.2.10",
+"1Cor.2.11",
+"1Cor.2.12",
+"1Cor.2.13",
+"1Cor.2.14",
+"1Cor.2.15",
+"1Cor.2.16",
 "Eph.3.9",
 "Eph.3.10",
 "Eph.3.11",
@@ -1896,6 +1932,7 @@
 "heading": "Paragraph 1. I BELIEVE IN GOD",
 "url": "https://www.vatican.va/archive/ENG0015/__P16.HTM",
 "refs": [
+"1Cor.4.7",
 "Ps.116.12"
 ]
 },
@@ -2102,6 +2139,9 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P17.HTM",
 "refs": [
 "2Cor.13.14",
+"1Cor.12.4",
+"1Cor.12.5",
+"1Cor.12.6",
 "Eph.4.4",
 "Eph.4.5",
 "Eph.4.6"
@@ -2257,6 +2297,7 @@
 "John.1.3",
 "Matt.6.9",
 "2Cor.12.9",
+"1Cor.1.18",
 "Ps.115.3"
 ]
 },
@@ -2524,7 +2565,8 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P19.HTM",
 "refs": [
 "Eph.1.5",
-"Eph.1.6"
+"Eph.1.6",
+"1Cor.15.28"
 ]
 },
 "295": {
@@ -2662,6 +2704,8 @@
 "Gen.1.27",
 "Gen.1.28",
 "Col.1.24",
+"1Cor.3.9",
+"1Thess.3.2",
 "Col.4.11"
 ]
 },
@@ -2672,6 +2716,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P19.HTM",
 "refs": [
 "Phil.2.13",
+"1Cor.12.6",
 "Matt.19.26",
 "John.15.5"
 ]
@@ -2723,6 +2768,7 @@
 "heading": "Paragraph 4. THE CREATOR",
 "url": "https://www.vatican.va/archive/ENG0015/__P19.HTM",
 "refs": [
+"1Cor.13.12",
 "Gen.2.2"
 ]
 },
@@ -3163,6 +3209,8 @@
 "heading": "Paragraph 6. MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1B.HTM",
 "refs": [
+"1Cor.6.19",
+"1Cor.6.20",
 "Dan.3.57",
 "Dan.3.58",
 "Dan.3.59",
@@ -3208,7 +3256,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 6. MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1B.HTM",
-"refs": []
+"refs": [
+"1Thess.5.23"
+]
 },
 "368": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -3324,7 +3374,7 @@
 "heading": "Paragraph 6. MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1B.HTM",
 "refs": [
-"John.2.16"
+"1John.2.16"
 ]
 },
 "378": {
@@ -3385,11 +3435,13 @@
 "heading": "Paragraph 7. THE FALL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1C.HTM",
 "refs": [
+"2Thess.2.7",
+"1Tim.3.16",
 "Rom.5.20",
 "Luke.11.21",
 "Luke.11.22",
 "John.16.11",
-"John.3.8"
+"1John.3.8"
 ]
 },
 "386": {
@@ -3430,7 +3482,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 7. THE FALL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1C.HTM",
-"refs": []
+"refs": [
+"1Cor.2.16"
+]
 },
 "390": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -3461,8 +3515,9 @@
 "heading": "Paragraph 7. THE FALL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1C.HTM",
 "refs": [
+"2Pet.2.4",
 "Gen.3.5",
-"John.3.8",
+"1John.3.8",
 "John.8.44"
 ]
 },
@@ -3491,7 +3546,7 @@
 "Matt.4.9",
 "Matt.4.10",
 "Matt.4.11",
-"John.3.8"
+"1John.3.8"
 ]
 },
 "395": {
@@ -3676,7 +3731,8 @@
 "heading": "Paragraph 7. THE FALL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1C.HTM",
 "refs": [
-"John.5.19"
+"1John.5.19",
+"1Pet.5.8"
 ]
 },
 "410": {
@@ -3694,6 +3750,8 @@
 "heading": "Paragraph 7. THE FALL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1C.HTM",
 "refs": [
+"1Cor.15.21",
+"1Cor.15.22",
 "Phil.2.8",
 "Rom.5.19",
 "Rom.5.20"
@@ -3814,10 +3872,10 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P1D.HTM",
 "refs": [
 "Acts.4.20",
-"John.1.1",
-"John.1.2",
-"John.1.3",
-"John.1.4"
+"1John.1.1",
+"1John.1.2",
+"1John.1.3",
+"1John.1.4"
 ]
 },
 "426": {
@@ -3942,6 +4000,7 @@
 "Exod.29.7",
 "Lev.8.12",
 "1Sam.9.16",
+"1Kgs.1.39",
 "Ps.2.2",
 "Acts.4.26",
 "Acts.4.27",
@@ -4044,6 +4103,7 @@
 "Wis.18.13",
 "2Sam.7.14",
 "Ps.82.6",
+"1Chr.17.13",
 "Ps.2.7",
 "Matt.27.54",
 "Luke.23.47"
@@ -4060,6 +4120,7 @@
 "Gal.1.15",
 "Gal.1.16",
 "Acts.9.20",
+"1Thess.1.10",
 "John.20.31",
 "Matt.16.18"
 ]
@@ -4109,7 +4170,8 @@
 "heading": "IV. Lord",
 "url": "https://www.vatican.va/archive/ENG0015/__P1H.HTM",
 "refs": [
-"Exod.3.14"
+"Exod.3.14",
+"1Cor.2.8"
 ]
 },
 "447": {
@@ -4156,6 +4218,7 @@
 "Rev.5.13",
 "Phil.2.6",
 "Rom.10.9",
+"1Cor.12.3",
 "Phil.2.9",
 "Phil.2.10",
 "Phil.2.11"
@@ -4178,6 +4241,7 @@
 "heading": "IV. Lord",
 "url": "https://www.vatican.va/archive/ENG0015/__P1H.HTM",
 "refs": [
+"1Cor.16.22",
 "Rev.22.20"
 ]
 },
@@ -4222,7 +4286,7 @@
 "heading": "Paragraph 1. THE SON OF GOD BECAME MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1J.HTM",
 "refs": [
-"John.4.10"
+"1John.4.10"
 ]
 },
 "458": {
@@ -4231,7 +4295,7 @@
 "heading": "Paragraph 1. THE SON OF GOD BECAME MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1J.HTM",
 "refs": [
-"John.4.9",
+"1John.4.9",
 "John.3.16"
 ]
 },
@@ -4253,7 +4317,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 1. THE SON OF GOD BECAME MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1J.HTM",
-"refs": []
+"refs": [
+"2Pet.1.4"
+]
 },
 "461": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -4285,7 +4351,7 @@
 "heading": "Paragraph 1. THE SON OF GOD BECAME MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1J.HTM",
 "refs": [
-"John.4.2",
+"1John.4.2",
 "1Tim.3.16"
 ]
 },
@@ -4302,8 +4368,8 @@
 "heading": "Paragraph 1. THE SON OF GOD BECAME MAN",
 "url": "https://www.vatican.va/archive/ENG0015/__P1J.HTM",
 "refs": [
-"John.4.2",
-"John.4.3"
+"1John.4.2",
+"1John.4.3"
 ]
 },
 "466": {
@@ -4517,7 +4583,8 @@
 "Gen.18.11",
 "Gen.18.12",
 "Gen.18.13",
-"Gen.18.14"
+"Gen.18.14",
+"1Cor.1.17"
 ]
 },
 "490": {
@@ -4630,7 +4697,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 2. \"CONCEIVED BY THE POWER OF THE HOLY SPIRIT AND BORN OF THE VIRGIN MARY\"",
 "url": "https://www.vatican.va/archive/ENG0015/__P1K.HTM",
-"refs": []
+"refs": [
+"1Cor.2.8"
+]
 },
 "499": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -4650,6 +4719,7 @@
 "Mark.3.33",
 "Mark.3.34",
 "Mark.3.35",
+"1Cor.9.5",
 "Gal.1.19",
 "Matt.13.55",
 "Matt.27.56",
@@ -4691,6 +4761,7 @@
 "heading": "Paragraph 2. \"CONCEIVED BY THE POWER OF THE HOLY SPIRIT AND BORN OF THE VIRGIN MARY\"",
 "url": "https://www.vatican.va/archive/ENG0015/__P1K.HTM",
 "refs": [
+"1Cor.15.45",
 "John.3.34",
 "John.1.16",
 "Col.1.18"
@@ -4810,6 +4881,8 @@
 "Eph.1.7",
 "Col.1.13",
 "Col.1.14",
+"2Pet.1.18",
+"2Pet.1.19",
 "2Cor.8.9",
 "Luke.2.51",
 "John.15.3",
@@ -4830,8 +4903,9 @@
 "heading": "Paragraph 3. THE MYSTERIES OF CHRIST'S LIFE",
 "url": "https://www.vatican.va/archive/ENG0015/__P1L.HTM",
 "refs": [
+"1Cor.15.3",
 "Rom.4.25",
-"John.2.1",
+"1John.2.1",
 "Heb.9.24"
 ]
 },
@@ -5386,7 +5460,9 @@
 "refs": [
 "Mark.3.16",
 "Luke.24.34",
+"1Cor.15.5",
 "Matt.16.18",
+"1Pet.2.4",
 "Luke.22.32"
 ]
 },
@@ -5421,6 +5497,9 @@
 "Matt.17.6",
 "Matt.17.7",
 "Matt.17.8",
+"2Pet.1.16",
+"2Pet.1.17",
+"2Pet.1.18",
 "Luke.9.31",
 "Luke.9.35"
 ]
@@ -5990,6 +6069,8 @@
 "refs": [
 "Mark.15.11",
 "Acts.2.23",
+"1Thess.2.14",
+"1Thess.2.15",
 "Luke.23.34",
 "Acts.3.17",
 "Matt.27.25",
@@ -6064,7 +6145,11 @@
 "heading": "Paragraph 2. JESUS DIED CRUCIFIED",
 "url": "https://www.vatican.va/archive/ENG0015/__P1O.HTM",
 "refs": [
+"1Pet.1.18",
+"1Pet.1.19",
+"1Pet.1.20",
 "Rom.5.12",
+"1Cor.15.56",
 "2Cor.5.21",
 "Phil.2.7",
 "Rom.8.3"
@@ -6089,6 +6174,7 @@
 "heading": "Paragraph 2. JESUS DIED CRUCIFIED",
 "url": "https://www.vatican.va/archive/ENG0015/__P1O.HTM",
 "refs": [
+"1John.4.10",
 "Rom.5.8"
 ]
 },
@@ -6103,7 +6189,7 @@
 "Rom.5.18",
 "Rom.5.19",
 "2Cor.5.15",
-"John.2.2"
+"1John.2.2"
 ]
 },
 "606": {
@@ -6120,7 +6206,7 @@
 "Heb.10.9",
 "Heb.10.10",
 "John.4.34",
-"John.2.2",
+"1John.2.2",
 "John.10.17"
 ]
 },
@@ -6190,6 +6276,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P1O.HTM",
 "refs": [
 "Matt.26.20",
+"1Cor.11.23",
 "Luke.22.19",
 "Matt.26.28"
 ]
@@ -6232,6 +6319,7 @@
 "refs": [
 "John.1.29",
 "1Cor.5.7",
+"2Pet.1.19",
 "Matt.26.28",
 "Exod.24.8",
 "Lev.16.15",
@@ -6290,6 +6378,7 @@
 "refs": [
 "1Tim.2.5",
 "Matt.16.24",
+"1Pet.2.21",
 "Mark.10.39",
 "John.21.18",
 "John.21.19",
@@ -6339,6 +6428,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P1P.HTM",
 "refs": [
 "Heb.2.9",
+"1Cor.15.3",
 "John.19.42",
 "Heb.4.7",
 "Heb.4.8",
@@ -6379,6 +6469,7 @@
 "Acts.2.27",
 "Ps.16.9",
 "Ps.16.10",
+"1Cor.15.4",
 "Luke.24.46",
 "Matt.12.40",
 "Jonah.2.1",
@@ -6429,7 +6520,10 @@
 "refs": [
 "Acts.3.15",
 "Rom.8.11",
-"Heb.13.20"
+"1Cor.15.20",
+"Heb.13.20",
+"1Pet.3.18",
+"1Pet.3.19"
 ]
 },
 "633": {
@@ -6443,6 +6537,7 @@
 "Rev.1.18",
 "Eph.4.9",
 "Ps.89.49",
+"1Sam.28.19",
 "Ezek.32.17",
 "Ezek.32.18",
 "Ezek.32.19",
@@ -6473,7 +6568,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 1. CHRIST DESCENDED INTO HELL",
 "url": "https://www.vatican.va/archive/ENG0015/__P1R.HTM",
-"refs": []
+"refs": [
+"1Pet.4.6"
+]
 },
 "635": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -6522,6 +6619,8 @@
 "heading": "Paragraph 2. ON THE THIRD DAY HE ROSE FROM THE DEAD",
 "url": "https://www.vatican.va/archive/ENG0015/__P1S.HTM",
 "refs": [
+"1Cor.15.3",
+"1Cor.15.4",
 "Acts.9.3",
 "Acts.9.4",
 "Acts.9.5",
@@ -6580,6 +6679,7 @@
 "John.20.16",
 "John.20.17",
 "John.20.18",
+"1Cor.15.5",
 "Luke.22.31",
 "Luke.22.32",
 "Luke.24.34"
@@ -6591,6 +6691,11 @@
 "heading": "Paragraph 2. ON THE THIRD DAY HE ROSE FROM THE DEAD",
 "url": "https://www.vatican.va/archive/ENG0015/__P1S.HTM",
 "refs": [
+"1Cor.15.4",
+"1Cor.15.5",
+"1Cor.15.6",
+"1Cor.15.7",
+"1Cor.15.8",
 "Acts.1.22"
 ]
 },
@@ -6701,7 +6806,8 @@
 "refs": [
 "Mark.8.31",
 "John.10.17",
-"John.10.18"
+"John.10.18",
+"1Thess.4.14"
 ]
 },
 "650": {
@@ -6716,7 +6822,9 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "Paragraph 2. ON THE THIRD DAY HE ROSE FROM THE DEAD",
 "url": "https://www.vatican.va/archive/ENG0015/__P1S.HTM",
-"refs": []
+"refs": [
+"1Cor.15.14"
+]
 },
 "652": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -6727,7 +6835,9 @@
 "Matt.28.6",
 "Mark.16.7",
 "Luke.24.6",
-"Luke.24.7"
+"Luke.24.7",
+"1Cor.15.3",
+"1Cor.15.4"
 ]
 },
 "653": {
@@ -6750,6 +6860,7 @@
 "refs": [
 "Eph.2.4",
 "Eph.2.5",
+"1Pet.1.3",
 "Matt.28.10",
 "John.20.17"
 ]
@@ -6760,6 +6871,9 @@
 "heading": "Paragraph 2. ON THE THIRD DAY HE ROSE FROM THE DEAD",
 "url": "https://www.vatican.va/archive/ENG0015/__P1S.HTM",
 "refs": [
+"1Cor.15.20",
+"1Cor.15.21",
+"1Cor.15.22",
 "Heb.6.5",
 "2Cor.5.15",
 "Col.3.1",
@@ -6921,7 +7035,9 @@
 "heading": "I. He Will Come Again in Glory",
 "url": "https://www.vatican.va/archive/ENG0015/__P1V.HTM",
 "refs": [
-"John.2.18",
+"1John.2.18",
+"1Pet.4.7",
+"1Cor.10.11",
 "Mark.16.17",
 "Mark.16.18"
 ]
@@ -6934,10 +7050,16 @@
 "refs": [
 "Luke.21.27",
 "Matt.25.31",
+"2Thess.2.7",
+"2Pet.3.13",
 "Rom.8.19",
 "Rom.8.20",
 "Rom.8.21",
 "Rom.8.22",
+"1Cor.15.28",
+"1Cor.11.26",
+"2Pet.3.11",
+"2Pet.3.12",
 "1Cor.16.22",
 "Rev.22.17"
 ]
@@ -6951,14 +7073,17 @@
 "Acts.1.6",
 "Acts.1.7",
 "Acts.1.8",
+"1Cor.7.26",
 "Eph.5.16",
+"1Pet.4.17",
 "Matt.25.1",
 "Mark.13.33",
 "Mark.13.34",
 "Mark.13.35",
 "Mark.13.36",
 "Mark.13.37",
-"John.2.18"
+"1John.2.18",
+"1Tim.4.1"
 ]
 },
 "673": {
@@ -6970,7 +7095,18 @@
 "Rev.22.20",
 "Acts.1.7",
 "Mark.13.32",
-"Matt.24.44"
+"Matt.24.44",
+"1Thess.5.2",
+"2Thess.2.3",
+"2Thess.2.4",
+"2Thess.2.5",
+"2Thess.2.6",
+"2Thess.2.7",
+"2Thess.2.8",
+"2Thess.2.9",
+"2Thess.2.10",
+"2Thess.2.11",
+"2Thess.2.12"
 ]
 },
 "674": {
@@ -6986,7 +7122,8 @@
 "Rom.11.15",
 "Rom.11.12",
 "Luke.21.24",
-"Eph.4.13"
+"Eph.4.13",
+"1Cor.15.28"
 ]
 },
 "675": {
@@ -7000,7 +7137,18 @@
 "Luke.21.12",
 "John.15.19",
 "John.15.20",
-"John.2.1"
+"2Thess.2.4",
+"2Thess.2.5",
+"2Thess.2.6",
+"2Thess.2.7",
+"2Thess.2.8",
+"2Thess.2.9",
+"2Thess.2.10",
+"2Thess.2.11",
+"2Thess.2.12",
+"1Thess.5.2",
+"1Thess.5.3",
+"1John.2.1"
 ]
 },
 "676": {
@@ -7052,6 +7200,7 @@
 "John.3.20",
 "John.3.21",
 "Rom.2.16",
+"1Cor.4.5",
 "Matt.11.20",
 "Matt.11.21",
 "Matt.11.22",
@@ -7074,6 +7223,10 @@
 "John.3.17",
 "John.3.18",
 "Matt.12.32",
+"1Cor.3.12",
+"1Cor.3.13",
+"1Cor.3.14",
+"1Cor.3.15",
 "Heb.6.4",
 "Heb.6.5",
 "Heb.6.6"
@@ -7185,7 +7338,7 @@
 "heading": "II. The Name, Titles, and Symbols of the Holy Spirit",
 "url": "https://www.vatican.va/archive/ENG0015/__P21.HTM",
 "refs": [
-"John.2.1"
+"1John.2.1"
 ]
 },
 "693": {
@@ -7828,7 +7981,7 @@
 "heading": "V. The Spirit and the Church In the Last Days",
 "url": "https://www.vatican.va/archive/ENG0015/__P24.HTM",
 "refs": [
-"John.4.8",
+"1John.4.8",
 "Rom.5.5"
 ]
 },
@@ -7847,7 +8000,7 @@
 "heading": "V. The Spirit and the Church In the Last Days",
 "url": "https://www.vatican.va/archive/ENG0015/__P24.HTM",
 "refs": [
-"John.4.12",
+"1John.4.12",
 "Rom.8.23",
 "2Cor.1.21",
 "Acts.1.8"
@@ -8793,9 +8946,9 @@
 "refs": [
 "Heb.2.17",
 "2Cor.5.21",
-"John.1.8",
-"John.1.9",
-"John.1.10",
+"1John.1.8",
+"1John.1.9",
+"1John.1.10",
 "Matt.13.24",
 "Matt.13.25",
 "Matt.13.26",
@@ -10409,7 +10562,10 @@
 "section": "SECTION TWO I. THE CREEDS",
 "heading": "II. Dying in Christ Jesus",
 "url": "https://www.vatican.va/archive/ENG0015/__P2I.HTM",
-"refs": []
+"refs": [
+"1Thess.4.13",
+"1Thess.4.14"
+]
 },
 "1013": {
 "part": "PART ONE: THE PROFESSION OF FAITH",
@@ -10588,8 +10744,8 @@
 "heading": "IV. Hell",
 "url": "https://www.vatican.va/archive/ENG0015/__P2O.HTM",
 "refs": [
-"John.3.14",
-"John.3.15",
+"1John.3.14",
+"1John.3.15",
 "Matt.25.31",
 "Matt.25.32",
 "Matt.25.33",
@@ -16490,7 +16646,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P5D.HTM",
 "refs": [
 "John.1.12",
-"John.3.1",
+"1John.3.1",
 "2Pet.1.4",
 "Phil.1.27"
 ]
@@ -17259,8 +17415,8 @@
 "heading": "I. The Judgment of Conscience",
 "url": "https://www.vatican.va/archive/ENG0015/__P5Z.HTM",
 "refs": [
-"John.3.19",
-"John.3.20"
+"1John.3.19",
+"1John.3.20"
 ]
 },
 "1782": {
@@ -17694,7 +17850,7 @@
 "heading": "II. The Theological Virtues",
 "url": "https://www.vatican.va/archive/ENG0015/__P66.HTM",
 "refs": [
-"John.4.19"
+"1John.4.19"
 ]
 },
 "1829": {
@@ -20531,7 +20687,7 @@
 "heading": "I. The Name of the Lord is Holy",
 "url": "https://www.vatican.va/archive/ENG0015/__P7I.HTM",
 "refs": [
-"John.1.10"
+"1John.1.10"
 ]
 },
 "2148": {
@@ -23684,7 +23840,7 @@
 "url": "https://www.vatican.va/archive/ENG0015/__P8Q.HTM",
 "refs": [
 "1Cor.13.12",
-"John.3.2"
+"1John.3.2"
 ]
 },
 "2520": {
@@ -23795,7 +23951,7 @@
 "heading": "Article 10 THE TENTH COMMANDMENT",
 "url": "https://www.vatican.va/archive/ENG0015/__P8T.HTM",
 "refs": [
-"John.2.16",
+"1John.2.16",
 "Mic.2.2",
 "Wis.14.12"
 ]
@@ -26359,7 +26515,7 @@
 "heading": "III. The Prayer of the Church",
 "url": "https://www.vatican.va/archive/ENG0015/__P9Z.HTM",
 "refs": [
-"John.3.2",
+"1John.3.2",
 "Col.3.4",
 "1Cor.11.26"
 ]

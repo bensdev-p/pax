@@ -10,6 +10,7 @@ import {
   type ActivityKind,
   type FathersPackInstall,
   type NotificationPrefs,
+  type CourseProgress,
   type NovenaProgress,
   type ReadingPosition,
   type ReadingsRead,
@@ -114,6 +115,20 @@ const MIGRATIONS: string[] = [
     days_done      INTEGER NOT NULL DEFAULT 0,
     last_prayed_on TEXT,
     reminder_time  TEXT,                  -- HH:MM, or NULL for no reminder
+    PRIMARY KEY (user_id, slug)
+  ) WITHOUT ROWID;
+  `,
+  // 4: reading plans in progress, with an optional daily reminder.
+  `
+  CREATE TABLE course_progress (
+    user_id       TEXT NOT NULL DEFAULT 'local',
+    slug          TEXT NOT NULL,          -- courses.slug in content.db
+    title         TEXT NOT NULL,          -- for the reminder text
+    days          INTEGER NOT NULL,       -- days in the plan
+    started_on    TEXT NOT NULL,
+    days_done     INTEGER NOT NULL DEFAULT 0,
+    last_done_on  TEXT,
+    reminder_time TEXT,                   -- HH:MM, or NULL for no reminder
     PRIMARY KEY (user_id, slug)
   ) WITHOUT ROWID;
   `,
@@ -324,5 +339,47 @@ export const userStore: UserStore = {
   async removeNovena(slug: string) {
     const db = await userDb();
     await db.runAsync("DELETE FROM novena_progress WHERE user_id = 'local' AND slug = ?", slug);
+  },
+
+  async getCourses() {
+    const db = await userDb();
+    const rows = await db.getAllAsync<{
+      slug: string;
+      title: string;
+      days: number;
+      started_on: string;
+      days_done: number;
+      last_done_on: string | null;
+      reminder_time: string | null;
+    }>("SELECT slug, title, days, started_on, days_done, last_done_on, reminder_time FROM course_progress WHERE user_id = 'local' ORDER BY started_on");
+    return rows.map((r) => ({
+      slug: r.slug,
+      title: r.title,
+      days: r.days,
+      startedOn: r.started_on,
+      daysDone: r.days_done,
+      lastDoneOn: r.last_done_on,
+      reminderTime: r.reminder_time,
+    }));
+  },
+
+  async saveCourse(c: CourseProgress) {
+    const db = await userDb();
+    await db.runAsync(
+      `INSERT OR REPLACE INTO course_progress (user_id, slug, title, days, started_on, days_done, last_done_on, reminder_time)
+       VALUES ('local', ?, ?, ?, ?, ?, ?, ?)`,
+      c.slug,
+      c.title,
+      c.days,
+      c.startedOn,
+      c.daysDone,
+      c.lastDoneOn,
+      c.reminderTime,
+    );
+  },
+
+  async removeCourse(slug: string) {
+    const db = await userDb();
+    await db.runAsync("DELETE FROM course_progress WHERE user_id = 'local' AND slug = ?", slug);
   },
 };

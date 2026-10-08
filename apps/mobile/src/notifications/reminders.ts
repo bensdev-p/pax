@@ -2,9 +2,9 @@ import type { DaySnapshot } from '@pax/liturgy';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-import type { NotificationPrefs, NovenaProgress } from '@/data/types';
+import type { NotificationPrefs } from '@/data/types';
 
-import { planNotifications } from './plan';
+import { planNotifications, type DailyReminder } from './plan';
 
 /**
  * Local notifications, scheduled on the phone so they work offline (SPEC: Notifications).
@@ -53,7 +53,7 @@ export async function requestPermission(): Promise<PermissionState> {
 export async function rescheduleReminders(
   prefs: NotificationPrefs,
   days: DaySnapshot[],
-  opts: { today: string; doneToday: boolean; novenas?: NovenaProgress[] },
+  opts: { today: string; doneToday: boolean; daily?: DailyReminder[] },
 ): Promise<number> {
   await Notifications.cancelAllScheduledNotificationsAsync();
   const plan = planNotifications(prefs, days, { now: new Date(), ...opts });

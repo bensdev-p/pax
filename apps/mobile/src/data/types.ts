@@ -75,6 +75,44 @@ export interface Devotion {
   sort_order: number;
 }
 
+/** A run of Douay verses in one chapter: the whole chapter unless from/to are set. */
+export interface CourseUnit {
+  book: string;
+  chapter: number;
+  from?: number;
+  to?: number;
+}
+
+export interface Course {
+  slug: string;
+  title: string;
+  kind: 'bible' | 'catechism';
+  summary: string;
+  intro: string;
+  days: number;
+  minutes: number | null;
+  sections: { name: string; intro: string }[];
+  sort_order: number;
+}
+
+export interface CourseDay {
+  course_slug: string;
+  day: number;
+  section: string | null;
+  title: string;
+  /** "Genesis 1–4" or "CCC 1–10". */
+  label: string;
+  intro: string | null;
+  summary: string | null;
+  question: string | null;
+  readings: CourseUnit[];
+  wisdom: CourseUnit[];
+  wisdom_label: string | null;
+  ccc_first: number | null;
+  ccc_last: number | null;
+  see: { kind: 'father' | 'saint'; key: string; label: string }[];
+}
+
 /** Read-only content from content.db. */
 export interface ContentStore {
   version: string;
@@ -85,6 +123,11 @@ export interface ContentStore {
   saints(): Promise<Saint[]>;
   devotions(): Promise<Devotion[]>;
   devotion(slug: string): Promise<Devotion | null>;
+  courses(): Promise<Course[]>;
+  course(slug: string): Promise<Course | null>;
+  /** Every day of a course, without the reading lists. */
+  courseDays(slug: string): Promise<Pick<CourseDay, 'day' | 'section' | 'title' | 'label'>[]>;
+  courseDay(slug: string, day: number): Promise<CourseDay | null>;
 }
 
 export type ReminderSlot = 'morning' | 'evening';
@@ -135,6 +178,18 @@ export interface NovenaProgress {
   reminderTime: string | null;
 }
 
+/** A reading plan in progress (user.db `course_progress`). Days are read in order. */
+export interface CourseProgress {
+  slug: string;
+  title: string;
+  /** Days in the plan. */
+  days: number;
+  startedOn: string;
+  daysDone: number;
+  lastDoneOn: string | null;
+  reminderTime: string | null;
+}
+
 export interface Settings {
   appearance: Appearance;
   /** A fixed palette, or null to follow the Church year. */
@@ -173,6 +228,9 @@ export interface UserStore {
   getNovenas(): Promise<NovenaProgress[]>;
   saveNovena(novena: NovenaProgress): Promise<void>;
   removeNovena(slug: string): Promise<void>;
+  getCourses(): Promise<CourseProgress[]>;
+  saveCourse(course: CourseProgress): Promise<void>;
+  removeCourse(slug: string): Promise<void>;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
