@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import build_content  # noqa: E402
+from extract_ccc import parse_refs  # noqa: E402
 from verse_map import douay_to_standard, english_to_standard, hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
 
 
@@ -67,6 +68,16 @@ class VersificationTest(unittest.TestCase):
         self.assertEqual(english_to_standard("Ps", 51, 1), (51, 3))  # "Have mercy on me"
         self.assertEqual(english_to_standard("Ps", 23, 1), (23, 1))  # no title verse
         self.assertEqual(english_to_standard("Matt", 5, 3), (5, 3))
+
+
+class CatechismRefTest(unittest.TestCase):
+    def test_numbered_books(self):
+        self.assertEqual(parse_refs("\u21d2 1 Jn 4:10."), ["1John.4.10"])
+        self.assertEqual(parse_refs("I \u21d2 Jn 4:10"), ["1John.4.10"])
+        self.assertEqual(parse_refs("1 \u21d2 Jn 2:20"), ["1John.2.20"])
+        self.assertEqual(parse_refs("Cf. I Cor 13:4-5"), ["1Cor.13.4", "1Cor.13.5"])
+        self.assertEqual(parse_refs("II Pt 1:4"), ["2Pet.1.4"])
+        self.assertEqual(parse_refs("\u21d2 Jn 4:10-11"), ["John.4.10", "John.4.11"])
 
 
 class CitationTest(unittest.TestCase):
