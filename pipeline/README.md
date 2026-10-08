@@ -25,8 +25,9 @@ Then upload `build/fathers-pack/*` to Supabase Storage as described in `supabase
 
 ## Inputs
 
-- `seed/*.json`: prayers, Rosary mysteries, a few own-words CCC summaries, saints,
-  cross-references, and an empty Learn file.
+- `seed/*.json`: prayers, Rosary mysteries, guided devotions (chaplets, litanies, novenas, the
+  Stations), saint-of-the-day write-ups for the US calendar, a few own-words CCC summaries,
+  cross-references, and an empty Learn file. How to edit them: `docs/CONTENT.md`.
 - `sources/drc1750/*.usfm`: the Douay-Rheims Bible, parsed by `bible_drc.py`.
 - `sources/ccc/ccc_index.json` and `sources/fathers/starter.json.gz`: see above. Every row has a stable
   key (slug, OSIS ref, CCC number or romcal key).
@@ -53,9 +54,12 @@ a later switch to NABRE or RSV-2CE. `bible_verses` stores the Douay-Rheims text 
 with its own Douay chapter and verse beside it for reading (Psalm 23 is Douay Psalm 22).
 
 `verse_map.py` holds the mappings:
-- Douay → standard: Psalms (including the split Psalms 9–10, 113–116 and 146–147), Joel 2:28–3:21
-  and Malachi 4. Esther, Tobit and Sirach follow the Vulgate and only roughly line up.
+- Douay → standard: Psalms (including the split Psalms 9–10, 113–116 and 146–147), Joel 2:28–3:21,
+  Malachi 4, and the chapter breaks where the Douay follows the English rather than the Hebrew
+  (Genesis 31–32, Isaiah 9 and 64, Micah 5, Zechariah 1–2 and others; see `DOUAY_SHIFTS`). Esther,
+  Tobit and Sirach follow the Vulgate and only roughly line up.
 - King James-style → standard, for the Fathers database: Psalms whose titles count as verses in
-  Hebrew (51, 52, 54 and 60 shift by two, most titled Psalms by one).
+  Hebrew (51, 52, 54 and 60 shift by two, most titled Psalms by one), and the same chapter breaks
+  (`ENGLISH_SHIFTS`, which adds Jonah, Hosea 13–14, Ecclesiastes 5 and others).
 
 Book names are OSIS ids, so "4 Kings" and "2 Kings" are both `2Kgs`; only the display name differs.

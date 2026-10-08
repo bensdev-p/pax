@@ -7,6 +7,7 @@ import {
   GRACE_DAYS_PER_MONTH,
   type ActivityKind,
   type NotificationPrefs,
+  type NovenaProgress,
   type Progress,
   type Settings,
   type UserStore,
@@ -20,6 +21,7 @@ interface WebData {
   settings: Partial<Settings>;
   prefs: NotificationPrefs;
   activity: Record<string, { lesson: boolean; readings: boolean; prayer: boolean; xp: number }>;
+  novenas?: Record<string, NovenaProgress>;
 }
 
 const KEY = 'pax.user.v1';
@@ -50,6 +52,7 @@ function settingsOf(data: WebData): Settings {
     contentVersion: s.contentVersion ?? null,
     lastRead: s.lastRead ?? null,
     fathersPack: null,
+    readingsRead: s.readingsRead ?? null,
   };
 }
 
@@ -100,5 +103,18 @@ export const userStore: UserStore = {
       reviewsDue: 0,
       graceDaysLeft: GRACE_DAYS_PER_MONTH,
     };
+  },
+  async getNovenas() {
+    return Object.values(load().novenas ?? {}).sort((a, b) => a.startedOn.localeCompare(b.startedOn));
+  },
+  async saveNovena(n) {
+    const data = load();
+    data.novenas = { ...data.novenas, [n.slug]: n };
+    save(data);
+  },
+  async removeNovena(slug) {
+    const data = load();
+    if (data.novenas) delete data.novenas[slug];
+    save(data);
   },
 };

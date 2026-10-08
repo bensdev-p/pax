@@ -3,7 +3,14 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { AppState as RNAppState } from 'react-native';
 
 import { userStore } from '@/data/userStore';
-import { DEFAULT_SETTINGS, type ActivityKind, type NotificationPrefs, type Progress, type Settings } from '@/data/types';
+import {
+  DEFAULT_SETTINGS,
+  type ActivityKind,
+  type NotificationPrefs,
+  type NovenaProgress,
+  type Progress,
+  type Settings,
+} from '@/data/types';
 import { rescheduleReminders } from '@/notifications/reminders';
 import { DAILY_XP_GOAL, writeWidgetFeed } from '@/widgets/widgetFeed';
 
@@ -18,6 +25,10 @@ interface AppStateValue {
   updateNotificationPrefs(prefs: NotificationPrefs): Promise<void>;
   /** Marks today's lesson, readings or prayer done; refreshes the streak and widget feed. */
   recordActivity(kind: ActivityKind, xp?: number): Promise<void>;
+  /** Novenas in progress. */
+  novenas: NovenaProgress[];
+  /** Starts, updates (reminder, day prayed) or, with `null`, stops a novena; reschedules reminders. */
+  saveNovena(slug: string, next: NovenaProgress | null): Promise<void>;
 }
 
 const Ctx = createContext<AppStateValue | null>(null);
@@ -28,14 +39,20 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [notificationPrefs, setNotificationPrefs] = useState<NotificationPrefs | null>(null);
+  const [novenas, setNovenas] = useState<NovenaProgress[]>([]);
   const prefsRef = useRef<NotificationPrefs | null>(null);
 
   /** Runs on open, on returning to the app, and after anything is finished. */
   const refresh = useCallback(async (opts: { reschedule: boolean }) => {
     const date = toIsoDate(new Date());
-    const [snapshot, nextProgress] = await Promise.all([getDaySnapshot(date), userStore.getProgress(date)]);
+    const [snapshot, nextProgress, nextNovenas] = await Promise.all([
+      getDaySnapshot(date),
+      userStore.getProgress(date),
+      userStore.getNovenas(),
+    ]);
     setToday(snapshot);
     setProgress(nextProgress);
+    setNovenas(nextNovenas);
     const feed = await getDaySnapshots(date, 14);
     await writeWidgetFeed(feed, {
       date,
@@ -46,7 +63,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     });
     const prefs = prefsRef.current;
     if (opts.reschedule && prefs) {
-      await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday });
+      await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday, novenas: nextNovenas });
     }
   }, []);
 
@@ -100,9 +117,29 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [refresh],
   );
 
+  const saveNovena = useCallback(
+    async (slug: string, next: NovenaProgress | null) => {
+      if (next) await userStore.saveNovena(next);
+      else await userStore.removeNovena(slug);
+      await refresh({ reschedule: true });
+    },
+    [refresh],
+  );
+
   return (
     <Ctx.Provider
-      value={{ ready, today, settings, progress, notificationPrefs, updateSettings, updateNotificationPrefs, recordActivity }}>
+      value={{
+        ready,
+        today,
+        settings,
+        progress,
+        notificationPrefs,
+        updateSettings,
+        updateNotificationPrefs,
+        recordActivity,
+        novenas,
+        saveNovena,
+      }}>
       {children}
     </Ctx.Provider>
   );

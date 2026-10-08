@@ -81,6 +81,29 @@ and no paid Apple account are needed until the widgets.
 - **Today's readings** now open in the reader with the cited verses highlighted.
 - **Web**: the same content.db loads in the browser with sql.js, so the Library works on web too.
 
+## What the polish pass adds (before Phase 3)
+
+- **Saint of the day**: own-words write-ups for all 235 saints and feasts of the US calendar
+  (bio, summary, three quick facts, patronage, a public-domain quote where one is certain, and
+  links to their writings in the Fathers library). A card on Today, a full page per saint, and
+  the Saints list now covers the year ahead. On a weekday with an optional memorial, that saint
+  is the saint of the day.
+- **Today's readings**: each reading opens in full in the Douay-Rheims, with a check mark once
+  read; finishing them counts the day (+10 XP). "Pax asks" adds a question to take into the day.
+- **Guided devotions** on the Pray tab, one screen at a time like the Rosary: the Divine Mercy
+  Chaplet, the Stations of the Cross, five litanies (Loreto, Sacred Heart, Saint Joseph, Holy
+  Name, Humility) and five novenas (Holy Spirit, Divine Mercy, Saint Joseph, Immaculate
+  Conception, Christmas) with nine-day tracking and an optional daily reminder.
+- **14 more prayers**: Regina Caeli, Nicene Creed, Acts of Faith, Hope and Love, grace before and
+  after meals, Anima Christi, Spiritual Communion, Prayer to Saint Joseph, Suscipe, the Peace
+  Prayer, We Fly to Thy Patronage and Eternal Rest.
+- **Search** now finds saints and devotions too.
+- **Versification**: the Douay is now mapped to modern numbering where the chapter breaks differ
+  (Isaiah 9 and 64, Micah 5, Zechariah 2 and about 20 more), so readings and links land on the
+  right verses.
+
+How to add prayers, devotions or saints: see [`docs/CONTENT.md`](docs/CONTENT.md).
+
 ## Decisions made with Ben during Phase 1
 
 - **Weekday readings**: lectio-api has only Sundays and major feasts, so weekday citations come
@@ -105,8 +128,9 @@ and no paid Apple account are needed until the widgets.
 
 ## Known gaps
 
-- **Library versification**: Esther, Tobit and Sirach follow the Vulgate and only roughly line up
-  with modern numbering. A few Fathers' Psalm references may be a verse off where the Vulgate
+- **Library versification**: Esther, Tobit, Sirach, Job 40–41 and Hosea 2's last verse follow the
+  Vulgate and only roughly line up with modern numbering; readings from Esther's Greek additions
+  (cited as "Esther C:12") don't open in the app and fall back to USCCB. A few Fathers' Psalm references may be a verse off where the Vulgate
   divides verses differently. Some Catechism footnotes are lost at page boundaries in the scraped
   data (CCC 1, for one).
 - **Not yet run on a phone**: the Fathers download and FTS search. Search falls back to a word
@@ -118,8 +142,11 @@ and no paid Apple account are needed until the widgets.
   upstream). 2028 is missing some Ordinary Time weekdays, and the vigil, midnight and dawn Masses
   are not stored. Memorials with their own proper readings show the weekday's readings. See
   `pipeline/reports/lectionary.md`.
-- Reading text: citations only, plus a link to USCCB. Douay-Rheims text is seeded for a few verses
-  so far.
+- Reading text is the Douay-Rheims. The responsorial Psalm's refrain and the Gospel acclamation
+  are not included (they are the lectionary's own copyrighted text); USCCB has them.
+- Saint write-ups were drafted for Pax and checked for accuracy, but deserve a read by a priest or
+  catechist before a public release. Each saint's card art is a simple placeholder until the
+  saint-card collection (Phase 4).
 - In Expo Go, tapping a notification opens Expo Go rather than Pax itself. A development build
   (Phase 3, with the Apple account) opens Pax directly to the linked screen.
 - user.db and the notification code run only on a device. They type-check and bundle for

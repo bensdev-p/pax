@@ -48,6 +48,20 @@ class VersificationTest(unittest.TestCase):
         self.assertEqual(douay_to_standard("Joel", 2, 28), (3, 1))
         self.assertEqual(douay_to_standard("John", 1, 14), (1, 14))
 
+    def test_english_chapter_breaks(self):
+        # Douay follows the English breaks here; the lectionary follows the Hebrew.
+        self.assertEqual(douay_to_standard("Isa", 9, 2), (9, 1))  # "The people that walked in darkness"
+        self.assertEqual(douay_to_standard("Isa", 9, 1), (8, 23))
+        self.assertEqual(douay_to_standard("Isa", 64, 3), (64, 2))
+        self.assertEqual(douay_to_standard("Mic", 5, 2), (5, 1))  # "And thou Bethlehem"
+        self.assertEqual(douay_to_standard("Zech", 2, 10), (2, 14))
+        self.assertEqual(douay_to_standard("1Kgs", 4, 21), (5, 1))
+        # ...and the Hebrew where the Vulgate does.
+        self.assertEqual(douay_to_standard("Jonah", 2, 1), (2, 1))
+        self.assertEqual(douay_to_standard("Hos", 14, 2), (14, 2))
+        self.assertEqual(english_to_standard("Jonah", 1, 17), (2, 1))
+        self.assertEqual(english_to_standard("Hos", 14, 1), (14, 2))
+
     def test_english_psalm_titles(self):
         self.assertEqual(english_to_standard("Ps", 22, 1), (22, 2))  # "My God, my God"
         self.assertEqual(english_to_standard("Ps", 51, 1), (51, 3))  # "Have mercy on me"
@@ -128,6 +142,34 @@ class BuildTest(unittest.TestCase):
                 continue
             self.assertRegex(sql, r"PRIMARY KEY")
             self.assertNotIn("AUTOINCREMENT", sql)
+
+    def test_saints_and_devotions(self):
+        row = self.db.execute(
+            "SELECT name, kind, month_day, facts, fathers FROM saints WHERE romcal_key='ignatius_of_antioch_bishop'"
+        ).fetchone()
+        self.assertEqual(row[:3], ("Saint Ignatius of Antioch", "saint", "10-17"))
+        self.assertEqual(len(json.loads(row[3])), 3)
+        self.assertEqual(json.loads(row[4]), ["ignatius-of-antioch"])
+        # Movable feasts have no fixed date.
+        self.assertIsNone(
+            self.db.execute("SELECT month_day FROM saints WHERE romcal_key='immaculate_heart_of_mary'").fetchone()[0]
+        )
+        novena = self.db.execute("SELECT anchor, days FROM devotions WHERE slug='christmas-novena'").fetchone()
+        self.assertEqual(novena[0], "nativity_of_the_lord")
+        self.assertEqual(len(json.loads(novena[1])), 9)
+        kinds = {k for (k,) in self.db.execute("SELECT DISTINCT d.kind FROM search_docs d")}
+        self.assertLessEqual({"saint", "devotion"}, kinds)
+        web = json.loads(self.paths["web"].read_text(encoding="utf-8"))
+        self.assertIn("ignatius_of_antioch_bishop", web["saints"])
+        self.assertIn("stations-of-the-cross", web["devotions"])
+
+    def test_devotion_checks(self):
+        with self.assertRaises(SystemExit):
+            build_content.check_devotions(
+                [{"slug": "x", "kind": "chaplet", "steps": [{"type": "prayer", "slug": "nope"}]}], {"hail-mary"}
+            )
+        with self.assertRaises(SystemExit):
+            build_content.check_devotions([{"slug": "n", "kind": "novena", "steps": [], "days": []}], set())
 
     def test_prayers_and_mysteries(self):
         self.assertEqual(self.db.execute("SELECT count(*) FROM rosary_mysteries").fetchone()[0], 20)

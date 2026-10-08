@@ -2,7 +2,7 @@ import type { LiturgicalDay } from 'romcal';
 
 import { addDays, dayOfWeek, toIsoDate, usccbReadingsUrl, type DateInput } from './dates';
 import { lookupReadings } from './lectionary';
-import { romcalDay } from './romcal';
+import { romcalDays } from './romcal';
 import type {
   DaySnapshot,
   LiturgicalColor,
@@ -37,7 +37,8 @@ const WEEKDAY_CYCLES: Record<string, WeekdayCycle> = { YEAR_1: 'I', YEAR_2: 'II'
 /** Everything the app, widgets and server need to know about one day of the Church year. */
 export async function getDaySnapshot(date: DateInput): Promise<DaySnapshot> {
   const iso = toIsoDate(date);
-  return toSnapshot(iso, await romcalDay(iso));
+  const [day, ...optional] = await romcalDays(iso);
+  return toSnapshot(iso, day!, optional);
 }
 
 /** `count` consecutive snapshots starting at `start` (the widget feed uses 14). */
@@ -47,7 +48,7 @@ export async function getDaySnapshots(start: DateInput, count: number): Promise<
   return Promise.all(dates.map((d) => getDaySnapshot(d)));
 }
 
-function toSnapshot(iso: string, day: LiturgicalDay): DaySnapshot {
+function toSnapshot(iso: string, day: LiturgicalDay, optional: LiturgicalDay[]): DaySnapshot {
   const colors = day.colors.map((c) => COLOR_MAP[c] ?? 'green');
   // Easter Sunday is listed in both the Triduum and Easter Time; the later season wins.
   const season = (day.seasons[day.seasons.length - 1] ?? 'ORDINARY_TIME') as Season;
@@ -79,6 +80,7 @@ function toSnapshot(iso: string, day: LiturgicalDay): DaySnapshot {
     colors,
     saintKey: saintKeys[0] ?? null,
     saintKeys,
+    optionalMemorials: optional.map((d) => ({ key: d.id, name: capitalize(d.name) })),
     isMartyr: hasMartyrTitle(day),
     weekdayKey,
     sundayCycle,

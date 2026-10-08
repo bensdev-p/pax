@@ -1,0 +1,1473 @@
+{
+ "$description": "Guided devotions: chaplets, Stations of the Cross, litanies and novenas. Steps reference prayers.json by slug. Own-words intros, meditations and novena prayers; fixed prayers in traditional wording.",
+ "devotions": [
+  {
+   "slug": "divine-mercy-chaplet",
+   "title": "Divine Mercy Chaplet",
+   "kind": "chaplet",
+   "summary": "Mercy for us and the whole world, on rosary beads",
+   "intro": "Saint Faustina Kowalska, a Polish sister who died in 1938, taught this short prayer, which she received in prayer as a gift from Jesus. It is prayed on ordinary rosary beads and offers Christ’s Passion to the Father, asking mercy for the whole world. Many pray it at three in the afternoon, the hour Jesus died, and as a novena before Divine Mercy Sunday.",
+   "season": null,
+   "minutes": 10,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "prayer",
+     "slug": "our-father",
+     "note": "On the first bead"
+    },
+    {
+     "type": "prayer",
+     "slug": "hail-mary",
+     "note": "On the second bead"
+    },
+    {
+     "type": "prayer",
+     "slug": "apostles-creed",
+     "note": "On the third bead"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "First decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "First decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Second decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Second decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Third decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Third decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Fourth decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Fourth decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Fifth decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Fifth decade · On the small beads"
+    },
+    {
+     "type": "repeat",
+     "title": "Holy God",
+     "text": "Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world.",
+     "count": 3,
+     "note": "To close"
+    },
+    {
+     "type": "text",
+     "title": "Jesus, I trust in you",
+     "text": "Jesus, I trust in you.",
+     "note": "In your own words, add any intentions"
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ]
+  },
+  {
+   "slug": "stations-of-the-cross",
+   "title": "Stations of the Cross",
+   "kind": "stations",
+   "summary": "Walk with Jesus from Pilate’s court to the tomb",
+   "intro": "Pilgrims to Jerusalem have long walked the road Jesus took to Calvary. The Stations of the Cross bring that pilgrimage to every church: fourteen moments on the way, each with a short meditation and prayer. Catholics pray them especially on the Fridays of Lent and on Good Friday, in church or anywhere.",
+   "season": "LENT",
+   "minutes": 20,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "text",
+     "title": "Opening prayer",
+     "text": "Lord Jesus, I want to walk with you on the way of the cross. As I follow you from Pilate’s court to the tomb, open my heart to how much you love me. Let your suffering soften my heart, heal my sins, and teach me to love as you love. Mary, my Mother, walk with me. Amen.",
+     "note": "Kneel or stand before the first station"
+    },
+    {
+     "type": "station",
+     "number": 1,
+     "title": "Jesus is condemned to death",
+     "citation": "Mark 15:15",
+     "text": "Pilate knows Jesus is innocent, yet he hands him over to please the crowd. Jesus says nothing to defend himself. He accepts an unjust sentence for our sake. Think of the times you went along with the crowd, or judged someone quickly. Ask for the courage to stand with what is true, even when it costs you."
+    },
+    {
+     "type": "station",
+     "number": 2,
+     "title": "Jesus takes up his cross",
+     "citation": "John 19:17",
+     "text": "The beam is rough and heavy, and Jesus takes it on shoulders already torn by the scourging. He does not refuse it. He carries it for us. Each of us has a cross: an illness, a worry, a hard relationship. Ask Jesus to help you carry yours with him, instead of alone."
+    },
+    {
+     "type": "station",
+     "number": 3,
+     "title": "Jesus falls the first time",
+     "citation": null,
+     "text": "Weak from loss of blood, Jesus stumbles and falls on the stones. The Son of God knows what it is to be exhausted and to fail in front of others. He gets up and keeps going. When you fall into the same sins again, do not stay on the ground. Get up with him."
+    },
+    {
+     "type": "station",
+     "number": 4,
+     "title": "Jesus meets his mother",
+     "citation": null,
+     "text": "Mary pushes through the crowd to see her Son. Their eyes meet. She cannot take away his pain, but she will not leave him. Simeon’s words come true: a sword pierces her heart. Ask Mary to stay near you in your own suffering, and to teach you to stay near others in theirs."
+    },
+    {
+     "type": "station",
+     "number": 5,
+     "title": "Simon of Cyrene helps Jesus carry the cross",
+     "citation": "Luke 23:26",
+     "text": "Simon is just passing through, coming in from the country, when the soldiers force him to carry the cross. He did not choose it, but he walks beside Jesus all the way. Sometimes God’s call comes as an interruption. Who needs you to share their load today?"
+    },
+    {
+     "type": "station",
+     "number": 6,
+     "title": "Veronica wipes the face of Jesus",
+     "citation": null,
+     "text": "Tradition tells of a woman who stepped out of the crowd to wipe the blood and sweat from Jesus’ face. It was a small kindness, and it took courage. Jesus left the image of his face on her cloth. Every act of mercy, however small, is done to him. Look for his face in someone who is suffering."
+    },
+    {
+     "type": "station",
+     "number": 7,
+     "title": "Jesus falls the second time",
+     "citation": null,
+     "text": "Jesus falls again, weaker now. The road is long and the crowd jeers. Still he rises, because his love for us is stronger than his pain. Think of a burden that has worn you down over time. Ask Jesus for the strength to rise again, and the humility to accept help."
+    },
+    {
+     "type": "station",
+     "number": 8,
+     "title": "Jesus meets the women of Jerusalem",
+     "citation": "Luke 23:28",
+     "text": "Women follow Jesus, weeping for him. He turns and tells them to weep instead for themselves and their children. Even now he thinks of others. Our tears matter to him, but he also calls us to change our lives. Ask for a heart that grieves over sin and turns back to God."
+    },
+    {
+     "type": "station",
+     "number": 9,
+     "title": "Jesus falls the third time",
+     "citation": null,
+     "text": "Near the top of the hill Jesus falls a third time, close to the end of his strength. He has given everything. He gets up once more to finish what he came to do. When you feel you have nothing left, remember that he went all the way for you. Ask him to carry you."
+    },
+    {
+     "type": "station",
+     "number": 10,
+     "title": "Jesus is stripped of his garments",
+     "citation": "John 19:23",
+     "text": "The soldiers pull off his clothes and cast lots for his tunic. Jesus is left with nothing, exposed before everyone. He who clothed the lilies of the field is shamed for us. Pray for all who are humiliated, abused or stripped of their dignity, and for the grace to protect the dignity of others."
+    },
+    {
+     "type": "station",
+     "number": 11,
+     "title": "Jesus is nailed to the cross",
+     "citation": "Luke 23:33",
+     "text": "They stretch out his arms and drive the nails through. Jesus does not curse them. He prays, “Father, forgive them, for they know not what they do.” Is there someone you have not forgiven? Bring that person to the foot of the cross, and ask Jesus to forgive through you."
+    },
+    {
+     "type": "station",
+     "number": 12,
+     "title": "Jesus dies on the cross",
+     "citation": "John 19:30",
+     "text": "After three hours of agony Jesus says, “It is finished,” bows his head and gives up his spirit. Darkness covers the land. Here is the greatest love: to lay down one’s life for one’s friends. Kneel for a moment in silence. Thank him for dying for you, by name."
+    },
+    {
+     "type": "station",
+     "number": 13,
+     "title": "Jesus is taken down from the cross",
+     "citation": "John 19:38",
+     "text": "Joseph of Arimathea and Nicodemus take down the body of Jesus, and his mother receives him into her arms. The one she held as an infant she now holds in death. Stay with Mary in her sorrow. Ask her to hold all who are grieving tonight."
+    },
+    {
+     "type": "station",
+     "number": 14,
+     "title": "Jesus is laid in the tomb",
+     "citation": "John 19:41",
+     "text": "They wrap his body in linen with spices and lay it in a new tomb in a garden. A stone is rolled across the door. All seems lost. But the tomb is not the end of the story. Wait in hope. Ask Jesus to bury in his tomb whatever in you needs to die, so that you may rise with him."
+    },
+    {
+     "type": "text",
+     "title": "Closing prayer",
+     "text": "Lord Jesus, you walked the way of the cross so that death would not have the last word. Thank you for your love, which held nothing back. Help me to carry my own cross with patience, to see you in all who suffer, and to rise with you to new life. Amen."
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ]
+  },
+  {
+   "slug": "litany-of-loreto",
+   "title": "Litany of Loreto",
+   "kind": "litany",
+   "summary": "The Litany of the Blessed Virgin Mary",
+   "intro": "This litany strings together the titles the Church has given Mary over the centuries, from Mother of God to Queen of peace. It was sung at the shrine of Loreto in Italy by the sixteenth century, and popes have added new titles since, most recently Mother of mercy, Mother of hope and Solace of migrants in 2020. It is often prayed after the Rosary.",
+   "season": null,
+   "minutes": 7,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "litany",
+     "title": "Lord, have mercy",
+     "groups": [
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, have mercy.",
+       "calls": [
+        "Christ, have mercy."
+       ]
+      },
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, graciously hear us.",
+       "calls": [
+        "Christ, hear us."
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "God the Father of heaven,",
+        "God the Son, Redeemer of the world,",
+        "God the Holy Spirit,",
+        "Holy Trinity, one God,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Mother",
+     "groups": [
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Holy Mary,",
+        "Holy Mother of God,",
+        "Holy Virgin of virgins,",
+        "Mother of Christ,",
+        "Mother of the Church,",
+        "Mother of mercy,",
+        "Mother of divine grace,",
+        "Mother of hope,",
+        "Mother most pure,",
+        "Mother most chaste,",
+        "Mother inviolate,",
+        "Mother undefiled,",
+        "Mother most amiable,",
+        "Mother most admirable,",
+        "Mother of good counsel,",
+        "Mother of our Creator,",
+        "Mother of our Savior,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Virgin and refuge",
+     "groups": [
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Virgin most prudent,",
+        "Virgin most venerable,",
+        "Virgin most renowned,",
+        "Virgin most powerful,",
+        "Virgin most merciful,",
+        "Virgin most faithful,",
+        "Mirror of justice,",
+        "Seat of wisdom,",
+        "Cause of our joy,",
+        "Spiritual vessel,",
+        "Vessel of honor,",
+        "Singular vessel of devotion,",
+        "Mystical rose,",
+        "Tower of David,",
+        "Tower of ivory,",
+        "House of gold,",
+        "Ark of the covenant,",
+        "Gate of heaven,",
+        "Morning star,",
+        "Health of the sick,",
+        "Refuge of sinners,",
+        "Solace of migrants,",
+        "Comforter of the afflicted,",
+        "Help of Christians,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Queen",
+     "groups": [
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Queen of Angels,",
+        "Queen of Patriarchs,",
+        "Queen of Prophets,",
+        "Queen of Apostles,",
+        "Queen of Martyrs,",
+        "Queen of Confessors,",
+        "Queen of Virgins,",
+        "Queen of all Saints,",
+        "Queen conceived without original sin,",
+        "Queen assumed into heaven,",
+        "Queen of the most holy Rosary,",
+        "Queen of families,",
+        "Queen of peace,"
+       ]
+      },
+      {
+       "response": "spare us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "graciously hear us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Let us pray",
+     "text": "V. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray. Grant, we beseech thee, O Lord God, that we thy servants may enjoy perpetual health of mind and body; and by the glorious intercession of the Blessed Mary, ever Virgin, may be delivered from present sorrow, and obtain eternal joy. Through Christ our Lord. Amen."
+    }
+   ]
+  },
+  {
+   "slug": "litany-of-the-sacred-heart",
+   "title": "Litany of the Sacred Heart",
+   "kind": "litany",
+   "summary": "Thirty-three praises of the Heart of Jesus",
+   "intro": "Devotion to the Sacred Heart honors the love of Jesus, shown in his heart pierced on the cross. This litany, approved for the whole Church by Pope Leo XIII in 1899, has thirty-three invocations, one for each year of his earthly life. It is prayed especially in June, the month of the Sacred Heart, and on First Fridays.",
+   "season": null,
+   "minutes": 6,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "litany",
+     "title": "Lord, have mercy",
+     "groups": [
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, have mercy.",
+       "calls": [
+        "Christ, have mercy."
+       ]
+      },
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, graciously hear us.",
+       "calls": [
+        "Christ, hear us."
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "God the Father of heaven,",
+        "God the Son, Redeemer of the world,",
+        "God the Holy Spirit,",
+        "Holy Trinity, one God,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Heart of Jesus",
+     "groups": [
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Heart of Jesus, Son of the Eternal Father,",
+        "Heart of Jesus, formed by the Holy Spirit in the womb of the Virgin Mother,",
+        "Heart of Jesus, substantially united to the Word of God,",
+        "Heart of Jesus, of infinite majesty,",
+        "Heart of Jesus, sacred temple of God,",
+        "Heart of Jesus, tabernacle of the Most High,",
+        "Heart of Jesus, house of God and gate of heaven,",
+        "Heart of Jesus, burning furnace of charity,",
+        "Heart of Jesus, abode of justice and love,",
+        "Heart of Jesus, full of goodness and love,",
+        "Heart of Jesus, abyss of all virtues,",
+        "Heart of Jesus, most worthy of all praise,",
+        "Heart of Jesus, king and center of all hearts,",
+        "Heart of Jesus, in whom are all the treasures of wisdom and knowledge,",
+        "Heart of Jesus, in whom dwells the fullness of divinity,",
+        "Heart of Jesus, in whom the Father was well pleased,",
+        "Heart of Jesus, of whose fullness we have all received,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Heart of Jesus",
+     "groups": [
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Heart of Jesus, desire of the everlasting hills,",
+        "Heart of Jesus, patient and most merciful,",
+        "Heart of Jesus, enriching all who invoke thee,",
+        "Heart of Jesus, fountain of life and holiness,",
+        "Heart of Jesus, propitiation for our sins,",
+        "Heart of Jesus, loaded down with opprobrium,",
+        "Heart of Jesus, bruised for our offenses,",
+        "Heart of Jesus, obedient unto death,",
+        "Heart of Jesus, pierced with a lance,",
+        "Heart of Jesus, source of all consolation,",
+        "Heart of Jesus, our life and resurrection,",
+        "Heart of Jesus, our peace and our reconciliation,",
+        "Heart of Jesus, victim for our sins,",
+        "Heart of Jesus, salvation of those who trust in thee,",
+        "Heart of Jesus, hope of those who die in thee,",
+        "Heart of Jesus, delight of all the saints,"
+       ]
+      },
+      {
+       "response": "spare us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "graciously hear us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Let us pray",
+     "text": "V. Jesus, meek and humble of heart.\nR. Make our hearts like unto thine.\n\nLet us pray. Almighty and everlasting God, look upon the Heart of thy most beloved Son and upon the praises and satisfaction which he offers thee in the name of sinners; and to those who implore thy mercy, in thy great goodness, grant forgiveness in the name of the same Jesus Christ, thy Son, who liveth and reigneth with thee for ever and ever. Amen."
+    }
+   ]
+  },
+  {
+   "slug": "litany-of-saint-joseph",
+   "title": "Litany of Saint Joseph",
+   "kind": "litany",
+   "summary": "Guardian of the Redeemer and Patron of the Church",
+   "intro": "Pope Saint Pius X approved this litany for the whole Church in 1909. In 2021, during a year dedicated to Saint Joseph, Pope Francis added seven titles, among them Guardian of the Redeemer, Patron of exiles and Patron of the poor. Many pray it on Wednesdays, the day traditionally given to Joseph, and through March, his month.",
+   "season": null,
+   "minutes": 5,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "litany",
+     "title": "Lord, have mercy",
+     "groups": [
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, have mercy.",
+       "calls": [
+        "Christ, have mercy."
+       ]
+      },
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, graciously hear us.",
+       "calls": [
+        "Christ, hear us."
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "God the Father of heaven,",
+        "God the Son, Redeemer of the world,",
+        "God the Holy Spirit,",
+        "Holy Trinity, one God,"
+       ]
+      },
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Holy Mary,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Saint Joseph",
+     "groups": [
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Saint Joseph,",
+        "Noble offspring of David,",
+        "Light of Patriarchs,",
+        "Spouse of the Mother of God,",
+        "Guardian of the Redeemer,",
+        "Chaste guardian of the Virgin,",
+        "Foster father of the Son of God,",
+        "Diligent protector of Christ,",
+        "Servant of Christ,",
+        "Minister of salvation,",
+        "Head of the Holy Family,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Joseph most just",
+     "groups": [
+      {
+       "response": "pray for us.",
+       "calls": [
+        "Joseph most just,",
+        "Joseph most chaste,",
+        "Joseph most prudent,",
+        "Joseph most strong,",
+        "Joseph most obedient,",
+        "Joseph most faithful,",
+        "Mirror of patience,",
+        "Lover of poverty,",
+        "Model of workmen,",
+        "Glory of domestic life,",
+        "Guardian of virgins,",
+        "Pillar of families,",
+        "Support in difficulties,",
+        "Solace of the wretched,",
+        "Hope of the sick,",
+        "Patron of exiles,",
+        "Patron of the afflicted,",
+        "Patron of the poor,",
+        "Patron of the dying,",
+        "Terror of demons,",
+        "Protector of Holy Church,"
+       ]
+      },
+      {
+       "response": "spare us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "graciously hear us, O Lord.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Let us pray",
+     "text": "V. He made him the lord of his household.\nR. And prince over all his possessions.\n\nLet us pray. O God, who in thy ineffable providence didst vouchsafe to choose blessed Joseph to be the spouse of thy most holy Mother, grant, we beseech thee, that we may be worthy to have him for our intercessor in heaven whom on earth we venerate as our protector: who livest and reignest world without end. Amen."
+    }
+   ]
+  },
+  {
+   "slug": "litany-of-the-holy-name",
+   "title": "Litany of the Holy Name of Jesus",
+   "kind": "litany",
+   "summary": "Calling on Jesus by his many names",
+   "intro": "Saint Paul writes that at the name of Jesus every knee should bow. This litany, loved by Franciscan preachers such as Saint Bernardine of Siena and approved for the whole Church in 1886, calls on Jesus by his titles from Scripture and tradition, then asks him to deliver us through each mystery of his life. It is prayed especially in January, the month of the Holy Name.",
+   "season": null,
+   "minutes": 8,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "litany",
+     "title": "Lord, have mercy",
+     "groups": [
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Christ, have mercy.",
+       "calls": [
+        "Christ, have mercy."
+       ]
+      },
+      {
+       "response": "Lord, have mercy.",
+       "calls": [
+        "Lord, have mercy."
+       ]
+      },
+      {
+       "response": "Jesus, graciously hear us.",
+       "calls": [
+        "Jesus, hear us."
+       ]
+      },
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "God the Father of heaven,",
+        "God the Son, Redeemer of the world,",
+        "God the Holy Spirit,",
+        "Holy Trinity, one God,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Jesus",
+     "groups": [
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Jesus, Son of the living God,",
+        "Jesus, splendor of the Father,",
+        "Jesus, brightness of eternal light,",
+        "Jesus, King of glory,",
+        "Jesus, sun of justice,",
+        "Jesus, Son of the Virgin Mary,",
+        "Jesus, most amiable,",
+        "Jesus, most admirable,",
+        "Jesus, the mighty God,",
+        "Jesus, Father of the world to come,",
+        "Jesus, angel of great counsel,",
+        "Jesus, most powerful,",
+        "Jesus, most patient,",
+        "Jesus, most obedient,",
+        "Jesus, meek and humble of heart,",
+        "Jesus, lover of chastity,",
+        "Jesus, lover of us,",
+        "Jesus, God of peace,",
+        "Jesus, author of life,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Jesus",
+     "groups": [
+      {
+       "response": "have mercy on us.",
+       "calls": [
+        "Jesus, example of virtues,",
+        "Jesus, zealous lover of souls,",
+        "Jesus, our God,",
+        "Jesus, our refuge,",
+        "Jesus, father of the poor,",
+        "Jesus, treasure of the faithful,",
+        "Jesus, good Shepherd,",
+        "Jesus, true light,",
+        "Jesus, eternal wisdom,",
+        "Jesus, infinite goodness,",
+        "Jesus, our way and our life,",
+        "Jesus, joy of the Angels,",
+        "Jesus, King of the Patriarchs,",
+        "Jesus, Master of the Apostles,",
+        "Jesus, teacher of the Evangelists,",
+        "Jesus, strength of Martyrs,",
+        "Jesus, light of Confessors,",
+        "Jesus, purity of Virgins,",
+        "Jesus, crown of all Saints,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Deliver us, O Jesus",
+     "groups": [
+      {
+       "response": "spare us, O Jesus.",
+       "calls": [
+        "Be merciful,"
+       ]
+      },
+      {
+       "response": "graciously hear us, O Jesus.",
+       "calls": [
+        "Be merciful,"
+       ]
+      },
+      {
+       "response": "deliver us, O Jesus.",
+       "calls": [
+        "From all evil,",
+        "From all sin,",
+        "From thy wrath,",
+        "From the snares of the devil,",
+        "From the spirit of fornication,",
+        "From everlasting death,",
+        "From the neglect of thine inspirations,",
+        "Through the mystery of thy holy Incarnation,",
+        "Through thy Nativity,",
+        "Through thine infancy,",
+        "Through thy most divine life,",
+        "Through thy labors,",
+        "Through thine agony and passion,",
+        "Through thy cross and dereliction,",
+        "Through thy sufferings,",
+        "Through thy death and burial,",
+        "Through thy Resurrection,",
+        "Through thine Ascension,",
+        "Through thine institution of the most Holy Eucharist,",
+        "Through thy joys,",
+        "Through thy glory,"
+       ]
+      },
+      {
+       "response": "spare us, O Jesus.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "graciously hear us, O Jesus.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "have mercy on us, O Jesus.",
+       "calls": [
+        "Lamb of God, who takest away the sins of the world,"
+       ]
+      },
+      {
+       "response": "Jesus, graciously hear us.",
+       "calls": [
+        "Jesus, hear us."
+       ]
+      }
+     ]
+    },
+    {
+     "type": "text",
+     "title": "Let us pray",
+     "text": "Let us pray. O Lord Jesus Christ, who hast said: Ask and ye shall receive; seek and ye shall find; knock and it shall be opened unto you; mercifully attend to our supplications, and grant us the gift of thy divine charity, that we may ever love thee with our whole heart and with all our words and deeds, and may never cease from praising thee.\n\nGive us, O Lord, a perpetual fear and love of thy holy Name, for thou never failest to govern those whom thou dost solidly establish in thy love. Who livest and reignest world without end. Amen."
+    }
+   ]
+  },
+  {
+   "slug": "litany-of-humility",
+   "title": "Litany of Humility",
+   "kind": "litany",
+   "summary": "Freedom from the need to be admired",
+   "intro": "Cardinal Rafael Merry del Val, secretary of state to Pope Saint Pius X, prayed this litany every day. It asks Jesus, meek and humble of heart, to free us from craving praise and fearing humiliation, and to let us rejoice when others are loved and chosen. It is short, searching and freeing.",
+   "season": null,
+   "minutes": 4,
+   "anchor": null,
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "litany",
+     "title": "Deliver me, Jesus",
+     "groups": [
+      {
+       "response": "hear me.",
+       "calls": [
+        "O Jesus, meek and humble of heart,"
+       ]
+      },
+      {
+       "response": "deliver me, Jesus.",
+       "calls": [
+        "From the desire of being esteemed,",
+        "From the desire of being loved,",
+        "From the desire of being extolled,",
+        "From the desire of being honored,",
+        "From the desire of being praised,",
+        "From the desire of being preferred to others,",
+        "From the desire of being consulted,",
+        "From the desire of being approved,",
+        "From the fear of being humiliated,",
+        "From the fear of being despised,",
+        "From the fear of suffering rebukes,",
+        "From the fear of being calumniated,",
+        "From the fear of being forgotten,",
+        "From the fear of being ridiculed,",
+        "From the fear of being wronged,",
+        "From the fear of being suspected,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "litany",
+     "title": "Grant me the grace",
+     "groups": [
+      {
+       "response": "Jesus, grant me the grace to desire it.",
+       "calls": [
+        "That others may be loved more than I,",
+        "That others may be esteemed more than I,",
+        "That, in the opinion of the world, others may increase and I may decrease,",
+        "That others may be chosen and I set aside,",
+        "That others may be praised and I unnoticed,",
+        "That others may be preferred to me in everything,",
+        "That others may become holier than I, provided that I may become as holy as I should,"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "prayer",
+     "slug": "glory-be"
+    }
+   ]
+  },
+  {
+   "slug": "novena-to-the-holy-spirit",
+   "title": "Novena to the Holy Spirit",
+   "kind": "novena",
+   "summary": "Nine days before Pentecost, like the first disciples",
+   "intro": "After the Ascension, the apostles waited and prayed with Mary for nine days until the Holy Spirit came at Pentecost. This is the first novena, and the model for all the others. Each day asks for one of the gifts of the Spirit, or for his presence in a part of your life. Begin nine days before Pentecost, or whenever you need fresh strength.",
+   "season": "EASTER",
+   "minutes": 5,
+   "anchor": "pentecost_sunday",
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "text",
+     "title": "Opening prayer",
+     "text": "Come, Holy Spirit. You came upon the apostles as they prayed with Mary, and you made fearful people bold. Come to me now as I pray. Open my heart to receive what you want to give."
+    },
+    {
+     "type": "day"
+    },
+    {
+     "type": "prayer",
+     "slug": "come-holy-spirit"
+    },
+    {
+     "type": "prayer",
+     "slug": "glory-be"
+    },
+    {
+     "type": "text",
+     "title": "Closing prayer",
+     "text": "Holy Spirit, Lord and giver of life, finish in me the work you have begun. Make me a living witness to Jesus, and lead me always to the Father. Amen."
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ],
+   "days": [
+    {
+     "title": "Day 1",
+     "intention": "For the gift of the Holy Spirit himself",
+     "text": "Father, Jesus promised that you would give the Holy Spirit to those who ask. I ask now. Send your Spirit into my heart, not only his gifts but his own presence, so that I may know I am your beloved child and never be alone."
+    },
+    {
+     "title": "Day 2",
+     "intention": "For the gift of wisdom",
+     "text": "Spirit of wisdom, teach me to see my life as God sees it. Help me to love what lasts more than what passes, and to taste how good the Lord is. Let me judge all things by the light of Christ."
+    },
+    {
+     "title": "Day 3",
+     "intention": "For the gift of understanding",
+     "text": "Spirit of understanding, open the Scriptures and the teaching of the Church to me. When I read God’s word, let it come alive. Help me grasp the truths of the faith with my mind and my heart."
+    },
+    {
+     "title": "Day 4",
+     "intention": "For the gift of counsel",
+     "text": "Spirit of counsel, guide my choices. When I do not know which way to go, speak quietly within me. Give me the humility to seek good advice, and the courage to follow the path you show."
+    },
+    {
+     "title": "Day 5",
+     "intention": "For the gift of fortitude",
+     "text": "Spirit of fortitude, strengthen me when I am tired or afraid. Give me courage to do what is right when it costs me, to resist temptation, and to bear suffering with patience and hope."
+    },
+    {
+     "title": "Day 6",
+     "intention": "For the gift of knowledge",
+     "text": "Spirit of knowledge, help me see created things for what they are: gifts from God, good but not God. Free me from loving anything more than him, and let all creation lead me back to its Maker."
+    },
+    {
+     "title": "Day 7",
+     "intention": "For the gift of piety",
+     "text": "Spirit of piety, fill me with a child’s love for the Father. Teach me to pray with trust and warmth, to love the Church as my family, and to treat every person as a brother or sister."
+    },
+    {
+     "title": "Day 8",
+     "intention": "For the gift of fear of the Lord",
+     "text": "Spirit of holy fear, give me deep reverence for God’s greatness and goodness. Keep me from anything that would separate me from him, not out of terror, but out of love that does not want to wound the one it loves."
+    },
+    {
+     "title": "Day 9",
+     "intention": "For the fruits of the Spirit",
+     "text": "Holy Spirit, let your fruits grow in me: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness and self-control. Make my life a sign that you are alive in the Church today. Come, Holy Spirit, come."
+    }
+   ]
+  },
+  {
+   "slug": "divine-mercy-novena",
+   "title": "Divine Mercy Novena",
+   "kind": "novena",
+   "summary": "Good Friday to Divine Mercy Sunday, with the chaplet",
+   "intro": "Saint Faustina recorded that Jesus asked her to pray a novena from Good Friday to the Sunday after Easter, now Divine Mercy Sunday, bringing a different group of souls to his mercy each day. This version names each day’s intention in Pax’s own words and prays the Divine Mercy Chaplet with it.",
+   "season": "EASTER",
+   "minutes": 12,
+   "anchor": "divine_mercy_sunday",
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "day"
+    },
+    {
+     "type": "prayer",
+     "slug": "our-father",
+     "note": "On the first bead"
+    },
+    {
+     "type": "prayer",
+     "slug": "hail-mary",
+     "note": "On the second bead"
+    },
+    {
+     "type": "prayer",
+     "slug": "apostles-creed",
+     "note": "On the third bead"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "First decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "First decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Second decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Second decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Third decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Third decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Fourth decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Fourth decade · On the small beads"
+    },
+    {
+     "type": "text",
+     "title": "Eternal Father",
+     "text": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of your dearly beloved Son, our Lord Jesus Christ, in atonement for our sins and those of the whole world.",
+     "note": "Fifth decade · On the large bead"
+    },
+    {
+     "type": "repeat",
+     "title": "For the sake of his sorrowful Passion",
+     "text": "For the sake of his sorrowful Passion, have mercy on us and on the whole world.",
+     "count": 10,
+     "note": "Fifth decade · On the small beads"
+    },
+    {
+     "type": "repeat",
+     "title": "Holy God",
+     "text": "Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world.",
+     "count": 3,
+     "note": "To close"
+    },
+    {
+     "type": "text",
+     "title": "Jesus, I trust in you",
+     "text": "Jesus, I trust in you.",
+     "note": "In your own words, add any intentions"
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ],
+   "days": [
+    {
+     "title": "Day 1",
+     "intention": "All of humanity, especially sinners",
+     "text": "Today I bring all people to the mercy of Jesus, especially those weighed down by sin. Merciful Jesus, look not on our failings but on the trust we place in your goodness. Draw every heart to yourself."
+    },
+    {
+     "title": "Day 2",
+     "intention": "Priests and religious",
+     "text": "Today I bring to Jesus all priests and consecrated men and women. Merciful Jesus, keep them faithful and joyful, so that through them your mercy may flow to all your people."
+    },
+    {
+     "title": "Day 3",
+     "intention": "All faithful Christians",
+     "text": "Today I bring to Jesus all who believe in him and try to follow him. Merciful Jesus, strengthen our faith, console us in trials, and make us faithful to the end."
+    },
+    {
+     "title": "Day 4",
+     "intention": "Those who do not yet know God",
+     "text": "Today I bring to Jesus all who do not yet know him or believe in him. Merciful Jesus, let the light of your love reach them, and draw them gently to the Father."
+    },
+    {
+     "title": "Day 5",
+     "intention": "Christians separated from the Church",
+     "text": "Today I bring to Jesus our brothers and sisters in Christ who are separated from the full communion of the Church. Merciful Jesus, heal our divisions and make us one, as you and the Father are one."
+    },
+    {
+     "title": "Day 6",
+     "intention": "The meek, the humble and little children",
+     "text": "Today I bring to Jesus the meek and humble of heart and all little children. Merciful Jesus, keep them close to you, and make my heart gentle and lowly like theirs and like yours."
+    },
+    {
+     "title": "Day 7",
+     "intention": "Those who honor God’s mercy",
+     "text": "Today I bring to Jesus all who honor and spread devotion to his mercy. Merciful Jesus, fill them with your love and make them living signs of your compassion in the world."
+    },
+    {
+     "title": "Day 8",
+     "intention": "The souls in purgatory",
+     "text": "Today I bring to Jesus the souls in purgatory. Merciful Jesus, by the blood that flowed from your Heart, ease their sufferings and bring them quickly into the joy of heaven."
+    },
+    {
+     "title": "Day 9",
+     "intention": "Those whose hearts have grown cold",
+     "text": "Today I bring to Jesus all whose love has grown lukewarm or cold, mine included. Merciful Jesus, set our hearts on fire again with your love, and let nothing keep us from you."
+    }
+   ]
+  },
+  {
+   "slug": "novena-to-saint-joseph",
+   "title": "Novena to Saint Joseph",
+   "kind": "novena",
+   "summary": "March 10 to 18, before his solemnity",
+   "intro": "Saint Joseph protected Mary and Jesus, worked with his hands and trusted God in the dark. The Church calls him Patron of the Universal Church. Pray this novena in the nine days before his solemnity on March 19, or any time you need a father’s care for your family, your work or a hard decision.",
+   "season": "LENT",
+   "minutes": 5,
+   "anchor": "joseph_spouse_of_mary",
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "text",
+     "title": "Opening prayer",
+     "text": "Saint Joseph, guardian of Jesus and spouse of Mary, I come to you as a child to a father. You know what it is to work, to worry and to trust. Take my intentions to Jesus, who once obeyed you."
+    },
+    {
+     "type": "day"
+    },
+    {
+     "type": "prayer",
+     "slug": "prayer-to-saint-joseph"
+    },
+    {
+     "type": "prayer",
+     "slug": "our-father"
+    },
+    {
+     "type": "prayer",
+     "slug": "hail-mary"
+    },
+    {
+     "type": "prayer",
+     "slug": "glory-be"
+    },
+    {
+     "type": "text",
+     "title": "Closing prayer",
+     "text": "Saint Joseph, protect me and those I love, guard the Church, and be with me at the hour of my death, as Jesus and Mary were with you. Amen."
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ],
+   "days": [
+    {
+     "title": "Day 1",
+     "intention": "Joseph the just man",
+     "text": "Saint Joseph, the Gospel calls you a just man. Help me to live with honesty and integrity, doing what is right even when no one sees, and treating others with fairness and mercy."
+    },
+    {
+     "title": "Day 2",
+     "intention": "Joseph who trusted in the dark",
+     "text": "Saint Joseph, when you learned Mary was with child, you did not understand, yet you trusted God’s word in a dream. Help me trust God when his plans are hidden from me."
+    },
+    {
+     "title": "Day 3",
+     "intention": "Joseph, guardian of the Redeemer",
+     "text": "Saint Joseph, God entrusted his own Son to your care. Watch over the children in my life and all who are vulnerable, and help me protect those placed in my care."
+    },
+    {
+     "title": "Day 4",
+     "intention": "Joseph at Bethlehem",
+     "text": "Saint Joseph, there was no room at the inn, and still you made a place for the Savior to be born. Help me make room for Jesus in a busy, crowded life."
+    },
+    {
+     "title": "Day 5",
+     "intention": "Joseph, protector in exile",
+     "text": "Saint Joseph, you led your family into Egypt as refugees. Watch over migrants, exiles and all who have lost their homes, and open my heart to welcome them."
+    },
+    {
+     "title": "Day 6",
+     "intention": "Joseph the worker",
+     "text": "Saint Joseph, you taught Jesus your trade and earned your bread by honest work. Bless my work, help all who are looking for work, and teach me to offer my labor to God."
+    },
+    {
+     "title": "Day 7",
+     "intention": "Joseph, head of the Holy Family",
+     "text": "Saint Joseph, you led the Holy Family with gentleness and strength. Bless my family and all families, especially those who are struggling or broken."
+    },
+    {
+     "title": "Day 8",
+     "intention": "Joseph who searched for Jesus",
+     "text": "Saint Joseph, with Mary you searched three days for the lost boy Jesus. When I lose sight of him, help me search until I find him again."
+    },
+    {
+     "title": "Day 9",
+     "intention": "Joseph, patron of a happy death",
+     "text": "Saint Joseph, you died, as tradition holds, in the arms of Jesus and Mary. Pray for all who are dying today, and for me, that I may meet the Lord in peace."
+    }
+   ]
+  },
+  {
+   "slug": "novena-to-the-immaculate-conception",
+   "title": "Novena to the Immaculate Conception",
+   "kind": "novena",
+   "summary": "November 29 to December 7, for the patroness of the USA",
+   "intro": "On December 8 the Church celebrates Mary’s Immaculate Conception: from the first moment of her life, God kept her free from all sin, preparing a pure dwelling for his Son. Mary under this title is the patroness of the United States. This novena runs the nine days before the feast, early in Advent.",
+   "season": "ADVENT",
+   "minutes": 5,
+   "anchor": "immaculate_conception_of_the_blessed_virgin_mary",
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "text",
+     "title": "Opening prayer",
+     "text": "Mary, conceived without sin, God chose you and filled you with grace from the very beginning. I come to you as your child. Pray for me, and lead me closer to your Son."
+    },
+    {
+     "type": "day"
+    },
+    {
+     "type": "prayer",
+     "slug": "memorare"
+    },
+    {
+     "type": "prayer",
+     "slug": "hail-mary"
+    },
+    {
+     "type": "prayer",
+     "slug": "glory-be"
+    },
+    {
+     "type": "text",
+     "title": "Closing prayer",
+     "text": "O Mary, conceived without sin, pray for us who have recourse to thee. Watch over our country and our families, and bring us all safely to Jesus. Amen."
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ],
+   "days": [
+    {
+     "title": "Day 1",
+     "intention": "Mary, full of grace",
+     "text": "Mary, the angel greeted you as full of grace. God’s love filled you completely. Pray that I may open my heart to receive all the grace God wants to give me."
+    },
+    {
+     "title": "Day 2",
+     "intention": "Mary, chosen before time",
+     "text": "Mary, God planned your life before the world began. Help me believe that God has a plan for my life too, and that he chose me in love."
+    },
+    {
+     "title": "Day 3",
+     "intention": "Mary, free from sin",
+     "text": "Mary, you never turned away from God. Pray for me in my struggle with sin, and help me make a good confession this Advent."
+    },
+    {
+     "title": "Day 4",
+     "intention": "Mary, the new Eve",
+     "text": "Mary, where Eve said no, you said yes. Help me say yes to God in the small decisions of each day."
+    },
+    {
+     "title": "Day 5",
+     "intention": "Mary, handmaid of the Lord",
+     "text": "Mary, you called yourself the Lord’s servant. Teach me humble service and obedience to God’s will, even when it is hard."
+    },
+    {
+     "title": "Day 6",
+     "intention": "Mary, Mother of the Church",
+     "text": "Mary, Jesus gave you to us as our Mother from the cross. Watch over the Church, its shepherds and all its people."
+    },
+    {
+     "title": "Day 7",
+     "intention": "Mary, patroness of our country",
+     "text": "Mary, under the title of your Immaculate Conception you are patroness of the United States. Pray for our nation, its leaders and all who live here, that we may seek justice and peace."
+    },
+    {
+     "title": "Day 8",
+     "intention": "Mary, Mother of the unborn",
+     "text": "Mary, you carried Jesus in your womb. Protect unborn children and their mothers, and help us build a culture that welcomes every life."
+    },
+    {
+     "title": "Day 9",
+     "intention": "Mary, Gate of heaven",
+     "text": "Mary, you are already where we hope to be, with your Son in glory. Keep me faithful to the end, and pray that I may share that joy with you forever."
+    }
+   ]
+  },
+  {
+   "slug": "christmas-novena",
+   "title": "Christmas Novena",
+   "kind": "novena",
+   "summary": "December 16 to 24, waiting for the Savior",
+   "intro": "The last nine days of Advent have a special character: the Church’s prayers turn toward Bethlehem, and the great O Antiphons are sung from December 17. Many cultures keep these days as a novena, such as Las Posadas in Mexico and Simbang Gabi in the Philippines. Each day of this novena prepares one corner of the heart for Christ.",
+   "season": "ADVENT",
+   "minutes": 5,
+   "anchor": "nativity_of_the_lord",
+   "steps": [
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    },
+    {
+     "type": "text",
+     "title": "Opening prayer",
+     "text": "Come, Lord Jesus. The whole world waited for you, and now I wait too. In these last days before Christmas, prepare my heart to welcome you."
+    },
+    {
+     "type": "day"
+    },
+    {
+     "type": "prayer",
+     "slug": "our-father"
+    },
+    {
+     "type": "prayer",
+     "slug": "hail-mary"
+    },
+    {
+     "type": "prayer",
+     "slug": "glory-be"
+    },
+    {
+     "type": "text",
+     "title": "Closing prayer",
+     "text": "Lord Jesus, born for us in Bethlehem, be born again in my heart this Christmas. Let your peace fill my home and reach every place that needs it. Amen."
+    },
+    {
+     "type": "prayer",
+     "slug": "sign-of-the-cross"
+    }
+   ],
+   "days": [
+    {
+     "title": "Day 1",
+     "intention": "For a heart that waits",
+     "text": "Lord, the prophets waited centuries for you. Give me patience and hope in all my waiting, and a quiet heart amid the rush of these days."
+    },
+    {
+     "title": "Day 2",
+     "intention": "O Wisdom",
+     "text": "O Wisdom from the mouth of the Most High, come and teach me the way of prudence. Guide my words and choices this week."
+    },
+    {
+     "title": "Day 3",
+     "intention": "O Lord of Israel",
+     "text": "O Lord, who gave the law to Moses on Sinai, come and save us with outstretched arm. Help me keep your commandments with love."
+    },
+    {
+     "title": "Day 4",
+     "intention": "O Root of Jesse",
+     "text": "O Root of Jesse, sign for all peoples, come and do not delay. Gather every nation, and help me welcome those who are different from me."
+    },
+    {
+     "title": "Day 5",
+     "intention": "O Key of David",
+     "text": "O Key of David, come and free those who sit in darkness. Unlock whatever in me is closed to you, and set captives free."
+    },
+    {
+     "title": "Day 6",
+     "intention": "O Rising Dawn",
+     "text": "O Rising Dawn, splendor of eternal light, come and shine on those in darkness and the shadow of death. Shine into my sorrows, and on all who are grieving."
+    },
+    {
+     "title": "Day 7",
+     "intention": "O King of the Nations",
+     "text": "O King of all nations, cornerstone that makes us one, come and save the people you formed from the dust. Bring peace where there is war."
+    },
+    {
+     "title": "Day 8",
+     "intention": "O Emmanuel",
+     "text": "O Emmanuel, God with us, our King and lawgiver, come and save us, Lord our God. Be with me in every hour of my life."
+    },
+    {
+     "title": "Day 9",
+     "intention": "For Christmas Eve",
+     "text": "Lord Jesus, tonight you come as a child, poor and small. Let me come to you like the shepherds, with joy and wonder, and bring others with me to the manger."
+    }
+   ]
+  }
+ ]
+}

@@ -1,3 +1,5 @@
+import { parseCitation } from '@pax/liturgy';
+
 import { ftsQuery, queryWords, type ReadDb } from './db';
 
 /**
@@ -90,7 +92,7 @@ export interface FatherAuthor {
   excerpts: number;
 }
 
-export type SearchKind = 'verse' | 'ccc' | 'father' | 'prayer';
+export type SearchKind = 'verse' | 'ccc' | 'father' | 'prayer' | 'saint' | 'devotion';
 
 export interface SearchHit {
   kind: SearchKind;
@@ -114,6 +116,11 @@ export interface LibraryStore {
   fatherExcerpts(authorSlug: string, limit?: number): Promise<FatherExcerpt[]>;
   search(query: string, limitPerKind?: number): Promise<SearchHit[]>;
   stats(): Promise<{ verses: number; ccc: number; fathers: number; fullFathers: boolean }>;
+  /**
+   * The Douay-Rheims text of a lectionary citation ("Isaiah 63:16b–17, 19b; 64:2–7"), one
+   * segment per verse range so the reader can mark the gaps. Empty when nothing matches.
+   */
+  passage(citation: string): Promise<VerseDetail[][]>;
   /** Douay chapter that holds a standard-numbered verse (Ps.23.1 → Psalms 22). */
   locate(ref: string): Promise<{ book: string; douay_chapter: number; douay_verse: number } | null>;
 }
@@ -315,6 +322,21 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
       return { verses, ccc, fathers, fullFathers: packs().length > 0 };
     },
 
+    async passage(citation) {
+      const segments: VerseDetail[][] = [];
+      for (const r of parseCitation(citation)) {
+        const verses = await content.all<VerseDetail>(
+          `SELECT ${VERSE_COLUMNS} FROM bible_verses v JOIN bible_books b ON b.osis = v.book
+           WHERE v.book = ? AND (v.chapter > ? OR (v.chapter = ? AND v.verse >= ?))
+             AND (v.chapter < ? OR (v.chapter = ? AND v.verse <= ?))
+           ORDER BY v.chapter, v.verse`,
+          [r.book, r.chapter, r.chapter, r.verse, r.endChapter, r.endChapter, r.endVerse],
+        );
+        if (verses.length) segments.push(verses);
+      }
+      return segments;
+    },
+
     locate: (ref) =>
       content.first<{ book: string; douay_chapter: number; douay_verse: number }>(
         'SELECT book, douay_chapter, douay_verse FROM bible_verses WHERE ref = ?',
@@ -331,7 +353,11 @@ async function snippetFor(db: ReadDb, kind: SearchKind, key: string): Promise<st
         ? await db.first<{ t: string }>('SELECT text AS t FROM father_passages WHERE slug = ?', [key])
         : kind === 'ccc'
           ? await db.first<{ t: string }>("SELECT section || ' · ' || heading AS t FROM ccc_paragraphs WHERE number = ?", [Number(key)])
-          : await db.first<{ t: string }>('SELECT text AS t FROM prayers WHERE slug = ?', [key]);
+          : kind === 'saint'
+            ? await db.first<{ t: string }>('SELECT summary AS t FROM saints WHERE romcal_key = ?', [key])
+            : kind === 'devotion'
+              ? await db.first<{ t: string }>('SELECT summary AS t FROM devotions WHERE slug = ?', [key])
+              : await db.first<{ t: string }>('SELECT text AS t FROM prayers WHERE slug = ?', [key]);
   return clip(row?.t ?? '');
 }
 
@@ -359,7 +385,18 @@ async function likeSearch(db: ReadDb, query: string, limit: number): Promise<Sea
     `SELECT slug AS key, title, text AS snippet FROM prayers WHERE ${like("(title || ' ' || text)")} LIMIT ?`,
     [...params, limit],
   );
+  const saints = await db.all<{ key: string; title: string; snippet: string }>(
+    `SELECT romcal_key AS key, name AS title, coalesce(summary, '') AS snippet FROM saints
+     WHERE ${like("(name || ' ' || coalesce(patronage, '') || ' ' || coalesce(bio, ''))")} LIMIT ?`,
+    [...params, limit],
+  );
+  const devotions = await db.all<{ key: string; title: string; snippet: string }>(
+    `SELECT slug AS key, title, summary AS snippet FROM devotions WHERE ${like("(title || ' ' || summary || ' ' || intro)")} LIMIT ?`,
+    [...params, limit],
+  );
   return [
+    ...saints.map((h) => ({ ...h, kind: 'saint' as const })),
+    ...devotions.map((h) => ({ ...h, kind: 'devotion' as const })),
     ...verses.map((h) => ({ ...h, kind: 'verse' as const, snippet: clip(h.snippet, words[0]) })),
     ...ccc.map((h) => ({ ...h, kind: 'ccc' as const })),
     ...fathers.map((h) => ({ ...h, kind: 'father' as const, snippet: clip(h.snippet, words[0]) })),

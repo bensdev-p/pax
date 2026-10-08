@@ -36,7 +36,7 @@ SEED = PIPELINE / "seed"
 SOURCES = PIPELINE / "sources"
 
 # Bump when the schema changes in a way the app must know about.
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 PROPER_RANKS = {"SOLEMNITY", "FEAST", "SUNDAY"}
 WEEKDAY_CYCLES = ("I", "II")
@@ -316,6 +316,35 @@ def check_unique(items: list[dict], key: str, what: str) -> None:
         seen.add(value)
 
 
+def month_days(romcal_days: dict) -> dict[str, str]:
+    """MM-DD for every celebration that always falls on the same date (movable feasts are left out)."""
+    seen: dict[str, set[str]] = {}
+    for date, day in romcal_days.items():
+        for key in [day["key"], *day.get("optional", [])]:
+            seen.setdefault(key, set()).add(date[5:])
+    return {key: next(iter(dates)) for key, dates in seen.items() if len(dates) == 1}
+
+
+STEP_TYPES = {"prayer", "text", "repeat", "station", "litany", "day"}
+
+
+def check_devotions(devotions: list[dict], prayer_slugs: set[str]) -> None:
+    for d in devotions:
+        where = f"devotion {d['slug']}"
+        if d["kind"] not in {"chaplet", "stations", "litany", "novena"}:
+            raise SystemExit(f"{where}: unknown kind {d['kind']}")
+        for step in d["steps"]:
+            if step["type"] not in STEP_TYPES:
+                raise SystemExit(f"{where}: unknown step type {step['type']}")
+            if step["type"] == "prayer" and step["slug"] not in prayer_slugs:
+                raise SystemExit(f"{where}: no prayer {step['slug']}")
+        if d["kind"] == "novena":
+            if len(d.get("days", [])) != 9 or not d.get("anchor"):
+                raise SystemExit(f"{where}: a novena needs an anchor and nine days")
+            if sum(1 for s in d["steps"] if s["type"] == "day") != 1:
+                raise SystemExit(f"{where}: a novena needs exactly one day step")
+
+
 def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -> dict:
     romcal_path = SEED / "generated" / "romcal_days.json"
     if not romcal_path.exists():
@@ -346,6 +375,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     used_works = {p["work_slug"] for p in fathers_starter["passages"]}
     fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
     saints = load_json(SEED / "saints.json")["saints"]
+    devotions = load_json(SEED / "devotions.json")["devotions"]
     cross_refs = load_json(SEED / "cross_refs.json")["cross_refs"]
     learn = load_json(SEED / "lessons.json")
 
@@ -353,6 +383,9 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     check_unique(mysteries, "slug", "mystery")
     check_unique([v.__dict__ for v in bible.verses], "ref", "verse")
     check_unique(saints, "romcal_key", "saint")
+    check_unique(devotions, "slug", "devotion")
+    check_devotions(devotions, {p["slug"] for p in prayers})
+    feast_days = month_days(romcal_days)
 
     report = [
         "# Lectionary build report",
@@ -426,7 +459,27 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         if r in verse_refs
     ]
     db.executemany(
-        "INSERT INTO saints VALUES (:romcal_key, :name, :dates, :patronage, :bio)", saints
+        "INSERT INTO saints VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            (
+                s["romcal_key"], s["name"], s.get("kind", "saint"), s.get("subtitle"), s.get("dates"),
+                s.get("patronage"), s.get("summary"), s.get("bio"), s.get("quote"), s.get("quote_source"),
+                json.dumps(s.get("facts", []), ensure_ascii=False), json.dumps(s.get("fathers", [])),
+                feast_days.get(s["romcal_key"]),
+            )
+            for s in saints
+        ],
+    )
+    db.executemany(
+        "INSERT INTO devotions VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            (
+                d["slug"], d["title"], d["kind"], d["summary"], d["intro"], d.get("season"), d.get("minutes"),
+                d.get("anchor"), json.dumps(d["steps"], ensure_ascii=False),
+                json.dumps(d["days"], ensure_ascii=False) if d.get("days") else None, i,
+            )
+            for i, d in enumerate(devotions)
+        ],
     )
     db.executemany(
         "INSERT INTO prayers VALUES (?, ?, ?, ?, ?, ?)",
@@ -480,6 +533,11 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             ("father", p["slug"], names[p["author_slug"]]["name"], p["text"])
             for p in fathers_starter["passages"]
         ]
+        + [
+            ("saint", s["romcal_key"], s["name"], " ".join(filter(None, [s.get("patronage"), s.get("summary"), s.get("bio")])))
+            for s in saints
+        ]
+        + [("devotion", d["slug"], d["title"], f"{d['summary']} {d['intro']}") for d in devotions]
     )
     db.executemany(
         "INSERT INTO search_docs (rowid, kind, key, title) VALUES (?, ?, ?, ?)",
@@ -512,6 +570,9 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             for i, p in enumerate(prayers)
         ],
         "rosary_mysteries": mysteries,
+        # Keys for the web build's static pages (generateStaticParams).
+        "saints": [s["romcal_key"] for s in saints],
+        "devotions": [d["slug"] for d in devotions],
     }
     out_web.write_text(json.dumps(web, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
@@ -525,6 +586,8 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         "verses": len(bible.verses),
         "ccc_links": sum(1 for r in cross_refs if r["from_type"] == "ccc"),
         "father_passages": len(fathers_starter["passages"]),
+        "saints": len(saints),
+        "devotions": len(devotions),
     }
 
 
@@ -539,7 +602,7 @@ def main(argv: list[str]) -> int:
     print(
         f"content {result['version']}: {result['verses']} verses, {result['ccc_links']} CCC links, "
         f"{result['father_passages']} Fathers excerpts, {result['lectionary_rows']} lectionary rows, "
-        f"{result['prayers']} prayers -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db} "
+        f"{result['prayers']} prayers, {result['saints']} saints, {result['devotions']} devotions -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db} "
         f"({args.db.stat().st_size / 1e6:.1f} MB)"
     )
     return 0

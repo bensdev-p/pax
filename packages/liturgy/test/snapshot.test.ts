@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getDaySnapshot, getDaySnapshots, mysteriesForDay, toIsoDate } from '../src';
+import { dateOfCelebration, getDaySnapshot, getDaySnapshots, mysteriesForDay, toIsoDate } from '../src';
 
 describe('getDaySnapshot', () => {
   it('Ash Wednesday 2026 is violet Lent with Joel 2', async () => {
@@ -128,5 +128,19 @@ describe('mysteriesForDay', () => {
     expect(mysteriesForDay(await getDaySnapshot('2026-03-15'))).toBe('sorrowful'); // Lent
     expect(mysteriesForDay(await getDaySnapshot('2026-04-05'))).toBe('glorious'); // Easter
     expect(mysteriesForDay(await getDaySnapshot('2026-10-18'))).toBe('glorious'); // Ordinary Time
+  });
+});
+
+describe('optional memorials and feast dates', () => {
+  it('lists the optional memorials of a weekday (Saint Faustina, Oct 5 2026)', async () => {
+    const day = await getDaySnapshot('2026-10-05');
+    expect(day.rank).toBe('WEEKDAY');
+    expect(day.optionalMemorials.map((m) => m.key)).toContain('faustina_kowalska_virgin');
+  });
+
+  it('finds the date of movable and fixed feasts', async () => {
+    expect(await dateOfCelebration('pentecost_sunday', 2026)).toBe('2026-05-24');
+    expect(await dateOfCelebration('immaculate_conception_of_the_blessed_virgin_mary', 2026)).toBe('2026-12-08');
+    expect(await dateOfCelebration('not_a_feast', 2026)).toBeNull();
   });
 });

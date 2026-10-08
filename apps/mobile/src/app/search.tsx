@@ -17,6 +17,8 @@ import { openVerse } from '@/lib/libraryLinks';
 const WEB_NO_OUTLINE = Platform.OS === 'web' ? ({ outlineWidth: 0 } as object) : null;
 
 const GROUPS: { kind: SearchKind; label: string }[] = [
+  { kind: 'saint', label: 'Saints and feasts' },
+  { kind: 'devotion', label: 'Devotions' },
   { kind: 'verse', label: 'Scripture' },
   { kind: 'ccc', label: 'Catechism' },
   { kind: 'father', label: 'Church Fathers' },
@@ -48,13 +50,15 @@ export default function SearchScreen() {
     if (hit.kind === 'verse') openVerse(hit.key);
     else if (hit.kind === 'ccc') router.push({ pathname: '/ccc/[number]', params: { number: hit.key } });
     else if (hit.kind === 'prayer') router.push({ pathname: '/prayer/[slug]', params: { slug: hit.key } });
+    else if (hit.kind === 'saint') router.push({ pathname: '/saint/[key]', params: { key: hit.key } });
+    else if (hit.kind === 'devotion') router.push({ pathname: '/devotion/[slug]', params: { slug: hit.key } });
     else {
       router.push({ pathname: '/fathers/[author]', params: { author: hit.key.replace(/-[0-9a-f]{10}$/, ''), name: hit.title } });
     }
   };
 
   return (
-    <Screen header={<Header title="Search" subtitle="Bible, Catechism, Fathers and prayers" />}>
+    <Screen header={<Header title="Search" subtitle="Bible, Catechism, Fathers, saints and prayers" />}>
       <View
         style={{
           height: 50,

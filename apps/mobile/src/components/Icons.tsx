@@ -298,3 +298,19 @@ export function DownloadIcon({ size = 22, color = '#FFFFFF' }: IconProps) {
     </Svg>
   );
 }
+
+export function ShareIcon({ size = 24, color = '#FFFFFF' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M12 15V3M7 8l5-5 5 5M5 13v7h14v-7" />
+    </Svg>
+  );
+}
+
+export function QuoteIcon({ size = 22, color = '#FFC107' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M4 18c0-6 2-10 7-12l1 2c-3 2-4 4-4 6h3v6H4zM13 18c0-6 2-10 7-12l1 2c-3 2-4 4-4 6h3v6h-7z" fill={color} />
+    </Svg>
+  );
+}

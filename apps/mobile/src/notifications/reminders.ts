@@ -2,7 +2,7 @@ import type { DaySnapshot } from '@pax/liturgy';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-import type { NotificationPrefs } from '@/data/types';
+import type { NotificationPrefs, NovenaProgress } from '@/data/types';
 
 import { planNotifications } from './plan';
 
@@ -53,7 +53,7 @@ export async function requestPermission(): Promise<PermissionState> {
 export async function rescheduleReminders(
   prefs: NotificationPrefs,
   days: DaySnapshot[],
-  opts: { today: string; doneToday: boolean },
+  opts: { today: string; doneToday: boolean; novenas?: NovenaProgress[] },
 ): Promise<number> {
   await Notifications.cancelAllScheduledNotificationsAsync();
   const plan = planNotifications(prefs, days, { now: new Date(), ...opts });

@@ -1,7 +1,7 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 8, 2026 · matches user.db schema version 2 (plus the Library settings) and
-Supabase migrations through `20261008000000_split_reminders`._
+_Last updated: October 7, 2026 · matches user.db schema version 3 (novenas in progress, plus the
+Library and readings settings) and Supabase migrations through `20261008000000_split_reminders`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
@@ -25,8 +25,8 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 Pax keeps two separate databases on the phone.
 
 **content.db** holds the app's reading content: the Douay-Rheims Bible, prayers, Rosary
-mysteries, lectionary citations, Catechism references, a starter set of Church Fathers excerpts
-and saints. It ships inside the app, is the same for every user, and contains nothing about you.
+mysteries, chaplets, litanies, novenas and the Stations of the Cross, lectionary citations,
+Catechism references, a starter set of Church Fathers excerpts and short write-ups of the saints. It ships inside the app, is the same for every user, and contains nothing about you.
 Reading and searching it happens entirely on the phone.
 
 **The Church Fathers library** is an optional download (about 120 MB) from Pax's public Supabase
@@ -39,10 +39,11 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed | To show the app the way you asked and offer "Continue reading" |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app | To show the app the way you asked, offer "Continue reading" and check off today's readings |
 | `daily_activity` | For each local date: whether you finished a lesson, the day's readings, or a prayer (such as the Rosary), XP earned, and whether a grace day was used | To count your streak and color the liturgical calendar |
 | `streaks` | Current and longest streak, last active date, grace days left | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
+| `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
 | `lesson_progress`, `review_cards`, `notes` | Empty for now. Later: finished lessons and scores, spaced-review cards, and your highlights and notes | Learning progress and your own annotations |
 | `sync_queue` | A list of changed rows waiting to be uploaded. Nothing reads it yet | Prepared for future sync |
 
@@ -52,11 +53,12 @@ Your notes and highlights will point at content by stable keys (a verse referenc
 **Reminders.** If you turn on reminders, Pax asks your phone's permission first, on its own Pax
 screen and never at first launch. It then schedules the coming days' local notifications with the
 phone's operating system (at most 60 at a time): your morning and evening reminders, the optional
-Angelus at noon, and, if you keep them on, nudges at fixed times in the afternoon, evening and
-night. To skip the rest of a day's reminders and nudges once you have read or prayed, Pax uses its
+Angelus at noon, nudges at fixed times in the afternoon, evening and night if you keep them on,
+and a daily reminder for each novena you asked to be reminded about, until its ninth day. To skip the rest of a day's reminders and nudges once you have read or prayed, Pax uses its
 own record of what you did that day; nothing leaves the phone. Notification text can name the
-day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius of Antioch") and
-can appear on your lock screen. Turning reminders off in Profile cancels them all.
+day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius of Antioch") or
+the novena you are praying (for example, "Novena to Saint Joseph · Day 4"), and can appear on
+your lock screen. Turning reminders off in Profile cancels them all.
 
 **Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
 the liturgical calendar, your current streak, and whether today is done into storage that only Pax
@@ -64,8 +66,9 @@ and its own widgets can read (the iOS App Group `group.com.benbrunson.pax`, or A
 storage). Widgets show this on your home and lock screen, where anyone holding your phone can see
 it. In Expo Go, Pax writes nothing for widgets.
 
-**On the web.** The web version keeps the same settings, activity, reminder choices and last
-reading position in your browser's local storage, under the key `pax.user.v1`. It loads the same
+**On the web.** The web version keeps the same settings, activity, reminder choices, last
+reading position, today's readings check marks and novenas in progress in your browser's local
+storage, under the key `pax.user.v1`. It loads the same
 content.db into the browser to read and search it there. The web version has no reminders and no
 Fathers download.
 
@@ -114,6 +117,9 @@ Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and
   look at personal rows except to fix a problem you report.
 - **No one else.** Pax has no advertisers, analytics companies or data brokers.
 
+**Sharing.** The share button on a saint's page hands the saint's name and a one-line summary
+to your phone's share sheet. Pax sends nothing itself; you choose the app and the person.
+
 **Links that leave Pax.** "Full texts on USCCB.org" opens the USCCB's daily readings page,
 "Read it on vatican.va" opens a Catechism page, and "Read the source" on a Father's excerpt opens
 the public-domain translation it came from, each in an in-app browser. Those sites' own privacy
@@ -129,6 +135,8 @@ Google or any other server at runtime.
   scheduled reminder.
 - **Reminders only:** Profile → Reminders → Turn off reminders. You can also revoke notification
   permission in your phone's Settings.
+- **A novena:** open it under Pray and tap Stop this novena (or Clear, once finished). That
+  deletes its row and its reminders.
 - **Theme settings:** Profile → Theme color → Follow the Church year.
 - **On the web:** clear this site's data in your browser settings.
 - **In the cloud (once sync exists):** Profile → Delete account. This calls

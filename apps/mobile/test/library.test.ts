@@ -83,4 +83,18 @@ describe('Library over content.db', () => {
   it('finds the Douay chapter for a lectionary verse', async () => {
     expect(await lib.locate('Ps.23.1')).toEqual({ book: 'Ps', douay_chapter: 22, douay_verse: 1 });
   });
+
+  it('reads a lectionary citation as Douay-Rheims segments', async () => {
+    const segments = await lib.passage('Isaiah 63:16b–17, 19b; 64:2–7');
+    expect(segments.map((s) => s.map((v) => v.ref))).toEqual([
+      ['Isa.63.16', 'Isa.63.17'],
+      ['Isa.63.19'],
+      ['Isa.64.2', 'Isa.64.3', 'Isa.64.4', 'Isa.64.5', 'Isa.64.6', 'Isa.64.7'],
+      // Standard 64:2-7 is Douay 64:3-8 (the Douay's 64:1 is the second half of 63:19).
+    ]);
+    const psalm = await lib.passage('Psalm 23:1–3a');
+    expect(psalm[0]?.[0]).toMatchObject({ ref: 'Ps.23.1', douay_chapter: 22, douay_verse: 1 });
+    const crossing = await lib.passage('Joel 2:26–3:2');
+    expect(crossing[0]?.map((v) => v.ref)).toEqual(['Joel.2.26', 'Joel.2.27', 'Joel.3.1', 'Joel.3.2']);
+  });
 });
