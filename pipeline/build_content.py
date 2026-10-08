@@ -28,6 +28,7 @@ from pathlib import Path
 import gzip
 
 import bible_drc
+import courses as course_plans
 from verse_map import verse_map_rows
 
 PIPELINE = Path(__file__).resolve().parent
@@ -345,6 +346,36 @@ def check_devotions(devotions: list[dict], prayer_slugs: set[str]) -> None:
                 raise SystemExit(f"{where}: a novena needs exactly one day step")
 
 
+def course_tables(courses: list[dict], plans: dict, book_names: dict[str, str]) -> tuple[list, list]:
+    """Rows for `courses` and `course_days`: the computed splits plus each day's words."""
+    course_rows, day_rows = [], []
+    for order, c in enumerate(courses):
+        days = plans.get(c["slug"])
+        if days is None:
+            raise SystemExit(f"course {c['slug']}: no day plan in courses.py")
+        words = c.get("days", [])
+        if words and len(words) != len(days):
+            raise SystemExit(f"course {c['slug']}: {len(words)} days of text for {len(days)} planned days")
+        course_rows.append((
+            c["slug"], c["title"], c["kind"], c["summary"], c["intro"], len(days), c.get("minutes"),
+            json.dumps(c.get("sections", []), ensure_ascii=False), order,
+        ))
+        for i, d in enumerate(days):
+            w = words[i] if words else {}
+            label = (
+                f"CCC {d.ccc[0]}–{d.ccc[1]}" if d.ccc else course_plans.label(d.readings, book_names)
+            )
+            day_rows.append((
+                c["slug"], i + 1, d.section, w.get("title") or label, label, w.get("intro"), w.get("summary"),
+                w.get("question"), json.dumps([u.as_json() for u in d.readings]),
+                json.dumps([u.as_json() for u in d.extra]),
+                course_plans.label(d.extra, book_names) if d.extra else None,
+                d.ccc[0] if d.ccc else None, d.ccc[1] if d.ccc else None,
+                json.dumps(w.get("see", []), ensure_ascii=False),
+            ))
+    return course_rows, day_rows
+
+
 def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -> dict:
     romcal_path = SEED / "generated" / "romcal_days.json"
     if not romcal_path.exists():
@@ -353,7 +384,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
 
     inputs = [p for p in SEED.rglob("*.json")] + [p for p in SOURCES.rglob("*.json")]
     inputs += list(SOURCES.rglob("*.usfm")) + list(SOURCES.rglob("*.json.gz"))
-    inputs += [PIPELINE / n for n in ("schema.sql", "verse_map.py", "bible_drc.py")]
+    inputs += [PIPELINE / n for n in ("schema.sql", "verse_map.py", "bible_drc.py", "courses.py")]
     inputs += [Path(__file__).resolve()]
     version = content_version(inputs)
 
@@ -376,6 +407,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
     saints = load_json(SEED / "saints.json")["saints"]
     devotions = load_json(SEED / "devotions.json")["devotions"]
+    courses = load_json(SEED / "courses.json")["courses"]
     cross_refs = load_json(SEED / "cross_refs.json")["cross_refs"]
     learn = load_json(SEED / "lessons.json")
 
@@ -470,6 +502,11 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             for s in saints
         ],
     )
+    book_names = {b.osis: b.name for b in bible.books}
+    plans = course_plans.build_plans(bible.verses, {b.osis: b.chapters for b in bible.books}, ccc_index)
+    course_rows, day_rows = course_tables(courses, plans, book_names)
+    db.executemany("INSERT INTO courses VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", course_rows)
+    db.executemany("INSERT INTO course_days VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", day_rows)
     db.executemany(
         "INSERT INTO devotions VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
@@ -524,10 +561,10 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             for r in sorted(rows.values(), key=lambda r: (r.key, r.cycle))
         ],
     )
-    book_names = {b.osis: b.name_douay for b in bible.books}
+    douay_names = {b.osis: b.name_douay for b in bible.books}
     docs = (
         [("prayer", p["slug"], p["title"], p["text"]) for p in prayers]
-        + [("verse", v.ref, f"{book_names[v.book]} {v.douay_chapter}:{v.douay_verse}", v.text) for v in bible.verses]
+        + [("verse", v.ref, f"{douay_names[v.book]} {v.douay_chapter}:{v.douay_verse}", v.text) for v in bible.verses]
         + [("ccc", n, f"CCC {n}", f"{c['section']} · {c['heading']}") for n, c in ccc_index.items()]
         + [
             ("father", p["slug"], names[p["author_slug"]]["name"], p["text"])
@@ -538,6 +575,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
             for s in saints
         ]
         + [("devotion", d["slug"], d["title"], f"{d['summary']} {d['intro']}") for d in devotions]
+        + [("course", c["slug"], c["title"], f"{c['summary']} {c['intro']}") for c in courses]
     )
     db.executemany(
         "INSERT INTO search_docs (rowid, kind, key, title) VALUES (?, ?, ?, ?)",
@@ -573,6 +611,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         # Keys for the web build's static pages (generateStaticParams).
         "saints": [s["romcal_key"] for s in saints],
         "devotions": [d["slug"] for d in devotions],
+        "courses": {c["slug"]: len(plans[c["slug"]]) for c in courses},
     }
     out_web.write_text(json.dumps(web, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
@@ -588,6 +627,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         "father_passages": len(fathers_starter["passages"]),
         "saints": len(saints),
         "devotions": len(devotions),
+        "course_days": len(day_rows),
     }
 
 
@@ -602,7 +642,8 @@ def main(argv: list[str]) -> int:
     print(
         f"content {result['version']}: {result['verses']} verses, {result['ccc_links']} CCC links, "
         f"{result['father_passages']} Fathers excerpts, {result['lectionary_rows']} lectionary rows, "
-        f"{result['prayers']} prayers, {result['saints']} saints, {result['devotions']} devotions -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db} "
+        f"{result['prayers']} prayers, {result['saints']} saints, {result['devotions']} devotions, "
+        f"{result['course_days']} course days -> {args.db.relative_to(ROOT) if args.db.is_relative_to(ROOT) else args.db} "
         f"({args.db.stat().st_size / 1e6:.1f} MB)"
     )
     return 0

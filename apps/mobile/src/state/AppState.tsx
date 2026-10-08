@@ -6,11 +6,13 @@ import { userStore } from '@/data/userStore';
 import {
   DEFAULT_SETTINGS,
   type ActivityKind,
+  type CourseProgress,
   type NotificationPrefs,
   type NovenaProgress,
   type Progress,
   type Settings,
 } from '@/data/types';
+import { courseReminder, novenaReminder } from '@/notifications/plan';
 import { rescheduleReminders } from '@/notifications/reminders';
 import { DAILY_XP_GOAL, writeWidgetFeed } from '@/widgets/widgetFeed';
 
@@ -29,6 +31,10 @@ interface AppStateValue {
   novenas: NovenaProgress[];
   /** Starts, updates (reminder, day prayed) or, with `null`, stops a novena; reschedules reminders. */
   saveNovena(slug: string, next: NovenaProgress | null): Promise<void>;
+  /** Reading plans in progress. */
+  courses: CourseProgress[];
+  /** Starts, updates or, with `null`, stops a reading plan; reschedules reminders. */
+  saveCourse(slug: string, next: CourseProgress | null): Promise<void>;
 }
 
 const Ctx = createContext<AppStateValue | null>(null);
@@ -40,19 +46,22 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [notificationPrefs, setNotificationPrefs] = useState<NotificationPrefs | null>(null);
   const [novenas, setNovenas] = useState<NovenaProgress[]>([]);
+  const [courses, setCourses] = useState<CourseProgress[]>([]);
   const prefsRef = useRef<NotificationPrefs | null>(null);
 
   /** Runs on open, on returning to the app, and after anything is finished. */
   const refresh = useCallback(async (opts: { reschedule: boolean }) => {
     const date = toIsoDate(new Date());
-    const [snapshot, nextProgress, nextNovenas] = await Promise.all([
+    const [snapshot, nextProgress, nextNovenas, nextCourses] = await Promise.all([
       getDaySnapshot(date),
       userStore.getProgress(date),
       userStore.getNovenas(),
+      userStore.getCourses(),
     ]);
     setToday(snapshot);
     setProgress(nextProgress);
     setNovenas(nextNovenas);
+    setCourses(nextCourses);
     const feed = await getDaySnapshots(date, 14);
     await writeWidgetFeed(feed, {
       date,
@@ -63,7 +72,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     });
     const prefs = prefsRef.current;
     if (opts.reschedule && prefs) {
-      await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday, novenas: nextNovenas });
+      const daily = [...nextNovenas.map(novenaReminder), ...nextCourses.map(courseReminder)];
+      await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday, daily });
     }
   }, []);
 
@@ -126,6 +136,15 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [refresh],
   );
 
+  const saveCourse = useCallback(
+    async (slug: string, next: CourseProgress | null) => {
+      if (next) await userStore.saveCourse(next);
+      else await userStore.removeCourse(slug);
+      await refresh({ reschedule: true });
+    },
+    [refresh],
+  );
+
   return (
     <Ctx.Provider
       value={{
@@ -139,6 +158,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         recordActivity,
         novenas,
         saveNovena,
+        courses,
+        saveCourse,
       }}>
       {children}
     </Ctx.Provider>

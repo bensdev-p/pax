@@ -149,6 +149,38 @@ CREATE TABLE devotions (
   sort_order INTEGER NOT NULL
 ) WITHOUT ROWID;
 
+-- Reading plans on the Learn tab (Bible in a Year, Catechism in a Year, short courses). The day
+-- splits come from pipeline/courses.py; titles, introductions and summaries are Pax's own words.
+CREATE TABLE courses (
+  slug       TEXT PRIMARY KEY,
+  title      TEXT NOT NULL,
+  kind       TEXT NOT NULL,              -- bible, catechism
+  summary    TEXT NOT NULL,
+  intro      TEXT NOT NULL,
+  days       INTEGER NOT NULL,
+  minutes    INTEGER,
+  sections   TEXT NOT NULL DEFAULT '[]', -- JSON [{name, intro}]
+  sort_order INTEGER NOT NULL
+) WITHOUT ROWID;
+
+CREATE TABLE course_days (
+  course_slug TEXT NOT NULL,
+  day         INTEGER NOT NULL,          -- 1-based
+  section     TEXT,
+  title       TEXT NOT NULL,
+  label       TEXT NOT NULL,             -- e.g. Genesis 1–4, or CCC 1–10
+  intro       TEXT,                      -- Bible plans: what to watch for
+  summary     TEXT,                      -- Catechism plan: the day's teaching in our words
+  question    TEXT,
+  readings    TEXT NOT NULL DEFAULT '[]',-- JSON [{book, chapter, from?, to?}] in Douay chapters
+  wisdom      TEXT NOT NULL DEFAULT '[]',-- JSON, same shape: the day's Psalm or Proverbs
+  wisdom_label TEXT,
+  ccc_first   INTEGER,
+  ccc_last    INTEGER,
+  see         TEXT NOT NULL DEFAULT '[]',-- JSON [{kind: father|saint, key, label}]
+  PRIMARY KEY (course_slug, day)
+) WITHOUT ROWID;
+
 CREATE TABLE units (
   slug       TEXT PRIMARY KEY,
   ocia_stage TEXT NOT NULL,

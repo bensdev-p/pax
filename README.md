@@ -102,7 +102,22 @@ and no paid Apple account are needed until the widgets.
   (Isaiah 9 and 64, Micah 5, Zechariah 2 and about 20 more), so readings and links land on the
   right verses.
 
-How to add prayers, devotions or saints: see [`docs/CONTENT.md`](docs/CONTENT.md).
+## Reading plans (Learn tab)
+
+- **Bible in a Year**: all 73 books in Pax's own salvation-history order, in eleven sections
+  (Beginnings, the Patriarchs, the Exodus … the Church), about 90 verses a day plus a Psalm or
+  Proverbs, with a short introduction, a question and a word from the Fathers each day.
+- **Catechism in a Year**: all 2,865 paragraphs, 6 to 11 a day, with Pax's own summary, the
+  Scripture the paragraphs cite and a link to the full text on vatican.va (the Catechism's text
+  is not ours to copy).
+- **Short courses**: Mark in 16 days, the Psalms in 30 days, and Acts in 28 days with links to
+  the apostolic Fathers.
+- Start any day; days are read in order and a missed day simply waits. Each day read counts for
+  the streak (+10 XP), and each plan can have its own daily reminder.
+- The day splits are computed from verse and paragraph counts by `pipeline/courses.py`; the
+  words for each day are in `pipeline/seed/courses.json`.
+
+How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 
 ## Decisions made with Ben during Phase 1
 
@@ -144,8 +159,9 @@ How to add prayers, devotions or saints: see [`docs/CONTENT.md`](docs/CONTENT.md
   `pipeline/reports/lectionary.md`.
 - Reading text is the Douay-Rheims. The responsorial Psalm's refrain and the Gospel acclamation
   are not included (they are the lectionary's own copyrighted text); USCCB has them.
-- Saint write-ups were drafted for Pax and checked for accuracy, but deserve a read by a priest or
-  catechist before a public release. Each saint's card art is a simple placeholder until the
+- Saint write-ups and the reading plans' daily texts (especially the Catechism summaries) were
+  drafted for Pax and checked for accuracy, but deserve a read by a priest or catechist before a
+  public release. Each saint's card art is a simple placeholder until the
   saint-card collection (Phase 4).
 - In Expo Go, tapping a notification opens Expo Go rather than Pax itself. A development build
   (Phase 3, with the Apple account) opens Pax directly to the linked screen.

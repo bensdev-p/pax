@@ -163,6 +163,27 @@ class BuildTest(unittest.TestCase):
         self.assertIn("ignatius_of_antioch_bishop", web["saints"])
         self.assertIn("stations-of-the-cross", web["devotions"])
 
+    def test_courses(self):
+        rows = dict(self.db.execute("SELECT slug, days FROM courses").fetchall())
+        self.assertEqual(rows["bible-in-a-year"], 365)
+        self.assertEqual(rows["catechism-in-a-year"], 365)
+        day = self.db.execute(
+            "SELECT section, label, wisdom_label FROM course_days WHERE course_slug='bible-in-a-year' AND day=365"
+        ).fetchone()
+        self.assertEqual(day[0], "The Church")
+        self.assertTrue(day[1].startswith("Revelation"))
+        last = self.db.execute(
+            "SELECT ccc_last FROM course_days WHERE course_slug='catechism-in-a-year' AND day=365"
+        ).fetchone()[0]
+        self.assertEqual(last, 2865)
+        with self.assertRaises(SystemExit):
+            build_content.course_tables(
+                [{"slug": "mark-in-16-days", "title": "x", "kind": "bible", "summary": "", "intro": "",
+                  "days": [{"title": "only one"}]}],
+                {"mark-in-16-days": [None] * 16},
+                {},
+            )
+
     def test_devotion_checks(self):
         with self.assertRaises(SystemExit):
             build_content.check_devotions(

@@ -16,13 +16,14 @@ import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
 import type { Saint } from '@/data/types';
 import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting, paxMoodFor } from '@/lib/format';
+import { isFinished, nextDay } from '@/lib/courses';
 import { readingsOf, readParts, type ReadingPart } from '@/lib/readings';
 import { saintColor, saintForDay, type Celebration } from '@/lib/saints';
 import { useAppState } from '@/state/AppState';
 
 export default function TodayScreen() {
   const t = useTheme();
-  const { today, progress, settings } = useAppState();
+  const { today, progress, settings, courses } = useAppState();
   const content = useContent();
   const [saint, setSaint] = useState<{ saint: Saint; celebration: Celebration } | null>(null);
 
@@ -65,6 +66,46 @@ export default function TodayScreen() {
       </View>
 
       {saint ? <SaintCard saint={saint.saint} celebration={saint.celebration} onPress={openSaint} /> : null}
+
+      {courses
+        .filter((c) => !isFinished(c))
+        .map((c) => {
+          const doneToday = c.lastDoneOn === today.date;
+          return (
+            <Card
+              key={c.slug}
+              onPress={() =>
+                doneToday
+                  ? router.push({ pathname: '/course/[slug]', params: { slug: c.slug } })
+                  : router.push({ pathname: '/course/[slug]/[day]', params: { slug: c.slug, day: String(nextDay(c)) } })
+              }
+              accessibilityLabel={`${c.title}, day ${nextDay(c)} of ${c.days}`}
+              contentStyle={{ paddingVertical: 12, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+              <View
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 18,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: doneToday ? t.accent.accent : 'transparent',
+                  borderWidth: doneToday ? 0 : 3,
+                  borderColor: t.accent.accent,
+                }}>
+                {doneToday ? <CheckIcon color={t.accent.onAccent} /> : null}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text variant="label" caps color={t.accent.text}>
+                  {doneToday ? `Day ${c.daysDone} read` : `Day ${nextDay(c)} of ${c.days}`}
+                </Text>
+                <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+                  {c.title}
+                </Text>
+              </View>
+              <ChevronIcon color={t.neutral.textSubtle} />
+            </Card>
+          );
+        })}
 
       <RosaryCard set={MYSTERY_SET_NAMES[mysteries]} prayed={!!progress?.didPrayerToday} />
 

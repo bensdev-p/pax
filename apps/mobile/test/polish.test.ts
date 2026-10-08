@@ -11,7 +11,7 @@ import type { ContentStore, NovenaProgress } from '@/data/types';
 import { afterPraying, novenaDayIndex, novenaWindow } from '@/lib/devotions';
 import { paxAsks, readingsOf, readParts } from '@/lib/readings';
 import { rankChip, saintColor, saintForDay } from '@/lib/saints';
-import { planNotifications } from '@/notifications/plan';
+import { novenaReminder, planNotifications } from '@/notifications/plan';
 
 const CONTENT = fileURLToPath(new URL('../assets/content/content.db', import.meta.url));
 let db: ReadDb;
@@ -111,7 +111,7 @@ describe('Devotions', () => {
       reminderTime: '19:30',
     };
     const off = { morning: { enabled: false, time: '07:30' }, evening: { enabled: false, time: '20:00' }, nudges: false, angelus: false };
-    const plan = planNotifications(off, days, { now: new Date(2026, 11, 18, 8), today: '2026-12-18', doneToday: true, novenas: [novena] });
+    const plan = planNotifications(off, days, { now: new Date(2026, 11, 18, 8), today: '2026-12-18', doneToday: true, daily: [novenaReminder(novena)] });
     expect(plan.map((n) => `${n.date} ${n.title}`)).toEqual([
       '2026-12-19 Christmas Novena · Day 4',
       '2026-12-20 Christmas Novena · Day 5',

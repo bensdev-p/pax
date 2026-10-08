@@ -6,6 +6,7 @@ import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Header } from '@/components/Header';
+import { Passage } from '@/components/Passage';
 import { RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
@@ -99,21 +100,7 @@ export default function ReadingScreen() {
                 · · ·
               </Text>
             ) : null}
-            <Text variant="scripture" selectable>
-              {verses.map((v, j) => (
-                <Text key={v.ref} variant="scripture">
-                  {j > 0 ? ' ' : ''}
-                  <Text
-                    variant="label"
-                    color={t.accent.text}
-                    style={{ fontSize: 12, lineHeight: t.font.size.scripture * 1.5 }}>
-                    {v.douay_verse}
-                    {' '}
-                  </Text>
-                  {v.text}
-                </Text>
-              ))}
-            </Text>
+            <Passage verses={verses} />
           </View>
         ))
       )}

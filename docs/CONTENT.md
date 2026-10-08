@@ -76,6 +76,24 @@ optional `quote` and `quote_source`, three `facts` (`{"value": "7", "label": "le
 All write-ups are in our own words. Quotes must be Douay-Rheims verses or from a public-domain
 translation; if in doubt, leave the quote `null`.
 
+## A reading plan
+
+A plan has two halves:
+
+1. **The day split**, computed in `pipeline/courses.py`. `build_plans()` lists every plan by
+   slug. Bible plans are lists of Douay chapters (or parts of chapters) per day, balanced by
+   verse count; the Catechism plan is paragraph ranges. To make a new plan, add a function there
+   (for example `one_chapter_a_day("John", 21, counts)`) and an entry in `build_plans()`.
+2. **The words**, in `pipeline/seed/courses.json`: the plan's `title`, `kind` (`bible` or
+   `catechism`), `summary`, `intro`, `minutes`, optional `sections` (`[{name, intro}]`), and
+   `days`, one object per computed day in order: `title`, `intro` and `question` for Bible plans,
+   `title`, `summary` and `question` for the Catechism, and optionally
+   `see: [{kind: "saint" | "father", key, label}]`.
+
+`days` can be left empty while you write; the app then shows each day's reading label as its
+title. Once filled, the build refuses a count that doesn't match the split, so changing a split
+means re-checking the words.
+
 ## Bible text, Catechism, Fathers and lectionary
 
 These come from vendored sources, not hand-written seeds; see `pipeline/README.md` and
