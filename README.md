@@ -149,8 +149,8 @@ and no paid Apple account are needed until the widgets.
   ("Answer privately"), add a note to any verse, or write a free entry. Tags (#prayer,
   #reflection, #readings, #study, #scripture, #gratitude or your own, also typed inline) filter
   the list. Everything stays on the phone.
-- **Highlights and bookmarks**: press and hold a verse in the reader:
-  page: the verse panel opens as the native iOS sheet at half height (four highlight colors, a
+- **Highlights and bookmarks**: press and hold a verse in the reader and
+  the verse panel opens as the native iOS sheet at half height (four highlight colors, a
   bookmark and a note written right there); drag it up for Challoner's note, the Catechism and the
   Fathers, flick it down to close. A tap opens the same sheet. The reader shows the color wash, a ribbon and a note mark; Library → Your
   highlights and bookmarks lists them.
