@@ -75,8 +75,17 @@ function Navigator() {
         <Stack.Screen name="journal/edit" options={{ presentation: 'modal' }} />
         <Stack.Screen name="welcome" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="prayer/[slug]" />
-        {/* A sheet on iOS: swipe down closes it (Android uses the back gesture). */}
-        <Stack.Screen name="verse/[ref]" options={{ presentation: 'modal', gestureEnabled: true }} />
+        {/* The native iOS sheet (Android: bottom sheet): opens at half height with the verse and its
+            highlight, bookmark and note; drag up for Challoner, the Catechism and the Fathers. */}
+        <Stack.Screen
+          name="verse/[ref]"
+          options={{
+            presentation: 'formSheet',
+            sheetAllowedDetents: [0.5, 1.0],
+            sheetGrabberVisible: true,
+            sheetExpandsWhenScrolledToEdge: true,
+          }}
+        />
       </Stack>
     </>
   );
