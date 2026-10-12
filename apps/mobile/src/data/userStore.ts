@@ -1,20 +1,20 @@
 import { isPaletteName } from '@pax/tokens';
 import * as SQLite from 'expo-sqlite';
 
-import { computeStreak } from './streak';
+import { buildProgress, computeStreak, graceDaysLeft, isActive } from './streak';
 import {
   DEFAULT_NOTIFICATION_PREFS,
   DEFAULT_SETTINGS,
   GRACE_DAYS_PER_MONTH,
   parseJson,
   type ActivityKind,
+  type DayActivity,
   type FathersPackInstall,
   type NotificationPrefs,
   type CourseProgress,
   type NovenaProgress,
   type ReadingPosition,
   type ReadingsRead,
-  type Progress,
   type ReminderTime,
   type Settings,
   type UserStore,
@@ -170,7 +170,49 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     lastRead: parseJson<ReadingPosition>(map.lastRead),
     fathersPack: parseJson<FathersPackInstall>(map.fathersPack),
     readingsRead: parseJson<ReadingsRead>(map.readingsRead),
+    graceDeclinedFor: map.graceDeclinedFor ?? null,
   };
+}
+
+interface ActivityRow {
+  local_date: string;
+  did_lesson: number;
+  did_readings: number;
+  did_prayer: number;
+  used_grace_day: number;
+}
+
+const ACTIVITY_COLUMNS = 'local_date, did_lesson, did_readings, did_prayer, used_grace_day';
+
+/** `did_lesson` predates the rhythm: it now means a day of a reading plan (Study). */
+const toDay = (r: ActivityRow): DayActivity => ({
+  date: r.local_date,
+  read: !!r.did_readings,
+  pray: !!r.did_prayer,
+  study: !!r.did_lesson,
+  grace: !!r.used_grace_day,
+});
+
+async function allActivity(db: SQLite.SQLiteDatabase): Promise<DayActivity[]> {
+  const rows = await db.getAllAsync<ActivityRow>(
+    `SELECT ${ACTIVITY_COLUMNS} FROM daily_activity WHERE user_id = 'local' ORDER BY local_date`,
+  );
+  return rows.map(toDay);
+}
+
+/** Recomputes the cached `streaks` row (read by sync later; the app computes from activity). */
+async function saveStreak(db: SQLite.SQLiteDatabase, localDate: string) {
+  const days = await allActivity(db);
+  const { current, longest } = computeStreak(days.filter(isActive).map((d) => d.date), localDate);
+  await db.runAsync(
+    `INSERT INTO streaks (user_id, current, longest, last_active_date, grace_days_left) VALUES ('local', ?, ?, ?, ?)
+     ON CONFLICT (user_id) DO UPDATE SET current = excluded.current, longest = MAX(longest, excluded.longest),
+       last_active_date = excluded.last_active_date, grace_days_left = excluded.grace_days_left`,
+    current,
+    longest,
+    localDate,
+    graceDaysLeft(days, localDate),
+  );
 }
 
 export const userStore: UserStore = {
@@ -230,32 +272,18 @@ export const userStore: UserStore = {
     });
   },
 
-  async recordActivity(localDate: string, kind: ActivityKind, xp = 0) {
+  async recordActivity(localDate: string, kind: ActivityKind) {
     const db = await userDb();
-    const column = { lesson: 'did_lesson', readings: 'did_readings', prayer: 'did_prayer' }[kind];
+    const column = { study: 'did_lesson', readings: 'did_readings', prayer: 'did_prayer' }[kind];
     await db.withTransactionAsync(async () => {
       await db.runAsync(
-        `INSERT INTO daily_activity (user_id, local_date, ${column}, xp, updated_at)
-         VALUES ('local', ?, 1, ?, ?)
-         ON CONFLICT (user_id, local_date) DO UPDATE SET ${column} = 1, xp = xp + excluded.xp, updated_at = excluded.updated_at`,
+        `INSERT INTO daily_activity (user_id, local_date, ${column}, updated_at)
+         VALUES ('local', ?, 1, ?)
+         ON CONFLICT (user_id, local_date) DO UPDATE SET ${column} = 1, updated_at = excluded.updated_at`,
         localDate,
-        xp,
         now(),
       );
-      const dates = await db.getAllAsync<{ local_date: string }>(
-        "SELECT local_date FROM daily_activity WHERE user_id = 'local' AND (did_lesson OR did_readings OR did_prayer OR used_grace_day)",
-      );
-      const { current, longest } = computeStreak(
-        dates.map((d) => d.local_date),
-        localDate,
-      );
-      await db.runAsync(
-        `INSERT INTO streaks (user_id, current, longest, last_active_date) VALUES ('local', ?, ?, ?)
-         ON CONFLICT (user_id) DO UPDATE SET current = excluded.current, longest = MAX(longest, excluded.longest), last_active_date = excluded.last_active_date`,
-        current,
-        longest,
-        localDate,
-      );
+      await saveStreak(db, localDate);
       await db.runAsync(
         "INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('daily_activity', ?, 'upsert', ?)",
         localDate,
@@ -264,42 +292,48 @@ export const userStore: UserStore = {
     });
   },
 
-  async getProgress(localDate: string): Promise<Progress> {
+  async getProgress(localDate: string) {
     const db = await userDb();
-    const dates = await db.getAllAsync<{ local_date: string; xp: number }>(
-      "SELECT local_date, xp FROM daily_activity WHERE user_id = 'local' AND (did_lesson OR did_readings OR did_prayer OR used_grace_day)",
+    const [days, settings, streakRow] = await Promise.all([
+      allActivity(db),
+      readSettings(db),
+      db.getFirstAsync<{ longest: number }>("SELECT longest FROM streaks WHERE user_id = 'local'"),
+    ]);
+    return buildProgress(days, localDate, {
+      declinedFor: settings.graceDeclinedFor,
+      storedLongest: streakRow?.longest,
+    });
+  },
+
+  async getActivity(from: string, to: string) {
+    const db = await userDb();
+    const rows = await db.getAllAsync<ActivityRow>(
+      `SELECT ${ACTIVITY_COLUMNS} FROM daily_activity WHERE user_id = 'local' AND local_date BETWEEN ? AND ? ORDER BY local_date`,
+      from,
+      to,
     );
-    const xp = await db.getFirstAsync<{ total: number | null; today: number | null }>(
-      "SELECT SUM(xp) AS total, SUM(CASE WHEN local_date = ? THEN xp ELSE 0 END) AS today FROM daily_activity WHERE user_id = 'local'",
-      localDate,
-    );
-    const due = await db.getFirstAsync<{ n: number }>(
-      "SELECT COUNT(*) AS n FROM review_cards WHERE user_id = 'local' AND due_at <= ?",
-      now(),
-    );
-    const todayRow = await db.getFirstAsync<{ did_readings: number; did_prayer: number }>(
-      "SELECT did_readings, did_prayer FROM daily_activity WHERE user_id = 'local' AND local_date = ?",
-      localDate,
-    );
-    const streakRow = await db.getFirstAsync<{ longest: number; grace_days_left: number }>(
-      "SELECT longest, grace_days_left FROM streaks WHERE user_id = 'local'",
-    );
-    const { current, longest } = computeStreak(
-      dates.map((d) => d.local_date),
-      localDate,
-    );
-    return {
-      today: localDate,
-      doneToday: dates.some((d) => d.local_date === localDate),
-      didReadingsToday: !!todayRow?.did_readings,
-      didPrayerToday: !!todayRow?.did_prayer,
-      currentStreak: current,
-      longestStreak: Math.max(longest, streakRow?.longest ?? 0),
-      xpToday: xp?.today ?? 0,
-      xpTotal: xp?.total ?? 0,
-      reviewsDue: due?.n ?? 0,
-      graceDaysLeft: streakRow?.grace_days_left ?? GRACE_DAYS_PER_MONTH,
-    };
+    return rows.map(toDay);
+  },
+
+  async applyGraceDays(dates: string[]) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      for (const date of dates) {
+        await db.runAsync(
+          `INSERT INTO daily_activity (user_id, local_date, used_grace_day, updated_at) VALUES ('local', ?, 1, ?)
+           ON CONFLICT (user_id, local_date) DO UPDATE SET used_grace_day = 1, updated_at = excluded.updated_at`,
+          date,
+          now(),
+        );
+        await db.runAsync(
+          "INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('daily_activity', ?, 'upsert', ?)",
+          date,
+          now(),
+        );
+      }
+      const last = dates.at(-1);
+      if (last) await saveStreak(db, last);
+    });
   },
 
   async getNovenas() {

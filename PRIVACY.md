@@ -40,9 +40,9 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app | To show the app the way you asked, offer "Continue reading" and check off today's readings |
-| `daily_activity` | For each local date: whether you finished a lesson or a day of a reading plan, the day's readings, or a prayer (such as the Rosary), XP earned, and whether a grace day was used | To count your streak and color the liturgical calendar |
-| `streaks` | Current and longest streak, last active date, grace days left | Same as above |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings, and not ask about the same missed days twice |
+| `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
+| `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
 | `course_progress` | For each reading plan you start (such as Bible in a Year): its name and length, the day you started, how many days you have read, the last date you read, and the reminder time you picked, if any | To show "Day 12 of 365", pick up where you left off, and remind you |
 | `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
@@ -64,7 +64,7 @@ the novena you are praying (for example, "Novena to Saint Joseph · Day 4"), and
 your lock screen. Turning reminders off in Me cancels them all.
 
 **Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
-the liturgical calendar, your current streak, and whether today is done into storage that only Pax
+the liturgical calendar, your current streak, and which of today's Read, Pray and Study marks are done into storage that only Pax
 and its own widgets can read (the iOS App Group `group.com.benbrunson.pax`, or Android app
 storage). Widgets show this on your home and lock screen, where anyone holding your phone can see
 it. In Expo Go, Pax writes nothing for widgets.

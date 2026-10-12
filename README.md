@@ -46,7 +46,7 @@ and no paid Apple account are needed until the widgets.
 
 ## What Phase 1 does
 
-- **Today**: season chip, streak, XP and reviews in the stats bar. Below that, the feast card
+- **Today**: season chip and streak in the header (XP and reviews were retired in Phase 3). Below that, the feast card
   (with the Advent wreath in Advent), Pax's greeting, today's Rosary card, and the reading
   citations with the USCCB link for the date. "I read today's readings" counts the day toward the
   streak.
@@ -91,7 +91,7 @@ and no paid Apple account are needed until the widgets.
   the Saints list now covers the year ahead. On a weekday with an optional memorial, that saint
   is the saint of the day.
 - **Today's readings**: each reading opens in full in the Douay-Rheims, with a check mark once
-  read; finishing them counts the day (+10 XP). "Pax asks" adds a question to take into the day.
+  read; finishing them counts the day. "Pax asks" adds a question to take into the day.
 - **Guided devotions** on the Pray tab, one screen at a time like the Rosary: the Divine Mercy
   Chaplet, the Stations of the Cross, five litanies (Loreto, Sacred Heart, Saint Joseph, Holy
   Name, Humility) and five novenas (Holy Spirit, Divine Mercy, Saint Joseph, Immaculate
@@ -115,7 +115,7 @@ and no paid Apple account are needed until the widgets.
 - **Short courses**: Mark in 16 days, the Psalms in 30 days, and Acts in 28 days with links to
   the apostolic Fathers.
 - Start any day; days are read in order and a missed day simply waits. Each day read counts for
-  the streak (+10 XP), and each plan can have its own daily reminder.
+  the streak (Study), and each plan can have its own daily reminder.
 - The day splits are computed from verse and paragraph counts by `pipeline/courses.py`; the
   words for each day are in `pipeline/seed/courses.json`.
 
@@ -123,6 +123,16 @@ and no paid Apple account are needed until the widgets.
 
 - **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
   `/learn` and `/profile` links redirect.
+- **Daily rhythm** replaces XP and reviews: three marks a day, **Read** (today's readings),
+  **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
+  day for the streak.
+- **Calendar in Me**: each month's days in their liturgical color, filled for full days (all
+  three), tinted for partial days, a dot for missed days and a shield for grace days. Tap a day
+  for its feast and marks. Me also shows the current and longest streak and grace days left.
+- **Grace days**: two a month, refilled on the 1st, no carryover. When the days right before
+  today were missed and the streak was at least two days long, Pax asks on Today whether to use
+  grace days to keep it ("Keep my streak" or "Start fresh"); a gap of several days uses several
+  while the month has them. Pax asks once per gap.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 

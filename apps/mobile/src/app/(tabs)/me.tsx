@@ -4,11 +4,12 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { BellIcon, BoltIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
-import { Pax } from '@/components/Pax';
+import { BellIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Card } from '@/components/Raised';
+import { RhythmCalendar } from '@/components/RhythmCalendar';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
+import { GRACE_DAYS_PER_MONTH } from '@/data/types';
 import { checkCloud, type CloudStatus } from '@/lib/cloudStatus';
 import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
@@ -51,16 +52,11 @@ export default function MeScreen() {
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <StatCard icon={<FlameIcon size={22} />} value={progress?.currentStreak ?? 0} label="day streak" />
-        <StatCard icon={<BoltIcon size={22} />} value={progress?.xpTotal ?? 0} label="total XP" />
-        <StatCard icon={<ShieldIcon />} value={progress?.graceDaysLeft ?? 2} label="grace days left" />
+        <StatCard icon={<FlameIcon size={22} color={t.neutral.textSubtle} />} value={progress?.longestStreak ?? 0} label="longest" />
+        <StatCard icon={<ShieldIcon />} value={progress?.graceDaysLeft ?? GRACE_DAYS_PER_MONTH} label="grace days left" />
       </View>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 4 }}>
-        <Pax mood="hint" size={84} />
-        <Text variant="body" color={t.neutral.textMuted} style={{ flex: 1 }}>
-          Your liturgical calendar, saint cards and OCIA milestones will live here soon.
-        </Text>
-      </View>
+      {today ? <RhythmCalendar today={today.date} version={progress} /> : null}
 
       <Text variant="title">Settings</Text>
 

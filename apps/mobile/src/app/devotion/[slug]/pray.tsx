@@ -81,8 +81,8 @@ export default function DevotionPrayScreen() {
       } else {
         setFinished({ day: null });
       }
-      // A finished devotion counts the day for the streak (SPEC: Gamification). Prayer earns no XP.
-      if (!progress?.didPrayerToday) await recordActivity('prayer');
+      // A finished devotion counts the day for the streak (SPEC: Habit model).
+      if (!progress?.rhythm.pray) await recordActivity('prayer');
     })();
   };
 

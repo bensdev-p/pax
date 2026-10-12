@@ -14,7 +14,7 @@ import {
 } from '@/data/types';
 import { courseReminder, novenaReminder } from '@/notifications/plan';
 import { rescheduleReminders } from '@/notifications/reminders';
-import { DAILY_XP_GOAL, writeWidgetFeed } from '@/widgets/widgetFeed';
+import { writeWidgetFeed } from '@/widgets/widgetFeed';
 
 interface AppStateValue {
   ready: boolean;
@@ -25,8 +25,10 @@ interface AppStateValue {
   notificationPrefs: NotificationPrefs | null;
   updateSettings(patch: Partial<Settings>): Promise<void>;
   updateNotificationPrefs(prefs: NotificationPrefs): Promise<void>;
-  /** Marks today's lesson, readings or prayer done; refreshes the streak and widget feed. */
-  recordActivity(kind: ActivityKind, xp?: number): Promise<void>;
+  /** Marks today's Read, Pray or Study done; refreshes the streak and widget feed. */
+  recordActivity(kind: ActivityKind): Promise<void>;
+  /** Answers Pax's grace-day offer: cover the missed days, or let the streak go. */
+  answerGraceOffer(accept: boolean): Promise<void>;
   /** Novenas in progress. */
   novenas: NovenaProgress[];
   /** Starts, updates (reminder, day prayed) or, with `null`, stops a novena; reschedules reminders. */
@@ -67,8 +69,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       date,
       currentStreak: nextProgress.currentStreak,
       doneToday: nextProgress.doneToday,
-      xpToday: nextProgress.xpToday,
-      xpGoal: DAILY_XP_GOAL,
+      rhythm: nextProgress.rhythm,
     });
     const prefs = prefsRef.current;
     if (opts.reschedule && prefs) {
@@ -119,12 +120,23 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   );
 
   const recordActivity = useCallback(
-    async (kind: ActivityKind, xp = 0) => {
-      await userStore.recordActivity(toIsoDate(new Date()), kind, xp);
+    async (kind: ActivityKind) => {
+      await userStore.recordActivity(toIsoDate(new Date()), kind);
       // Today now counts, so today's reminders and nudges are dropped.
       await refresh({ reschedule: true });
     },
     [refresh],
+  );
+
+  const answerGraceOffer = useCallback(
+    async (accept: boolean) => {
+      const offer = progress?.graceOffer;
+      if (!offer) return;
+      if (accept) await userStore.applyGraceDays(offer.dates);
+      else setSettings(await userStore.setSettings({ graceDeclinedFor: offer.lastActive }));
+      await refresh({ reschedule: false });
+    },
+    [progress, refresh],
   );
 
   const saveNovena = useCallback(
@@ -156,6 +168,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         updateSettings,
         updateNotificationPrefs,
         recordActivity,
+        answerGraceOffer,
         novenas,
         saveNovena,
         courses,

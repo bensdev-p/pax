@@ -4,10 +4,10 @@ import { View } from 'react-native';
 
 import type { Progress } from '@/data/types';
 
-import { BoltIcon, FlameIcon, ReviewIcon } from './Icons';
+import { FlameIcon } from './Icons';
 import { Text } from './Text';
 
-/** Season chip, streak, XP and reviews due (SPEC: Today). */
+/** Season chip and streak (SPEC: Today, header). */
 export function StatsBar({ today, progress }: { today: DaySnapshot; progress: Progress | null }) {
   const t = useTheme();
   return (
@@ -36,8 +36,6 @@ export function StatsBar({ today, progress }: { today: DaySnapshot; progress: Pr
         </Text>
       </View>
       <Stat label="day streak" value={progress?.currentStreak ?? 0} color={t.game.streakText} icon={<FlameIcon size={24} />} />
-      <Stat label="XP" value={progress?.xpTotal ?? 0} color={t.game.xpText} icon={<BoltIcon size={22} />} />
-      <Stat label="reviews due" value={progress?.reviewsDue ?? 0} color={t.game.reviewText} icon={<ReviewIcon size={22} />} />
     </View>
   );
 }

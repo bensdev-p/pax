@@ -38,5 +38,3 @@ export function afterReading(progress: CourseProgress, day: number, today: strin
   return { ...progress, daysDone: day, lastDoneOn: today };
 }
 
-/** XP for finishing a day of a reading plan. */
-export const COURSE_DAY_XP = 10;

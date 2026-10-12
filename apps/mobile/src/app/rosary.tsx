@@ -54,7 +54,7 @@ export default function RosaryScreen() {
       setFinishedIn(Math.round((Date.now() - startedAt) / 1000));
       if (!recorded.current) {
         recorded.current = true;
-        // A finished prayer counts the day for the streak (SPEC: Gamification). Prayer earns no XP.
+        // A finished prayer counts the day for the streak (SPEC: Habit model).
         void recordActivity('prayer');
       }
     }

@@ -18,7 +18,7 @@ import { Text } from '@/components/Text';
 import { useContent, useLibrary } from '@/data/content';
 import { verseLabel, type CccParagraph, type FatherExcerpt, type LibraryStore, type VerseDetail } from '@/data/library';
 import type { Course, CourseDay, CourseUnit } from '@/data/types';
-import { afterReading, COURSE_DAY_XP, startCourse } from '@/lib/courses';
+import { afterReading, startCourse } from '@/lib/courses';
 import { openVerse } from '@/lib/libraryLinks';
 import { useAppState } from '@/state/AppState';
 
@@ -136,7 +136,7 @@ export default function CourseDayScreen() {
   const finish = async () => {
     const base = progress ?? startCourse(course, today);
     await saveCourse(slug, afterReading(base, dayNumber, today));
-    await recordActivity('lesson', COURSE_DAY_XP);
+    await recordActivity('study');
     setFinishedDay(`${slug}/${dayNumber}`);
   };
 
@@ -156,7 +156,7 @@ export default function CourseDayScreen() {
           {justDone ? (
             <>
               <Text variant="bodyStrong" align="center" color={t.accent.text}>
-                Day {dayNumber} done · +{COURSE_DAY_XP} XP
+                Day {dayNumber} done
               </Text>
               <RaisedButton
                 kind={hasNext ? 'neutral' : 'accent'}
