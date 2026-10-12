@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { ChevronIcon, RosaryIcon } from '@/components/Icons';
+import { ChevronIcon, RosaryIcon, StarIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
@@ -16,6 +16,7 @@ import { KIND_LABELS, NOVENA_DAYS, novenaWindow } from '@/lib/devotions';
 import { MYSTERY_SET_NAMES } from '@/lib/format';
 import { prayedRosaryToday } from '@/lib/today';
 import { useAppState } from '@/state/AppState';
+import { useNotes } from '@/state/notes';
 
 const SECTIONS: { category: string; title: string }[] = [
   { category: 'essentials', title: 'The essentials' },
@@ -69,6 +70,7 @@ export default function PrayScreen() {
   const featured = devotions.filter(
     (d) => !inProgress.some((n) => n.slug === d.slug) && (novenasNow.includes(d.slug) || (d.kind !== 'novena' && d.season === seasonTag)),
   );
+  const { notes: favorites } = useNotes({ kind: 'favorite' });
   const openDevotion = (slug: string) => router.push({ pathname: '/devotion/[slug]', params: { slug } });
 
   return (
@@ -158,6 +160,29 @@ export default function PrayScreen() {
               </Card>
             );
           })}
+        </View>
+      ) : null}
+
+      {favorites.length ? (
+        <View style={{ gap: 10 }}>
+          <Text variant="title">Your favorites</Text>
+          {favorites.map((f) => (
+            <Card
+              key={f.id}
+              onPress={() =>
+                f.targetType === 'devotion'
+                  ? openDevotion(f.targetKey)
+                  : router.push({ pathname: '/prayer/[slug]', params: { slug: f.targetKey } })
+              }
+              accessibilityLabel={f.prompt ?? f.targetKey}
+              contentStyle={{ paddingVertical: 14, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+              <StarIcon size={22} />
+              <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black', flex: 1 }}>
+                {f.prompt ?? f.targetKey}
+              </Text>
+              <ChevronIcon color={t.neutral.textSubtle} />
+            </Card>
+          ))}
         </View>
       ) : null}
 

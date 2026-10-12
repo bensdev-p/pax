@@ -314,3 +314,55 @@ export function QuoteIcon({ size = 22, color = '#FFC107' }: IconProps) {
     </Svg>
   );
 }
+
+/** A ribbon bookmark; `filled` when set. */
+export function BookmarkIcon({ size = 22, color = '#E86A9A', filled = true }: IconProps & { filled?: boolean }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path
+        d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z"
+        fill={filled ? color : 'none'}
+        stroke={color}
+        strokeWidth={filled ? 0 : 2}
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+/** A note page with a pencil. */
+export function NoteIcon({ size = 22, color = '#2FA4E7' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Rect x="3" y="3" width="15" height="18" rx="3" fill={color} />
+      <Path d="M7 8h7M7 12h7M7 16h4" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+      <Path d="M15 19l5.5-5.5 2 2L17 21h-2z" fill="#FFC107" />
+    </Svg>
+  );
+}
+
+/** A favorite star; `filled` when set. */
+export function StarIcon({ size = 24, color = '#FFC107', filled = true }: IconProps & { filled?: boolean }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path
+        d="M12 2.8l2.8 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17.1l-5.7 3 1.2-6.3L2.9 9.4l6.3-.8z"
+        fill={filled ? color : 'none'}
+        stroke={color}
+        strokeWidth={filled ? 0 : 2}
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+/** A closed journal with a ribbon. */
+export function JournalIcon({ size = 22 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Rect x="4" y="2.5" width="16" height="19" rx="3" fill="#8E5CF6" />
+      <Rect x="4" y="2.5" width="4" height="19" rx="2" fill="#6C46BB" />
+      <Path d="M14 2.5h3v8l-1.5-1.2L14 10.5z" fill="#FFC107" />
+    </Svg>
+  );
+}

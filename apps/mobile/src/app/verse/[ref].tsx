@@ -9,6 +9,7 @@ import { SectionLabel } from '@/components/LibraryBits';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
+import { VerseActions } from '@/components/VerseActions';
 import { useFathersPack, useLibrary } from '@/data/content';
 import { PACK_SUPPORTED } from '@/data/fathersPack';
 import { modernLabel, verseLabel, type BibleNote, type CccParagraph, type FatherExcerpt, type VerseDetail } from '@/data/library';
@@ -44,6 +45,7 @@ export default function VerseScreen() {
           {verse.text}
         </Text>
       ) : null}
+      {verse ? <VerseActions verse={verse} /> : null}
       {verse ? (
         <RaisedButton
           kind="neutral"

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { FavoriteButton } from '@/components/Favorite';
 import { Header } from '@/components/Header';
 import { DailyReminder } from '@/components/DailyReminder';
 import { CheckIcon } from '@/components/Icons';
@@ -73,6 +74,7 @@ export default function DevotionScreen() {
         <Header
           title={devotion.title}
           subtitle={`${KIND_LABELS[devotion.kind]}${devotion.minutes ? ` · About ${devotion.minutes} minutes` : ''}`}
+          right={<FavoriteButton targetType="devotion" slug={devotion.slug} title={devotion.title} />}
         />
       }
       footer={

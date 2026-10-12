@@ -80,8 +80,11 @@ Everything else (tiles, long readings list) moves one tap away.
   newly received · going deeper), suggest a plan, offer a reminder. Decided with Ben: the answer
   only picks the suggested plan and is not stored; no OCIA stage question for now; shown on new
   installs only, with a replay in Me.
-- **Journal:** answer Pax's questions (readings, plans) privately; browse past entries in Me.
-- **Highlights and bookmarks** in the Bible reader; favorite prayers.
+- **Journal** (built in Phase 3): answer Pax's questions (readings, plans) privately, add notes
+  to verses and free entries, each with tags (#prayer, #reflection, #readings or your own);
+  browse and filter by tag in Me. No lock for now (decided with Ben).
+- **Highlights (four colors) and verse bookmarks** in the Bible reader, listed in Library;
+  favorite prayers and devotions at the top of Pray (built in Phase 3).
 - **Examination of conscience** and a nightly **Examen**.
 - **Study courses on the Fathers and saints:** guided reading of their own writings (for example
   the letters of Ignatius of Antioch, the Didache, Augustine's Confessions, Thérèse's Story of a
@@ -197,9 +200,9 @@ verse alongside), `bible_chapters`, `bible_notes`, `verse_map`, `ccc_paragraphs`
 `search_index` (FTS5), `content_meta`; `units`, `lessons`, `questions` exist for the future OCIA
 course and are empty.
 
-**user.db (schema v4):** `settings`, `daily_activity`, `streaks`, `notification_prefs`,
-`novena_progress`, `course_progress`, `notes` (unused yet: journal, highlights and bookmarks
-will use it), `lesson_progress` and `review_cards` (unused; review cards may be dropped),
+**user.db (schema v5):** `settings`, `daily_activity`, `streaks`, `notification_prefs`,
+`novena_progress`, `course_progress`, `notes` (`kind`: journal, highlight, bookmark or favorite;
+journal entries keep Pax's question in `prompt` and their `tags`), `lesson_progress` and `review_cards` (unused; review cards may be dropped),
 `sync_queue`.
 
 Rules:

@@ -5,12 +5,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { BackIcon, ChevronIcon } from '@/components/Icons';
+import { BackIcon, BookmarkIcon, ChevronIcon, NoteIcon } from '@/components/Icons';
 import { Header } from '@/components/Header';
 import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import type { ChapterView } from '@/data/library';
 import { openVerse } from '@/lib/libraryLinks';
+import { HIGHLIGHT_COLORS, isHighlightColor } from '@/lib/notes';
+import { useNotes } from '@/state/notes';
 import { useAppState } from '@/state/AppState';
 
 /**
@@ -28,6 +30,17 @@ export default function ReaderScreen() {
   const scroll = useRef<ScrollView>(null);
   const offsets = useRef<Record<string, number>>({});
   const scrolled = useRef(false);
+
+  // The reader's own marks: highlights wash the verse, a ribbon marks bookmarks, a page marks notes.
+  const { notes: marks } = useNotes({ targetType: 'verse' });
+  const washOf = new Map(
+    marks.filter((n) => n.kind === 'highlight' && isHighlightColor(n.highlightColor)).map((n) => {
+      const c = HIGHLIGHT_COLORS[n.highlightColor as keyof typeof HIGHLIGHT_COLORS];
+      return [n.targetKey, t.scheme === 'dark' ? c.washDark : c.wash];
+    }),
+  );
+  const bookmarked = new Set(marks.filter((n) => n.kind === 'bookmark').map((n) => n.targetKey));
+  const noted = new Set(marks.filter((n) => n.kind === 'journal' && n.body).map((n) => n.targetKey));
 
   const highlight = useMemo(() => (params.hl ? parseCitation(String(params.hl)) : []), [params.hl]);
 
@@ -100,7 +113,7 @@ export default function ReaderScreen() {
               <Pressable
                 key={v.ref}
                 accessibilityRole="button"
-                accessibilityLabel={`Verse ${v.douay_verse}${linked ? ', has notes or links' : ''}`}
+                accessibilityLabel={`Verse ${v.douay_verse}${linked ? ', has notes or links' : ''}${washOf.has(v.ref) ? ', highlighted' : ''}${bookmarked.has(v.ref) ? ', bookmarked' : ''}${noted.has(v.ref) ? ', your note' : ''}`}
                 onPress={() => openVerse(v.ref)}
                 onLayout={(e) => {
                   // Read the layout now: React reuses the event object once this handler returns.
@@ -116,8 +129,15 @@ export default function ReaderScreen() {
                   paddingHorizontal: 8,
                   marginHorizontal: -8,
                   borderRadius: 10,
-                  backgroundColor: pressed ? t.neutral.surfaceMuted : marked ? t.accent.tint : 'transparent',
+                  paddingRight: bookmarked.has(v.ref) || noted.has(v.ref) ? 26 : 8,
+                  backgroundColor: pressed ? t.neutral.surfaceMuted : (washOf.get(v.ref) ?? (marked ? t.accent.tint : 'transparent')),
                 })}>
+                {bookmarked.has(v.ref) || noted.has(v.ref) ? (
+                  <View style={{ position: 'absolute', right: 2, top: 6, gap: 4, alignItems: 'center' }}>
+                    {bookmarked.has(v.ref) ? <BookmarkIcon size={16} color={t.accent.accent} /> : null}
+                    {noted.has(v.ref) ? <NoteIcon size={16} /> : null}
+                  </View>
+                ) : null}
                 <Text variant="scripture">
                   {/* iOS lays the whole paragraph out with this span's line height, so it must match the
                       verse text's; a smaller one clips the tops of letters and cuts off the last line. */}

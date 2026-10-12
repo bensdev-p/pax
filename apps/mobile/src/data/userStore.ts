@@ -12,6 +12,8 @@ import {
   type FathersPackInstall,
   type NotificationPrefs,
   type CourseProgress,
+  type Note,
+  type NoteQuery,
   type NovenaProgress,
   type PrayedToday,
   type ReadingPosition,
@@ -132,6 +134,14 @@ const MIGRATIONS: string[] = [
     reminder_time TEXT,                   -- HH:MM, or NULL for no reminder
     PRIMARY KEY (user_id, slug)
   ) WITHOUT ROWID;
+  `,
+  // 5: notes become the journal, highlights, bookmarks and favorites (SPEC: Phase 3).
+  `
+  ALTER TABLE notes ADD COLUMN kind TEXT NOT NULL DEFAULT 'journal';  -- journal, highlight, bookmark, favorite
+  ALTER TABLE notes ADD COLUMN prompt TEXT;                            -- Pax's question, for answers
+  ALTER TABLE notes ADD COLUMN tags TEXT NOT NULL DEFAULT '[]';        -- JSON array of tags
+  ALTER TABLE notes ADD COLUMN created_at TEXT;
+  CREATE INDEX notes_target ON notes (user_id, target_type, target_key);
   `,
 ];
 
@@ -420,4 +430,76 @@ export const userStore: UserStore = {
     const db = await userDb();
     await db.runAsync("DELETE FROM course_progress WHERE user_id = 'local' AND slug = ?", slug);
   },
+
+  async getNotes(query: NoteQuery = {}) {
+    const db = await userDb();
+    const filters = [
+      ['kind', query.kind],
+      ['target_type', query.targetType],
+      ['target_key', query.targetKey],
+    ].filter((f): f is [string, string] => !!f[1]);
+    const where = ["user_id = 'local'", ...filters.map(([col]) => `${col} = ?`)];
+    const params = filters.map(([, value]) => value);
+    const rows = await db.getAllAsync<NoteRow>(
+      `SELECT id, kind, target_type, target_key, highlight_color, body, prompt, tags, created_at, updated_at
+       FROM notes WHERE ${where.join(' AND ')} ORDER BY COALESCE(created_at, updated_at) DESC`,
+      ...params,
+    );
+    return rows.map(toNote);
+  },
+
+  async saveNote(n: Note) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync(
+        `INSERT OR REPLACE INTO notes (user_id, id, kind, target_type, target_key, highlight_color, body, prompt, tags, created_at, updated_at)
+         VALUES ('local', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        n.id,
+        n.kind,
+        n.targetType,
+        n.targetKey,
+        n.highlightColor,
+        n.body,
+        n.prompt,
+        JSON.stringify(n.tags),
+        n.createdAt,
+        n.updatedAt,
+      );
+      await db.runAsync("INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('notes', ?, 'upsert', ?)", n.id, now());
+    });
+  },
+
+  async deleteNote(id: string) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync("DELETE FROM notes WHERE user_id = 'local' AND id = ?", id);
+      await db.runAsync("INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('notes', ?, 'delete', ?)", id, now());
+    });
+  },
 };
+
+interface NoteRow {
+  id: string;
+  kind: Note['kind'];
+  target_type: Note['targetType'];
+  target_key: string;
+  highlight_color: string | null;
+  body: string | null;
+  prompt: string | null;
+  tags: string;
+  created_at: string | null;
+  updated_at: string;
+}
+
+const toNote = (r: NoteRow): Note => ({
+  id: r.id,
+  kind: r.kind,
+  targetType: r.target_type,
+  targetKey: r.target_key,
+  highlightColor: r.highlight_color,
+  body: r.body,
+  prompt: r.prompt,
+  tags: parseJson<string[]>(r.tags) ?? [],
+  createdAt: r.created_at ?? r.updated_at,
+  updatedAt: r.updated_at,
+});
