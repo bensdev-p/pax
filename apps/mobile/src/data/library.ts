@@ -114,6 +114,8 @@ export interface LibraryStore {
   cccOutline(): Promise<CccSection[]>;
   fatherAuthors(): Promise<FatherAuthor[]>;
   fatherExcerpts(authorSlug: string, limit?: number): Promise<FatherExcerpt[]>;
+  /** One excerpt by slug, from the starter set or the downloaded library. */
+  fatherPassage(slug: string): Promise<FatherExcerpt | null>;
   search(query: string, limitPerKind?: number): Promise<SearchHit[]>;
   stats(): Promise<{ verses: number; ccc: number; fathers: number; fullFathers: boolean }>;
   /**
@@ -263,6 +265,14 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
         .flat()
         .sort((a, b) => key(a.ref) - key(b.ref))
         .slice(0, limit);
+    },
+
+    async fatherPassage(slug) {
+      for (const db of fatherSources()) {
+        const row = await db.first<FatherExcerpt>(`${fatherSelect('NULL')} WHERE p.slug = ?`, [slug]);
+        if (row) return row;
+      }
+      return null;
     },
 
     async search(query, limitPerKind = 12) {

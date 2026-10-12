@@ -163,8 +163,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   const saveCourse = useCallback(
     async (slug: string, next: CourseProgress | null) => {
-      if (next) await userStore.saveCourse(next);
-      else await userStore.removeCourse(slug);
+      if (next) {
+        await userStore.saveCourse(next);
+        // Starting a plan brings Study back into the daily rhythm.
+        if (!(await userStore.getSettings()).studyInRhythm) setSettings(await userStore.setSettings({ studyInRhythm: true }));
+      } else await userStore.removeCourse(slug);
       await refresh({ reschedule: true });
     },
     [refresh],

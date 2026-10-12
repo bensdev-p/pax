@@ -1,11 +1,11 @@
-import { mysteriesForDay, type DaySnapshot } from '@pax/liturgy';
+import { addDays, getDaySnapshots, mysteriesForDay, type DaySnapshot } from '@pax/liturgy';
 import { tokens } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { AdventWreath, CandleIcon, CheckIcon, ChevronIcon } from '@/components/Icons';
+import { AdventWreath, CandleIcon, CheckIcon, ChevronIcon, CloseIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { GraceOfferCard } from '@/components/Rhythm';
@@ -13,8 +13,10 @@ import { SaintArt } from '@/components/SaintArt';
 import { Screen } from '@/components/Screen';
 import { StatsBar } from '@/components/StatsBar';
 import { Text } from '@/components/Text';
+import { WordForToday } from '@/components/WordForToday';
 import { useContent } from '@/data/content';
 import type { Saint } from '@/data/types';
+import { weekdayName } from '@/lib/calendar';
 import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting, paxMoodFor, shortName } from '@/lib/format';
 import { readingsOf, readParts } from '@/lib/readings';
 import { saintColor, saintForDay, type Celebration } from '@/lib/saints';
@@ -23,13 +25,28 @@ import { useAppState } from '@/state/AppState';
 
 export default function TodayScreen() {
   const t = useTheme();
-  const { today, progress, settings, courses, novenas, answerGraceOffer } = useAppState();
+  const { today, progress, settings, updateSettings, courses, novenas, answerGraceOffer } = useAppState();
   const content = useContent();
-  const [saint, setSaint] = useState<{ saint: Saint; celebration: Celebration } | null>(null);
+  const [saint, setSaint] = useState<FeastSaint | null>(null);
 
   useEffect(() => {
     if (!today) return;
-    void saintForDay(content, today).then(setSaint);
+    let cancelled = false;
+    void (async () => {
+      const own = await saintForDay(content, today);
+      if (own) return { ...own, ahead: null };
+      // No saint today: the next one this week, so the card always has a saint.
+      for (const day of await getDaySnapshots(addDays(today.date, 1), 6)) {
+        const next = await saintForDay(content, day);
+        if (next) return { ...next, ahead: day };
+      }
+      return null;
+    })().then((s) => {
+      if (!cancelled) setSaint(s);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [content, today]);
 
   if (!today) return null;
@@ -44,6 +61,7 @@ export default function TodayScreen() {
     prayed: settings.prayedToday,
     novenas,
     courses,
+    studyInRhythm: settings.studyInRhythm,
   });
 
   return (
@@ -54,10 +72,12 @@ export default function TodayScreen() {
 
       <FeastCard day={today} saint={saint} />
 
-      <TodayWithGod items={items} />
+      <TodayWithGod items={items} onHideStudy={() => void updateSettings({ studyInRhythm: false })} />
+
+      <WordForToday day={today} />
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <Pax mood={paxMoodFor(mood)} size={60} />
+        <Pax mood={paxMoodFor(mood)} size={72} />
         <Text variant="body" color={t.neutral.textMuted} style={{ flex: 1 }}>
           {paxGreeting(today, mood)}
         </Text>
@@ -71,14 +91,17 @@ export default function TodayScreen() {
  * the saint is the day's own celebration, the card is about them; on a weekday with an optional
  * memorial, the saint sits under the day. Tapping opens the saint's page.
  */
-function FeastCard({ day, saint }: { day: DaySnapshot; saint: { saint: Saint; celebration: Celebration } | null }) {
+/** The saint of the day, or (`ahead`) the next saint this week when today has none. */
+type FeastSaint = { saint: Saint; celebration: Celebration; ahead: DaySnapshot | null };
+
+function FeastCard({ day, saint }: { day: DaySnapshot; saint: FeastSaint | null }) {
   const t = useTheme();
   const advent = day.season === 'ADVENT';
-  const own = !!saint && !saint.celebration.optional;
+  const own = !!saint && !saint.celebration.optional && !saint.ahead;
   const palette = saint ? (t.locked ? t.accent : tokens.palettes[saintColor(saint.saint, saint.celebration)][t.scheme]) : t.accent;
   const feast = !!saint && saint.saint.kind !== 'saint' && saint.saint.kind !== 'saints';
   const open = saint
-    ? () => router.push({ pathname: '/saint/[key]', params: { key: saint.saint.romcal_key, date: day.date } })
+    ? () => router.push({ pathname: '/saint/[key]', params: { key: saint.saint.romcal_key, date: (saint.ahead ?? day).date } })
     : undefined;
 
   return (
@@ -139,8 +162,9 @@ function FeastCard({ day, saint }: { day: DaySnapshot; saint: { saint: Saint; ce
           <SaintFrame saint={saint.saint} color={palette.accent} small />
           <View style={{ flex: 1, gap: 2 }}>
             <Text variant="label" caps color={palette.text}>
-              {feast ? 'Feast of the day' : 'Saint of the day'}
-              {saint.celebration.optional ? ' · Optional memorial' : ''}
+              {saint.ahead
+                ? `Coming up · ${weekdayName(saint.ahead.date)}`
+                : `${feast ? 'Feast of the day' : 'Saint of the day'}${saint.celebration.optional ? ' · Optional memorial' : ''}`}
             </Text>
             <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
               {saint.saint.name}
@@ -185,7 +209,7 @@ function SaintFrame({ saint, color, small }: { saint: Saint; color: string; smal
 }
 
 /** One checklist card: Read · Pray · Study, each checking off when done (SPEC: Today, item 3). */
-function TodayWithGod({ items }: { items: ChecklistItem[] }) {
+function TodayWithGod({ items, onHideStudy }: { items: ChecklistItem[]; onHideStudy: () => void }) {
   const t = useTheme();
   const done = items.filter((i) => i.done).length;
   return (
@@ -247,7 +271,19 @@ function TodayWithGod({ items }: { items: ChecklistItem[] }) {
               {item.detail}
             </Text>
           </View>
-          <ChevronIcon color={t.neutral.textSubtle} />
+          {item.optional ? (
+            // No plan wanted: take Study out of the daily rhythm (back on in Me, or by starting a plan).
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Take Study out of my daily rhythm"
+              hitSlop={10}
+              onPress={onHideStudy}
+              style={{ padding: 4 }}>
+              <CloseIcon size={20} color={t.neutral.textSubtle} />
+            </Pressable>
+          ) : (
+            <ChevronIcon color={t.neutral.textSubtle} />
+          )}
         </Pressable>
       ))}
     </View>

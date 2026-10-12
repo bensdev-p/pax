@@ -36,12 +36,14 @@ export function isActive(day: DayActivity | undefined): boolean {
 
 export type DayStatus = 'full' | 'partial' | 'grace' | 'missed';
 
-/** Full: all three marks. Partial: one or two. Grace: missed but covered by a grace day. */
-export function dayStatus(day: DayActivity | undefined): DayStatus {
+/**
+ * Full: every mark in the rhythm (Read and Pray, plus Study unless the user took it out).
+ * Partial: some. Grace: missed but covered by a grace day.
+ */
+export function dayStatus(day: DayActivity | undefined, studyInRhythm = true): DayStatus {
   if (!day) return 'missed';
-  const marks = Number(day.read) + Number(day.pray) + Number(day.study);
-  if (marks === 3) return 'full';
-  if (marks > 0) return 'partial';
+  if (day.read && day.pray && (day.study || !studyInRhythm)) return 'full';
+  if (day.read || day.pray || day.study) return 'partial';
   return day.grace ? 'grace' : 'missed';
 }
 

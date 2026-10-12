@@ -16,13 +16,22 @@ export const RHYTHM_MARKS: { key: keyof Rhythm; label: string }[] = [
 ];
 
 /** Today's three marks as pills: filled with the accent once done (SPEC: Habit model). */
-export function RhythmMarks({ rhythm, colors }: { rhythm: Rhythm; colors?: { accent: string; onAccent: string } }) {
+export function RhythmMarks({
+  rhythm,
+  colors,
+  study = true,
+}: {
+  rhythm: Rhythm;
+  colors?: { accent: string; onAccent: string };
+  /** False leaves the Study pill out (the user took Study out of their rhythm). */
+  study?: boolean;
+}) {
   const t = useTheme();
   const accent = colors?.accent ?? t.accent.accent;
   const onAccent = colors?.onAccent ?? t.accent.onAccent;
   return (
     <View style={{ flexDirection: 'row', gap: 8 }}>
-      {RHYTHM_MARKS.map(({ key, label }) => {
+      {RHYTHM_MARKS.filter(({ key }) => study || key !== 'study').map(({ key, label }) => {
         const done = rhythm[key];
         return (
           <View

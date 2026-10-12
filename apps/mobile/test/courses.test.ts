@@ -8,6 +8,7 @@ import { createContentStore } from '@/data/contentStore';
 import type { SqlParam } from '@/data/db';
 import { createLibrary } from '@/data/library';
 import type { ContentStore, CourseProgress } from '@/data/types';
+import { DAILY_WORDS } from '@/lib/dailyWord';
 import { afterReading, daysBehind, isFinished, nextDay, startCourse } from '@/lib/courses';
 import { courseReminder, planNotifications } from '@/notifications/plan';
 
@@ -111,5 +112,16 @@ describe('Plan progress', () => {
       '2026-10-11 Mark in 16 Days · Day 16',
     ]);
     expect(plan[0]?.url).toBe('paxapp://course/mark-in-16-days');
+  });
+});
+
+describe('A word for today in content.db', () => {
+  it('finds every verse, saint quote and Fathers excerpt it rotates through', async () => {
+    const lib = createLibrary(db);
+    for (const list of Object.values(DAILY_WORDS.VERSES)) {
+      for (const citation of list) expect((await lib.passage(citation)).flat().length, citation).toBeGreaterThan(0);
+    }
+    for (const key of DAILY_WORDS.SAINT_QUOTES) expect((await content.saint(key))?.quote, key).toBeTruthy();
+    for (const slug of DAILY_WORDS.FATHER_QUOTES) expect(await lib.fatherPassage(slug), slug).toBeTruthy();
   });
 });

@@ -27,8 +27,9 @@ export function prayedRosaryToday(prayed: PrayedToday | null, date: string): boo
 
 /**
  * Read: today's readings. Pray: a novena day if one is in progress and not yet prayed today,
- * otherwise the Rosary with today's mysteries. Study: the next day of a plan in progress.
- * Each row checks off with its Read · Pray · Study mark, and says what was actually done.
+ * otherwise the Pray tab (the Rosary, chaplets, litanies). Study: the next day of a plan in
+ * progress, or a quiet nudge to start one, left out when the user took Study out of their
+ * rhythm. Each row checks off with its mark and says what was actually done.
  */
 export function todayChecklist(input: {
   date: string;
@@ -39,6 +40,7 @@ export function todayChecklist(input: {
   prayed: PrayedToday | null;
   novenas: NovenaProgress[];
   courses: CourseProgress[];
+  studyInRhythm: boolean;
 }): ChecklistItem[] {
   const { date, rhythm } = input;
 
@@ -66,7 +68,7 @@ export function todayChecklist(input: {
   if (!rhythm.pray) {
     pray = waiting
       ? { mark: 'pray', title: waiting.title, detail: `Day ${waiting.daysDone + 1} of ${NOVENA_DAYS}`, done: false, href: novenaHref(waiting.slug) }
-      : { mark: 'pray', title: 'The Rosary', detail: `${input.mysteries} Mysteries`, done: false, href: '/rosary' };
+      : { mark: 'pray', title: 'Time to pray', detail: `The Rosary today: ${input.mysteries} Mysteries`, done: false, href: '/pray' };
   } else {
     // Name what was actually prayed (the Rosary only if it was the Rosary).
     const names = prayers.length ? prayers.map((p) => p.title) : novenas.filter((n) => n.lastPrayedOn === date).map((n) => n.title);
@@ -102,6 +104,8 @@ export function todayChecklist(input: {
       done: rhythm.study,
       href: { pathname: '/course/[slug]/[day]', params: { slug: next.slug, day: String(nextDay(next)) } },
     };
+  } else if (!input.studyInRhythm) {
+    return [read, pray];
   } else {
     study = {
       mark: 'study',

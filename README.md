@@ -131,10 +131,15 @@ and no paid Apple account are needed until the widgets.
   missed or still ahead. Tap a day to ring it and see its feast, rank and marks in its color. Me also shows the current and longest streak and grace days left.
 - **Today, redesigned**: the header has the season and streak; the feast card folds in the
   saint of the day (tap for the saint's page); one "Today with God" card lists Read (today's
-  readings), Pray (a novena day if one is in progress, otherwise the Rosary with today's
-  mysteries) and Study (the next day of your plan, or a nudge to start one), each checking off
-  when done and naming what was actually prayed; and a short line from Pax. The readings list,
-  Rosary card and tiles are one tap away (Read, Pray, and the Pray tab).
+  readings), Pray (a novena day if one is in progress, otherwise the Pray tab) and Study (the
+  next day of your plan, or a nudge to start one, which can be removed), each checking off when
+  done and naming what was actually prayed; "A word for today" (a verse for the season one day,
+  a saint or Church Father the next, from `src/lib/dailyWord.ts`); and a short line from Pax. On
+  days without a saint, the feast card shows the next saint this week. The readings list,
+  Rosary card and tiles are one tap away.
+- **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
+  reading plan. It decides what a full day is on the calendar; any one mark still keeps the
+  streak.
 - **Grace days**: two a month, refilled on the 1st, no carryover. When the days right before
   today were missed and the streak was at least two days long, Pax asks on Today whether to use
   grace days to keep it ("Keep my streak" or "Start fresh"); a gap of several days uses several
