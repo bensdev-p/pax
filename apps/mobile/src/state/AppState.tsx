@@ -27,6 +27,8 @@ interface AppStateValue {
   updateNotificationPrefs(prefs: NotificationPrefs): Promise<void>;
   /** Marks today's Read, Pray or Study done; refreshes the streak and widget feed. */
   recordActivity(kind: ActivityKind): Promise<void>;
+  /** Records a finished prayer ('rosary' or a devotion slug) and counts today's Pray mark. */
+  recordPrayer(slug: string, title: string): Promise<void>;
   /** Answers Pax's grace-day offer: cover the missed days, or let the streak go. */
   answerGraceOffer(accept: boolean): Promise<void>;
   /** Novenas in progress. */
@@ -128,6 +130,17 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [refresh],
   );
 
+  const recordPrayer = useCallback(
+    async (slug: string, title: string) => {
+      const date = toIsoDate(new Date());
+      const current = await userStore.getSettings();
+      const earlier = current.prayedToday?.date === date ? current.prayedToday.prayers.filter((p) => p.slug !== slug) : [];
+      setSettings(await userStore.setSettings({ prayedToday: { date, prayers: [...earlier, { slug, title }] } }));
+      await recordActivity('prayer');
+    },
+    [recordActivity],
+  );
+
   const answerGraceOffer = useCallback(
     async (accept: boolean) => {
       const offer = progress?.graceOffer;
@@ -168,6 +181,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         updateSettings,
         updateNotificationPrefs,
         recordActivity,
+        recordPrayer,
         answerGraceOffer,
         novenas,
         saveNovena,

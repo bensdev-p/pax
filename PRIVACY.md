@@ -40,7 +40,7 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings, and not ask about the same missed days twice |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
 | `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
 | `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |

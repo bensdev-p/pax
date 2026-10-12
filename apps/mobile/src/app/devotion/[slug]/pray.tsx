@@ -36,7 +36,7 @@ export default function DevotionPrayScreen() {
   const insets = useSafeAreaInsets();
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const content = useContent();
-  const { novenas, saveNovena, recordActivity, progress } = useAppState();
+  const { novenas, saveNovena, recordPrayer } = useAppState();
   const [devotion, setDevotion] = useState<Devotion | null>(null);
   const [prayers, setPrayers] = useState<Record<string, Prayer>>({});
   const [index, setIndex] = useState(0);
@@ -82,7 +82,7 @@ export default function DevotionPrayScreen() {
         setFinished({ day: null });
       }
       // A finished devotion counts the day for the streak (SPEC: Habit model).
-      if (!progress?.rhythm.pray) await recordActivity('prayer');
+      await recordPrayer(devotion.slug, devotion.title);
     })();
   };
 

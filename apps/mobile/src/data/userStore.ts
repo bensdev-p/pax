@@ -13,6 +13,7 @@ import {
   type NotificationPrefs,
   type CourseProgress,
   type NovenaProgress,
+  type PrayedToday,
   type ReadingPosition,
   type ReadingsRead,
   type ReminderTime,
@@ -171,6 +172,7 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     fathersPack: parseJson<FathersPackInstall>(map.fathersPack),
     readingsRead: parseJson<ReadingsRead>(map.readingsRead),
     graceDeclinedFor: map.graceDeclinedFor ?? null,
+    prayedToday: parseJson<PrayedToday>(map.prayedToday),
   };
 }
 
