@@ -4,15 +4,16 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { BookIcon, SaintIcon, ScrollIcon } from '@/components/Icons';
+import { BookIcon, BookmarkIcon, ChevronIcon, SaintIcon, ScrollIcon } from '@/components/Icons';
 import { Chip, SearchField, ShelfTile } from '@/components/LibraryBits';
-import { RaisedSurface } from '@/components/Raised';
+import { Card, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import type { ChapterView } from '@/data/library';
 import { citationRefs, openChapter, openCitation, openVerse } from '@/lib/libraryLinks';
 import { useAppState } from '@/state/AppState';
+import { useNotes } from '@/state/notes';
 
 interface FeastChip {
   label: string;
@@ -21,6 +22,8 @@ interface FeastChip {
 
 export default function LibraryScreen() {
   const t = useTheme();
+  const { notes: verseMarks } = useNotes({ targetType: 'verse' });
+  const marks = verseMarks.filter((n) => n.kind === 'bookmark' || n.kind === 'highlight').length;
   const library = useLibrary();
   const { today, settings } = useAppState();
   const [stats, setStats] = useState<{ verses: number; ccc: number; fathers: number; fullFathers: boolean } | null>(null);
@@ -127,6 +130,21 @@ export default function LibraryScreen() {
         />
         <ShelfTile title="Saints" subtitle="By feast day" tint="#8E5CF6" icon={<SaintIcon />} onPress={() => router.push('/saints')} />
       </View>
+      <Card
+        onPress={() => router.push('/marks')}
+        accessibilityLabel="Your highlights and bookmarks"
+        contentStyle={{ paddingVertical: 12, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <BookmarkIcon size={24} />
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+            Your highlights and bookmarks
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            {marks ? `${marks} in the Bible` : 'Tap any verse to mark it'}
+          </Text>
+        </View>
+        <ChevronIcon color={t.neutral.textSubtle} />
+      </Card>
 
       {chips.length ? (
         <View style={{ gap: 10 }}>

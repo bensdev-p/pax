@@ -4,6 +4,7 @@ import { buildProgress, dayStatus, findGraceOffer, graceDaysLeft } from '@/data/
 import type { DayActivity } from '@/data/types';
 import { monthGrid, shiftMonth, weekdayList } from '@/lib/calendar';
 import { DAILY_WORDS, dailyWordFor, workTitle } from '@/lib/dailyWord';
+import { defaultTags, journalView, makeNote, newId, normalizeTag, tagsFrom } from '@/lib/notes';
 import { needsOnboarding, suggestedPlan } from '@/lib/onboarding';
 import { prayedRosaryToday, todayChecklist } from '@/lib/today';
 
@@ -186,5 +187,37 @@ describe('onboarding', () => {
     expect(suggestedPlan('received').slug).toBe('acts-in-28-days');
     expect(suggestedPlan('deeper').slug).toBe('bible-in-a-year');
     expect(suggestedPlan(null).slug).toBe('mark-in-16-days');
+  });
+});
+
+describe('journal and notes', () => {
+  it('normalizes tags and picks up #tags typed in the text', () => {
+    expect(normalizeTag('#Morning Prayer!')).toBe('morning-prayer');
+    expect(normalizeTag('###')).toBe('');
+    expect(tagsFrom('Thankful today #Gratitude and #rosary-week', ['prayer'])).toEqual(['prayer', 'gratitude', 'rosary-week']);
+    expect(tagsFrom('no tags here', ['Reflection', 'reflection'])).toEqual(['reflection']);
+  });
+
+  it('makes notes with v4 ids and keys free entries by their id', () => {
+    const id = newId();
+    expect(id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    const entry = makeNote({ kind: 'journal', targetType: 'entry' }, '2026-10-12T10:00:00Z');
+    expect(entry.targetKey).toBe(entry.id);
+    expect(makeNote({ kind: 'highlight', targetType: 'verse', targetKey: 'Ps.23.1', highlightColor: 'blue' })).toMatchObject({
+      targetKey: 'Ps.23.1',
+      highlightColor: 'blue',
+      tags: [],
+    });
+    expect(defaultTags('readings')).toEqual(['readings']);
+    expect(defaultTags('verse')).toEqual(['scripture']);
+  });
+
+  it('lists journal entries newest first, by tag, skipping empty ones and other kinds', () => {
+    const a = makeNote({ kind: 'journal', targetType: 'entry', body: 'first', tags: ['prayer'] }, '2026-10-10T08:00:00Z');
+    const b = makeNote({ kind: 'journal', targetType: 'readings', targetKey: '2026-10-12', body: 'second', tags: ['readings', 'prayer'] }, '2026-10-12T08:00:00Z');
+    const empty = makeNote({ kind: 'journal', targetType: 'entry', body: '  ' }, '2026-10-12T09:00:00Z');
+    const mark = makeNote({ kind: 'bookmark', targetType: 'verse', targetKey: 'John.1.1' });
+    expect(journalView([a, b, empty, mark], null)).toEqual({ entries: [b, a], tags: ['prayer', 'readings'] });
+    expect(journalView([a, b], 'readings').entries).toEqual([b]);
   });
 });

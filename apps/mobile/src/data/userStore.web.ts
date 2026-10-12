@@ -8,6 +8,7 @@ import {
   type DayActivity,
   type NotificationPrefs,
   type CourseProgress,
+  type Note,
   type NovenaProgress,
   type Settings,
   type UserStore,
@@ -24,6 +25,7 @@ interface WebData {
   activity: Record<string, { lesson: boolean; readings: boolean; prayer: boolean; xp?: number; grace?: boolean }>;
   novenas?: Record<string, NovenaProgress>;
   courses?: Record<string, CourseProgress>;
+  notes?: Record<string, Note>;
 }
 
 const KEY = 'pax.user.v1';
@@ -135,6 +137,26 @@ export const userStore: UserStore = {
   async removeCourse(slug) {
     const data = load();
     if (data.courses) delete data.courses[slug];
+    save(data);
+  },
+  async getNotes(query = {}) {
+    return Object.values(load().notes ?? {})
+      .filter(
+        (n) =>
+          (!query.kind || n.kind === query.kind) &&
+          (!query.targetType || n.targetType === query.targetType) &&
+          (!query.targetKey || n.targetKey === query.targetKey),
+      )
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async saveNote(n) {
+    const data = load();
+    data.notes = { ...data.notes, [n.id]: n };
+    save(data);
+  },
+  async deleteNote(id) {
+    const data = load();
+    if (data.notes) delete data.notes[id];
     save(data);
   },
 };

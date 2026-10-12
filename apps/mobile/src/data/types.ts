@@ -254,6 +254,40 @@ export interface Progress {
   graceOffer: GraceOffer | null;
 }
 
+/**
+ * A row of user.db `notes`: a journal entry, a highlight, a bookmark or a favorite. Notes point
+ * at content by stable keys (SPEC: Data model rule 1).
+ */
+export type NoteKind = 'journal' | 'highlight' | 'bookmark' | 'favorite';
+
+/**
+ * What a note is about: a verse (OSIS ref), today's readings (date), a plan day ("slug/day"),
+ * a prayer or devotion (slug), or nothing (`entry`, a free journal entry keyed by its id).
+ */
+export type NoteTarget = 'verse' | 'readings' | 'course_day' | 'prayer' | 'devotion' | 'entry';
+
+export interface Note {
+  id: string;
+  kind: NoteKind;
+  targetType: NoteTarget;
+  targetKey: string;
+  /** Highlights: one of HIGHLIGHT_COLORS. */
+  highlightColor: string | null;
+  body: string | null;
+  /** Journal answers: the question Pax asked, kept with the answer. */
+  prompt: string | null;
+  /** Journal tags without the "#", lowercase. */
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NoteQuery {
+  kind?: NoteKind;
+  targetType?: NoteTarget;
+  targetKey?: string;
+}
+
 /** Local user data (user.db on the phone; browser storage on web). */
 export interface UserStore {
   getSettings(): Promise<Settings>;
@@ -272,6 +306,9 @@ export interface UserStore {
   getCourses(): Promise<CourseProgress[]>;
   saveCourse(course: CourseProgress): Promise<void>;
   removeCourse(slug: string): Promise<void>;
+  getNotes(query?: NoteQuery): Promise<Note[]>;
+  saveNote(note: Note): Promise<void>;
+  deleteNote(id: string): Promise<void>;
 }
 
 export const DEFAULT_SETTINGS: Settings = {

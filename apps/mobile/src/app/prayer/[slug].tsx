@@ -3,6 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
+import { FavoriteButton } from '@/components/Favorite';
 import { Header } from '@/components/Header';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
@@ -27,7 +28,11 @@ export default function PrayerScreen() {
   }, [content, slug]);
 
   return (
-    <Screen header={<Header title={prayer?.title ?? (prayer === null ? 'Prayer not found' : '')} subtitle={prayer ? 'Traditional' : undefined} />}>
+    <Screen header={<Header
+          title={prayer?.title ?? (prayer === null ? 'Prayer not found' : '')}
+          subtitle={prayer ? 'Traditional' : undefined}
+          right={prayer ? <FavoriteButton targetType="prayer" slug={prayer.slug} title={prayer.title} /> : undefined}
+        />}>
       {prayer?.latin_text ? (
         <View style={{ flexDirection: 'row', gap: 8 }}>
           {(['English', 'Latin'] as const).map((label) => {

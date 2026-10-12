@@ -10,6 +10,7 @@ import { CheckIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
+import { PaxQuestion } from '@/components/Journal';
 import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import { clip, verseLabel } from '@/data/library';
@@ -145,10 +146,7 @@ export default function ReadingsScreen() {
               paddingHorizontal: 12,
               gap: 2,
             }}>
-            <Text variant="label" caps color={t.neutral.textMuted}>
-              Pax asks
-            </Text>
-            <Text variant="body">{paxAsks(today.date)}</Text>
+            <PaxQuestion question={paxAsks(today.date)} targetType="readings" targetKey={today.date} />
           </View>
         </View>
       ) : null}

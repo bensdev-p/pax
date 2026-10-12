@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { BellIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
+import { BellIcon, CloudIcon, JournalIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { RhythmCalendar } from '@/components/RhythmCalendar';
@@ -14,6 +14,7 @@ import { GRACE_DAYS_PER_MONTH } from '@/data/types';
 import { checkCloud, type CloudStatus } from '@/lib/cloudStatus';
 import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
+import { useNotes } from '@/state/notes';
 
 const APPEARANCES: { value: Appearance; label: string }[] = [
   { value: 'light', label: 'Light' },
@@ -25,6 +26,8 @@ export default function MeScreen() {
   const t = useTheme();
   const { today, progress, settings, notificationPrefs, updateSettings } = useAppState();
 
+  const { notes: journal } = useNotes({ kind: 'journal' });
+  const journalCount = journal.filter((n) => n.body?.trim()).length;
   const [cloud, setCloud] = useState<CloudStatus>('checking');
   useEffect(() => {
     void checkCloud().then(setCloud);
@@ -79,6 +82,21 @@ export default function MeScreen() {
           <Choice label="Read · Pray · Study" selected={settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: true })} />
           <Choice label="Read · Pray" selected={!settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: false })} />
         </View>
+      </Card>
+
+      <Card onPress={() => router.push('/journal')} accessibilityLabel="Journal" contentStyle={rowStyle}>
+        <IconTile color="#8E5CF6">
+          <JournalIcon />
+        </IconTile>
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+            Journal
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            {journalCount ? `${journalCount} ${journalCount === 1 ? 'entry' : 'entries'} · private to you` : 'Answers, notes and reflections, private to you'}
+          </Text>
+        </View>
+        <ChevronIcon color={t.neutral.textSubtle} />
       </Card>
 
       <Card onPress={() => router.push('/welcome')} accessibilityLabel="See the welcome again" contentStyle={rowStyle}>

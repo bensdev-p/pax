@@ -46,11 +46,15 @@ the app.
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
 | `course_progress` | For each reading plan you start (such as Bible in a Year): its name and length, the day you started, how many days you have read, the last date you read, and the reminder time you picked, if any | To show "Day 12 of 365", pick up where you left off, and remind you |
 | `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
-| `lesson_progress`, `review_cards`, `notes` | Empty for now. Later: finished lessons and scores, spaced-review cards, and your highlights and notes | Learning progress and your own annotations |
+| `notes` | Your journal: answers to Pax's questions (with the question), notes on verses and free entries, each with its tags and the time you wrote it. Also your highlights (verse and color), bookmarks (verse) and favorite prayers and devotions | To show your journal in Me, mark verses in the Bible reader and list your favorites on the Pray tab |
+| `lesson_progress`, `review_cards` | Empty for now. Later: finished lessons and scores for the OCIA course (spaced review may be dropped) | Learning progress |
 | `sync_queue` | A list of changed rows waiting to be uploaded. Nothing reads it yet | Prepared for future sync |
 
-Your notes and highlights will point at content by stable keys (a verse reference such as
-`Ps.23.1`, a Catechism number, or a prayer name), not by your identity.
+Your notes and highlights point at content by stable keys (a verse reference such as `Ps.23.1`,
+a date for that day's readings, a reading plan's day, or a prayer name), not by your identity.
+**Your journal is private:** it stays on the phone, is not part of any widget or notification,
+and will be synced only if you turn sync on once it exists. Deleting an entry removes it from
+user.db (a deletion is noted in `sync_queue` so a future sync can delete it in the cloud too).
 
 **Reminders.** If you turn on reminders, Pax asks your phone's permission first, on its own Pax
 screen and never at first launch. It then schedules the coming days' local notifications with the
@@ -70,7 +74,8 @@ storage). Widgets show this on your home and lock screen, where anyone holding y
 it. In Expo Go, Pax writes nothing for widgets.
 
 **On the web.** The web version keeps the same settings, activity, reminder choices, last
-reading position, today's readings check marks, and novenas and reading plans in progress in
+reading position, today's readings check marks, novenas and reading plans in progress, and your
+journal, highlights, bookmarks and favorites in
 your browser's local
 storage, under the key `pax.user.v1`. It loads the same
 content.db into the browser to read and search it there. The web version has no reminders and no

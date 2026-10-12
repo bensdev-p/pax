@@ -145,6 +145,14 @@ and no paid Apple account are needed until the widgets.
   then Catechism in a Year; Acts for the newly received; Bible in a Year for going deeper) with
   the others one tap away; and, on phones, an evening reminder (asks permission only on a tap).
   Every step can be skipped. People who already used Pax skip it automatically.
+- **Journal** (Me → Journal): answer Pax's question under today's readings or a plan day
+  ("Answer privately"), add a note to any verse, or write a free entry. Tags (#prayer,
+  #reflection, #readings, #study, #scripture, #gratitude or your own, also typed inline) filter
+  the list. Everything stays on the phone.
+- **Highlights and bookmarks**: tap a verse, then pick one of four highlight colors, bookmark it
+  or add a note. The reader shows the color wash, a ribbon and a note mark; Library → Your
+  highlights and bookmarks lists them.
+- **Favorites**: the star on a prayer or devotion puts it under "Your favorites" on Pray.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
   reading plan. It decides what a full day is on the calendar; any one mark still keeps the
   streak.

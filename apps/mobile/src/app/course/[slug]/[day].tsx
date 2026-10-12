@@ -14,6 +14,7 @@ import { Passage, type PassageVerse } from '@/components/Passage';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
+import { PaxQuestion } from '@/components/Journal';
 import { Text } from '@/components/Text';
 import { useContent, useLibrary } from '@/data/content';
 import { verseLabel, type CccParagraph, type FatherExcerpt, type LibraryStore, type VerseDetail } from '@/data/library';
@@ -294,11 +295,8 @@ export default function CourseDayScreen() {
       ) : null}
 
       {day.question ? (
-        <View style={{ borderWidth: t.border.width, borderColor: t.neutral.border, borderRadius: t.radius.button, padding: 12, gap: 2 }}>
-          <Text variant="label" caps color={t.neutral.textMuted}>
-            Pax asks
-          </Text>
-          <Text variant="body">{day.question}</Text>
+        <View style={{ borderWidth: t.border.width, borderColor: t.neutral.border, borderRadius: t.radius.button, padding: 12 }}>
+          <PaxQuestion question={day.question} targetType="course_day" targetKey={`${slug}/${dayNumber}`} />
         </View>
       ) : null}
     </Screen>
