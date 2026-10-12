@@ -16,8 +16,10 @@ export const RHYTHM_MARKS: { key: keyof Rhythm; label: string }[] = [
 ];
 
 /** Today's three marks as pills: filled with the accent once done (SPEC: Habit model). */
-export function RhythmMarks({ rhythm }: { rhythm: Rhythm }) {
+export function RhythmMarks({ rhythm, colors }: { rhythm: Rhythm; colors?: { accent: string; onAccent: string } }) {
   const t = useTheme();
+  const accent = colors?.accent ?? t.accent.accent;
+  const onAccent = colors?.onAccent ?? t.accent.onAccent;
   return (
     <View style={{ flexDirection: 'row', gap: 8 }}>
       {RHYTHM_MARKS.map(({ key, label }) => {
@@ -35,15 +37,15 @@ export function RhythmMarks({ rhythm }: { rhythm: Rhythm }) {
               gap: 6,
               borderRadius: t.radius.chip,
               borderWidth: t.border.width,
-              borderColor: done ? t.accent.accent : t.neutral.border,
-              backgroundColor: done ? t.accent.accent : 'transparent',
+              borderColor: done ? accent : t.neutral.border,
+              backgroundColor: done ? accent : 'transparent',
             }}>
             {done ? (
-              <CheckIcon size={14} color={t.accent.onAccent} />
+              <CheckIcon size={14} color={onAccent} />
             ) : (
               <View style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, borderColor: t.neutral.textSubtle }} />
             )}
-            <Text variant="label" caps color={done ? t.accent.onAccent : t.neutral.textMuted}>
+            <Text variant="label" caps color={done ? onAccent : t.neutral.textMuted}>
               {label}
             </Text>
           </View>

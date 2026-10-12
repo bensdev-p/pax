@@ -127,8 +127,8 @@ and no paid Apple account are needed until the widgets.
   **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
   day for the streak.
 - **Calendar in Me**: each month's days in their liturgical color, filled for full days (all
-  three), tinted for partial days, a dot for missed days and a shield for grace days. Tap a day
-  for its feast and marks. Me also shows the current and longest streak and grace days left.
+  three), tinted for partial days, a day-sized shield for grace days, and a small dot for days
+  missed or still ahead. Tap a day to ring it and see its feast, rank and marks in its color. Me also shows the current and longest streak and grace days left.
 - **Grace days**: two a month, refilled on the 1st, no carryover. When the days right before
   today were missed and the streak was at least two days long, Pax asks on Today whether to use
   grace days to keep it ("Keep my streak" or "Start fresh"); a gap of several days uses several
