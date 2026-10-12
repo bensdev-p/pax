@@ -139,10 +139,12 @@ and no paid Apple account are needed until the widgets.
   Rosary card and tiles are one tap away.
 - **Bible reader**: tap the book and chapter at the top to open that book's chapters (the one
   you were reading is highlighted); back from there goes to the Bible's contents.
-- **Saint quotes link to their source**: on a saint's page, tapping the quote opens a Scripture
-  quote in the reader (verses highlighted) or the whole work online in a public-domain edition
-  (New Advent, CCEL, Gutenberg…; links in `src/lib/quoteSources.ts`). Jerome's commentary on
-  Isaiah has no public-domain English text online, so his quote has no link.
+- **Onboarding** (first run on a new install; Me → See the welcome again replays it): hello from
+  Pax; "What brings you here?" (just curious, in OCIA, newly received, going deeper; the answer
+  only picks a suggestion and is not stored); a suggested plan (Mark in 16 days; for OCIA Mark,
+  then Catechism in a Year; Acts for the newly received; Bible in a Year for going deeper) with
+  the others one tap away; and, on phones, an evening reminder (asks permission only on a tap).
+  Every step can be skipped. People who already used Pax skip it automatically.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
   reading plan. It decides what a full day is on the calendar; any one mark still keeps the
   streak.

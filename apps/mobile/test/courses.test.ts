@@ -1,7 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 
-import { citationStart, getDaySnapshots } from '@pax/liturgy';
+import { getDaySnapshots } from '@pax/liturgy';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { createContentStore } from '@/data/contentStore';
@@ -9,7 +9,6 @@ import type { SqlParam } from '@/data/db';
 import { createLibrary } from '@/data/library';
 import type { ContentStore, CourseProgress } from '@/data/types';
 import { DAILY_WORDS } from '@/lib/dailyWord';
-import { QUOTE_WORK_KEYS, quoteSource } from '@/lib/quoteSources';
 import { afterReading, daysBehind, isFinished, nextDay, startCourse } from '@/lib/courses';
 import { courseReminder, planNotifications } from '@/notifications/plan';
 
@@ -124,22 +123,5 @@ describe('A word for today in content.db', () => {
     }
     for (const key of DAILY_WORDS.SAINT_QUOTES) expect((await content.saint(key))?.quote, key).toBeTruthy();
     for (const slug of DAILY_WORDS.FATHER_QUOTES) expect(await lib.fatherPassage(slug), slug).toBeTruthy();
-  });
-});
-
-describe('Saint quotes link to their source', () => {
-  it('opens Scripture quotes in the reader and the rest as a whole work', async () => {
-    const lib = createLibrary(db);
-    const unlinked: string[] = [];
-    for (const s of (await content.saints()).filter((x) => x.quote)) {
-      const source = quoteSource(s);
-      if (!source) unlinked.push(s.romcal_key);
-      else if (source.kind === 'scripture') {
-        const start = citationStart(source.citation);
-        expect(start && (await lib.locate(start)), `${s.romcal_key}: ${source.citation}`).toBeTruthy();
-      } else expect(source.url).toMatch(/^https:\/\//);
-    }
-    expect(unlinked).toEqual(['jerome_of_stridon_priest']);
-    for (const key of QUOTE_WORK_KEYS) expect((await content.saint(key))?.quote, key).toBeTruthy();
   });
 });

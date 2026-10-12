@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { BellIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
+import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { RhythmCalendar } from '@/components/RhythmCalendar';
 import { Screen } from '@/components/Screen';
@@ -78,6 +79,21 @@ export default function MeScreen() {
           <Choice label="Read · Pray · Study" selected={settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: true })} />
           <Choice label="Read · Pray" selected={!settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: false })} />
         </View>
+      </Card>
+
+      <Card onPress={() => router.push('/welcome')} accessibilityLabel="See the welcome again" contentStyle={rowStyle}>
+        <IconTile color="#2FA4E7">
+          <Pax mood="hello" size={34} shadow={false} />
+        </IconTile>
+        <View style={{ flex: 1 }}>
+          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+            See the welcome again
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            Pick a plan or set a reminder with Pax
+          </Text>
+        </View>
+        <ChevronIcon color={t.neutral.textSubtle} />
       </Card>
 
       <Card onPress={() => router.push('/reminders')} accessibilityLabel="Reminders" contentStyle={rowStyle}>

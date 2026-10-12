@@ -76,9 +76,10 @@ Everything else (tiles, long readings list) moves one tap away.
 
 ### Planned screens
 
-- **Onboarding** (first run): what brings you here (just curious · in OCIA · newly received ·
-  going deeper), suggest a plan, offer a reminder. The OCIA stage, if given, is optional and
-  treated as sensitive (see Privacy).
+- **Onboarding** (first run, built in Phase 3): what brings you here (just curious · in OCIA ·
+  newly received · going deeper), suggest a plan, offer a reminder. Decided with Ben: the answer
+  only picks the suggested plan and is not stored; no OCIA stage question for now; shown on new
+  installs only, with a replay in Me.
 - **Journal:** answer Pax's questions (readings, plans) privately; browse past entries in Me.
 - **Highlights and bookmarks** in the Bible reader; favorite prayers.
 - **Examination of conscience** and a nightly **Examen**.
@@ -251,5 +252,8 @@ Phases 1 and 2 and the first polish rounds are done. Next:
 - Rework the layout of a few screens (details to come).
   - Example: Prayer tab should be laid out better, not just a long scrolling list of prayers.
   - Today tab (as mentioned earlier)
+- Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
+  tapping that saint's quote on their page should open it there. Until then the quote stays as
+  it is, with no link (an online-link version was tried and set aside).
 - Open: the "Coming up" saint on Today (shown on days without a saint). Kept for now; decide
   later whether to cut it, since the word for today already fills the space.

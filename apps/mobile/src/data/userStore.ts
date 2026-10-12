@@ -172,6 +172,7 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     fathersPack: parseJson<FathersPackInstall>(map.fathersPack),
     readingsRead: parseJson<ReadingsRead>(map.readingsRead),
     graceDeclinedFor: map.graceDeclinedFor ?? null,
+    onboarded: map.onboarded === 'true',
     studyInRhythm: map.studyInRhythm !== 'false',
     prayedToday: parseJson<PrayedToday>(map.prayedToday),
   };
