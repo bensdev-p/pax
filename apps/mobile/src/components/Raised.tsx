@@ -38,8 +38,11 @@ export function RaisedSurface({
 }) {
   const t = useTheme();
   const r = radius ?? t.radius.button;
+  // Inside the Pressable, `flex` must stay on the Pressable only: on the inner view it would mean
+  // "grow vertically from zero" and collapse a row of buttons on iOS and Android (not on web).
+  const innerStyle = onPress ? withoutFlex(style) : style;
   const body = (pressed: boolean) => (
-    <View style={[{ paddingBottom: pressed ? 0 : edge, marginTop: pressed ? edge : 0 }, style]}>
+    <View style={[{ paddingBottom: pressed ? 0 : edge, marginTop: pressed ? edge : 0 }, innerStyle]}>
       <View
         style={{
           position: 'absolute',
@@ -81,6 +84,13 @@ export function RaisedSurface({
       {({ pressed }) => body(pressed && !disabled)}
     </Pressable>
   );
+}
+
+function withoutFlex(style: StyleProp<ViewStyle>): StyleProp<ViewStyle> {
+  const flat = StyleSheet.flatten(style);
+  if (!flat || flat.flex === undefined) return style;
+  const { flex: _flex, ...rest } = flat;
+  return rest;
 }
 
 /** Lets a pressable surface take part in a row layout (flex: 1) like its inner view. */
