@@ -137,6 +137,8 @@ and no paid Apple account are needed until the widgets.
   a saint or Church Father the next, from `src/lib/dailyWord.ts`); and a short line from Pax. On
   days without a saint, the feast card shows the next saint this week. The readings list,
   Rosary card and tiles are one tap away.
+- **Bible reader**: tap the book and chapter at the top to open that book's chapters (the one
+  you were reading is highlighted); back from there goes to the Bible's contents.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
   reading plan. It decides what a full day is on the calendar; any one mark still keeps the
   streak.

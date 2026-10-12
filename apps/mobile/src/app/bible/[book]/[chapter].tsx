@@ -1,6 +1,6 @@
 import { parseCitation, rangesInclude } from '@pax/liturgy';
 import { useTheme } from '@pax/tokens/react';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -45,12 +45,31 @@ export default function ReaderScreen() {
       ? `${modernName} ${modern.join('–')} in modern Bibles`
       : undefined;
 
+  // The book and chapter in the header open the book's chapters, with the Bible's contents
+  // behind them, as if the chapter had been picked from the Bible card.
+  const navigation = useNavigation();
+  const openBook = () => {
+    const routes = navigation.getState()?.routes ?? [];
+    const prev = routes[routes.length - 2];
+    if (prev?.name === 'bible/[book]/index' && (prev.params as { book?: string } | undefined)?.book === book) {
+      router.back();
+      return;
+    }
+    router.replace('/bible');
+    router.push({ pathname: '/bible/[book]', params: { book, current: String(chapterNumber) } });
+  };
+
   const go = (c: number) =>
     router.replace({ pathname: '/bible/[book]/[chapter]', params: { book, chapter: String(c) } });
 
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: t.neutral.background }}>
-      <Header title={view ? `${view.book.name_douay} ${chapterNumber}` : ''} subtitle={subtitle} />
+      <Header
+        title={view ? `${view.book.name_douay} ${chapterNumber}` : ''}
+        subtitle={subtitle}
+        onTitlePress={openBook}
+        titleHint="Shows the chapters of this book"
+      />
       <ScrollView ref={scroll} contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 4, paddingBottom: 40, gap: 14 }}>
         {view?.summary || view?.incipit ? (
           <View

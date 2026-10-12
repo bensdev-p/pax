@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import type { ReactNode } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { BackIcon, CloseIcon } from './Icons';
+import { BackIcon, ChevronIcon, CloseIcon } from './Icons';
 import { Text } from './Text';
 
 /** Back (or close) button, title and subtitle, as on the Daily readings canvas. */
@@ -13,12 +13,17 @@ export function Header({
   close,
   right,
   onBack,
+  onTitlePress,
+  titleHint,
 }: {
   title: string;
   subtitle?: string;
   close?: boolean;
   right?: ReactNode;
   onBack?: () => void;
+  /** Makes the title a button (with a small chevron), e.g. the reader's book and chapter. */
+  onTitlePress?: () => void;
+  titleHint?: string;
 }) {
   const t = useTheme();
   return (
@@ -31,16 +36,28 @@ export function Header({
         style={{ width: 44, height: 44, justifyContent: 'center' }}>
         {close ? <CloseIcon color={t.neutral.textSubtle} /> : <BackIcon color={t.neutral.textSubtle} />}
       </Pressable>
-      <View style={{ flex: 1 }}>
-        <Text variant="title" accessibilityRole="header">
-          {title}
-        </Text>
+      <Pressable
+        disabled={!onTitlePress}
+        onPress={onTitlePress}
+        accessibilityRole={onTitlePress ? 'button' : undefined}
+        accessibilityHint={titleHint}
+        style={({ pressed }) => ({ flex: 1, opacity: pressed ? 0.6 : 1 })}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <Text variant="title" accessibilityRole="header">
+            {title}
+          </Text>
+          {onTitlePress && title ? (
+            <View style={{ transform: [{ rotate: '90deg' }] }}>
+              <ChevronIcon size={16} color={t.neutral.textSubtle} />
+            </View>
+          ) : null}
+        </View>
         {subtitle ? (
           <Text variant="label" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
             {subtitle}
           </Text>
         ) : null}
-      </View>
+      </Pressable>
       {right}
     </View>
   );
