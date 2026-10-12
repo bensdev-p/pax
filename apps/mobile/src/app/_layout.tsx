@@ -75,7 +75,8 @@ function Navigator() {
         <Stack.Screen name="journal/edit" options={{ presentation: 'modal' }} />
         <Stack.Screen name="welcome" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="prayer/[slug]" />
-        <Stack.Screen name="verse/[ref]" options={{ presentation: 'modal' }} />
+        {/* A sheet on iOS: swipe down closes it (Android uses the back gesture). */}
+        <Stack.Screen name="verse/[ref]" options={{ presentation: 'modal', gestureEnabled: true }} />
       </Stack>
     </>
   );

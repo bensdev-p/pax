@@ -150,8 +150,9 @@ and no paid Apple account are needed until the widgets.
   #reflection, #readings, #study, #scripture, #gratitude or your own, also typed inline) filter
   the list. Everything stays on the phone.
 - **Highlights and bookmarks**: press and hold a verse in the reader for a small menu over the
-  page: four highlight colors, a bookmark and a note written right there (a tap still opens the
-  verse's notes, Catechism and Fathers, which has the same buttons at the top). The reader shows the color wash, a ribbon and a note mark; Library → Your
+  page: four highlight colors, a bookmark and a note written right there. Swipe the menu up for the
+  verse's notes, Catechism and Fathers (a tap on the verse opens them too), or down to close it;
+  that page closes with a swipe down on iPhone. The reader shows the color wash, a ribbon and a note mark; Library → Your
   highlights and bookmarks lists them.
 - **Favorites**: the star on a prayer or devotion puts it under "Your favorites" on Pray.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
