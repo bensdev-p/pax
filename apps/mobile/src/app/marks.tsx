@@ -62,7 +62,7 @@ export default function MarksScreen() {
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <Pax mood="hint" size={84} />
           <Text variant="body" color={t.neutral.textMuted} style={{ flex: 1 }}>
-            Tap any verse in the Bible to highlight it, bookmark it or add a note.
+            Press and hold any verse in the Bible to highlight it, bookmark it or add a note.
           </Text>
         </View>
       ) : null}

@@ -1,15 +1,19 @@
 import { useTheme } from '@pax/tokens/react';
-import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, TextInput, View } from 'react-native';
 
 import { verseLabel, type VerseDetail } from '@/data/library';
-import { HIGHLIGHT_COLORS, makeNote, type HighlightColor } from '@/lib/notes';
+import { defaultTags, HIGHLIGHT_COLORS, makeNote, tagsFrom, type HighlightColor } from '@/lib/notes';
 import { notes, useNotes } from '@/state/notes';
 
 import { BookmarkIcon, CheckIcon, NoteIcon } from './Icons';
+import { RaisedButton } from './Raised';
 import { Text } from './Text';
 
-/** Highlight (four colors), bookmark and a private note for one verse, in the verse panel. */
+/**
+ * Highlight (four colors), bookmark and a private note for one verse: in the long-press sheet
+ * in the reader, and at the top of the verse panel.
+ */
 export function VerseActions({ verse }: { verse: VerseDetail }) {
   const t = useTheme();
   const { notes: mine } = useNotes({ targetType: 'verse', targetKey: verse.ref });
@@ -26,15 +30,23 @@ export function VerseActions({ verse }: { verse: VerseDetail }) {
     if (bookmark) void notes.remove(bookmark.id);
     else void notes.save(makeNote({ kind: 'bookmark', targetType: 'verse', targetKey: verse.ref, prompt: label }));
   };
-  const openNote = () =>
-    router.push(
-      note
-        ? { pathname: '/journal/edit', params: { id: note.id } }
-        : {
-            pathname: '/journal/edit',
-            params: { targetType: 'verse', targetKey: verse.ref, prompt: `${label} · ${verse.text}`, title: 'Note on a verse' },
-          },
-    );
+  // The note is written right here, in a small box; the journal keeps it with its tags.
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+  const startNote = () => {
+    setDraft(note?.body ?? '');
+    setEditing(true);
+  };
+  const saveNote = async () => {
+    const text = draft.trim();
+    if (!text) {
+      if (note) await notes.remove(note.id);
+    } else {
+      const base = note ?? makeNote({ kind: 'journal', targetType: 'verse', targetKey: verse.ref, prompt: `${label} · ${verse.text}`, tags: defaultTags('verse') });
+      await notes.save({ ...base, body: text, tags: tagsFrom(text, base.tags) });
+    }
+    setEditing(false);
+  };
 
   return (
     <View style={{ gap: 12 }}>
@@ -87,31 +99,62 @@ export function VerseActions({ verse }: { verse: VerseDetail }) {
         </Pressable>
       </View>
 
-      <Pressable
-        accessibilityRole="button"
-        onPress={openNote}
-        style={({ pressed }) => ({
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          gap: 10,
-          padding: 12,
-          borderRadius: t.radius.button,
-          borderWidth: t.border.width,
-          borderColor: t.neutral.border,
-          backgroundColor: pressed ? t.neutral.surfaceMuted : 'transparent',
-        })}>
-        <NoteIcon size={20} />
-        <View style={{ flex: 1, gap: 2 }}>
-          <Text variant="label" caps color={t.accent.text}>
-            {note ? 'Your note' : 'Add a private note'}
-          </Text>
-          {note?.body ? (
-            <Text variant="small" color={t.neutral.textMuted} numberOfLines={3}>
-              {note.body}
-            </Text>
-          ) : null}
+      {editing ? (
+        <View style={{ gap: 8 }}>
+          <TextInput
+            value={draft}
+            onChangeText={setDraft}
+            multiline
+            autoFocus
+            placeholder="A private note on this verse… (#tags work too)"
+            placeholderTextColor={t.neutral.textSubtle}
+            textAlignVertical="top"
+            accessibilityLabel="Your note on this verse"
+            style={{
+              minHeight: 96,
+              borderWidth: t.border.width,
+              borderColor: t.accent.accent,
+              borderRadius: t.radius.button,
+              padding: 12,
+              color: t.neutral.text,
+              backgroundColor: t.neutral.surface,
+              fontFamily: 'SourceSerif4_400Regular',
+              fontSize: 17,
+              lineHeight: 25,
+            }}
+          />
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            <RaisedButton kind="neutral" label="Cancel" height={44} style={{ flex: 1 }} onPress={() => setEditing(false)} />
+            <RaisedButton label="Save note" height={44} style={{ flex: 1 }} onPress={() => void saveNote()} />
+          </View>
         </View>
-      </Pressable>
+      ) : (
+        <Pressable
+          accessibilityRole="button"
+          onPress={startNote}
+          style={({ pressed }) => ({
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            gap: 10,
+            padding: 12,
+            borderRadius: t.radius.button,
+            borderWidth: t.border.width,
+            borderColor: t.neutral.border,
+            backgroundColor: pressed ? t.neutral.surfaceMuted : 'transparent',
+          })}>
+          <NoteIcon size={20} />
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text variant="label" caps color={t.accent.text}>
+              {note ? 'Your note' : 'Add a private note'}
+            </Text>
+            {note?.body ? (
+              <Text variant="small" color={t.neutral.textMuted} numberOfLines={3}>
+                {note.body}
+              </Text>
+            ) : null}
+          </View>
+        </Pressable>
+      )}
     </View>
   );
 }
