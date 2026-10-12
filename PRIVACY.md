@@ -125,9 +125,8 @@ Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and
 to your phone's share sheet. Pax sends nothing itself; you choose the app and the person.
 
 **Links that leave Pax.** "Full texts on USCCB.org" opens the USCCB's daily readings page,
-"Read it on vatican.va" opens a Catechism page, "Read the source" on a Father's excerpt opens
-the public-domain translation it came from, and a saint's quote opens the work it comes from (on
-sites such as New Advent, CCEL or Project Gutenberg), each in an in-app browser. Those sites' own privacy
+"Read it on vatican.va" opens a Catechism page, and "Read the source" on a Father's excerpt opens
+the public-domain translation it came from, each in an in-app browser. Those sites' own privacy
 policies apply there. Pax sends them nothing except the request for that page.
 
 **While in development.** Pax currently runs inside Expo Go, Expo's development app, which has its

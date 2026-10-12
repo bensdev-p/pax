@@ -3,7 +3,6 @@ import { tokens } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, Share, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,8 +14,6 @@ import { Text } from '@/components/Text';
 import { useContent, useLibrary } from '@/data/content';
 import type { FatherAuthor } from '@/data/library';
 import type { Saint } from '@/data/types';
-import { openCitation } from '@/lib/libraryLinks';
-import { quoteSource } from '@/lib/quoteSources';
 import { celebrationsOf, rankChip, saintColor, shortDate, type Celebration } from '@/lib/saints';
 
 /** Pre-renders every saint page for the static web build. */
@@ -42,11 +39,6 @@ export default function SaintScreen() {
   const [authors, setAuthors] = useState<FatherAuthor[]>([]);
   const today = toIsoDate(new Date());
   const date = params.date ? String(params.date) : today;
-  const source = saint ? quoteSource(saint) : null;
-  const openSource = () => {
-    if (source?.kind === 'scripture') void openCitation(library, source.citation);
-    else if (source) void WebBrowser.openBrowserAsync(source.url);
-  };
 
   useEffect(() => {
     void content.saint(key).then(setSaint);
@@ -169,35 +161,16 @@ export default function SaintScreen() {
         {saint ? (
           <View style={{ paddingHorizontal: 16, paddingTop: 22, gap: 14 }}>
             {saint.quote ? (
-              // Tapping the quote opens where it comes from: the Bible reader, or the whole work online.
-              <Pressable
-                disabled={!source}
-                onPress={openSource}
-                accessibilityRole={source ? 'link' : undefined}
-                accessibilityHint={source ? (source.kind === 'scripture' ? 'Opens the passage in the Bible' : 'Opens the whole work') : undefined}
-                style={({ pressed }) => ({
-                  borderWidth: t.border.width,
-                  borderColor: t.neutral.border,
-                  borderRadius: t.radius.card,
-                  padding: 16,
-                  gap: 8,
-                  backgroundColor: pressed ? t.neutral.surfaceMuted : 'transparent',
-                })}>
-                <Text variant="scripture">“{saint.quote}”</Text>
+              <View style={{ borderWidth: t.border.width, borderColor: t.neutral.border, borderRadius: t.radius.card, padding: 16, gap: 8 }}>
+                <Text variant="scripture" selectable>
+                  “{saint.quote}”
+                </Text>
                 {saint.quote_source ? (
                   <Text variant="small" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
                     {saint.quote_source}
                   </Text>
                 ) : null}
-                {source ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                    <Text variant="label" caps color={t.accent.text}>
-                      {source.kind === 'scripture' ? 'Read it in the Bible' : 'Read the whole work'}
-                    </Text>
-                    <ChevronIcon size={16} color={t.accent.text} />
-                  </View>
-                ) : null}
-              </Pressable>
+              </View>
             ) : null}
 
             {saint.facts.length ? (

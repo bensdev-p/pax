@@ -251,5 +251,8 @@ Phases 1 and 2 and the first polish rounds are done. Next:
 - Rework the layout of a few screens (details to come).
   - Example: Prayer tab should be laid out better, not just a long scrolling list of prayers.
   - Today tab (as mentioned earlier)
+- Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
+  tapping that saint's quote on their page should open it there. Until then the quote stays as
+  it is, with no link (an online-link version was tried and set aside).
 - Open: the "Coming up" saint on Today (shown on days without a saint). Kept for now; decide
   later whether to cut it, since the word for today already fills the space.
