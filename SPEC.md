@@ -83,7 +83,8 @@ Everything else (tiles, long readings list) moves one tap away.
 - **Journal** (built in Phase 3): answer Pax's questions (readings, plans) privately, add notes
   to verses and free entries, each with tags (#prayer, #reflection, #readings or your own);
   browse and filter by tag in Me. No lock for now (decided with Ben).
-- **Highlights (four colors) and verse bookmarks** in the Bible reader, listed in Library;
+- **Highlights (four colors), verse bookmarks and notes** from a long press on a verse in the
+  Bible reader (a sheet over the page), listed in Library;
   favorite prayers and devotions at the top of Pray (built in Phase 3).
 - **Examination of conscience** and a nightly **Examen**.
 - **Study courses on the Fathers and saints:** guided reading of their own writings (for example

@@ -140,7 +140,7 @@ export default function LibraryScreen() {
             Your highlights and bookmarks
           </Text>
           <Text variant="small" color={t.neutral.textMuted}>
-            {marks ? `${marks} in the Bible` : 'Tap any verse to mark it'}
+            {marks ? `${marks} in the Bible` : 'Press and hold a verse to mark it'}
           </Text>
         </View>
         <ChevronIcon color={t.neutral.textSubtle} />
