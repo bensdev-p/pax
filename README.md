@@ -1,8 +1,10 @@
 # Pax
 
-A daily Catholic companion where the liturgical year drives everything. This repo is Phase 1
-(Foundation) of the build described in [SPEC.md](SPEC.md). The privacy notice is in
-[PRIVACY.md](PRIVACY.md).
+A daily Catholic companion: read, pray and study with the Church, one day at a time. Phases 1
+and 2 and the companion features (saints, readings, devotions, reading plans) are built; Phase 3
+(Rhythm) is next. [SPEC.md](SPEC.md) is the plan (v2, Oct 12 2026), [CLAUDE.md](CLAUDE.md) is
+the guide for Claude Code sessions, [docs/NEXT_SESSION.md](docs/NEXT_SESSION.md) is the prompt
+for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 
 | Path | What it is |
 | --- | --- |
