@@ -283,7 +283,7 @@ function Legend() {
           ))}
         </View>
         <Text variant="label" color={t.neutral.textMuted} style={{ flexShrink: 1 }}>
-          Dot: missed or still ahead, in the day’s liturgical color
+          Dot: the day’s liturgical color
         </Text>
       </View>
     </View>
