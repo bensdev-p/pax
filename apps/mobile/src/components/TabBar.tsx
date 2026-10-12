@@ -4,16 +4,16 @@ import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Tabs } from 'expo-router/js-tabs';
 
-import { LearnIcon, LibraryIcon, PrayIcon, ProfileIcon, TodayIcon } from './Icons';
+import { LibraryIcon, MeIcon, PrayIcon, StudyIcon, TodayIcon } from './Icons';
 
 type TabBarProps = Parameters<NonNullable<ComponentProps<typeof Tabs>['tabBar']>>[0];
 
 const ICONS: Record<string, (p: { size: number }) => React.ReactElement> = {
   today: TodayIcon,
-  learn: LearnIcon,
-  library: LibraryIcon,
   pray: PrayIcon,
-  profile: ProfileIcon,
+  study: StudyIcon,
+  library: LibraryIcon,
+  me: MeIcon,
 };
 
 /** 30 px two-tone icons; the active tab sits in an outlined box tinted with the accent. */

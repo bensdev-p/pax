@@ -22,7 +22,7 @@ import { useAppState } from '@/state/AppState';
 
 /**
  * The Pax screen that explains reminders before the system prompt (SPEC: Notifications rule 2).
- * Opened from Profile for now; after the first finished lesson once Learn exists.
+ * Opened from Me (and later from onboarding).
  */
 export default function RemindersScreen() {
   const t = useTheme();

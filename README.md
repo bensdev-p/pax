@@ -55,13 +55,13 @@ and no paid Apple account are needed until the widgets.
   season: Joyful in Advent and Christmas, Sorrowful in Lent, Glorious otherwise.
 - **Profile**: reminders, appearance (Light, Dark or System) and the theme lock. Learn and Library
   are placeholders.
-- **Reminders**: Profile → Reminders opens the Pax permission screen from the canvas. It asks for
+- **Reminders**: Me → Reminders opens the Pax permission screen from the canvas. It asks for
   permission only there. Morning and evening reminders each have their own time. Optional
   built-in nudges come at 1:00 PM, 5:30 PM and 9:00 PM, and an optional Angelus at noon. Once
   today counts, Pax stays quiet until tomorrow (except the Angelus). Up to 60 notifications are
   scheduled ahead and rescheduled when the app opens or something is finished.
 - **Theme**: the accent follows the day's liturgical color (a martyr's memorial turns a weekday
-  red; Gaudete and Laetare are rose). It can be locked to one color in Profile.
+  red; Gaudete and Laetare are rose). It can be locked to one color in Me.
 - **Widget feed**: `writeWidgetFeed(snapshots, progress)` builds the 14-day feed and the Pax mood
   timeline behind a `WidgetFeedWriter` interface. In Expo Go the writer does nothing; an App Group
   writer replaces it with the first EAS development build.
@@ -104,7 +104,7 @@ and no paid Apple account are needed until the widgets.
   (Isaiah 9 and 64, Micah 5, Zechariah 2 and about 20 more), so readings and links land on the
   right verses.
 
-## Reading plans (Learn tab)
+## Reading plans (Study tab)
 
 - **Bible in a Year**: all 73 books in Pax's own salvation-history order, in eleven sections
   (Beginnings, the Patriarchs, the Exodus … the Church), about 90 verses a day plus a Psalm or
@@ -118,6 +118,11 @@ and no paid Apple account are needed until the widgets.
   the streak (+10 XP), and each plan can have its own daily reminder.
 - The day splits are computed from verse and paragraph counts by `pipeline/courses.py`; the
   words for each day are in `pipeline/seed/courses.json`.
+
+## What Phase 3 (Rhythm) adds so far
+
+- **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
+  `/learn` and `/profile` links redirect.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 
@@ -171,4 +176,4 @@ How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](
   iOS and Android, but they were not run on a phone while being built. The web build was tested in
   a browser.
 - Supabase: the app is connected to the project but doesn't sign in or sync yet. Apply the
-  schema as described in `supabase/README.md`; Profile → Cloud confirms it.
+  schema as described in `supabase/README.md`; Me → Cloud confirms it.

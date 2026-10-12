@@ -19,7 +19,7 @@ const APPEARANCES: { value: Appearance; label: string }[] = [
   { value: 'system', label: 'System' },
 ];
 
-export default function ProfileScreen() {
+export default function MeScreen() {
   const t = useTheme();
   const { today, progress, settings, notificationPrefs, updateSettings } = useAppState();
 
@@ -29,7 +29,7 @@ export default function ProfileScreen() {
   }, []);
   const cloudLine = {
     checking: 'Checking…',
-    ready: 'Connected. Sync arrives with Learn.',
+    ready: 'Connected. Sync isn’t switched on yet.',
     'schema-missing': 'Connected, but the database tables aren’t set up yet.',
     offline: 'Can’t reach Supabase right now.',
   }[cloud];
@@ -46,7 +46,7 @@ export default function ProfileScreen() {
   return (
     <Screen>
       <Text variant="hero" style={{ fontSize: 28 }} accessibilityRole="header">
-        Profile
+        Me
       </Text>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>

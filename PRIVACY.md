@@ -12,12 +12,12 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 
 - Today, everything Pax knows about you stays on your phone. No personal data is sent to a server.
   The only network request to Pax's backend is an anonymous check that the cloud database is
-  reachable (shown under Profile → Cloud).
+  reachable (shown under Me → Cloud).
 - Pax has no ads, no analytics and no tracking SDKs.
 - Your OCIA stage is religious information. Pax will treat it as sensitive data: asked for only
   with your clear consent, visible only to you, and never used for anything except choosing your
   lessons.
-- Deleting the app deletes your data. When cloud sync arrives, Profile will have a "Delete
+- Deleting the app deletes your data. When cloud sync arrives, Me will have a "Delete
   account" button that erases everything in the cloud too.
 
 ## What Pax stores on your phone
@@ -61,7 +61,7 @@ last day. To skip the rest of a day's reminders and nudges once you have read or
 own record of what you did that day; nothing leaves the phone. Notification text can name the
 day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius of Antioch") or
 the novena you are praying (for example, "Novena to Saint Joseph · Day 4"), and can appear on
-your lock screen. Turning reminders off in Profile cancels them all.
+your lock screen. Turning reminders off in Me cancels them all.
 
 **Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
 the liturgical calendar, your current streak, and whether today is done into storage that only Pax
@@ -79,7 +79,7 @@ Fathers download.
 ## What Pax stores in Supabase (the cloud)
 
 **Nothing yet.** The cloud tables below exist in `supabase/migrations/` so they are ready for
-sync, but the app does not sign in or upload anything in this version. When Profile opens, the
+sync, but the app does not sign in or upload anything in this version. When Me opens, the
 app asks Supabase, without signing in, whether these tables exist. That request carries the app's
 public key and no personal data; like any web request, it reveals your IP address to Supabase. This section describes
 what will be stored once sync is switched on, and that change will update this notice first.
@@ -107,7 +107,7 @@ Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and
 - never show it to other users, group leaders or sponsors unless a future opt-in feature asks you
   first;
 - never use it for advertising, analytics or profiling, and never sell or share it;
-- let you change or clear it in Profile at any time.
+- let you change or clear it in Me at any time.
 
 ## Who can see your data
 
@@ -137,14 +137,14 @@ Google or any other server at runtime.
 
 - **Everything on your phone:** delete the Pax app. That removes user.db, content.db and every
   scheduled reminder.
-- **Reminders only:** Profile → Reminders → Turn off reminders. You can also revoke notification
+- **Reminders only:** Me → Reminders → Turn off reminders. You can also revoke notification
   permission in your phone's Settings.
 - **A novena:** open it under Pray and tap Stop this novena (or Clear, once finished). That
   deletes its row and its reminders.
-- **A reading plan:** open it under Learn and tap Stop this plan (or Clear, once finished).
-- **Theme settings:** Profile → Theme color → Follow the Church year.
+- **A reading plan:** open it under Study and tap Stop this plan (or Clear, once finished).
+- **Theme settings:** Me → Theme color → Follow the Church year.
 - **On the web:** clear this site's data in your browser settings.
-- **In the cloud (once sync exists):** Profile → Delete account. This calls
+- **In the cloud (once sync exists):** Me → Delete account. This calls
   `delete_my_account()`, which deletes your sign-in and, by cascade, every Pax row tied to it:
   profile, activity, streaks, lesson progress, review cards, notes, devices and notification
   preferences. Apple requires this for apps that offer accounts, and Pax will offer it from the
