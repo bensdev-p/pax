@@ -202,6 +202,8 @@ export interface Settings {
   readingsRead: ReadingsRead | null;
   /** Last active date of a streak whose grace-day offer was declined (Pax asks once per gap). */
   graceDeclinedFor: string | null;
+  /** The first-run welcome was finished or skipped. */
+  onboarded: boolean;
   /** False when the user took Study out of their daily rhythm (no reading plan wanted). */
   studyInRhythm: boolean;
   /** Which prayers were finished today, so Today names what was prayed. */
@@ -280,6 +282,7 @@ export const DEFAULT_SETTINGS: Settings = {
   fathersPack: null,
   readingsRead: null,
   graceDeclinedFor: null,
+  onboarded: false,
   studyInRhythm: true,
   prayedToday: null,
 };

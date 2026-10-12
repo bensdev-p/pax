@@ -40,7 +40,7 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; whether you finished or skipped the welcome; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
 | `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
 | `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
@@ -96,12 +96,17 @@ Google if you choose.
 
 ### Your OCIA stage is religious information
 
-Your OCIA stage (Just curious, Inquiry, Catechumenate, Purification and Enlightenment, Newly
-received, or Catholic going deeper) reveals your religious beliefs and your path into the Catholic
-Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and, in California,
-"sensitive personal information" under the CPRA. Pax will:
+**Today:** the welcome asks "What brings you here?" (Just curious, I'm in OCIA, Newly received,
+Going deeper, or Rather not say). Your answer is used once, on the phone, to suggest a reading
+plan. Pax does not store it and never sends it anywhere; only the fact that you finished or
+skipped the welcome is saved.
 
-- ask for it only during onboarding, with "Just curious" and skipping both available;
+**Later:** your OCIA stage (Inquiry, Catechumenate, Purification and Enlightenment, Newly
+received) reveals your religious beliefs and your path into the Catholic Church. Privacy laws
+treat this as special or sensitive data: GDPR article 9 and, in California, "sensitive personal
+information" under the CPRA. If the OCIA course ever asks for it, Pax will:
+
+- ask for it only with your clear consent, with skipping always available;
 - store it on the phone, and in the cloud only after you agree to sync;
 - use it only to choose your starting unit and match lessons to the rites;
 - never show it to other users, group leaders or sponsors unless a future opt-in feature asks you

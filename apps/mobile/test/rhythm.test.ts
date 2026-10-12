@@ -4,6 +4,7 @@ import { buildProgress, dayStatus, findGraceOffer, graceDaysLeft } from '@/data/
 import type { DayActivity } from '@/data/types';
 import { monthGrid, shiftMonth, weekdayList } from '@/lib/calendar';
 import { DAILY_WORDS, dailyWordFor, workTitle } from '@/lib/dailyWord';
+import { needsOnboarding, suggestedPlan } from '@/lib/onboarding';
 import { prayedRosaryToday, todayChecklist } from '@/lib/today';
 
 const day = (date: string, marks: Partial<DayActivity> = { read: true }): DayActivity => ({
@@ -167,5 +168,23 @@ describe('A word for today', () => {
     );
     expect(workTitle('SERMONS ON NEW TESTAMENT LESSONS 65.1')).toBe('Sermons on New Testament Lessons 65.1');
     expect(workTitle('Commentary on Mark')).toBe('Commentary on Mark');
+  });
+});
+
+describe('onboarding', () => {
+  const fresh = { onboarded: false, longestStreak: 0, plans: 0, novenas: 0, remindersOn: false, hasReadingPosition: false };
+  it('shows the welcome on a new install only', () => {
+    expect(needsOnboarding(fresh)).toBe('show');
+    expect(needsOnboarding({ ...fresh, longestStreak: 3 })).toBe('mark-done');
+    expect(needsOnboarding({ ...fresh, hasReadingPosition: true })).toBe('mark-done');
+    expect(needsOnboarding({ ...fresh, onboarded: true })).toBe('no');
+  });
+
+  it('suggests a plan for each answer', () => {
+    expect(suggestedPlan('curious').slug).toBe('mark-in-16-days');
+    expect(suggestedPlan('ocia')).toEqual({ slug: 'mark-in-16-days', then: 'catechism-in-a-year' });
+    expect(suggestedPlan('received').slug).toBe('acts-in-28-days');
+    expect(suggestedPlan('deeper').slug).toBe('bible-in-a-year');
+    expect(suggestedPlan(null).slug).toBe('mark-in-16-days');
   });
 });

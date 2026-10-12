@@ -76,9 +76,10 @@ Everything else (tiles, long readings list) moves one tap away.
 
 ### Planned screens
 
-- **Onboarding** (first run): what brings you here (just curious · in OCIA · newly received ·
-  going deeper), suggest a plan, offer a reminder. The OCIA stage, if given, is optional and
-  treated as sensitive (see Privacy).
+- **Onboarding** (first run, built in Phase 3): what brings you here (just curious · in OCIA ·
+  newly received · going deeper), suggest a plan, offer a reminder. Decided with Ben: the answer
+  only picks the suggested plan and is not stored; no OCIA stage question for now; shown on new
+  installs only, with a replay in Me.
 - **Journal:** answer Pax's questions (readings, plans) privately; browse past entries in Me.
 - **Highlights and bookmarks** in the Bible reader; favorite prayers.
 - **Examination of conscience** and a nightly **Examen**.
