@@ -22,7 +22,7 @@ export default function RosaryScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const content = useContent();
-  const { today, progress, recordActivity } = useAppState();
+  const { today, progress, recordPrayer } = useAppState();
   const set = today ? mysteriesForDay(today) : 'joyful';
   const [prayers, setPrayers] = useState<Record<string, Prayer>>({});
   const [mysteries, setMysteries] = useState<RosaryMystery[]>([]);
@@ -55,7 +55,7 @@ export default function RosaryScreen() {
       if (!recorded.current) {
         recorded.current = true;
         // A finished prayer counts the day for the streak (SPEC: Habit model).
-        void recordActivity('prayer');
+        void recordPrayer('rosary', 'The Rosary');
       }
     }
   };

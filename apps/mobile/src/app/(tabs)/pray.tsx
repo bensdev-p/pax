@@ -14,6 +14,7 @@ import { useContent } from '@/data/content';
 import type { Devotion, Prayer, RosaryMystery } from '@/data/types';
 import { KIND_LABELS, NOVENA_DAYS, novenaWindow } from '@/lib/devotions';
 import { MYSTERY_SET_NAMES } from '@/lib/format';
+import { prayedRosaryToday } from '@/lib/today';
 import { useAppState } from '@/state/AppState';
 
 const SECTIONS: { category: string; title: string }[] = [
@@ -37,7 +38,7 @@ const SEASON_TAGS: Record<string, string> = { LENT: 'LENT', PASCHAL_TRIDUUM: 'LE
 export default function PrayScreen() {
   const t = useTheme();
   const content = useContent();
-  const { today, progress, novenas } = useAppState();
+  const { today, settings, novenas } = useAppState();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [mysteries, setMysteries] = useState<RosaryMystery[]>([]);
   const [devotions, setDevotions] = useState<Devotion[]>([]);
@@ -128,7 +129,7 @@ export default function PrayScreen() {
         <RaisedButton
           kind="white"
           height={50}
-          label={progress?.rhythm.pray ? 'Pray it again' : 'Start the Rosary'}
+          label={today && prayedRosaryToday(settings.prayedToday, today.date) ? 'Pray it again' : 'Start the Rosary'}
           onPress={() => router.push('/rosary')}
         />
       </RaisedSurface>

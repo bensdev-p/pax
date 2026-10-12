@@ -56,6 +56,8 @@ function settingsOf(data: WebData): Settings {
     fathersPack: null,
     readingsRead: s.readingsRead ?? null,
     graceDeclinedFor: s.graceDeclinedFor ?? null,
+    studyInRhythm: s.studyInRhythm ?? true,
+    prayedToday: s.prayedToday ?? null,
   };
 }
 

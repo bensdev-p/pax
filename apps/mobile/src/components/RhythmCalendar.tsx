@@ -23,7 +23,7 @@ const RING = 44;
  * shield where a grace day kept the streak (SPEC: Habit model). `version` changes whenever
  * progress does, so the month reloads after something is finished.
  */
-export function RhythmCalendar({ today, version }: { today: string; version: unknown }) {
+export function RhythmCalendar({ today, version, study = true }: { today: string; version: unknown; study?: boolean }) {
   const t = useTheme();
   const [month, setMonth] = useState(today.slice(0, 7));
   const [selected, setSelected] = useState<string | null>(null);
@@ -104,7 +104,7 @@ export function RhythmCalendar({ today, version }: { today: string; version: unk
                   <DayCell
                     date={date}
                     color={loaded?.days.get(date)?.color}
-                    status={date > today ? 'future' : dayStatus(loaded?.activity.get(date))}
+                    status={date > today ? 'future' : dayStatus(loaded?.activity.get(date), study)}
                     isToday={date === today}
                     selected={date === show}
                     onPress={() => setSelected(date === show ? null : date)}
@@ -118,9 +118,9 @@ export function RhythmCalendar({ today, version }: { today: string; version: unk
         ))}
       </View>
 
-      {show && shown ? <DayDetails date={show} day={shown} activity={loaded?.activity.get(show)} past={show <= today} /> : null}
+      {show && shown ? <DayDetails date={show} day={shown} activity={loaded?.activity.get(show)} past={show <= today} study={study} /> : null}
 
-      <Legend />
+      <Legend study={study} />
     </View>
   );
 }
@@ -131,11 +131,13 @@ function DayDetails({
   day,
   activity,
   past,
+  study,
 }: {
   date: string;
   day: DaySnapshot;
   activity: DayActivity | undefined;
   past: boolean;
+  study: boolean;
 }) {
   const t = useTheme();
   const name = isPaletteName(day.color) ? day.color : 'green';
@@ -162,7 +164,7 @@ function DayDetails({
             {`${day.rankName} · ${paletteLabel(name)}`}
           </Text>
         </View>
-        {past ? <RhythmMarks rhythm={rhythmOf(activity)} colors={p} /> : null}
+        {past ? <RhythmMarks rhythm={rhythmOf(activity)} colors={p} study={study || !!activity?.study} /> : null}
         {activity?.grace ? (
           <Text variant="small" color={t.neutral.textMuted}>
             A grace day kept your streak.
@@ -255,11 +257,11 @@ function GraceShield({ size, fill, stroke }: { size: number; fill: string; strok
   );
 }
 
-function Legend() {
+function Legend({ study }: { study: boolean }) {
   const t = useTheme();
   const swatch = (style: object) => <View style={[{ width: 16, height: 16, borderRadius: 8, borderWidth: t.border.width }, style]} />;
   const items = [
-    { label: 'All three', icon: swatch({ backgroundColor: t.accent.accent, borderColor: t.accent.accent }) },
+    { label: study ? 'All three' : 'Both', icon: swatch({ backgroundColor: t.accent.accent, borderColor: t.accent.accent }) },
     { label: 'Some', icon: swatch({ backgroundColor: t.accent.tint, borderColor: t.accent.accent }) },
     { label: 'Grace day', icon: <GraceShield size={18} fill={t.accent.tint} stroke={t.accent.accent} /> },
   ];

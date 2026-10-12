@@ -56,9 +56,29 @@ export default function MeScreen() {
         <StatCard icon={<ShieldIcon />} value={progress?.graceDaysLeft ?? GRACE_DAYS_PER_MONTH} label="grace days left" />
       </View>
 
-      {today ? <RhythmCalendar today={today.date} version={progress} /> : null}
+      {today ? <RhythmCalendar today={today.date} version={progress} study={settings.studyInRhythm} /> : null}
 
       <Text variant="title">Settings</Text>
+
+      <Card contentStyle={[rowStyle, { flexDirection: 'column', alignItems: 'stretch', gap: 12 }]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+          <IconTile color="#FF9F1C">
+            <FlameIcon size={22} />
+          </IconTile>
+          <View style={{ flex: 1 }}>
+            <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
+              Daily rhythm
+            </Text>
+            <Text variant="small" color={t.neutral.textMuted}>
+              A full day on the calendar means all of these. Any one keeps your streak.
+            </Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <Choice label="Read · Pray · Study" selected={settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: true })} />
+          <Choice label="Read · Pray" selected={!settings.studyInRhythm} onPress={() => void updateSettings({ studyInRhythm: false })} />
+        </View>
+      </Card>
 
       <Card onPress={() => router.push('/reminders')} accessibilityLabel="Reminders" contentStyle={rowStyle}>
         <IconTile color="#FFC107">

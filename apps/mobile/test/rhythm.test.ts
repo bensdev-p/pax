@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { buildProgress, dayStatus, findGraceOffer, graceDaysLeft } from '@/data/streak';
 import type { DayActivity } from '@/data/types';
 import { monthGrid, shiftMonth, weekdayList } from '@/lib/calendar';
+import { DAILY_WORDS, dailyWordFor, workTitle } from '@/lib/dailyWord';
+import { prayedRosaryToday, todayChecklist } from '@/lib/today';
 
 const day = (date: string, marks: Partial<DayActivity> = { read: true }): DayActivity => ({
   date,
@@ -21,6 +23,9 @@ describe('daily rhythm', () => {
     expect(dayStatus(day('2026-10-01', { pray: true }))).toBe('partial');
     expect(dayStatus(day('2026-10-01', { grace: true }))).toBe('grace');
     expect(dayStatus(undefined)).toBe('missed');
+    // Without Study in the rhythm, Read and Pray make a full day.
+    expect(dayStatus(day('2026-10-01', { read: true, pray: true }), false)).toBe('full');
+    expect(dayStatus(day('2026-10-01', { read: true, pray: true }))).toBe('partial');
   });
 
   it('builds today’s marks and counts any one of them for the streak', () => {
@@ -88,5 +93,79 @@ describe('calendar helpers', () => {
     expect(shiftMonth('2026-12', 1)).toBe('2027-01');
     expect(weekdayList(['2026-10-10', '2026-10-11'])).toBe('Saturday and Sunday');
     expect(weekdayList(['2026-10-09', '2026-10-10', '2026-10-11'])).toBe('Friday, Saturday and Sunday');
+  });
+});
+
+describe('Today with God checklist', () => {
+  const base = {
+    date: '2026-10-12',
+    rhythm: { read: false, pray: false, study: false },
+    readings: [
+      { part: 'firstReading', label: 'First reading', citation: 'Gal 4:22–24' },
+      { part: 'gospel', label: 'Gospel', citation: 'Luke 11:29–32' },
+    ],
+    readParts: [] as string[],
+    mysteries: 'Joyful',
+    prayed: null,
+    novenas: [],
+    courses: [],
+    studyInRhythm: true,
+  };
+  const novena = { slug: 'novena-st-joseph', title: 'Novena to Saint Joseph', startedOn: '2026-10-09', daysDone: 3, lastPrayedOn: '2026-10-11', reminderTime: null };
+  const plan = { slug: 'mark-in-16-days', title: 'Mark in 16 Days', days: 16, startedOn: '2026-10-01', daysDone: 4, lastDoneOn: '2026-10-11', reminderTime: null };
+
+  it('suggests the readings, the Pray tab and starting a plan on a fresh day', () => {
+    const [read, pray, study] = todayChecklist(base);
+    expect(read).toMatchObject({ title: 'Today’s readings', detail: 'Gospel · Luke 11:29–32', done: false });
+    expect(pray).toMatchObject({ title: 'Time to pray', detail: 'The Rosary today: Joyful Mysteries', href: '/pray' });
+    expect(study).toMatchObject({ title: 'Start a reading plan', optional: true });
+  });
+
+  it('leaves Study out when the user took it out, unless a plan is in progress', () => {
+    expect(todayChecklist({ ...base, studyInRhythm: false }).map((i) => i.mark)).toEqual(['read', 'pray']);
+    expect(todayChecklist({ ...base, studyInRhythm: false, courses: [plan] }).map((i) => i.mark)).toEqual(['read', 'pray', 'study']);
+  });
+
+  it('puts a novena day in progress before the Rosary, and the next plan day under Study', () => {
+    const [read, pray, study] = todayChecklist({ ...base, readParts: ['firstReading'], novenas: [novena], courses: [plan] });
+    expect(read?.detail).toBe('1 of 2 read');
+    expect(pray).toMatchObject({ title: 'Novena to Saint Joseph', detail: 'Day 4 of 9', done: false });
+    expect(study).toMatchObject({ title: 'Mark in 16 Days', detail: 'Day 5 of 16', done: false });
+  });
+
+  it('names what was prayed instead of claiming the Rosary', () => {
+    const prayed = { date: '2026-10-12', prayers: [{ slug: 'divine-mercy-chaplet', title: 'Divine Mercy Chaplet' }] };
+    const [, pray] = todayChecklist({ ...base, rhythm: { read: false, pray: true, study: false }, prayed });
+    expect(pray).toMatchObject({ title: 'Divine Mercy Chaplet', detail: 'Prayed today', done: true });
+    expect(prayedRosaryToday(prayed, '2026-10-12')).toBe(false);
+    // Yesterday's prayers don't count today.
+    expect(prayedRosaryToday({ date: '2026-10-11', prayers: [{ slug: 'rosary', title: 'The Rosary' }] }, '2026-10-12')).toBe(false);
+  });
+
+  it('shows the novena prayed today, and a plan day read today, as done', () => {
+    const prayedNovena = { ...novena, daysDone: 4, lastPrayedOn: '2026-10-12' };
+    const prayed = { date: '2026-10-12', prayers: [{ slug: novena.slug, title: novena.title }] };
+    const readPlan = { ...plan, daysDone: 5, lastDoneOn: '2026-10-12' };
+    const [, pray, study] = todayChecklist({
+      ...base,
+      rhythm: { read: false, pray: true, study: true },
+      prayed,
+      novenas: [prayedNovena],
+      courses: [readPlan],
+    });
+    expect(pray).toMatchObject({ title: 'Novena to Saint Joseph', done: true });
+    expect(study).toMatchObject({ title: 'Mark in 16 Days', detail: 'Day 5 read', done: true });
+  });
+});
+
+describe('A word for today', () => {
+  it('alternates a verse for the season with a saint or a Father', () => {
+    const words = [10, 11, 12, 13].map((d) => dailyWordFor({ date: `2026-10-${d}`, season: 'ORDINARY_TIME' }));
+    expect(words.map((w) => w.kind).filter((k) => k === 'verse')).toHaveLength(2);
+    expect(dailyWordFor({ date: '2026-12-02', season: 'ADVENT' })).toSatisfy(
+      (w: ReturnType<typeof dailyWordFor>) => w.kind !== 'verse' || DAILY_WORDS.VERSES.ADVENT.includes(w.citation),
+    );
+    expect(workTitle('SERMONS ON NEW TESTAMENT LESSONS 65.1')).toBe('Sermons on New Testament Lessons 65.1');
+    expect(workTitle('Commentary on Mark')).toBe('Commentary on Mark');
   });
 });

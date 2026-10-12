@@ -41,18 +41,23 @@ Learn · Library · Pray · Profile: "Learn" became "Study", prayer moved next t
 
 ### Today (to be redesigned)
 
-Today currently stacks six sections (feast card, Pax greeting, saint card, plan cards, Rosary
-card, readings list, tiles). It should become:
+Built in Phase 3 (the old Today stacked six sections: feast card, Pax greeting, saint card, plan
+cards, Rosary card, readings list, tiles):
 
 1. **Header:** season chip and streak.
 2. **Feast card:** today's celebration, with the saint or feast of the day folded into it
-   (tap for the saint page).
+   (tap for the saint page). On a day with no saint, the next saint this week ("Coming up").
 3. **"Today with God":** one checklist card with the day's items, each checking off when done:
    - **Read:** today's Mass readings (opens the readings screen).
-   - **Pray:** the Rosary (today's mysteries), or a novena day if one is in progress.
-   - **Study:** the next day of your current plan, if you have one.
+   - **Pray:** a novena day if one is in progress, otherwise the Pray tab (it names today's
+     Rosary mysteries). Once prayed, it names what was actually prayed.
+   - **Study:** the next day of your current plan, or a quiet "Start a reading plan". Users who
+     don't want a plan can take Study out of their rhythm (× on that row, or Me → Daily rhythm);
+     then Read and Pray make a full day. Starting a plan puts Study back.
    Optionally grouped by time of day (morning, midday, evening) once the Examen exists.
-4. **A short line from Pax**, not a full card.
+4. **A word for today:** on alternate days a verse for the season (not from the readings, Douay
+   text) or a line from a saint or Church Father (public-domain translations).
+5. **A short line from Pax**, not a full card.
 
 Everything else (tiles, long readings list) moves one tap away.
 

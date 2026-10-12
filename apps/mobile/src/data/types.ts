@@ -202,6 +202,16 @@ export interface Settings {
   readingsRead: ReadingsRead | null;
   /** Last active date of a streak whose grace-day offer was declined (Pax asks once per gap). */
   graceDeclinedFor: string | null;
+  /** False when the user took Study out of their daily rhythm (no reading plan wanted). */
+  studyInRhythm: boolean;
+  /** Which prayers were finished today, so Today names what was prayed. */
+  prayedToday: PrayedToday | null;
+}
+
+/** Prayers finished on one local date: 'rosary' or a devotion slug, with its title. */
+export interface PrayedToday {
+  date: string;
+  prayers: { slug: string; title: string }[];
 }
 
 /** The daily rhythm's three marks (SPEC: Habit model): readings, a prayer, a day of a plan. */
@@ -270,6 +280,8 @@ export const DEFAULT_SETTINGS: Settings = {
   fathersPack: null,
   readingsRead: null,
   graceDeclinedFor: null,
+  studyInRhythm: true,
+  prayedToday: null,
 };
 
 export function parseJson<T>(raw: string | null | undefined): T | null {
