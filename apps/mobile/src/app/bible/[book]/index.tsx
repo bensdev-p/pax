@@ -11,7 +11,7 @@ import type { BibleBook } from '@/data/library';
 
 export default function ChaptersScreen() {
   const t = useTheme();
-  const { book: osis } = useLocalSearchParams<{ book: string }>();
+  const { book: osis, current } = useLocalSearchParams<{ book: string; current?: string }>();
   const library = useLibrary();
   const [book, setBook] = useState<BibleBook | null>(null);
 
@@ -33,21 +33,21 @@ export default function ChaptersScreen() {
           <Pressable
             key={c}
             accessibilityRole="button"
-            accessibilityLabel={`Chapter ${c}`}
+            accessibilityLabel={`Chapter ${c}${String(c) === current ? ', where you were reading' : ''}`}
             onPress={() => router.push({ pathname: '/bible/[book]/[chapter]', params: { book: String(osis), chapter: String(c) } })}
             style={({ pressed }) => ({
               width: 56,
               height: 56,
               borderRadius: t.radius.tile,
               borderWidth: t.border.width,
-              borderColor: t.neutral.border,
+              borderColor: String(c) === current ? t.accent.accent : t.neutral.border,
               borderBottomWidth: pressed ? t.border.width : t.edge.card,
               marginTop: pressed ? 2 : 0,
-              backgroundColor: t.neutral.surface,
+              backgroundColor: String(c) === current ? t.accent.tint : t.neutral.surface,
               alignItems: 'center',
               justifyContent: 'center',
             })}>
-            <Text variant="title" style={{ fontSize: 18 }}>
+            <Text variant="title" style={{ fontSize: 18 }} color={String(c) === current ? t.accent.text : undefined}>
               {c}
             </Text>
           </Pressable>

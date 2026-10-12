@@ -251,3 +251,5 @@ Phases 1 and 2 and the first polish rounds are done. Next:
 - Rework the layout of a few screens (details to come).
   - Example: Prayer tab should be laid out better, not just a long scrolling list of prayers.
   - Today tab (as mentioned earlier)
+- Open: the "Coming up" saint on Today (shown on days without a saint). Kept for now; decide
+  later whether to cut it, since the word for today already fills the space.
