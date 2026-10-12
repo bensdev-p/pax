@@ -12,12 +12,12 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 
 - Today, everything Pax knows about you stays on your phone. No personal data is sent to a server.
   The only network request to Pax's backend is an anonymous check that the cloud database is
-  reachable (shown under Profile → Cloud).
+  reachable (shown under Me → Cloud).
 - Pax has no ads, no analytics and no tracking SDKs.
 - Your OCIA stage is religious information. Pax will treat it as sensitive data: asked for only
   with your clear consent, visible only to you, and never used for anything except choosing your
   lessons.
-- Deleting the app deletes your data. When cloud sync arrives, Profile will have a "Delete
+- Deleting the app deletes your data. When cloud sync arrives, Me will have a "Delete
   account" button that erases everything in the cloud too.
 
 ## What Pax stores on your phone
@@ -40,9 +40,9 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app | To show the app the way you asked, offer "Continue reading" and check off today's readings |
-| `daily_activity` | For each local date: whether you finished a lesson or a day of a reading plan, the day's readings, or a prayer (such as the Rosary), XP earned, and whether a grace day was used | To count your streak and color the liturgical calendar |
-| `streaks` | Current and longest streak, last active date, grace days left | Same as above |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings, and not ask about the same missed days twice |
+| `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
+| `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
 | `course_progress` | For each reading plan you start (such as Bible in a Year): its name and length, the day you started, how many days you have read, the last date you read, and the reminder time you picked, if any | To show "Day 12 of 365", pick up where you left off, and remind you |
 | `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
@@ -61,10 +61,10 @@ last day. To skip the rest of a day's reminders and nudges once you have read or
 own record of what you did that day; nothing leaves the phone. Notification text can name the
 day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius of Antioch") or
 the novena you are praying (for example, "Novena to Saint Joseph · Day 4"), and can appear on
-your lock screen. Turning reminders off in Profile cancels them all.
+your lock screen. Turning reminders off in Me cancels them all.
 
 **Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
-the liturgical calendar, your current streak, and whether today is done into storage that only Pax
+the liturgical calendar, your current streak, and which of today's Read, Pray and Study marks are done into storage that only Pax
 and its own widgets can read (the iOS App Group `group.com.benbrunson.pax`, or Android app
 storage). Widgets show this on your home and lock screen, where anyone holding your phone can see
 it. In Expo Go, Pax writes nothing for widgets.
@@ -79,7 +79,7 @@ Fathers download.
 ## What Pax stores in Supabase (the cloud)
 
 **Nothing yet.** The cloud tables below exist in `supabase/migrations/` so they are ready for
-sync, but the app does not sign in or upload anything in this version. When Profile opens, the
+sync, but the app does not sign in or upload anything in this version. When Me opens, the
 app asks Supabase, without signing in, whether these tables exist. That request carries the app's
 public key and no personal data; like any web request, it reveals your IP address to Supabase. This section describes
 what will be stored once sync is switched on, and that change will update this notice first.
@@ -107,7 +107,7 @@ Church. Privacy laws treat this as special or sensitive data: GDPR article 9 and
 - never show it to other users, group leaders or sponsors unless a future opt-in feature asks you
   first;
 - never use it for advertising, analytics or profiling, and never sell or share it;
-- let you change or clear it in Profile at any time.
+- let you change or clear it in Me at any time.
 
 ## Who can see your data
 
@@ -137,14 +137,14 @@ Google or any other server at runtime.
 
 - **Everything on your phone:** delete the Pax app. That removes user.db, content.db and every
   scheduled reminder.
-- **Reminders only:** Profile → Reminders → Turn off reminders. You can also revoke notification
+- **Reminders only:** Me → Reminders → Turn off reminders. You can also revoke notification
   permission in your phone's Settings.
 - **A novena:** open it under Pray and tap Stop this novena (or Clear, once finished). That
   deletes its row and its reminders.
-- **A reading plan:** open it under Learn and tap Stop this plan (or Clear, once finished).
-- **Theme settings:** Profile → Theme color → Follow the Church year.
+- **A reading plan:** open it under Study and tap Stop this plan (or Clear, once finished).
+- **Theme settings:** Me → Theme color → Follow the Church year.
 - **On the web:** clear this site's data in your browser settings.
-- **In the cloud (once sync exists):** Profile → Delete account. This calls
+- **In the cloud (once sync exists):** Me → Delete account. This calls
   `delete_my_account()`, which deletes your sign-in and, by cascade, every Pax row tied to it:
   profile, activity, streaks, lesson progress, review cards, notes, devices and notification
   preferences. Apple requires this for apps that offer accounts, and Pax will offer it from the

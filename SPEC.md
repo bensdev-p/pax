@@ -91,8 +91,10 @@ Everything else (tiles, long readings list) moves one tap away.
 - **Daily rhythm.** Three marks a day: **Read**, **Pray**, **Study**. Doing all three makes the
   day "full"; the calendar in Me shows full days, partial days and missed days, each tinted with
   that day's liturgical color.
-- **Grace days.** Decided: they genuinely protect the streak (for example two a month,
-  applied automatically to a missed day). Today they are shown but unused. 
+- **Grace days.** Decided with Ben (Phase 3): two a month, refilled on the 1st, no carryover.
+  Pax asks before using them: when the days right before today were missed, Today offers to
+  cover them ("Keep my streak" or "Start fresh"), once per gap. A gap of several days uses
+  several while that month still has them. The calendar shows a covered day with a shield.
 - **Retired:** XP totals, levels and "reviews due" (spaced review no longer exists). The
   `daily_activity.xp` column can stay for history but is not shown.
 - **Later, opt-in:** saint cards for milestones (finishing a plan, a novena, a season of

@@ -13,7 +13,7 @@ import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import type { VerseDetail } from '@/data/library';
 import { openCitation } from '@/lib/libraryLinks';
-import { READING_PARTS, READINGS_XP, readingsOf, readParts, type ReadingPart } from '@/lib/readings';
+import { READING_PARTS, readingsOf, readParts, type ReadingPart } from '@/lib/readings';
 import { useAppState } from '@/state/AppState';
 
 /** Pre-renders the four reading pages for the static web build. */
@@ -53,7 +53,7 @@ export default function ReadingScreen() {
     const parts = [...new Set([...read, reading.part])];
     await updateSettings({ readingsRead: { date: today.date, parts } });
     if (finishing) {
-      if (!progress?.didReadingsToday) await recordActivity('readings', READINGS_XP);
+      if (!progress?.rhythm.read) await recordActivity('readings');
       router.back();
     } else {
       router.replace({ pathname: '/readings/[part]', params: { part: nextUnread.part } });
@@ -72,7 +72,7 @@ export default function ReadingScreen() {
       footer={
         <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: insets.bottom + 12 }}>
           <RaisedButton
-            label={finishing ? (progress?.didReadingsToday ? 'Done' : `Finish · +${READINGS_XP} XP`) : `Done · Next: ${nextUnread.label}`}
+            label={finishing ? 'Finish' : `Done · Next: ${nextUnread.label}`}
             onPress={() => void done()}
           />
         </View>

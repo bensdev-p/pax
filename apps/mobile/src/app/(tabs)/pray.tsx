@@ -128,7 +128,7 @@ export default function PrayScreen() {
         <RaisedButton
           kind="white"
           height={50}
-          label={progress?.didPrayerToday ? 'Pray it again' : 'Start the Rosary'}
+          label={progress?.rhythm.pray ? 'Pray it again' : 'Start the Rosary'}
           onPress={() => router.push('/rosary')}
         />
       </RaisedSurface>

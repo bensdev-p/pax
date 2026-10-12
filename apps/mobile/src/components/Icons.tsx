@@ -22,7 +22,7 @@ export function TodayIcon({ size = 30 }: IconProps) {
   );
 }
 
-export function LearnIcon({ size = 30 }: IconProps) {
+export function StudyIcon({ size = 30 }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       <Path d="M3 10l9-6 9 6-9 6z" fill="#FF6B6B" />
@@ -50,7 +50,7 @@ export function PrayIcon({ size = 30 }: IconProps) {
   );
 }
 
-export function ProfileIcon({ size = 30 }: IconProps) {
+export function MeIcon({ size = 30 }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       <Circle cx="12" cy="8" r="5" fill="#AFAFAF" />

@@ -200,21 +200,46 @@ export interface Settings {
   lastRead: ReadingPosition | null;
   fathersPack: FathersPackInstall | null;
   readingsRead: ReadingsRead | null;
+  /** Last active date of a streak whose grace-day offer was declined (Pax asks once per gap). */
+  graceDeclinedFor: string | null;
 }
 
-export type ActivityKind = 'lesson' | 'readings' | 'prayer';
+/** The daily rhythm's three marks (SPEC: Habit model): readings, a prayer, a day of a plan. */
+export type ActivityKind = 'readings' | 'prayer' | 'study';
+
+export interface Rhythm {
+  read: boolean;
+  pray: boolean;
+  study: boolean;
+}
+
+/** One local date of `daily_activity`. */
+export interface DayActivity extends Rhythm {
+  date: string;
+  /** A grace day covered this date (it was otherwise missed). */
+  grace: boolean;
+}
+
+/** Missed days right before today that grace days could cover, if the user agrees. */
+export interface GraceOffer {
+  /** The missed dates, oldest first. */
+  dates: string[];
+  /** The last day done before the gap. */
+  lastActive: string;
+  /** The streak if the offer is accepted. */
+  streak: number;
+}
 
 export interface Progress {
   today: string;
   doneToday: boolean;
-  didReadingsToday: boolean;
-  didPrayerToday: boolean;
+  /** Today's Read · Pray · Study marks. */
+  rhythm: Rhythm;
   currentStreak: number;
   longestStreak: number;
-  xpToday: number;
-  xpTotal: number;
-  reviewsDue: number;
+  /** Grace days still free this month. */
   graceDaysLeft: number;
+  graceOffer: GraceOffer | null;
 }
 
 /** Local user data (user.db on the phone; browser storage on web). */
@@ -223,8 +248,12 @@ export interface UserStore {
   setSettings(patch: Partial<Settings>): Promise<Settings>;
   getNotificationPrefs(): Promise<NotificationPrefs>;
   setNotificationPrefs(prefs: NotificationPrefs): Promise<void>;
-  recordActivity(localDate: string, kind: ActivityKind, xp?: number): Promise<void>;
+  recordActivity(localDate: string, kind: ActivityKind): Promise<void>;
   getProgress(localDate: string): Promise<Progress>;
+  /** Activity for each date in [from, to] that has any. */
+  getActivity(from: string, to: string): Promise<DayActivity[]>;
+  /** Marks missed dates as covered by grace days. */
+  applyGraceDays(dates: string[]): Promise<void>;
   getNovenas(): Promise<NovenaProgress[]>;
   saveNovena(novena: NovenaProgress): Promise<void>;
   removeNovena(slug: string): Promise<void>;
@@ -240,6 +269,7 @@ export const DEFAULT_SETTINGS: Settings = {
   lastRead: null,
   fathersPack: null,
   readingsRead: null,
+  graceDeclinedFor: null,
 };
 
 export function parseJson<T>(raw: string | null | undefined): T | null {

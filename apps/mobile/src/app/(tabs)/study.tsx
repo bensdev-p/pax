@@ -13,8 +13,8 @@ import type { Course } from '@/data/types';
 import { isFinished, nextDay } from '@/lib/courses';
 import { useAppState } from '@/state/AppState';
 
-/** Reading plans now; the OCIA path joins them later (SPEC: Learn). */
-export default function LearnScreen() {
+/** Reading plans now; the OCIA path joins them later (SPEC: Study). */
+export default function StudyScreen() {
   const t = useTheme();
   const content = useContent();
   const { courses: progress, today } = useAppState();
@@ -32,7 +32,7 @@ export default function LearnScreen() {
   return (
     <Screen>
       <Text variant="hero" style={{ fontSize: 28 }} accessibilityRole="header">
-        Learn
+        Study
       </Text>
 
       {active.length === 0 ? (

@@ -1,15 +1,14 @@
 import { isPaletteName } from '@pax/tokens';
 
-import { computeStreak } from './streak';
+import { buildProgress } from './streak';
 import {
   DEFAULT_NOTIFICATION_PREFS,
   DEFAULT_SETTINGS,
-  GRACE_DAYS_PER_MONTH,
   type ActivityKind,
+  type DayActivity,
   type NotificationPrefs,
   type CourseProgress,
   type NovenaProgress,
-  type Progress,
   type Settings,
   type UserStore,
 } from './types';
@@ -21,7 +20,8 @@ import {
 interface WebData {
   settings: Partial<Settings>;
   prefs: NotificationPrefs;
-  activity: Record<string, { lesson: boolean; readings: boolean; prayer: boolean; xp: number }>;
+  /** `lesson` is a day of a reading plan (Study); `xp` is kept from older versions, unused. */
+  activity: Record<string, { lesson: boolean; readings: boolean; prayer: boolean; xp?: number; grace?: boolean }>;
   novenas?: Record<string, NovenaProgress>;
   courses?: Record<string, CourseProgress>;
 }
@@ -55,7 +55,16 @@ function settingsOf(data: WebData): Settings {
     lastRead: s.lastRead ?? null,
     fathersPack: null,
     readingsRead: s.readingsRead ?? null,
+    graceDeclinedFor: s.graceDeclinedFor ?? null,
   };
+}
+
+const ACTIVITY_KEYS = { study: 'lesson', readings: 'readings', prayer: 'prayer' } as const;
+
+function daysOf(data: WebData): DayActivity[] {
+  return Object.entries(data.activity)
+    .map(([date, d]) => ({ date, read: !!d.readings, pray: !!d.prayer, study: !!d.lesson, grace: !!d.grace }))
+    .sort((a, b) => a.date.localeCompare(b.date));
 }
 
 export const userStore: UserStore = {
@@ -78,33 +87,26 @@ export const userStore: UserStore = {
     data.prefs = prefs;
     save(data);
   },
-  async recordActivity(localDate: string, kind: ActivityKind, xp = 0) {
+  async recordActivity(localDate: string, kind: ActivityKind) {
     const data = load();
-    const day = data.activity[localDate] ?? { lesson: false, readings: false, prayer: false, xp: 0 };
-    day[kind] = true;
-    day.xp += xp;
+    const day = data.activity[localDate] ?? { lesson: false, readings: false, prayer: false };
+    day[ACTIVITY_KEYS[kind]] = true;
     data.activity[localDate] = day;
     save(data);
   },
-  async getProgress(localDate: string): Promise<Progress> {
+  async getProgress(localDate: string) {
     const data = load();
-    const active = Object.entries(data.activity)
-      .filter(([, d]) => d.lesson || d.readings || d.prayer)
-      .map(([date]) => date);
-    const { current, longest } = computeStreak(active, localDate);
-    const xpValues = Object.values(data.activity).map((d) => d.xp);
-    return {
-      today: localDate,
-      doneToday: active.includes(localDate),
-      didReadingsToday: !!data.activity[localDate]?.readings,
-      didPrayerToday: !!data.activity[localDate]?.prayer,
-      currentStreak: current,
-      longestStreak: longest,
-      xpToday: data.activity[localDate]?.xp ?? 0,
-      xpTotal: xpValues.reduce((a, b) => a + b, 0),
-      reviewsDue: 0,
-      graceDaysLeft: GRACE_DAYS_PER_MONTH,
-    };
+    return buildProgress(daysOf(data), localDate, { declinedFor: settingsOf(data).graceDeclinedFor });
+  },
+  async getActivity(from: string, to: string) {
+    return daysOf(load()).filter((d) => d.date >= from && d.date <= to);
+  },
+  async applyGraceDays(dates: string[]) {
+    const data = load();
+    for (const date of dates) {
+      data.activity[date] = { ...(data.activity[date] ?? { lesson: false, readings: false, prayer: false }), grace: true };
+    }
+    save(data);
   },
   async getNovenas() {
     return Object.values(load().novenas ?? {}).sort((a, b) => a.startedOn.localeCompare(b.startedOn));

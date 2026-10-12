@@ -13,7 +13,7 @@ import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
 import { useLibrary } from '@/data/content';
 import { clip, verseLabel } from '@/data/library';
-import { paxAsks, READINGS_XP, readingsOf, readParts, type ReadingPart } from '@/lib/readings';
+import { paxAsks, readingsOf, readParts, type ReadingPart } from '@/lib/readings';
 import { useAppState } from '@/state/AppState';
 
 /**
@@ -30,7 +30,7 @@ export default function ReadingsScreen() {
   const list = today ? readingsOf(today) : [];
   const read = today ? readParts(settings, today.date) : [];
   const next = list.find((r) => !read.includes(r.part));
-  const allDone = !!progress?.didReadingsToday || (list.length > 0 && !next);
+  const allDone = !!progress?.rhythm.read || (list.length > 0 && !next);
   const nextCitation = next?.citation;
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function ReadingsScreen() {
               <RaisedButton kind="neutral" label="Readings done" icon={<CheckIcon color={t.neutral.textMuted} />} onPress={() => router.back()} />
             ) : (
               <RaisedButton
-                label={`Read the ${next!.label.toLowerCase()}${read.length === list.length - 1 ? ` · +${READINGS_XP} XP` : ''}`}
+                label={`Read the ${next!.label.toLowerCase()}`}
                 onPress={() => open(next!.part)}
               />
             )}
@@ -161,7 +161,7 @@ export default function ReadingsScreen() {
       {list.length && !allDone ? (
         <Pressable
           accessibilityRole="button"
-          onPress={() => void recordActivity('readings', READINGS_XP)}
+          onPress={() => void recordActivity('readings')}
           style={{ alignSelf: 'center', padding: 6 }}>
           <Text variant="small" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
             Read them somewhere else? Mark them done

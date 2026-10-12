@@ -11,8 +11,6 @@ export const READING_PARTS: { part: ReadingPart; label: string }[] = [
   { part: 'gospel', label: 'Gospel' },
 ];
 
-/** XP for reading all of the day's readings (the canvas's "+10 XP"). */
-export const READINGS_XP = 10;
 
 export function isReadingPart(value: unknown): value is ReadingPart {
   return READING_PARTS.some((p) => p.part === value);

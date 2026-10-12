@@ -26,7 +26,7 @@ describe('widget feed', () => {
     const days = await getDaySnapshots('2026-10-17', 14);
     const feed = buildWidgetFeed(
       days,
-      { date: '2026-10-17', currentStreak: 12, doneToday: false, xpToday: 20, xpGoal: 30 },
+      { date: '2026-10-17', currentStreak: 12, doneToday: false, rhythm: { read: false, pray: false, study: false } },
       new Date('2026-10-17T08:00:00Z'),
     );
     expect(feed.days).toHaveLength(14);
@@ -41,7 +41,7 @@ describe('widget feed', () => {
 
   it('switches Pax to happy once today is done', async () => {
     const days = await getDaySnapshots('2026-10-17', 1);
-    const feed = buildWidgetFeed(days, { date: '2026-10-17', currentStreak: 13, doneToday: true, xpToday: 30, xpGoal: 30 });
+    const feed = buildWidgetFeed(days, { date: '2026-10-17', currentStreak: 13, doneToday: true, rhythm: { read: true, pray: false, study: false } });
     expect(feed.paxTimeline.slice(1).every((e) => e.mood === 'happy')).toBe(true);
   });
 });

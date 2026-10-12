@@ -9,6 +9,7 @@ import { Pressable, View } from 'react-native';
 import { AdventWreath, BookIcon, CandleIcon, CheckIcon, ChevronIcon, RosaryIcon, SaintIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton, RaisedSurface } from '@/components/Raised';
+import { GraceOfferCard, RhythmMarks } from '@/components/Rhythm';
 import { SaintArt } from '@/components/SaintArt';
 import { Screen } from '@/components/Screen';
 import { StatsBar } from '@/components/StatsBar';
@@ -23,7 +24,7 @@ import { useAppState } from '@/state/AppState';
 
 export default function TodayScreen() {
   const t = useTheme();
-  const { today, progress, settings, courses } = useAppState();
+  const { today, progress, settings, courses, answerGraceOffer } = useAppState();
   const content = useContent();
   const [saint, setSaint] = useState<{ saint: Saint; celebration: Celebration } | null>(null);
 
@@ -38,7 +39,7 @@ export default function TodayScreen() {
   const mysteries = mysteriesForDay(today);
   const mood = { doneToday: !!progress?.doneToday, hour: new Date().getHours() };
   const readings = readingsOf(today);
-  const read = progress?.didReadingsToday ? readings.map((r) => r.part) : readParts(settings, today.date);
+  const read = progress?.rhythm.read ? readings.map((r) => r.part) : readParts(settings, today.date);
   const openSaint = () =>
     saint
       ? router.push({ pathname: '/saint/[key]', params: { key: saint.saint.romcal_key, date: today.date } })
@@ -46,7 +47,13 @@ export default function TodayScreen() {
 
   return (
     <Screen header={<StatsBar today={today} progress={progress} />}>
+      {progress?.graceOffer ? (
+        <GraceOfferCard offer={progress.graceOffer} left={progress.graceDaysLeft} onAnswer={(a) => void answerGraceOffer(a)} />
+      ) : null}
+
       <FeastCard day={today} />
+
+      {progress ? <RhythmMarks rhythm={progress.rhythm} /> : null}
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
         <Pax mood={paxMoodFor(mood)} size={96} />
@@ -107,7 +114,7 @@ export default function TodayScreen() {
           );
         })}
 
-      <RosaryCard set={MYSTERY_SET_NAMES[mysteries]} prayed={!!progress?.didPrayerToday} />
+      <RosaryCard set={MYSTERY_SET_NAMES[mysteries]} prayed={!!progress?.rhythm.pray} />
 
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -137,9 +144,9 @@ export default function TodayScreen() {
           </Text>
         </Pressable>
         <RaisedButton
-          kind={progress?.didReadingsToday ? 'neutral' : 'accent'}
-          label={progress?.didReadingsToday ? 'Readings done' : read.length ? 'Keep reading' : 'Read today’s readings'}
-          icon={progress?.didReadingsToday ? <CheckIcon color={t.neutral.textMuted} /> : undefined}
+          kind={progress?.rhythm.read ? 'neutral' : 'accent'}
+          label={progress?.rhythm.read ? 'Readings done' : read.length ? 'Keep reading' : 'Read today’s readings'}
+          icon={progress?.rhythm.read ? <CheckIcon color={t.neutral.textMuted} /> : undefined}
           onPress={() => router.push('/readings')}
         />
       </View>

@@ -4,11 +4,12 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { BellIcon, BoltIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
-import { Pax } from '@/components/Pax';
+import { BellIcon, CloudIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Card } from '@/components/Raised';
+import { RhythmCalendar } from '@/components/RhythmCalendar';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
+import { GRACE_DAYS_PER_MONTH } from '@/data/types';
 import { checkCloud, type CloudStatus } from '@/lib/cloudStatus';
 import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
@@ -19,7 +20,7 @@ const APPEARANCES: { value: Appearance; label: string }[] = [
   { value: 'system', label: 'System' },
 ];
 
-export default function ProfileScreen() {
+export default function MeScreen() {
   const t = useTheme();
   const { today, progress, settings, notificationPrefs, updateSettings } = useAppState();
 
@@ -29,7 +30,7 @@ export default function ProfileScreen() {
   }, []);
   const cloudLine = {
     checking: 'Checking…',
-    ready: 'Connected. Sync arrives with Learn.',
+    ready: 'Connected. Sync isn’t switched on yet.',
     'schema-missing': 'Connected, but the database tables aren’t set up yet.',
     offline: 'Can’t reach Supabase right now.',
   }[cloud];
@@ -46,21 +47,16 @@ export default function ProfileScreen() {
   return (
     <Screen>
       <Text variant="hero" style={{ fontSize: 28 }} accessibilityRole="header">
-        Profile
+        Me
       </Text>
 
       <View style={{ flexDirection: 'row', gap: 10 }}>
         <StatCard icon={<FlameIcon size={22} />} value={progress?.currentStreak ?? 0} label="day streak" />
-        <StatCard icon={<BoltIcon size={22} />} value={progress?.xpTotal ?? 0} label="total XP" />
-        <StatCard icon={<ShieldIcon />} value={progress?.graceDaysLeft ?? 2} label="grace days left" />
+        <StatCard icon={<FlameIcon size={22} color={t.neutral.textSubtle} />} value={progress?.longestStreak ?? 0} label="longest" />
+        <StatCard icon={<ShieldIcon />} value={progress?.graceDaysLeft ?? GRACE_DAYS_PER_MONTH} label="grace days left" />
       </View>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 4 }}>
-        <Pax mood="hint" size={84} />
-        <Text variant="body" color={t.neutral.textMuted} style={{ flex: 1 }}>
-          Your liturgical calendar, saint cards and OCIA milestones will live here soon.
-        </Text>
-      </View>
+      {today ? <RhythmCalendar today={today.date} version={progress} /> : null}
 
       <Text variant="title">Settings</Text>
 

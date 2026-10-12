@@ -1,6 +1,7 @@
 import type { DaySnapshot } from '@pax/liturgy';
 
 import type { PaxMood } from '@/components/Pax';
+import type { Rhythm } from '@/data/types';
 
 /**
  * The data home-screen widgets read (SPEC: Widgets). The app writes the next 14 DaySnapshots
@@ -10,8 +11,8 @@ export interface WidgetProgress {
   date: string;
   currentStreak: number;
   doneToday: boolean;
-  xpToday: number;
-  xpGoal: number;
+  /** Today's Read · Pray · Study marks. */
+  rhythm: Rhythm;
 }
 
 export interface WidgetDay {
@@ -30,7 +31,8 @@ export interface WidgetDay {
 }
 
 export interface WidgetFeed {
-  schemaVersion: 1;
+  /** 2: XP replaced by the Read · Pray · Study rhythm. */
+  schemaVersion: 2;
   writtenAt: string;
   days: WidgetDay[];
   progress: WidgetProgress;
@@ -69,7 +71,6 @@ export function getLastWidgetFeed() {
 }
 
 export const APP_GROUP = 'group.com.benbrunson.pax';
-export const DAILY_XP_GOAL = 30;
 
 export function buildWidgetFeed(snapshots: DaySnapshot[], progress: WidgetProgress, now = new Date()): WidgetFeed {
   const days = snapshots.map<WidgetDay>((s) => ({
@@ -86,7 +87,7 @@ export function buildWidgetFeed(snapshots: DaySnapshot[], progress: WidgetProgre
     url: 'paxapp://today',
   }));
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     writtenAt: now.toISOString(),
     days,
     progress,
