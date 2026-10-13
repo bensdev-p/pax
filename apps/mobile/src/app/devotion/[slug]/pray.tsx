@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Beads } from '@/components/Beads';
 import { CloseIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
+import { PrayerText } from '@/components/PrayerText';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Text } from '@/components/Text';
 import { useContent, useLibrary } from '@/data/content';
@@ -180,7 +181,7 @@ function StepView({
           <Text variant="display" accessibilityRole="header">
             {step.title}
           </Text>
-          <Text variant="scripture">{step.text}</Text>
+          <PrayerText text={step.text} />
         </Animated.View>
       );
     case 'repeat':
@@ -191,7 +192,7 @@ function StepView({
             {step.title}
           </Text>
           <Beads count={step.count} current={bead} label="Bead" />
-          <Text variant="scripture">{step.text}</Text>
+          <PrayerText text={step.text} />
         </Animated.View>
       );
     case 'station':
@@ -247,7 +248,7 @@ function StepView({
             </Text>
             <Text variant="headline">{day.intention}</Text>
           </Card>
-          <Text variant="scripture">{day.text}</Text>
+          <PrayerText text={day.text} />
         </Animated.View>
       ) : null;
   }

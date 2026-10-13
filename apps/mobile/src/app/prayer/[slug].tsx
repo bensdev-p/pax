@@ -5,6 +5,7 @@ import { Pressable, View } from 'react-native';
 
 import { FavoriteButton } from '@/components/Favorite';
 import { Header } from '@/components/Header';
+import { PrayerText } from '@/components/PrayerText';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
@@ -61,9 +62,7 @@ export default function PrayerScreen() {
         </View>
       ) : null}
       {prayer ? (
-        <Text variant="scripture" selectable>
-          {latin && prayer.latin_text ? prayer.latin_text : prayer.text}
-        </Text>
+        <PrayerText text={latin && prayer.latin_text ? prayer.latin_text : prayer.text} selectable />
       ) : null}
     </Screen>
   );

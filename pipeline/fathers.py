@@ -208,7 +208,9 @@ CREATE TABLE father_works (slug TEXT PRIMARY KEY, author_slug TEXT NOT NULL, aut
 CREATE TABLE father_passages (slug TEXT PRIMARY KEY, work_slug TEXT NOT NULL, author_slug TEXT NOT NULL, year INTEGER, chapter TEXT, text TEXT NOT NULL);
 CREATE TABLE cross_refs (from_type TEXT NOT NULL, from_key TEXT NOT NULL, to_type TEXT NOT NULL, to_key TEXT NOT NULL, PRIMARY KEY (from_type, from_key, to_type, to_key)) WITHOUT ROWID;
 """
-PART_LIMIT_BYTES = 30_000_000
+# Text bytes per part; the files come out about a fifth larger (indexes, verse links), so ~24 MB:
+# under Storage's 50 MB free-tier limit and small enough to send through a chat.
+PART_LIMIT_BYTES = 20_000_000
 
 
 def to_json(f: Fathers, slugs: set[str]) -> dict:

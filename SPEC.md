@@ -228,14 +228,15 @@ private by default and never synced unless the user turns sync on. See `PRIVACY.
 
 ## Roadmap
 
-Phases 1 and 2 and the first polish rounds are done. Next:
+Phases 1 to 3 are built. Phase 3's gate (Ben using the new Today every day for two weeks) is under
+way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
 
 | Phase | What it includes | Gate |
 | --- | --- | --- |
 | 1. Foundation ✓ | Today from romcal, theming, Rosary, reminders | Done |
 | 2. Library ✓ | Douay-Rheims reader, Catechism index, Fathers, search, cross-links | Done |
 | 2.5 Companion ✓ | Saint of the day, today's readings, devotions and novenas, reading plans | Done |
-| 3. Rhythm | New tabs (Today · Pray · Study · Library · Me), Today redesign, habit model (streak + Read · Pray · Study, grace days decided), onboarding, journal, highlights and bookmarks, Ben's layout notes | You use the new Today every day for two weeks |
+| 3. Rhythm ✓ (built) | New tabs (Today · Pray · Study · Library · Me), Today redesign, habit model (streak + Read · Pray · Study, grace days decided), onboarding, journal, highlights and bookmarks, Ben's layout notes | You use the new Today every day for two weeks |
 | 4. Depth | Examen and examination of conscience, Fathers' and saints' writings courses, more plans, OCIA course on the course engine | One new course finished end to end |
 | 5. Ship | Apple Developer account, EAS builds, widgets, sync and accounts (with deletion), store listing, TestFlight for the OCIA group | Licensing and content review done |
 
@@ -264,6 +265,9 @@ Phases 1 and 2 and the first polish rounds are done. Next:
     most-quoted Fathers, one era at a time; a Father's page goes book → chapter → verse. Familiar
     names, with the other names kept ("also called").
   - Today tab (as mentioned earlier)
+- Considering joining the Apple Developer Program before Phase 5, so Pax can run as its own app
+  (TestFlight) instead of through Expo Go on the home network, and so widgets and notifications
+  can be built. If Ben enrolls, the EAS setup moves ahead of Phase 4 (see `docs/NEXT_SESSION.md`).
 - Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
   tapping that saint's quote on their page should open it there. Until then the quote stays as
   it is, with no link (an online-link version was tried and set aside).

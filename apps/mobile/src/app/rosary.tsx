@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Beads } from '@/components/Beads';
 import { CloseIcon, FlameIcon, RosaryIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
+import { PrayerText } from '@/components/PrayerText';
 import { Card, RaisedButton } from '@/components/Raised';
 import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
@@ -158,7 +159,7 @@ function StepView({ step, prayers, bead, set }: { step: RosaryStep; prayers: Rec
         {prayer?.title ?? ''}
       </Text>
       {step.kind === 'beads' ? <Beads count={step.count} current={bead} /> : null}
-      <Text variant="scripture">{prayer?.text ?? ''}</Text>
+      <PrayerText text={prayer?.text ?? ''} />
     </Animated.View>
   );
 }

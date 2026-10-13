@@ -1,8 +1,8 @@
 # Pax
 
 A daily Catholic companion: read, pray and study with the Church, one day at a time. Phases 1
-and 2 and the companion features (saints, readings, devotions, reading plans) are built; Phase 3
-(Rhythm) is next. [SPEC.md](SPEC.md) is the plan (v2, Oct 12 2026), [CLAUDE.md](CLAUDE.md) is
+to 3 are built (the Library, the companion features and the Rhythm: daily marks, the new Today,
+the journal); Phase 4 (Depth) is next. [SPEC.md](SPEC.md) is the plan (v2, Oct 12 2026), [CLAUDE.md](CLAUDE.md) is
 the guide for Claude Code sessions, [docs/NEXT_SESSION.md](docs/NEXT_SESSION.md) is the prompt
 for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 
@@ -13,6 +13,7 @@ for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 | `packages/tokens` | Theme generated from `design/tokens.json`, plus the liturgical `ThemeProvider` |
 | `pipeline` | Python script that builds `content.db` from JSON seeds |
 | `supabase` | Postgres schema with row-level security, and how to apply it |
+| `scripts` | `serve-web.mjs`: serves the web export for checking screens |
 | `design` | The Next Screens canvas and `tokens.json` |
 
 ## Run it on your iPhone (Expo Go)
@@ -119,7 +120,7 @@ and no paid Apple account are needed until the widgets.
 - The day splits are computed from verse and paragraph counts by `pipeline/courses.py`; the
   words for each day are in `pipeline/seed/courses.json`.
 
-## What Phase 3 (Rhythm) adds so far
+## What Phase 3 (Rhythm) adds
 
 - **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
   `/learn` and `/profile` links redirect.
@@ -181,6 +182,15 @@ and no paid Apple account are needed until the widgets.
   today were missed and the streak was at least two days long, Pax asks on Today whether to use
   grace days to keep it ("Keep my streak" or "Start fresh"); a gap of several days uses several
   while the month has them. Pax asks once per gap.
+- **Prayers in sense lines**, as a prayer book prints them: short lines, a gap between stanzas,
+  "Amen." on its own line, "V." and "R." in the accent (`components/PrayerText.tsx`), on the
+  prayer page, the Rosary, devotions and novena days. English and Latin.
+- **New Testament verse numbers** follow modern Bibles where the Douay divides verses
+  differently (John 6, Mark 8–9, Acts 7 and others; `pipeline/verse_map.py`). Notes on verses
+  that moved were moved with them, once. 27 scanning slips in the Douay text are corrected in the
+  build (`CORRECTIONS` in `pipeline/bible_drc.py`).
+- **Second tap to confirm** anything that can't be undone (deleting a journal entry, removing the
+  Fathers download): the button turns red and says "Tap again…" for a few seconds.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 
@@ -215,8 +225,10 @@ How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](
   "Esther C:12") don't open in the app and fall back to USCCB. A few Fathers' Psalm references may
   be a verse off where the Vulgate divides verses differently. Some Catechism footnotes are lost at
   page boundaries in the scraped data (CCC 1, for one).
-- **Not yet run on a phone**: the Fathers download and FTS search. Search falls back to a word
-  match if the phone's SQLite lacks FTS5.
+- **Not yet checked on a phone**: FTS search (it falls back to a word match if the phone's SQLite
+  lacks FTS5). The Fathers download works (version 1, six parts in Supabase Storage).
+- **Web only**: React warns (#418, a hydration mismatch) when a page is opened directly by its
+  address; the app itself is fine. Ben doesn't use the web build, so this is left alone.
 - **content.db** is now about 30 MB and committed to git; each content rebuild adds a new copy to the
   history. Git LFS would be worth setting up before it grows further.
 

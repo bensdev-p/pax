@@ -73,3 +73,17 @@ describe('Pray hub', () => {
     expect(isDevotionKind('toString')).toBe(false);
   });
 });
+
+describe('Prayer layout', () => {
+  it('splits a prayer into stanzas and sense lines, keeping V. and R. apart', async () => {
+    const { prayerStanzas } = await import('@/lib/prayerText');
+    const stanzas = prayerStanzas('Come, Holy Spirit,\nfill the hearts of thy faithful.\n\nV. Send forth thy Spirit.\nR. And thou shalt renew the face of the earth.\n\n\nAmen.\n');
+    expect(stanzas).toEqual([
+      [{ marker: null, text: 'Come, Holy Spirit,' }, { marker: null, text: 'fill the hearts of thy faithful.' }],
+      [{ marker: 'V.', text: 'Send forth thy Spirit.' }, { marker: 'R.', text: 'And thou shalt renew the face of the earth.' }],
+      [{ marker: null, text: 'Amen.' }],
+    ]);
+    // A prayer with no breaks is one stanza of one line.
+    expect(prayerStanzas('Hail Mary, full of grace.')).toEqual([[{ marker: null, text: 'Hail Mary, full of grace.' }]]);
+  });
+});
