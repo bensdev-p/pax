@@ -56,6 +56,13 @@ CREATE TABLE verse_map (
   ref_vulgate TEXT NOT NULL
 ) WITHOUT ROWID;
 
+-- Modern verses with no Douay-Rheims verse of their own (Mark 4:41 is inside Douay 4:40), and the
+-- verse that holds each, so links to them still open the right verse.
+CREATE TABLE verse_aliases (
+  ref      TEXT PRIMARY KEY,               -- modern numbering, e.g. Mark.4.41
+  verse_ref TEXT NOT NULL                  -- the bible_verses row that holds it
+) WITHOUT ROWID;
+
 CREATE TABLE ccc_paragraphs (
   number      INTEGER PRIMARY KEY,
   part        TEXT NOT NULL,

@@ -118,6 +118,66 @@ DOUAY_SHIFTS: dict[str, list[Shift]] = {
     "Hos": [*COMMON_SHIFTS["Hos"], (2, 1, None, 2, 2)],
 }
 
+# The New Testament: where the Douay-Rheims (after the Vulgate) divides verses differently from
+# modern Catholic Bibles, found by aligning the text verse by verse against a modern-numbered
+# Bible. Matthew 5 has the meek before those who mourn; Mark's 8:39 is the modern 9:1; and where
+# one Douay verse holds two modern ones (Matthew 17:14 is 14-15), every verse after it is one
+# behind. Philippians 1:16-17, 2 Corinthians 13 and Revelation 12:18 already match.
+DOUAY_SHIFTS.update({
+    "Matt": [(5, 4, 4, 5, 1), (5, 5, 5, 5, -1), (17, 15, None, 17, 1)],
+    "Mark": [(8, 39, 39, 9, -38), (9, 1, None, 9, 1)],
+    "Luke": [(9, 44, 44, 9, -1), (17, 36, 36, 17, 1)],
+    "John": [(6, 53, None, 6, -1)],
+    "Acts": [(7, 56, None, 7, 1), (8, 9, 9, 8, -1), (14, 7, None, 14, 1)],
+    "1Thess": [(4, 12, None, 4, 1)],
+    "2Tim": [(4, 9, 9, 4, 1)],
+    "2Thess": [(2, 11, None, 2, 1)],
+    "Rev": [(20, 8, 8, 20, 1)],
+})
+
+# Douay verses that are the second half of a modern verse: John 6:51 is split over Douay 6:51-52.
+# They share the modern number and take the OSIS key for a part of a verse ("John.6.51!b").
+DOUAY_SECOND_HALVES: dict[tuple[str, int, int], tuple[int, int]] = {
+    ("Luke", 9, 43): (9, 42),
+    ("Luke", 17, 37): (17, 37),
+    ("John", 6, 52): (6, 51),
+    ("Acts", 8, 8): (8, 7),
+    ("2Tim", 4, 10): (4, 10),
+    ("Rev", 20, 9): (20, 9),
+}
+
+# Modern verses with no Douay verse of their own: the Douay verse that holds them. Links,
+# Catechism citations and Fathers' comments on them land on that verse.
+STANDARD_ALIASES: dict[str, str] = {
+    "Matt.17.15": "Matt.17.14",
+    "Mark.4.41": "Mark.4.40",
+    "Luke.9.44": "Luke.9.43",
+    "Luke.17.36": "Luke.17.35",
+    "John.11.57": "John.11.56",
+    "Acts.7.56": "Acts.7.55",
+    "Acts.8.9": "Acts.8.8",
+    "Acts.14.7": "Acts.14.6",
+    "Acts.19.41": "Acts.19.40",
+    "2Cor.1.24": "2Cor.1.23",
+    "1Thess.4.12": "1Thess.4.11",
+    "2Thess.2.11": "2Thess.2.10",
+    "2Tim.4.9": "2Tim.4.8",
+    "3John.1.15": "3John.1.14",
+    "Rev.20.8": "Rev.20.7",
+    # The downloaded Fathers library (built before 2 Corinthians 13 was mapped) cites 13:14.
+    "2Cor.13.14": "2Cor.13.13",
+}
+
+
+def douay_ref(book: str, chapter: int, verse: int) -> tuple[str, int, int]:
+    """The key and modern chapter and verse for a Douay-Rheims verse."""
+    if (book, chapter, verse) in DOUAY_SECOND_HALVES:
+        sc, sv = DOUAY_SECOND_HALVES[(book, chapter, verse)]
+        return f"{book}.{sc}.{sv}!b", sc, sv
+    sc, sv = douay_to_standard(book, chapter, verse)
+    return f"{book}.{sc}.{sv}", sc, sv
+
+
 # King James-style numbering, as the Fathers database uses.
 ENGLISH_SHIFTS: dict[str, list[Shift]] = {
     **COMMON_SHIFTS,
@@ -129,6 +189,8 @@ ENGLISH_SHIFTS: dict[str, list[Shift]] = {
     "Isa": [*COMMON_SHIFTS["Isa"], (64, 1, 1, 63, 18)],
     "Hos": [*COMMON_SHIFTS["Hos"], (2, 1, None, 2, 2), (13, 16, 16, 14, -15), (14, 1, None, 14, 1)],
     "Jonah": [(1, 17, 17, 2, -16), (2, 1, None, 2, 1)],
+    # "All the saints salute you" is its own verse in English Bibles, part of 13:12 in modern ones.
+    "2Cor": [(13, 13, 14, 13, -1)],
 }
 
 

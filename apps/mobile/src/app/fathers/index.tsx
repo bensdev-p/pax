@@ -17,6 +17,7 @@ import { useFathersPack, useLibrary } from '@/data/content';
 import { PACK_SUPPORTED } from '@/data/fathersPack';
 import type { FatherAuthor } from '@/data/library';
 import { FATHER_ERAS, fathersInEra, mostQuoted, searchFathers, type EraKey } from '@/lib/fathers';
+import { useTapTwice } from '@/lib/useTapTwice';
 
 const openFather = (a: FatherAuthor) => router.push({ pathname: '/fathers/[author]', params: { author: a.slug, name: a.name } });
 
@@ -38,7 +39,7 @@ export default function FathersScreen() {
   const excerpts = authors.reduce((n, a) => n + a.excerpts, 0);
 
   return (
-    <Screen header={<Header title="Church Fathers" subtitle="From the Apostolic Fathers to St Bonaventure" />}>
+    <Screen header={<Header title="Church Fathers" subtitle="From the Apostolic Fathers to St Thomas Aquinas" />}>
       <PackCard pack={pack} excerpts={excerpts} />
 
       <SearchInput value={query} onChangeText={setQuery} placeholder="Find a Father" />
@@ -88,6 +89,8 @@ export default function FathersScreen() {
 /** The full library: one line once installed, a short offer before. */
 function PackCard({ pack, excerpts }: { pack: ReturnType<typeof useFathersPack>; excerpts: number }) {
   const t = useTheme();
+  // Removing it means downloading it all again, so it takes a second tap.
+  const removing = useTapTwice(() => void pack.remove());
   if (!PACK_SUPPORTED) {
     return (
       <Text variant="small" color={t.neutral.textMuted}>
@@ -112,9 +115,9 @@ function PackCard({ pack, excerpts }: { pack: ReturnType<typeof useFathersPack>;
         <Text variant="small" style={{ flex: 1, fontFamily: 'Nunito_800ExtraBold' }}>
           Full library installed{excerpts ? ` · ${excerpts.toLocaleString('en-US')} excerpts` : ''}
         </Text>
-        <Pressable accessibilityRole="button" hitSlop={8} onPress={() => void pack.remove()}>
-          <Text variant="label" caps color={t.neutral.textMuted}>
-            Remove
+        <Pressable accessibilityRole="button" accessibilityLabel={removing.armed ? 'Tap again to remove the download' : 'Remove the download'} hitSlop={8} onPress={removing.press}>
+          <Text variant="label" caps color={removing.armed ? t.game.incorrect : t.neutral.textMuted}>
+            {removing.armed ? 'Tap again to remove' : 'Remove'}
           </Text>
         </Pressable>
       </View>

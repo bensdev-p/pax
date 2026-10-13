@@ -196,7 +196,8 @@ Open before any public release:
 ## Data model (as built)
 
 **content.db:** `bible_books`, `bible_verses` (OSIS ref in modern numbering, Douay chapter and
-verse alongside), `bible_chapters`, `bible_notes`, `verse_map`, `ccc_paragraphs`,
+verse alongside; the second half of a verse the Douay splits is `John.6.51!b`), `bible_chapters`,
+`bible_notes`, `verse_map`, `verse_aliases` (modern verses inside a Douay verse), `ccc_paragraphs`,
 `father_authors`, `father_works`, `father_passages`, `saints`, `prayers`, `rosary_mysteries`,
 `devotions`, `courses`, `course_days`, `cross_refs`, `lectionary`, `search_docs` +
 `search_index` (FTS5), `content_meta`; `units`, `lessons`, `questions` exist for the future OCIA

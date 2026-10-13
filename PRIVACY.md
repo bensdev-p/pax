@@ -1,7 +1,8 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 8, 2026 · matches user.db schema version 4 (novenas and reading plans in
-progress, plus the Library and readings settings) and Supabase migrations through `20261008000000_split_reminders`._
+_Last updated: October 13, 2026 · matches user.db schema version 5 (the journal, highlights,
+bookmarks and favorites in `notes`, plus the rhythm and onboarding settings) and Supabase migrations
+through `20261012000000_journal_notes`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
@@ -40,13 +41,13 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; whether you finished or skipped the welcome; the date of a streak you chose not to keep with grace days | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; whether you finished or skipped the welcome; the date of a streak you chose not to keep with grace days; which verse numbering your verse notes use (so Pax moves them once when a numbering fix ships) | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
 | `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
 | `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
 | `course_progress` | For each reading plan you start (such as Bible in a Year): its name and length, the day you started, how many days you have read, the last date you read, and the reminder time you picked, if any | To show "Day 12 of 365", pick up where you left off, and remind you |
 | `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
-| `notes` | Your journal: answers to Pax's questions (with the question), notes on verses and free entries, each with its tags and the time you wrote it. Also your highlights (verse and color), bookmarks (verse) and favorite prayers and devotions | To show your journal in Me, mark verses in the Bible reader and list your favorites on the Pray tab |
+| `notes` | Your journal: answers to Pax's questions (with the question), notes on verses and free entries, each with its tags and the time you wrote it. Also your highlights (verse and color), bookmarks (verse) and favorite prayers and devotions | To show your journal in Me, mark verses in the Bible reader and list your favorites in "For you" on the Pray tab |
 | `lesson_progress`, `review_cards` | Empty for now. Later: finished lessons and scores for the OCIA course (spaced review may be dropped) | Learning progress |
 | `sync_queue` | A list of changed rows waiting to be uploaded. Nothing reads it yet | Prepared for future sync |
 

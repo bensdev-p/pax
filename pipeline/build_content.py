@@ -29,7 +29,7 @@ import gzip
 
 import bible_drc
 import courses as course_plans
-from verse_map import verse_map_rows
+from verse_map import STANDARD_ALIASES, verse_map_rows
 
 PIPELINE = Path(__file__).resolve().parent
 ROOT = PIPELINE.parent
@@ -398,6 +398,13 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     # Keep only excerpts that point at a verse the Douay text has (a few King James-style
     # numbers run past the end of a Douay chapter).
     known_refs = {v.ref for v in bible.verses}
+    missing_alias_targets = set(STANDARD_ALIASES.values()) - known_refs
+    if missing_alias_targets:
+        raise SystemExit(f"verse_map.STANDARD_ALIASES points at verses the Douay text lacks: {sorted(missing_alias_targets)}")
+    # A modern verse with no Douay verse of its own (Mark 4:41) lands on the one that holds it.
+    fathers_starter["passages"] = [
+        {**p, "refs": list(dict.fromkeys(STANDARD_ALIASES.get(r, r) for r in p["refs"]))} for p in fathers_starter["passages"]
+    ]
     fathers_starter["passages"] = [
         {**p, "refs": [r for r in p["refs"] if r in known_refs]}
         for p in fathers_starter["passages"]
@@ -410,8 +417,17 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     if unknown:
         raise SystemExit(f"seed/fathers.json names unknown Fathers: {sorted(unknown)}")
     fathers_starter["authors"] = [
-        {**a, "name": father_names.get(a["slug"], {}).get("name", a["name"]), "also": json.dumps(father_names.get(a["slug"], {}).get("also", []), ensure_ascii=False)}
+        {
+            **a,
+            "name": father_names.get(a["slug"], {}).get("name", a["name"]),
+            "year": father_names.get(a["slug"], {}).get("year", a["year"]),
+            "also": json.dumps(father_names.get(a["slug"], {}).get("also", []), ensure_ascii=False),
+        }
         for a in fathers_starter["authors"]
+    ]
+    # The source dates each excerpt by its author's death; keep them in step with corrections.
+    fathers_starter["passages"] = [
+        {**p, "year": father_names.get(p["author_slug"], {}).get("year", p["year"])} for p in fathers_starter["passages"]
     ]
     used_works = {p["work_slug"] for p in fathers_starter["passages"]}
     fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
@@ -463,6 +479,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         [(n.ref, n.seq, n.keyword or None, n.text) for n in bible.notes],
     )
     db.executemany("INSERT INTO verse_map VALUES (?, ?)", verse_map_rows())
+    db.executemany("INSERT INTO verse_aliases VALUES (?, ?)", sorted(STANDARD_ALIASES.items()))
     db.executemany(
         "INSERT INTO ccc_paragraphs VALUES (?, ?, ?, ?, ?, ?)",
         [
@@ -491,7 +508,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     cross_refs += [
         {"from_type": "ccc", "from_key": n, "to_type": "verse", "to_key": r}
         for n, c in ccc_index.items()
-        for r in c["refs"]
+        for r in dict.fromkeys(STANDARD_ALIASES.get(r, r) for r in c["refs"])
         if r in verse_refs
     ]
     cross_refs += [

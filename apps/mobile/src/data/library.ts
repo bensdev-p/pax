@@ -147,6 +147,11 @@ export interface LibraryStore {
   passage(citation: string): Promise<VerseDetail[][]>;
   /** Douay chapter that holds a standard-numbered verse (Ps.23.1 → Psalms 22). */
   locate(ref: string): Promise<{ book: string; douay_chapter: number; douay_verse: number } | null>;
+  /**
+   * New Testament verse keys as they were before the Douay's own verse divisions were mapped
+   * (Phase 3), and what they are now: "John.6.69" → "John.6.68". For moving the user's notes.
+   */
+  verseRenames(): Promise<Record<string, string>>;
 }
 
 const VERSE_COLUMNS = `v.ref, v.book, v.chapter, v.verse, v.douay_chapter, v.douay_verse, v.text, b.name, b.name_douay`;
@@ -170,22 +175,41 @@ export function modernLabel(v: VerseDetail): string | null {
   return `${name} ${v.chapter}:${v.verse}`;
 }
 
+/**
+ * Where a modern verse number and a Douay verse differ (pipeline/verse_map.py): a modern verse
+ * with no Douay verse of its own is an alias for the one that holds it (Mark.4.41 → Mark.4.40),
+ * and the second half of a split verse is keyed "John.6.51!b".
+ */
+export const baseRef = (ref: string) => ref.replace(/!b$/, '');
+
 export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => []): LibraryStore {
+  /** The verse's own key, the whole verse it is half of, and the modern verses it holds. */
+  const keysFor = async (ref: string): Promise<string[]> => {
+    const aliases = await content.all<{ ref: string }>('SELECT ref FROM verse_aliases WHERE verse_ref = ?', [ref]);
+    return [...new Set([ref, baseRef(ref), ...aliases.map((a) => a.ref)])];
+  };
+  const holder = async (ref: string) =>
+    (await content.first<{ verse_ref: string }>('SELECT verse_ref FROM verse_aliases WHERE ref = ?', [ref]))?.verse_ref ?? null;
+  const marks = (n: number) => Array.from({ length: n }, () => '?').join(', ');
+
   const fatherSources = () => {
     const installed = packs();
     return installed.length ? installed : [content];
   };
   // Names come from content.db, which lists every Father by the familiar name; the downloaded
   // library keeps the source's names, so its rows are renamed on the way out.
-  let names: Promise<Map<string, { name: string; also: string[] }>> | null = null;
+  let names: Promise<Map<string, { name: string; also: string[]; year: number | null }>> | null = null;
   const fatherNames = () =>
     (names ??= content
-      .all<{ slug: string; name: string; also: string | null }>('SELECT slug, name, also FROM father_authors')
-      .then((rows) => new Map(rows.map((r) => [r.slug, { name: r.name, also: parseAlso(r.also) }])))
+      .all<{ slug: string; name: string; also: string | null; year: number | null }>('SELECT slug, name, also, year FROM father_authors')
+      .then((rows) => new Map(rows.map((r) => [r.slug, { name: r.name, also: parseAlso(r.also), year: r.year }])))
       .catch(() => new Map()));
-  const renamed = async <T extends { author_slug: string; author: string }>(rows: T[]): Promise<T[]> => {
+  const renamed = async <T extends { author_slug: string; author: string; year?: number | null }>(rows: T[]): Promise<T[]> => {
     const map = await fatherNames();
-    return rows.map((r) => ({ ...r, author: map.get(r.author_slug)?.name ?? r.author }));
+    return rows.map((r) => {
+      const known = map.get(r.author_slug);
+      return known ? { ...r, author: known.name, ...('year' in r ? { year: known.year } : {}) } : r;
+    });
   };
 
   return {
@@ -212,27 +236,37 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
       return { book, chapter: douayChapter, title: meta?.title ?? null, incipit: meta?.incipit ?? null, summary: meta?.summary ?? null, verses };
     },
 
-    verse: (ref) =>
-      content.first<VerseDetail>(`SELECT ${VERSE_COLUMNS} FROM bible_verses v JOIN bible_books b ON b.osis = v.book WHERE v.ref = ?`, [ref]),
+    async verse(ref) {
+      const sql = `SELECT ${VERSE_COLUMNS} FROM bible_verses v JOIN bible_books b ON b.osis = v.book WHERE v.ref = ?`;
+      const row = await content.first<VerseDetail>(sql, [ref]);
+      if (row) return row;
+      const held = await holder(ref);
+      return held ? content.first<VerseDetail>(sql, [held]) : null;
+    },
 
     notes: (ref) => content.all<BibleNote>('SELECT seq, keyword, text FROM bible_notes WHERE ref = ? ORDER BY seq', [ref]),
 
-    cccForVerse: (ref) =>
-      content.all<CccParagraph>(
-        `SELECT p.number, p.part, p.section, p.heading, p.summary, p.vatican_url
+    async cccForVerse(ref) {
+      const keys = await keysFor(ref);
+      return content.all<CccParagraph>(
+        `SELECT DISTINCT p.number, p.part, p.section, p.heading, p.summary, p.vatican_url
          FROM cross_refs c JOIN ccc_paragraphs p ON p.number = CAST(c.from_key AS INTEGER)
-         WHERE c.from_type = 'ccc' AND c.to_type = 'verse' AND c.to_key = ? ORDER BY p.number`,
-        [ref],
-      ),
+         WHERE c.from_type = 'ccc' AND c.to_type = 'verse' AND c.to_key IN (${marks(keys.length)}) ORDER BY p.number`,
+        keys,
+      );
+    },
 
     async fathersForVerse(ref) {
+      // The downloaded library keeps modern numbers, so a Douay verse also gathers the modern
+      // verses it holds (Mark 4:40 has Fathers on 4:41) and a half verse its whole one.
+      const keys = await keysFor(ref);
       const results = await Promise.all(
         fatherSources().map((db) =>
           db.all<FatherExcerpt>(
             `${fatherSelect('c.to_key')}
              JOIN cross_refs c ON c.from_type = 'father' AND c.from_key = p.slug
-             WHERE c.to_type = 'verse' AND c.to_key = ?`,
-            [ref],
+             WHERE c.to_type = 'verse' AND c.to_key IN (${marks(keys.length)})`,
+            keys,
           ),
         ),
       );
@@ -253,7 +287,7 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
         `SELECT ${VERSE_COLUMNS} FROM cross_refs c
          JOIN bible_verses v ON v.ref = c.to_key JOIN bible_books b ON b.osis = v.book
          WHERE c.from_type = 'ccc' AND c.from_key = ? AND c.to_type = 'verse'
-         ORDER BY b.sort_order, v.chapter, v.verse`,
+         ORDER BY b.sort_order, v.chapter, v.verse, v.douay_chapter, v.douay_verse`,
         [String(number)],
       ),
 
@@ -277,7 +311,10 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
       for (const a of lists.flat()) {
         const prev = merged.get(a.slug);
         const known = map.get(a.slug);
-        merged.set(a.slug, prev ? { ...prev, excerpts: prev.excerpts + a.excerpts } : { ...a, name: known?.name ?? a.name, also: known?.also ?? [] });
+        merged.set(
+          a.slug,
+          prev ? { ...prev, excerpts: prev.excerpts + a.excerpts } : { ...a, name: known?.name ?? a.name, also: known?.also ?? [], year: known ? known.year : a.year },
+        );
       }
       return [...merged.values()].sort((a, b) => (a.year ?? 9999) - (b.year ?? 9999));
     },
@@ -303,15 +340,20 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
 
     async fatherExcerptsBySlug(slugs) {
       if (!slugs.length) return [];
-      const marks = slugs.map(() => '?').join(', ');
       const lists = await Promise.all(
-        fatherSources().map((db) => db.all<FatherExcerpt>(`${fatherSelect('NULL')} WHERE p.slug IN (${marks})`, slugs)),
+        fatherSources().map((db) => db.all<FatherExcerpt>(`${fatherSelect('NULL')} WHERE p.slug IN (${marks(slugs.length)})`, slugs)),
       );
       const bySlug = new Map((await renamed(lists.flat())).map((e) => [e.slug, e]));
       return slugs.map((s) => bySlug.get(s)).filter((e): e is FatherExcerpt => !!e);
     },
 
-    douayPlaces: (book) => content.all<DouayPlace>('SELECT ref, douay_chapter, douay_verse FROM bible_verses WHERE book = ?', [book]),
+    douayPlaces: (book) =>
+      content.all<DouayPlace>(
+        `SELECT ref, douay_chapter, douay_verse FROM bible_verses WHERE book = ?
+         UNION ALL
+         SELECT a.ref, v.douay_chapter, v.douay_verse FROM verse_aliases a JOIN bible_verses v ON v.ref = a.verse_ref WHERE v.book = ?`,
+        [book, book],
+      ),
 
     async fatherPassage(slug) {
       for (const db of fatherSources()) {
@@ -386,7 +428,7 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
           `SELECT ${VERSE_COLUMNS} FROM bible_verses v JOIN bible_books b ON b.osis = v.book
            WHERE v.book = ? AND (v.chapter > ? OR (v.chapter = ? AND v.verse >= ?))
              AND (v.chapter < ? OR (v.chapter = ? AND v.verse <= ?))
-           ORDER BY v.chapter, v.verse`,
+           ORDER BY v.chapter, v.verse, v.douay_chapter, v.douay_verse`,
           [r.book, r.chapter, r.chapter, r.verse, r.endChapter, r.endChapter, r.endVerse],
         );
         if (verses.length) segments.push(verses);
@@ -394,11 +436,22 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
       return segments;
     },
 
-    locate: (ref) =>
-      content.first<{ book: string; douay_chapter: number; douay_verse: number }>(
-        'SELECT book, douay_chapter, douay_verse FROM bible_verses WHERE ref = ?',
-        [ref],
-      ),
+    async locate(ref) {
+      const sql = 'SELECT book, douay_chapter, douay_verse FROM bible_verses WHERE ref = ?';
+      const row = await content.first<{ book: string; douay_chapter: number; douay_verse: number }>(sql, [ref]);
+      if (row) return row;
+      const held = await holder(ref);
+      return held ? content.first<{ book: string; douay_chapter: number; douay_verse: number }>(sql, [held]) : null;
+    },
+
+    async verseRenames() {
+      const rows = await content.all<{ old: string; ref: string }>(
+        `SELECT v.book || '.' || v.douay_chapter || '.' || v.douay_verse AS old, v.ref
+         FROM bible_verses v JOIN bible_books b ON b.osis = v.book
+         WHERE b.testament = 'NT' AND v.ref <> v.book || '.' || v.douay_chapter || '.' || v.douay_verse`,
+      );
+      return Object.fromEntries(rows.map((r) => [r.old, r.ref]));
+    },
   };
 }
 

@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from verse_map import douay_to_standard
+from verse_map import douay_ref
 
 # USFM code -> (OSIS id, Douay name, common name, testament)
 BOOKS: list[tuple[str, str, str, str, str]] = [
@@ -134,6 +134,48 @@ class Bible:
     chapters: list[Chapter] = field(default_factory=list)
 
 
+# Scanning slips in the source text, by Douay book, chapter and verse: (wrong, right). Each must
+# still be in the text, so a fix upstream shows up as a build error rather than a silent no-op.
+CORRECTIONS: dict[tuple[str, int, int], tuple[str, str]] = {
+    ("1Chr", 14, 17): ("fear aim", "fear him"),
+    ("1Chr", 19, 2): ("favour tome", "favour to me"),
+    ("1Cor", 15, 8): ("due tine", "due time"),
+    ("2Kgs", 20, 1): ("llve", "live"),
+    ("Bar", 6, 48): ("them , or", "them, or"),
+    ("Exod", 23, 22): ("hear hi voice", "hear his voice"),
+    ("Ezek", 36, 10): ("cities ball be", "cities shall be"),
+    ("Jer", 13, 10): ("girdle ,which", "girdle, which"),
+    ("Jer", 17, 20): ("and al Juda", "and all Juda"),
+    ("Jer", 36, 8): ("prophet ,had", "prophet, had"),
+    ("Josh", 7, 14): ("and tho house", "and the house"),
+    ("Judg", 1, 29): ("bnt dwelt", "but dwelt"),
+    ("Judg", 6, 26): ("build un altar", "build an altar"),
+    ("Lev", 24, 20): ("eye for ere", "eye for eye"),
+    ("Lev", 6, 7): ("he bath sinned", "he hath sinned"),
+    ("Mark", 5, 38): ("they cone to", "they come to"),
+    ("Mark", 8, 39): ("Amen f say", "Amen I say"),
+    ("Mark", 9, 11): ("said to then:", "said to them:"),
+    ("Mark", 9, 25): ("went our of him", "went out of him"),
+    ("Neh", 7, 48): ("children os Siaa", "children of Siaa"),
+    ("Num", 3, 39): ("their f families", "their families"),
+    ("Prov", 3, 3): ("mercy aud truth", "mercy and truth"),
+    ("Ps", 43, 10): ("thou , O God", "thou, O God"),
+    ("Sir", 15, 20): ("knoweth al the", "knoweth all the"),
+    ("Sir", 4, 3): ("not to gibe", "not to give"),
+    ("Sir", 48, 26): ("sun wen backward", "sun went backward"),
+    ("Wis", 11, 23): ("upon tho earth", "upon the earth"),
+}
+
+
+def _correct(verse: "Verse") -> None:
+    fix = CORRECTIONS.get((verse.book, verse.douay_chapter, verse.douay_verse))
+    if fix:
+        wrong, right = fix
+        if wrong not in verse.text:
+            raise ValueError(f"Correction for {verse.ref} no longer matches: {wrong!r}")
+        verse.text = verse.text.replace(wrong, right)
+
+
 _FOOTNOTE = re.compile(r"\\f \+ (.*?)\\f\*", re.S)
 _INLINE = re.compile(r"\\(?:w|rq|qs|add|nd|wj|bk|it|bd|sc)\*?")
 _VP = re.compile(r"\\vp\s*[^\\]*\\vp\*")
@@ -174,6 +216,7 @@ def parse(source_dir: Path) -> Bible:
             nonlocal current
             if current:
                 current.text = _clean(current.text)
+                _correct(current)
                 bible.verses.append(current)
             current = None
 
@@ -201,9 +244,9 @@ def parse(source_dir: Path) -> Bible:
                 if not m:
                     continue
                 dv = int(m.group(1))
-                sc, sv = douay_to_standard(osis, chapter, dv)
+                ref, sc, sv = douay_ref(osis, chapter, dv)
                 body, notes = _footnotes(m.group(2))
-                current = Verse(f"{osis}.{sc}.{sv}", osis, sc, sv, chapter, dv, body)
+                current = Verse(ref, osis, sc, sv, chapter, dv, body)
                 for kw, text in notes:
                     note_seq[current.ref] = note_seq.get(current.ref, 0) + 1
                     bible.notes.append(Note(current.ref, note_seq[current.ref], kw, text))
