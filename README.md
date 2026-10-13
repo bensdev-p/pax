@@ -208,14 +208,16 @@ How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](
 
 ## Known gaps
 
-- **Library versification**: Esther, Tobit, Sirach, Job 40–41 and Hosea 2's last verse follow the
-  Vulgate and only roughly line up with modern numbering; readings from Esther's Greek additions
-  (cited as "Esther C:12") don't open in the app and fall back to USCCB. A few Fathers' Psalm references may be a verse off where the Vulgate
-  divides verses differently. Some Catechism footnotes are lost at page boundaries in the scraped
-  data (CCC 1, for one).
+- **Library versification**: the New Testament follows modern numbering throughout (where the
+  Douay divides verses differently, as in John 6, Pax maps them; see `pipeline/README.md`). In the
+  Old Testament, Esther, Tobit, Sirach, Job 40–41 and Hosea 2's last verse follow the Vulgate and
+  only roughly line up with modern numbering; readings from Esther's Greek additions (cited as
+  "Esther C:12") don't open in the app and fall back to USCCB. A few Fathers' Psalm references may
+  be a verse off where the Vulgate divides verses differently. Some Catechism footnotes are lost at
+  page boundaries in the scraped data (CCC 1, for one).
 - **Not yet run on a phone**: the Fathers download and FTS search. Search falls back to a word
   match if the phone's SQLite lacks FTS5.
-- **content.db** is now 28 MB and committed to git; each content rebuild adds a new copy to the
+- **content.db** is now about 30 MB and committed to git; each content rebuild adds a new copy to the
   history. Git LFS would be worth setting up before it grows further.
 
 - Lectionary citations cover Aug 2025 to Dec 2027 fully (one 2027 date is missing a psalm

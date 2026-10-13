@@ -39,6 +39,8 @@ describe('Church Fathers directory', () => {
     const gregory = all.find((a) => a.slug === 'gregory-the-dialogist');
     expect(gregory).toMatchObject({ name: 'Gregory the Great', also: ['Pope Gregory I', 'Gregory the Dialogist'] });
     expect(all.find((a) => a.slug === 'augustine-of-hippo')?.also).toEqual([]);
+    // The source's year for St Bonaventure (1257) is when he became Minister General.
+    expect(all.find((a) => a.slug === 'bonaventure')?.year).toBe(1274);
   });
 
   it('renames Fathers from a downloaded library that still has the source’s names', async () => {
@@ -49,14 +51,19 @@ describe('Church Fathers directory', () => {
       CREATE TABLE father_passages (slug TEXT PRIMARY KEY, work_slug TEXT NOT NULL, author_slug TEXT NOT NULL, year INTEGER, chapter TEXT, text TEXT NOT NULL);
       CREATE TABLE cross_refs (from_type TEXT, from_key TEXT, to_type TEXT, to_key TEXT);
       INSERT INTO father_authors VALUES ('gregory-the-dialogist', 'Gregory the Dialogist', 604, NULL, NULL);
+      INSERT INTO father_authors VALUES ('bonaventure', 'Bonaventure', 1257, NULL, NULL);
+      INSERT INTO father_works VALUES ('b', 'bonaventure', 'Bonaventure', 'On Luke', NULL, NULL);
+      INSERT INTO father_passages VALUES ('bonaventure-0123456789', 'b', 'bonaventure', 1257, NULL, 'Blessed are the poor.');
       INSERT INTO father_works VALUES ('w', 'gregory-the-dialogist', 'Gregory the Dialogist', 'Homilies on the Gospels', NULL, NULL);
       INSERT INTO father_passages VALUES ('gregory-the-dialogist-0123456789', 'w', 'gregory-the-dialogist', 604, NULL, 'The Lord sends them two by two.');
       INSERT INTO cross_refs VALUES ('father', 'gregory-the-dialogist-0123456789', 'verse', 'Luke.10.1');
     `);
     const lib = createLibrary(content, () => [wrap(pack)]);
-    expect((await lib.fatherAuthors())[0]).toMatchObject({ name: 'Gregory the Great', excerpts: 1 });
+    expect((await lib.fatherAuthors()).find((a) => a.slug === 'gregory-the-dialogist')).toMatchObject({ name: 'Gregory the Great', excerpts: 1 });
     expect((await lib.fathersForVerse('Luke.10.1'))[0]?.author).toBe('Gregory the Great');
     expect((await lib.fatherExcerptsBySlug(['gregory-the-dialogist-0123456789']))[0]?.author).toBe('Gregory the Great');
+    expect((await lib.fatherAuthors()).find((a) => a.slug === 'bonaventure')?.year).toBe(1274);
+    expect((await lib.fatherExcerptsBySlug(['bonaventure-0123456789']))[0]?.year).toBe(1274);
     expect(await lib.fatherRefs('gregory-the-dialogist', 'Luke')).toEqual([{ slug: 'gregory-the-dialogist-0123456789', ref: 'Luke.10.1' }]);
   });
 

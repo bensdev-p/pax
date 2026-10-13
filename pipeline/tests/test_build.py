@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import build_content  # noqa: E402
 from extract_ccc import parse_refs  # noqa: E402
-from verse_map import douay_to_standard, english_to_standard, hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
+from verse_map import douay_ref, douay_to_standard, english_to_standard, hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
 
 
 class VerseMapTest(unittest.TestCase):
@@ -48,6 +48,17 @@ class VersificationTest(unittest.TestCase):
         self.assertEqual(douay_to_standard("Mal", 4, 2), (3, 20))
         self.assertEqual(douay_to_standard("Joel", 2, 28), (3, 1))
         self.assertEqual(douay_to_standard("John", 1, 14), (1, 14))
+        # The New Testament, where the Douay divides verses differently.
+        self.assertEqual(douay_ref("John", 6, 51), ("John.6.51", 6, 51))
+        self.assertEqual(douay_ref("John", 6, 52), ("John.6.51!b", 6, 51))
+        self.assertEqual(douay_ref("John", 6, 69), ("John.6.68", 6, 68))
+        self.assertEqual(douay_ref("Mark", 8, 39), ("Mark.9.1", 9, 1))
+        self.assertEqual(douay_ref("Mark", 9, 1), ("Mark.9.2", 9, 2))
+        self.assertEqual(douay_ref("Matt", 5, 4), ("Matt.5.5", 5, 5))
+        self.assertEqual(douay_ref("Matt", 17, 15), ("Matt.17.16", 17, 16))
+        self.assertEqual(douay_ref("Acts", 7, 59), ("Acts.7.60", 7, 60))
+        self.assertEqual(douay_ref("Phil", 1, 16), ("Phil.1.16", 1, 16))
+        self.assertEqual(english_to_standard("2Cor", 13, 14), (13, 13))
 
     def test_english_chapter_breaks(self):
         # Douay follows the English breaks here; the lectionary follows the Hebrew.
@@ -153,6 +164,34 @@ class BuildTest(unittest.TestCase):
                 continue
             self.assertRegex(sql, r"PRIMARY KEY")
             self.assertNotIn("AUTOINCREMENT", sql)
+
+    def test_scanning_slips_are_corrected(self):
+        text = lambda ref: self.db.execute("SELECT text FROM bible_verses WHERE ref = ?", (ref,)).fetchone()[0]
+        self.assertIn("Amen I say to you", text("Mark.9.1"))
+        self.assertIn("eye for eye", text("Lev.24.20"))
+        self.assertNotIn(" ,", text("Jer.13.10"))
+
+    def test_new_testament_numbering(self):
+        text = lambda ref: self.db.execute("SELECT text FROM bible_verses WHERE ref = ?", (ref,)).fetchone()[0]
+        self.assertIn("to whom shall we go", text("John.6.68"))
+        self.assertIn("If any man eat of this bread", text("John.6.51!b"))
+        self.assertIn("Blessed are they that mourn", text("Matt.5.4"))
+        self.assertIn("Lord Jesus, receive my spirit", text("Acts.7.59"))
+        # Every alias lands on a verse that exists, and no alias shadows a real verse.
+        rows = self.db.execute(
+            "SELECT a.ref, v.ref, w.ref FROM verse_aliases a LEFT JOIN bible_verses v ON v.ref = a.verse_ref LEFT JOIN bible_verses w ON w.ref = a.ref"
+        ).fetchall()
+        self.assertTrue(rows)
+        for alias, target, shadow in rows:
+            self.assertIsNotNone(target, alias)
+            self.assertIsNone(shadow, alias)
+        # Every New Testament chapter numbers its verses without gaps, counting aliases.
+        nt = [r[0] for r in self.db.execute("SELECT osis FROM bible_books WHERE testament = 'NT'")]
+        refs = {r[0] for r in self.db.execute("SELECT ref FROM bible_verses")} | {r[0] for r in self.db.execute("SELECT ref FROM verse_aliases")}
+        for book in nt:
+            for (chapter, top) in self.db.execute("SELECT chapter, max(verse) FROM bible_verses WHERE book = ? GROUP BY chapter", (book,)):
+                gaps = [v for v in range(1, top + 1) if f"{book}.{chapter}.{v}" not in refs]
+                self.assertEqual(gaps, [], f"{book} {chapter}")
 
     def test_fathers_have_familiar_names(self):
         # Every Father in the full library is listed, so the app can rename the download's rows.

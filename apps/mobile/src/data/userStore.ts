@@ -185,6 +185,7 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     onboarded: map.onboarded === 'true',
     studyInRhythm: map.studyInRhythm !== 'false',
     prayedToday: parseJson<PrayedToday>(map.prayedToday),
+    verseNumbering: Number(map.verseNumbering) || DEFAULT_SETTINGS.verseNumbering,
   };
 }
 

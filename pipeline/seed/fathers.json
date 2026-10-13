@@ -1,5 +1,5 @@
 {
-  "_about": "Familiar names for the Church Fathers (decided with Ben). The source's name goes in 'also' (unless the new name contains it) with any other well-known names, so search finds either. Slugs are the source's and never change.",
+  "_about": "Familiar names for the Church Fathers (decided with Ben). The source's name goes in 'also' (unless the new name contains it) with any other well-known names, so search finds either. 'year' corrects the source's year of death. Slugs are the source's and never change.",
   "authors": {
     "clement-of-rome": { "also": ["Pope Clement I"] },
     "polycrates-of-ephesus": { "name": "Polycrates of Ephesus" },
@@ -32,6 +32,7 @@
     "rabanus-maurus": { "also": ["Hrabanus Maurus"] },
     "theophylact-of-ohrid": { "also": ["Theophylact of Bulgaria"] },
     "thomas-aquinas": { "also": ["The Angelic Doctor"] },
+    "bonaventure": { "also": ["The Seraphic Doctor"], "year": 1274 },
     "glossa-ordinaria": { "also": ["The Ordinary Gloss"] }
   }
 }

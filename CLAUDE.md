@@ -56,7 +56,9 @@ tool's background mode. Don't pipe `expo export` into `head` (it kills the expor
 - User data points at content by stable keys (OSIS ref in modern numbering, CCC number, romcal
   key, slug). Never auto-numbered IDs.
 - The Douay-Rheims is stored under modern-numbered refs with its own chapter/verse alongside;
-  readers show Douay numbers.
+  readers show Douay numbers. Where the Douay splits a verse, the second half is `John.6.51!b`;
+  modern verses folded into a Douay verse are in `verse_aliases` (`pipeline/verse_map.py`).
+  Treat refs as opaque keys.
 - Nested `<Text>` inside a paragraph must keep the paragraph's line height (iOS uses the first
   span's), see `components/Passage.tsx`.
 - Don't read a React event object after an `await` or inside `setTimeout`; copy the values first.

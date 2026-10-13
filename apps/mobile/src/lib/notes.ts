@@ -70,3 +70,8 @@ export function journalView(notes: Note[], tag: string | null): { entries: Note[
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   return { entries, tags };
 }
+
+/** Notes on verses whose key was renamed, with the new key; the rest are left out. */
+export function renumbered(list: Note[], renames: Record<string, string>): Note[] {
+  return list.filter((n) => n.targetType === 'verse' && renames[n.targetKey]).map((n) => ({ ...n, targetKey: renames[n.targetKey]! }));
+}

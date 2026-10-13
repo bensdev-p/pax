@@ -98,7 +98,7 @@ means re-checking the words.
 
 `pipeline/seed/fathers.json` gives a Father his familiar name (`"name": "Gregory the Great"`) and
 other names under `"also"` (the source's own name, a Latin form, a title), which the app shows as
-"Also called …" and searches. Key it by the source's slug, which never changes; the build stops
+"Also called …" and searches. `"year"` corrects the source's year of death (St Bonaventure died in 1274, not 1257). Key it by the source's slug, which never changes; the build stops
 if a slug doesn't exist. Every Father in the full library is listed in content.db, so a rename
 also applies to the downloaded library without a new download.
 

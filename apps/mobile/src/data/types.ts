@@ -208,6 +208,11 @@ export interface Settings {
   studyInRhythm: boolean;
   /** Which prayers were finished today, so Today names what was prayed. */
   prayedToday: PrayedToday | null;
+  /**
+   * The verse numbering the user's verse notes are keyed in: 1 before the New Testament's Douay
+   * verse divisions were mapped (Phase 3), 2 after. Notes are moved once (state/renumber.ts).
+   */
+  verseNumbering: number;
 }
 
 /** Prayers finished on one local date: 'rosary' or a devotion slug, with its title. */
@@ -321,6 +326,7 @@ export const DEFAULT_SETTINGS: Settings = {
   graceDeclinedFor: null,
   onboarded: false,
   studyInRhythm: true,
+  verseNumbering: 1,
   prayedToday: null,
 };
 

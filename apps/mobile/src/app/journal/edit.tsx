@@ -11,6 +11,7 @@ import { Text } from '@/components/Text';
 import { userStore } from '@/data/userStore';
 import type { Note, NoteTarget } from '@/data/types';
 import { defaultTags, makeNote, normalizeTag, SUGGESTED_TAGS, tagsFrom } from '@/lib/notes';
+import { useTapTwice } from '@/lib/useTapTwice';
 import { notes } from '@/state/notes';
 
 const TARGETS: NoteTarget[] = ['verse', 'readings', 'course_day', 'entry'];
@@ -79,6 +80,7 @@ export default function JournalEditScreen() {
     if (existing) await notes.remove(existing.id);
     router.back();
   };
+  const deleting = useTapTwice(() => void remove());
 
   return (
     <KeyboardAvoidingView
@@ -156,7 +158,7 @@ export default function JournalEditScreen() {
       </ScrollView>
       <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 12, gap: 4 }}>
         <RaisedButton label="Save" onPress={() => void save()} />
-        {existing ? <RaisedButton kind="ghost" label="Delete entry" onPress={() => void remove()} /> : null}
+        {existing ? <RaisedButton kind="ghost" label={deleting.armed ? 'Tap again to delete' : 'Delete entry'} onPress={deleting.press} /> : null}
       </View>
     </KeyboardAvoidingView>
   );

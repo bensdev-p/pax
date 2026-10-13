@@ -58,8 +58,20 @@ with its own Douay chapter and verse beside it for reading (Psalm 23 is Douay Ps
   Malachi 4, and the chapter breaks where the Douay follows the English rather than the Hebrew
   (Genesis 31–32, Isaiah 9 and 64, Micah 5, Zechariah 1–2 and others; see `DOUAY_SHIFTS`). Esther,
   Tobit and Sirach follow the Vulgate and only roughly line up.
+- The New Testament, where the Douay divides verses differently from modern Bibles (found by
+  aligning the text verse by verse against a modern-numbered Bible): Matthew 5:4-5 and 17, Mark
+  8-9, Luke 9 and 17, John 6, Acts 7, 8 and 14, 1 Thessalonians 4, 2 Thessalonians 2, 2 Timothy 4
+  and Revelation 20. The second half of a split verse is keyed `John.6.51!b` (the OSIS form for
+  part of a verse) and shares the modern number, so readings include it. A modern verse with no
+  Douay verse of its own (Mark 4:41 is inside Douay 4:40) is listed in `STANDARD_ALIASES` and goes
+  into content.db's `verse_aliases`; links, Catechism and Fathers citations to it land on the verse
+  that holds it.
 - King James-style → standard, for the Fathers database: Psalms whose titles count as verses in
   Hebrew (51, 52, 54 and 60 shift by two, most titled Psalms by one), and the same chapter breaks
   (`ENGLISH_SHIFTS`, which adds Jonah, Hosea 13–14, Ecclesiastes 5 and others).
 
 Book names are OSIS ids, so "4 Kings" and "2 Kings" are both `2Kgs`; only the display name differs.
+
+`bible_drc.py` also fixes a few scanning slips in the source text (`CORRECTIONS`, such as "Amen f
+say" in Mark 8:39), each keyed by Douay chapter and verse; the build stops if one no longer
+matches.
