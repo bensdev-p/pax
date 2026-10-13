@@ -122,16 +122,7 @@ and no paid Apple account are needed until the widgets.
 ## What Phase 3 (Rhythm) adds so far
 
 - **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
-  `/learn` and `/profile` links redirect. On trial: phones use the system tab bar (iOS: Liquid
-  Glass and SF Symbols; Android: Material 3), tinted with the day's color; web keeps Pax's own bar.
-  To go back, delete `src/app/(tabs)/_layout.tsx` and rename `_layout.web.tsx` to `_layout.tsx`.
-- **Navigation bars** (on trial): on phones every pushed screen uses the system navigation bar
-  (iOS: back button naming the previous screen, large Nunito title that shrinks as you scroll;
-  Android: Material top app bar); subtitles sit under the title. Sheets and modals with a close
-  button, and the web, keep Pax's header. To go back, delete `src/components/Header.tsx` and
-  rename `Header.web.tsx` to `Header.tsx`.
-- Decided with Ben from the native mockups: switches, the time picker, segmented controls and
-  confirmations stay Pax's own; the verse panel is the native sheet.
+  `/learn` and `/profile` links redirect.
 - **Daily rhythm** replaces XP and reviews: three marks a day, **Read** (today's readings),
   **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
   day for the streak.
@@ -164,6 +155,8 @@ and no paid Apple account are needed until the widgets.
   Fathers, flick it down to close. A tap opens the same sheet. The reader shows the color wash, a ribbon and a note mark; Library → Your
   highlights and bookmarks lists them.
 - **Favorites**: the star on a prayer or devotion puts it under "Your favorites" on Pray.
+- **Native vs Pax's look** (decided with Ben from mockups): the verse panel is the native sheet;
+  the tab bar, headers, switches, time picker, segmented choices and buttons stay Pax's own.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
   reading plan. It decides what a full day is on the calendar; any one mark still keeps the
   streak.
