@@ -7,11 +7,10 @@ import { Platform, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BackIcon, BookmarkIcon, ChevronIcon, NoteIcon } from '@/components/Icons';
-import { Header } from '@/components/Header';
+import { Header, usesNativeHeader } from '@/components/Header';
 import { Text } from '@/components/Text';
-import { VerseSheet } from '@/components/VerseSheet';
 import { useLibrary } from '@/data/content';
-import type { ChapterView, VerseDetail } from '@/data/library';
+import type { ChapterView } from '@/data/library';
 import { openVerse } from '@/lib/libraryLinks';
 import { HIGHLIGHT_COLORS, isHighlightColor } from '@/lib/notes';
 import { useAppState } from '@/state/AppState';
@@ -29,7 +28,6 @@ export default function ReaderScreen() {
   const library = useLibrary();
   const { updateSettings } = useAppState();
   const [view, setView] = useState<ChapterView | null>(null);
-  const [sheet, setSheet] = useState<VerseDetail | null>(null);
   const scroll = useRef<ScrollView>(null);
   const offsets = useRef<Record<string, number>>({});
   const scrolled = useRef(false);
@@ -75,18 +73,29 @@ export default function ReaderScreen() {
     router.push({ pathname: '/bible/[book]', params: { book, current: String(chapterNumber) } });
   };
 
+  const headerProps = {
+    title: view ? `${view.book.name_douay} ${chapterNumber}` : '',
+    subtitle,
+    onTitlePress: openBook,
+    titleHint: 'Shows the chapters of this book',
+  };
+  const header = <Header {...headerProps} />;
+  const native = usesNativeHeader(headerProps);
+  const Container = native ? View : SafeAreaView;
+
   const go = (c: number) =>
     router.replace({ pathname: '/bible/[book]/[chapter]', params: { book, chapter: String(c) } });
 
   return (
-    <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: t.neutral.background }}>
-      <Header
-        title={view ? `${view.book.name_douay} ${chapterNumber}` : ''}
-        subtitle={subtitle}
-        onTitlePress={openBook}
-        titleHint="Shows the chapters of this book"
-      />
-      <ScrollView ref={scroll} contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 4, paddingBottom: 40, gap: 14 }}>
+    // On phones the header is the native navigation bar (see Header.tsx): no status-bar padding
+    // here, and the subtitle line scrolls with the text.
+    <Container edges={['top']} style={{ flex: 1, backgroundColor: t.neutral.background }}>
+      {native ? null : header}
+      <ScrollView
+        ref={scroll}
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 4, paddingBottom: 40, gap: 14 }}>
+        {native ? header : null}
         {view?.summary || view?.incipit ? (
           <View
             style={{
@@ -119,19 +128,9 @@ export default function ReaderScreen() {
                 accessibilityLabel={`Verse ${v.douay_verse}${linked ? ', has notes or links' : ''}${washOf.has(v.ref) ? ', highlighted' : ''}${bookmarked.has(v.ref) ? ', bookmarked' : ''}${noted.has(v.ref) ? ', your note' : ''}`}
                 onPress={() => openVerse(v.ref)}
                 onLongPress={() => {
-                  if (!view) return;
-                  if (Platform.OS !== 'web') void Haptics.selectionAsync();
-                  setSheet({
-                    ref: v.ref,
-                    book: view.book.osis,
-                    chapter: v.chapter,
-                    verse: v.verse,
-                    douay_chapter: chapterNumber,
-                    douay_verse: v.douay_verse,
-                    text: v.text,
-                    name: view.book.name,
-                    name_douay: view.book.name_douay,
-                  });
+                  // Same native sheet as a tap, with the haptic tick iOS gives a long press.
+                  if (Platform.OS !== 'web') void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  openVerse(v.ref);
                 }}
                 delayLongPress={350}
                 onLayout={(e) => {
@@ -186,8 +185,7 @@ export default function ReaderScreen() {
           Douay-Rheims Bible, Challoner revision (public domain)
         </Text>
       </ScrollView>
-      <VerseSheet verse={sheet} onClose={() => setSheet(null)} />
-    </SafeAreaView>
+    </Container>
   );
 }
 

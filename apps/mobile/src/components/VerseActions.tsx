@@ -11,8 +11,8 @@ import { RaisedButton } from './Raised';
 import { Text } from './Text';
 
 /**
- * Highlight (four colors), bookmark and a private note for one verse: in the long-press sheet
- * in the reader, and at the top of the verse panel.
+ * Highlight (four colors), bookmark and a private note for one verse, at the top of the verse
+ * panel (a native sheet opened by a tap or a long press in the reader).
  */
 export function VerseActions({ verse }: { verse: VerseDetail }) {
   const t = useTheme();

@@ -39,7 +39,7 @@ export default function VerseScreen() {
 
   const modern = verse ? modernLabel(verse) : null;
   return (
-    <Screen header={<Header close title={verse ? verseLabel(verse) : ''} subtitle={modern ? `${modern} in modern Bibles` : 'Douay-Rheims'} />}>
+    <Screen sheet header={<Header close title={verse ? verseLabel(verse) : ''} subtitle={modern ? `${modern} in modern Bibles` : 'Douay-Rheims'} />}>
       {verse ? (
         <Text variant="scripture" selectable style={{ fontSize: 20, lineHeight: 31 }}>
           {verse.text}

@@ -3,6 +3,7 @@ import { SourceSerif4_400Regular, SourceSerif4_600SemiBold } from '@expo-google-
 import { ThemeProvider, useTheme } from '@pax/tokens/react';
 import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
+import { getFocusedRouteNameFromRoute } from 'expo-router/react-navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -12,6 +13,8 @@ import { addNotificationTapListener } from '@/notifications/reminders';
 import { AppStateProvider, useAppState } from '@/state/AppState';
 
 void SplashScreen.preventAutoHideAsync();
+
+const TAB_TITLES: Record<string, string> = { today: 'Today', pray: 'Pray', study: 'Study', library: 'Library', me: 'Me' };
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -68,15 +71,28 @@ function Navigator() {
     <>
       <StatusBar style={t.scheme === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: t.neutral.background } }}>
-        <Stack.Screen name="(tabs)" />
+        {/* Names the tab on iOS back buttons ("‹ Library") once screens use the native bar. */}
+        <Stack.Screen
+          name="(tabs)"
+          options={({ route }) => ({ title: TAB_TITLES[getFocusedRouteNameFromRoute(route) ?? 'today'] ?? 'Back' })}
+        />
         <Stack.Screen name="rosary" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="devotion/[slug]/pray" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="reminders" options={{ presentation: 'modal' }} />
         <Stack.Screen name="journal/edit" options={{ presentation: 'modal' }} />
         <Stack.Screen name="welcome" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="prayer/[slug]" />
-        {/* A sheet on iOS: swipe down closes it (Android uses the back gesture). */}
-        <Stack.Screen name="verse/[ref]" options={{ presentation: 'modal', gestureEnabled: true }} />
+        {/* The native iOS sheet (Android: bottom sheet): opens at half height with the verse and its
+            highlight, bookmark and note; drag up for Challoner, the Catechism and the Fathers. */}
+        <Stack.Screen
+          name="verse/[ref]"
+          options={{
+            presentation: 'formSheet',
+            sheetAllowedDetents: [0.5, 1.0],
+            sheetGrabberVisible: true,
+            sheetExpandsWhenScrolledToEdge: true,
+          }}
+        />
       </Stack>
     </>
   );

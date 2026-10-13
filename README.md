@@ -122,7 +122,16 @@ and no paid Apple account are needed until the widgets.
 ## What Phase 3 (Rhythm) adds so far
 
 - **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
-  `/learn` and `/profile` links redirect.
+  `/learn` and `/profile` links redirect. On trial: phones use the system tab bar (iOS: Liquid
+  Glass and SF Symbols; Android: Material 3), tinted with the day's color; web keeps Pax's own bar.
+  To go back, delete `src/app/(tabs)/_layout.tsx` and rename `_layout.web.tsx` to `_layout.tsx`.
+- **Navigation bars** (on trial): on phones every pushed screen uses the system navigation bar
+  (iOS: back button naming the previous screen, large Nunito title that shrinks as you scroll;
+  Android: Material top app bar); subtitles sit under the title. Sheets and modals with a close
+  button, and the web, keep Pax's header. To go back, delete `src/components/Header.tsx` and
+  rename `Header.web.tsx` to `Header.tsx`.
+- Decided with Ben from the native mockups: switches, the time picker, segmented controls and
+  confirmations stay Pax's own; the verse panel is the native sheet.
 - **Daily rhythm** replaces XP and reviews: three marks a day, **Read** (today's readings),
   **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
   day for the streak.
@@ -149,10 +158,10 @@ and no paid Apple account are needed until the widgets.
   ("Answer privately"), add a note to any verse, or write a free entry. Tags (#prayer,
   #reflection, #readings, #study, #scripture, #gratitude or your own, also typed inline) filter
   the list. Everything stays on the phone.
-- **Highlights and bookmarks**: press and hold a verse in the reader for a small menu over the
-  page: four highlight colors, a bookmark and a note written right there. Swipe the menu up for the
-  verse's notes, Catechism and Fathers (a tap on the verse opens them too), or down to close it;
-  that page closes with a swipe down on iPhone. The reader shows the color wash, a ribbon and a note mark; Library → Your
+- **Highlights and bookmarks**: press and hold a verse in the reader and
+  the verse panel opens as the native iOS sheet at half height (four highlight colors, a
+  bookmark and a note written right there); drag it up for Challoner's note, the Catechism and the
+  Fathers, flick it down to close. A tap opens the same sheet. The reader shows the color wash, a ribbon and a note mark; Library → Your
   highlights and bookmarks lists them.
 - **Favorites**: the star on a prayer or devotion puts it under "Your favorites" on Pray.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a
