@@ -167,6 +167,11 @@ and no paid Apple account are needed until the widgets.
   much he says, and each chapter his excerpts by verse, folded to a few lines. Fathers go by
   their familiar names (Gregory the Great, Basil the Great, Lactantius) with the source's name
   and other names kept as "also called", from `pipeline/seed/fathers.json`.
+- **Quotes from Aquinas's Catena Aurea** (8,553 of the library's excerpts, which are the Fathers'
+  own words collected by Aquinas) show the Father's work as the source, read from Aquinas's
+  citation ("Con. Evang. iii. 24" → Harmony of the Gospels 3.24), with "via Aquinas's Catena
+  Aurea" under it; the citation no longer opens the text. Rare abbreviations stay as written
+  (`src/lib/catena.ts`).
 - **Native vs Pax's look** (decided with Ben from mockups): the verse panel is the native sheet;
   the tab bar, headers, switches, time picker, segmented choices and buttons stay Pax's own.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a

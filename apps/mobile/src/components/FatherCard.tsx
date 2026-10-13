@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import type { FatherExcerpt } from '@/data/library';
+import { excerptSource } from '@/lib/catena';
 
 import { Card } from './Raised';
 import { Text } from './Text';
@@ -16,14 +17,24 @@ export function FatherCard({ excerpt, showRef, byWork }: { excerpt: FatherExcerp
   const t = useTheme();
   const [open, setOpen] = useState(false);
   const lines = byWork ? 4 : 5;
+  // Aquinas's Catena Aurea quotes are shown under the Father's own work (lib/catena.ts).
+  const from = excerptSource(excerpt);
+  const via = from.via ? `via ${from.via}` : null;
   // About how much fits in the collapsed lines; longer excerpts get a "Read more".
-  const long = excerpt.text.length > lines * 52;
+  const long = from.text.length > lines * 52;
   return (
     <Card onPress={() => setOpen(!open)} accessibilityLabel={`${excerpt.author}, ${excerpt.work}`} contentStyle={{ padding: 14, gap: 6 }}>
       {byWork ? (
-        <Text variant="label" caps color={t.neutral.textMuted} numberOfLines={open ? undefined : 1}>
-          {excerpt.work}
-        </Text>
+        <View style={{ gap: 1 }}>
+          <Text variant="label" caps color={t.neutral.textMuted} numberOfLines={open ? undefined : 1}>
+            {from.work ?? via}
+          </Text>
+          {from.work && via ? (
+            <Text variant="small" color={t.neutral.textSubtle} numberOfLines={1}>
+              {via}
+            </Text>
+          ) : null}
+        </View>
       ) : (
         <>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
@@ -36,14 +47,13 @@ export function FatherCard({ excerpt, showRef, byWork }: { excerpt: FatherExcerp
               </Text>
             ) : null}
           </View>
-          <Text variant="small" color={t.neutral.textMuted} numberOfLines={1}>
-            {showRef ? `${showRef} · ` : ''}
-            {excerpt.work}
+          <Text variant="small" color={t.neutral.textMuted} numberOfLines={2}>
+            {[showRef, from.work, via].filter(Boolean).join(' · ')}
           </Text>
         </>
       )}
       <Text variant="scripture" style={{ fontSize: 16, lineHeight: 24 }} numberOfLines={open ? undefined : lines}>
-        {excerpt.text}
+        {from.text}
       </Text>
       {byWork && long && !open ? (
         <Text variant="small" color={t.accent.text} style={{ fontFamily: 'Nunito_900Black' }}>

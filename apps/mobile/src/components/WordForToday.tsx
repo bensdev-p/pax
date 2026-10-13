@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import { useContent, useLibrary } from '@/data/content';
 import { verseLabel } from '@/data/library';
+import { excerptSource } from '@/lib/catena';
 import { dailyWordFor, workTitle } from '@/lib/dailyWord';
 
 import { QuoteIcon } from './Icons';
@@ -59,10 +60,11 @@ export function WordForToday({ day }: { day: DaySnapshot }) {
       }
       const excerpt = await library.fatherPassage(pick.slug);
       if (!excerpt) return null;
+      const from = excerptSource(excerpt);
       return {
         label: 'From the Church Fathers',
-        text: excerpt.text.replace(/\s*\n\s*\n\s*/g, ' '),
-        source: `${excerpt.author} · ${workTitle(excerpt.work)}`,
+        text: from.text.replace(/\s*\n\s*\n\s*/g, ' '),
+        source: `${excerpt.author} · ${from.work ? workTitle(from.work) : `via ${from.via}`}`,
         href: { pathname: '/fathers/[author]', params: { author: excerpt.author_slug, name: excerpt.author } },
       };
     };
