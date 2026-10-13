@@ -86,10 +86,26 @@ export interface FatherExcerpt {
 
 export interface FatherAuthor {
   slug: string;
+  /** The familiar name (seed/fathers.json), e.g. Gregory the Great. */
   name: string;
+  /** Other names: the source's own, a Latin or Greek form, a title. */
+  also: string[];
   year: number | null;
   category: string | null;
   excerpts: number;
+}
+
+/** An excerpt and the first verse it comments on (standard numbering). */
+export interface FatherRef {
+  slug: string;
+  ref: string;
+}
+
+/** Where a standard-numbered verse sits in the Douay-Rheims. */
+export interface DouayPlace {
+  ref: string;
+  douay_chapter: number;
+  douay_verse: number;
 }
 
 export type SearchKind = 'verse' | 'ccc' | 'father' | 'prayer' | 'saint' | 'devotion' | 'course';
@@ -113,7 +129,13 @@ export interface LibraryStore {
   cccVerses(number: number): Promise<VerseDetail[]>;
   cccOutline(): Promise<CccSection[]>;
   fatherAuthors(): Promise<FatherAuthor[]>;
-  fatherExcerpts(authorSlug: string, limit?: number): Promise<FatherExcerpt[]>;
+  fatherAuthor(slug: string): Promise<FatherAuthor | null>;
+  /** Each of a Father's excerpts with its first verse, optionally in one book. */
+  fatherRefs(authorSlug: string, book?: string): Promise<FatherRef[]>;
+  /** Excerpts by slug, in the order given. */
+  fatherExcerptsBySlug(slugs: string[]): Promise<FatherExcerpt[]>;
+  /** Douay chapter and verse of every verse in a book, by standard ref. */
+  douayPlaces(book: string): Promise<DouayPlace[]>;
   /** One excerpt by slug, from the starter set or the downloaded library. */
   fatherPassage(slug: string): Promise<FatherExcerpt | null>;
   search(query: string, limitPerKind?: number): Promise<SearchHit[]>;
@@ -152,6 +174,18 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
   const fatherSources = () => {
     const installed = packs();
     return installed.length ? installed : [content];
+  };
+  // Names come from content.db, which lists every Father by the familiar name; the downloaded
+  // library keeps the source's names, so its rows are renamed on the way out.
+  let names: Promise<Map<string, { name: string; also: string[] }>> | null = null;
+  const fatherNames = () =>
+    (names ??= content
+      .all<{ slug: string; name: string; also: string | null }>('SELECT slug, name, also FROM father_authors')
+      .then((rows) => new Map(rows.map((r) => [r.slug, { name: r.name, also: parseAlso(r.also) }])))
+      .catch(() => new Map()));
+  const renamed = async <T extends { author_slug: string; author: string }>(rows: T[]): Promise<T[]> => {
+    const map = await fatherNames();
+    return rows.map((r) => ({ ...r, author: map.get(r.author_slug)?.name ?? r.author }));
   };
 
   return {
@@ -203,10 +237,12 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
         ),
       );
       const seen = new Set<string>();
-      return results
-        .flat()
-        .filter((f) => (seen.has(f.slug) ? false : (seen.add(f.slug), true)))
-        .sort((a, b) => (a.year ?? 9999) - (b.year ?? 9999));
+      return renamed(
+        results
+          .flat()
+          .filter((f) => (seen.has(f.slug) ? false : (seen.add(f.slug), true)))
+          .sort((a, b) => (a.year ?? 9999) - (b.year ?? 9999)),
+      );
     },
 
     ccc: (number) =>
@@ -236,41 +272,51 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
           ),
         ),
       );
+      const map = await fatherNames();
       const merged = new Map<string, FatherAuthor>();
       for (const a of lists.flat()) {
         const prev = merged.get(a.slug);
-        merged.set(a.slug, prev ? { ...prev, excerpts: prev.excerpts + a.excerpts } : a);
+        const known = map.get(a.slug);
+        merged.set(a.slug, prev ? { ...prev, excerpts: prev.excerpts + a.excerpts } : { ...a, name: known?.name ?? a.name, also: known?.also ?? [] });
       }
       return [...merged.values()].sort((a, b) => (a.year ?? 9999) - (b.year ?? 9999));
     },
 
-    async fatherExcerpts(authorSlug, limit = 100) {
-      const order = new Map((await this.books()).map((b) => [b.osis, b.sort_order]));
+    async fatherAuthor(slug) {
+      return (await this.fatherAuthors()).find((a) => a.slug === slug) ?? null;
+    },
+
+    async fatherRefs(authorSlug, book) {
       const lists = await Promise.all(
         fatherSources().map((db) =>
-          db.all<FatherExcerpt>(
-            `${fatherSelect('r.ref')}
-             JOIN (SELECT from_key, MIN(to_key) AS ref FROM cross_refs WHERE from_type = 'father' GROUP BY from_key) r
-               ON r.from_key = p.slug
-             WHERE p.author_slug = ?`,
+          db.all<FatherRef>(
+            `SELECT p.slug, MIN(c.to_key) AS ref FROM father_passages p
+             JOIN cross_refs c ON c.from_type = 'father' AND c.from_key = p.slug AND c.to_type = 'verse'
+             WHERE p.author_slug = ? GROUP BY p.slug`,
             [authorSlug],
           ),
         ),
       );
-      const key = (ref = '') => {
-        const [book, ch, v] = ref.split('.');
-        return (order.get(book ?? '') ?? 999) * 1e6 + Number(ch) * 1e3 + Number(v);
-      };
-      return lists
-        .flat()
-        .sort((a, b) => key(a.ref) - key(b.ref))
-        .slice(0, limit);
+      const all = lists.flat();
+      return book ? all.filter((r) => r.ref.startsWith(`${book}.`)) : all;
     },
+
+    async fatherExcerptsBySlug(slugs) {
+      if (!slugs.length) return [];
+      const marks = slugs.map(() => '?').join(', ');
+      const lists = await Promise.all(
+        fatherSources().map((db) => db.all<FatherExcerpt>(`${fatherSelect('NULL')} WHERE p.slug IN (${marks})`, slugs)),
+      );
+      const bySlug = new Map((await renamed(lists.flat())).map((e) => [e.slug, e]));
+      return slugs.map((s) => bySlug.get(s)).filter((e): e is FatherExcerpt => !!e);
+    },
+
+    douayPlaces: (book) => content.all<DouayPlace>('SELECT ref, douay_chapter, douay_verse FROM bible_verses WHERE book = ?', [book]),
 
     async fatherPassage(slug) {
       for (const db of fatherSources()) {
         const row = await db.first<FatherExcerpt>(`${fatherSelect('NULL')} WHERE p.slug = ?`, [slug]);
-        if (row) return row;
+        if (row) return (await renamed([row]))[0]!;
       }
       return null;
     },
@@ -305,18 +351,19 @@ export function createLibrary(content: ReadDb, packs: () => ReadDb[] = () => [])
           const fromPacks = (
             await Promise.all(
               installed.map((db) =>
-                db.all<{ slug: string; author: string; text: string }>(
-                  `SELECT p.slug, a.name AS author, p.text FROM father_passages p JOIN father_authors a ON a.slug = p.author_slug WHERE ${where} LIMIT ?`,
+                db.all<{ slug: string; author: string; author_slug: string; text: string }>(
+                  `SELECT p.slug, a.name AS author, p.author_slug, p.text FROM father_passages p JOIN father_authors a ON a.slug = p.author_slug WHERE ${where} LIMIT ?`,
                   [...params, limitPerKind],
                 ),
               ),
             )
           ).flat();
+          const named = await renamed(fromPacks);
           const others = hits.filter((h) => h.kind !== 'father');
           hits.length = 0;
           hits.push(
             ...others,
-            ...fromPacks.slice(0, limitPerKind).map((f) => ({ kind: 'father' as const, key: f.slug, title: f.author, snippet: clip(f.text, words[0]) })),
+            ...named.slice(0, limitPerKind).map((f) => ({ kind: 'father' as const, key: f.slug, title: f.author, snippet: clip(f.text, words[0]) })),
           );
         }
       }
@@ -429,4 +476,13 @@ export function clip(text: string, word?: string, size = 160): string {
   const start = at > 40 ? at - 40 : 0;
   const piece = flat.slice(start, start + size).trim();
   return `${start > 0 ? '…' : ''}${piece}…`;
+}
+
+function parseAlso(json: string | null): string[] {
+  try {
+    const list: unknown = JSON.parse(json ?? '[]');
+    return Array.isArray(list) ? list.filter((x): x is string => typeof x === 'string') : [];
+  } catch {
+    return [];
+  }
 }

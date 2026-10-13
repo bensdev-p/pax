@@ -94,6 +94,14 @@ A plan has two halves:
 title. Once filled, the build refuses a count that doesn't match the split, so changing a split
 means re-checking the words.
 
+## Church Fathers' names
+
+`pipeline/seed/fathers.json` gives a Father his familiar name (`"name": "Gregory the Great"`) and
+other names under `"also"` (the source's own name, a Latin form, a title), which the app shows as
+"Also called …" and searches. Key it by the source's slug, which never changes; the build stops
+if a slug doesn't exist. Every Father in the full library is listed in content.db, so a rename
+also applies to the downloaded library without a new download.
+
 ## Bible text, Catechism, Fathers and lectionary
 
 These come from vendored sources, not hand-written seeds; see `pipeline/README.md` and

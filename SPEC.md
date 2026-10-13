@@ -259,6 +259,9 @@ Phases 1 and 2 and the first polish rounds are done. Next:
     Done in Phase 3 as a hub (Ben chose it from three mockups): today's Rosary, "For you", and
     tiles for the Rosary's mysteries, chaplets, Stations, litanies, novenas and the prayer book,
     each opening its own short page.
+  - Church Fathers: done in Phase 3 as a directory (Ben chose it from mockups): search, the
+    most-quoted Fathers, one era at a time; a Father's page goes book → chapter → verse. Familiar
+    names, with the other names kept ("also called").
   - Today tab (as mentioned earlier)
 - Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
   tapping that saint's quote on their page should open it there. Until then the quote stays as

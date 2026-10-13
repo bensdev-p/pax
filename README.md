@@ -160,6 +160,13 @@ and no paid Apple account are needed until the widgets.
   Chaplets, Stations, Litanies, Novenas (in progress and the ones whose nine days are now listed
   first) and the Prayer book (one section at a time, with search across all of them). A kind
   with a single devotion opens it directly.
+- **Church Fathers as a directory** (Ben's layout notes; chosen from mockups): search by any of a
+  Father's names, the four most-quoted Fathers as tiles, then one era at a time (Before Nicaea,
+  325–750, Medieval), each Father with a quill in his era's color. A Father's page shows his
+  books (with a link to his saint page where Pax has one), each book its chapters shaded by how
+  much he says, and each chapter his excerpts by verse, folded to a few lines. Fathers go by
+  their familiar names (Gregory the Great, Basil the Great, Lactantius) with the source's name
+  and other names kept as "also called", from `pipeline/seed/fathers.json`.
 - **Native vs Pax's look** (decided with Ben from mockups): the verse panel is the native sheet;
   the tab bar, headers, switches, time picker, segmented choices and buttons stay Pax's own.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a

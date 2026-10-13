@@ -214,7 +214,9 @@ PART_LIMIT_BYTES = 30_000_000
 def to_json(f: Fathers, slugs: set[str]) -> dict:
     passages = [f.passages[s] for s in sorted(slugs)]
     works = sorted({p.work_slug for p in passages})
-    authors = sorted({p.author_slug for p in passages})
+    # Every author, even those with no starter excerpt, so the app can name the Fathers in the
+    # downloaded library by their familiar names (seed/fathers.json).
+    authors = sorted(f.authors)
     return {
         "source": f"https://github.com/HistoricalChristianFaith/Commentaries-Database @ {FATHERS_COMMIT}",
         "authors": [f.authors[a].__dict__ for a in authors],

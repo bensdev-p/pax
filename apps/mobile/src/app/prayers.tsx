@@ -1,19 +1,18 @@
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
+import { FilterChip } from '@/components/FilterChip';
 import { Header } from '@/components/Header';
-import { ChevronIcon, SearchIcon } from '@/components/Icons';
+import { ChevronIcon } from '@/components/Icons';
 import { Card } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
+import { SearchInput } from '@/components/SearchInput';
 import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
 import type { Prayer } from '@/data/types';
 import { filterPrayers, PRAYER_SECTIONS } from '@/lib/pray';
-
-// The field already has a focus border; drop the browser's own outline on web.
-const WEB_NO_OUTLINE = Platform.OS === 'web' ? ({ outlineWidth: 0 } as object) : null;
 
 /** The prayer book: one section at a time, or a search across all of them. */
 export default function PrayersScreen() {
@@ -33,56 +32,14 @@ export default function PrayersScreen() {
 
   return (
     <Screen header={<Header title="Prayer book" subtitle={prayers ? `${prayers.length} prayers` : undefined} />}>
-      <View
-        style={{
-          height: 50,
-          borderWidth: t.border.width,
-          borderColor: searching ? t.accent.accent : t.neutral.border,
-          borderRadius: t.radius.tile,
-          backgroundColor: t.neutral.surface,
-          paddingHorizontal: 14,
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 10,
-        }}>
-        <SearchIcon color={t.neutral.textSubtle} />
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Find a prayer"
-          placeholderTextColor={t.neutral.textSubtle}
-          returnKeyType="search"
-          accessibilityLabel="Find a prayer"
-          style={[{ flex: 1, fontFamily: 'Nunito_700Bold', fontSize: 16, color: t.neutral.text }, WEB_NO_OUTLINE]}
-        />
-      </View>
+      <SearchInput value={query} onChangeText={setQuery} placeholder="Find a prayer" />
 
       {!searching ? (
         // Bleeds to the screen edges so chips scroll in from the side.
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }} contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}>
-          {sections.map((s) => {
-            const on = s.category === section;
-            return (
-              <Pressable
-                key={s.category}
-                accessibilityRole="tab"
-                accessibilityState={{ selected: on }}
-                onPress={() => setSection(s.category)}
-                style={{
-                  paddingHorizontal: 14,
-                  height: 36,
-                  justifyContent: 'center',
-                  borderRadius: t.radius.chip,
-                  borderWidth: t.border.width,
-                  borderColor: on ? t.accent.accent : t.neutral.border,
-                  backgroundColor: on ? t.accent.tint : 'transparent',
-                }}>
-                <Text variant="small" style={{ fontFamily: 'Nunito_800ExtraBold' }} color={on ? t.accent.text : t.neutral.textMuted}>
-                  {s.title}
-                </Text>
-              </Pressable>
-            );
-          })}
+          {sections.map((s) => (
+            <FilterChip key={s.category} label={s.title} selected={s.category === section} onPress={() => setSection(s.category)} />
+          ))}
         </ScrollView>
       ) : null}
 
