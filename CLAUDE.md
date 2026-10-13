@@ -3,13 +3,15 @@
 Pax is a daily Catholic companion app (read, pray, study with the liturgical year). **Read
 `SPEC.md` first**: it is the source of truth for the vision, tabs, habit model and roadmap.
 `README.md` lists what is built; `PRIVACY.md` must match the data model; `docs/CONTENT.md`
-explains how content is added.
+explains how content is added; `docs/NEXT_SESSION.md` says where the work stands.
 
 ## Working with Ben
 
 - Ben tests on his iPhone in **Expo Go**. He has no Mac and no paid Apple account yet.
 - **Use only libraries that run in Expo Go, and ask Ben before adding any native module.**
-- **Ask Ben before choosing anything not covered in `SPEC.md`.** Offer a recommended option.
+- **Ask Ben before choosing anything not covered in `SPEC.md`.** Offer a recommended option. For
+  a layout or look, show him mockups first (an Artifact with two or three options, phone-sized,
+  in Pax's look, one marked recommended); he picks, then build it and send web screenshots.
 - **Native mechanics, Pax's look.** Use the platform's own sheets, gestures, transitions and
   haptics over custom JS look-alikes (custom gesture code feels like a web app), but keep Pax's own
   visual chrome: Ben tried the native tab bar and navigation bars and found them too Apple-like.
@@ -47,7 +49,14 @@ npm run content                            # refresh the romcal dump, then rebui
 cd apps/mobile && EXPO_OFFLINE=1 npx expo export -p web   # also -p ios / -p android to check bundles
 ```
 
-In the cloud sandbox: `api.expo.dev` is blocked, so prefix Expo CLI commands with
+To see a screen: export the web build, serve it with `node scripts/serve-web.mjs` (clean URLs,
+port 8081; run it in the Bash tool's background mode, and stop it by PID, never `pkill -f`), then
+screenshot with Playwright (`/opt/node-tools/node_modules/playwright`, Chromium at
+`/opt/pw-browsers/chromium`, a 390-wide viewport). Seed user data on the web through
+`localStorage['pax.user.v1']` (see `src/data/userStore.web.ts`). Web layout can differ from
+iOS; when Ben reports a phone-only bug, believe the phone.
+
+In the cloud sandbox: `api.expo.dev` and Supabase are blocked, so prefix Expo CLI commands with
 `EXPO_OFFLINE=1` and use `npx expo install` for packages. Background servers must use the Bash
 tool's background mode. Don't pipe `expo export` into `head` (it kills the export).
 
