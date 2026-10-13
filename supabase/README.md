@@ -36,8 +36,9 @@ offline. To publish it:
    `python3 pipeline/fetch_sources.py && python3 pipeline/fathers.py pack 1`
 2. In the dashboard: **Storage → New bucket**, name `packs`, and turn on **Public bucket**.
 3. Open `packs`, create a folder `fathers`, and upload everything in
-   `pipeline/build/fathers-pack/`: `manifest.json` and the four `fathers-1-*.db` parts (each
-   under the free plan's 50 MB limit).
+   `pipeline/build/fathers-pack/`: `manifest.json` and the six `fathers-1-*.db` parts (about
+   24 MB each, under the free plan's 50 MB limit). No Python handy? Ask Claude in a cloud session
+   to build the pack and send you the files.
 4. In Pax: Library → Church Fathers → Download.
 
 The app reads `https://wufwcvokotpdyvttcuga.supabase.co/storage/v1/object/public/packs/fathers/manifest.json`.
