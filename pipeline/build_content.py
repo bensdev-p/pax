@@ -403,6 +403,16 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         for p in fathers_starter["passages"]
         if any(r in known_refs for r in p["refs"])
     ]
+    # Familiar names (Gregory the Great, not "Gregory the Dialogist"); the source's name is kept
+    # under "also" so search finds either.
+    father_names = load_json(SEED / "fathers.json")["authors"]
+    unknown = set(father_names) - {a["slug"] for a in fathers_starter["authors"]}
+    if unknown:
+        raise SystemExit(f"seed/fathers.json names unknown Fathers: {sorted(unknown)}")
+    fathers_starter["authors"] = [
+        {**a, "name": father_names.get(a["slug"], {}).get("name", a["name"]), "also": json.dumps(father_names.get(a["slug"], {}).get("also", []), ensure_ascii=False)}
+        for a in fathers_starter["authors"]
+    ]
     used_works = {p["work_slug"] for p in fathers_starter["passages"]}
     fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
     saints = load_json(SEED / "saints.json")["saints"]
@@ -461,7 +471,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         ],
     )
     db.executemany(
-        "INSERT INTO father_authors VALUES (:slug, :name, :year, :category, :wiki)",
+        "INSERT INTO father_authors VALUES (:slug, :name, :year, :category, :wiki, :also)",
         fathers_starter["authors"],
     )
     names = {a["slug"]: a for a in fathers_starter["authors"]}

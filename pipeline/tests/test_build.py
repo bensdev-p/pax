@@ -154,6 +154,19 @@ class BuildTest(unittest.TestCase):
             self.assertRegex(sql, r"PRIMARY KEY")
             self.assertNotIn("AUTOINCREMENT", sql)
 
+    def test_fathers_have_familiar_names(self):
+        # Every Father in the full library is listed, so the app can rename the download's rows.
+        self.assertEqual(self.db.execute("SELECT count(*) FROM father_authors").fetchone()[0], 104)
+        name, also = self.db.execute("SELECT name, also FROM father_authors WHERE slug='gregory-the-dialogist'").fetchone()
+        self.assertEqual(name, "Gregory the Great")
+        self.assertIn("Gregory the Dialogist", json.loads(also))
+        self.assertEqual(self.db.execute("SELECT also FROM father_authors WHERE slug='augustine-of-hippo'").fetchone()[0], "[]")
+        # Works and search use the familiar name too.
+        self.assertEqual(
+            self.db.execute("SELECT DISTINCT author FROM father_works WHERE author_slug='gregory-the-dialogist'").fetchall(),
+            [("Gregory the Great",)],
+        )
+
     def test_saints_and_devotions(self):
         row = self.db.execute(
             "SELECT name, kind, month_day, facts, fathers FROM saints WHERE romcal_key='ignatius_of_antioch_bishop'"

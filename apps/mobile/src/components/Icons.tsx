@@ -376,3 +376,14 @@ export function CrossIcon({ size = 26 }: IconProps) {
     </Svg>
   );
 }
+
+/** A quill for a Church Father, in his era's color. */
+export function QuillIcon({ size = 24, color = '#F5A524' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M21 2.5C13.2 3 8.3 7.8 6.6 15l2.8 1.2C15.2 14 19.1 9.2 21 2.5z" fill={color} />
+      <Path d="M21 2.5C16.4 5.2 12.3 9.8 9.4 16.2" stroke="#FFFFFF" strokeOpacity={0.6} strokeWidth={1.4} strokeLinecap="round" fill="none" />
+      <Path d="M9.4 16.2L4 21.5" stroke={color} strokeWidth={2.4} strokeLinecap="round" />
+    </Svg>
+  );
+}

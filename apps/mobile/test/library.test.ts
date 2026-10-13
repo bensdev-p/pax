@@ -68,9 +68,12 @@ describe('Library over content.db', () => {
     const authors = await lib.fatherAuthors();
     const augustine = authors.find((a) => a.slug === 'augustine-of-hippo');
     expect(augustine?.excerpts).toBeGreaterThan(10);
-    const excerpts = await lib.fatherExcerpts('augustine-of-hippo', 5);
-    expect(excerpts).toHaveLength(5);
-    expect(excerpts[0]?.ref).toBeTruthy();
+    const refs = await lib.fatherRefs('augustine-of-hippo', 'John');
+    expect(refs.length).toBeGreaterThan(5);
+    expect(refs.every((r) => r.ref.startsWith('John.'))).toBe(true);
+    const excerpts = await lib.fatherExcerptsBySlug(refs.slice(0, 5).map((r) => r.slug).reverse());
+    expect(excerpts.map((e) => e.slug)).toEqual(refs.slice(0, 5).map((r) => r.slug).reverse());
+    expect(excerpts[0]?.author).toBe('Augustine of Hippo');
   });
 
   it('searches with FTS and with the LIKE fallback', async () => {

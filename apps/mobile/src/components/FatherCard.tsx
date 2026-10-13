@@ -8,29 +8,48 @@ import type { FatherExcerpt } from '@/data/library';
 import { Card } from './Raised';
 import { Text } from './Text';
 
-/** A Father's excerpt, collapsed to a few lines until tapped. */
-export function FatherCard({ excerpt, showRef }: { excerpt: FatherExcerpt; showRef?: string }) {
+/**
+ * A Father's excerpt, collapsed to a few lines until tapped. `byWork` is for a list that is
+ * already one Father's: the work leads instead of his name.
+ */
+export function FatherCard({ excerpt, showRef, byWork }: { excerpt: FatherExcerpt; showRef?: string; byWork?: boolean }) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
+  const lines = byWork ? 4 : 5;
+  // About how much fits in the collapsed lines; longer excerpts get a "Read more".
+  const long = excerpt.text.length > lines * 52;
   return (
     <Card onPress={() => setOpen(!open)} accessibilityLabel={`${excerpt.author}, ${excerpt.work}`} contentStyle={{ padding: 14, gap: 6 }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
-        <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black', flex: 1 }}>
-          {excerpt.author}
+      {byWork ? (
+        <Text variant="label" caps color={t.neutral.textMuted} numberOfLines={open ? undefined : 1}>
+          {excerpt.work}
         </Text>
-        {excerpt.year && excerpt.year < 9999 ? (
-          <Text variant="small" color={t.neutral.textSubtle}>
-            c. {excerpt.year}
+      ) : (
+        <>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
+            <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black', flex: 1 }}>
+              {excerpt.author}
+            </Text>
+            {excerpt.year && excerpt.year < 9999 ? (
+              <Text variant="small" color={t.neutral.textSubtle}>
+                c. {excerpt.year}
+              </Text>
+            ) : null}
+          </View>
+          <Text variant="small" color={t.neutral.textMuted} numberOfLines={1}>
+            {showRef ? `${showRef} · ` : ''}
+            {excerpt.work}
           </Text>
-        ) : null}
-      </View>
-      <Text variant="small" color={t.neutral.textMuted} numberOfLines={1}>
-        {showRef ? `${showRef} · ` : ''}
-        {excerpt.work}
-      </Text>
-      <Text variant="scripture" style={{ fontSize: 16, lineHeight: 24 }} numberOfLines={open ? undefined : 5}>
+        </>
+      )}
+      <Text variant="scripture" style={{ fontSize: 16, lineHeight: 24 }} numberOfLines={open ? undefined : lines}>
         {excerpt.text}
       </Text>
+      {byWork && long && !open ? (
+        <Text variant="small" color={t.accent.text} style={{ fontFamily: 'Nunito_900Black' }}>
+          Read more
+        </Text>
+      ) : null}
       {open && excerpt.source_url ? (
         <Pressable accessibilityRole="link" onPress={() => void WebBrowser.openBrowserAsync(excerpt.source_url!)}>
           <Text variant="small" color={t.accent.text} style={{ textDecorationLine: 'underline' }}>

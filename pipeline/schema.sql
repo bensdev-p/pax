@@ -72,7 +72,8 @@ CREATE TABLE father_authors (
   name     TEXT NOT NULL,
   year     INTEGER,
   category TEXT,
-  wiki     TEXT
+  wiki     TEXT,
+  also     TEXT NOT NULL DEFAULT '[]'  -- JSON list of other names (the source's own, Latin, etc.)
 ) WITHOUT ROWID;
 
 CREATE TABLE father_works (
