@@ -101,6 +101,15 @@ export function VerseActions({ verse }: { verse: VerseDetail }) {
 
       {editing ? (
         <View style={{ gap: 8 }}>
+          {/* Above the box, so they stay in view while the keyboard is up. */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Pressable accessibilityRole="button" onPress={() => setEditing(false)} hitSlop={10} style={{ paddingVertical: 6 }}>
+              <Text variant="label" caps color={t.neutral.textMuted}>
+                Cancel
+              </Text>
+            </Pressable>
+            <RaisedButton label="Save note" height={36} onPress={() => void saveNote()} />
+          </View>
           <TextInput
             value={draft}
             onChangeText={setDraft}
@@ -123,10 +132,6 @@ export function VerseActions({ verse }: { verse: VerseDetail }) {
               lineHeight: 25,
             }}
           />
-          <View style={{ flexDirection: 'row', gap: 10 }}>
-            <RaisedButton kind="neutral" label="Cancel" height={44} style={{ flex: 1 }} onPress={() => setEditing(false)} />
-            <RaisedButton label="Save note" height={44} style={{ flex: 1 }} onPress={() => void saveNote()} />
-          </View>
         </View>
       ) : (
         <Pressable

@@ -10,9 +10,10 @@ explains how content is added.
 - Ben tests on his iPhone in **Expo Go**. He has no Mac and no paid Apple account yet.
 - **Use only libraries that run in Expo Go, and ask Ben before adding any native module.**
 - **Ask Ben before choosing anything not covered in `SPEC.md`.** Offer a recommended option.
-- **Prefer iOS-native components and behavior wherever Expo Go allows** (native sheets, stack
-  transitions, gestures, pickers, alerts, haptics) over custom JS look-alikes; custom gesture
-  code feels like a web app. Ask Ben when native would change Pax's look (SPEC: Visual style).
+- **Native mechanics, Pax's look.** Use the platform's own sheets, gestures, transitions and
+  haptics over custom JS look-alikes (custom gesture code feels like a web app), but keep Pax's own
+  visual chrome: Ben tried the native tab bar and navigation bars and found them too Apple-like.
+  Ask Ben before anything native that would change how Pax looks (SPEC: Visual style).
 - Update `PRIVACY.md` in the same change as any data-model change (user.db, Supabase, widget
   feed).
 - After pulling, Ben runs `npm install` (from the repo root) when dependencies changed, then

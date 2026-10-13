@@ -35,7 +35,23 @@ export function Screen({
       {footer}
     </>
   );
-  if (sheet) return <View style={{ flex: 1, paddingTop: 10, backgroundColor: t.neutral.background }}>{content}</View>;
+  if (sheet) {
+    // In a native sheet the screen's height isn't fixed, so a header above a ScrollView can collapse
+    // onto it. The ScrollView is the whole sheet instead (iOS also expands the sheet when it scrolls),
+    // with the header as its first row. Taps on buttons work while the keyboard is up, and the
+    // content scrolls clear of the keyboard.
+    return (
+      <ScrollView
+        style={{ flex: 1, backgroundColor: t.neutral.background }}
+        contentContainerStyle={{ paddingTop: 10, paddingBottom: 32 }}
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets>
+        {header}
+        <View style={body}>{children}</View>
+        {footer}
+      </ScrollView>
+    );
+  }
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: t.neutral.background }}>
       {content}
