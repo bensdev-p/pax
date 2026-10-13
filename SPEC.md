@@ -85,7 +85,7 @@ Everything else (tiles, long readings list) moves one tap away.
   browse and filter by tag in Me. No lock for now (decided with Ben).
 - **Highlights (four colors), verse bookmarks and notes** from a long press on a verse in the
   Bible reader (a sheet over the page), listed in Library;
-  favorite prayers and devotions at the top of Pray (built in Phase 3).
+  favorite prayers and devotions in "For you" at the top of Pray (built in Phase 3).
 - **Examination of conscience** and a nightly **Examen**.
 - **Study courses on the Fathers and saints:** guided reading of their own writings (for example
   the letters of Ignatius of Antioch, the Didache, Augustine's Confessions, Thérèse's Story of a
@@ -256,6 +256,9 @@ Phases 1 and 2 and the first polish rounds are done. Next:
   writings.
 - Rework the layout of a few screens (details to come).
   - Example: Prayer tab should be laid out better, not just a long scrolling list of prayers.
+    Done in Phase 3 as a hub (Ben chose it from three mockups): today's Rosary, "For you", and
+    tiles for the Rosary's mysteries, chaplets, Stations, litanies, novenas and the prayer book,
+    each opening its own short page.
   - Today tab (as mentioned earlier)
 - Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
   tapping that saint's quote on their page should open it there. Until then the quote stays as

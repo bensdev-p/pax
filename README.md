@@ -153,7 +153,13 @@ and no paid Apple account are needed until the widgets.
   bookmark and a note written right there); drag it up for Challoner's note, the Catechism and the
   Fathers, flick it down to close. A tap opens the same sheet. The reader shows the color wash, a ribbon and a note mark; Library → Your
   highlights and bookmarks lists them.
-- **Favorites**: the star on a prayer or devotion puts it under "Your favorites" on Pray.
+- **Favorites**: the star on a prayer or devotion puts it in "For you" on Pray.
+- **Pray as a hub** (Ben's layout notes; chosen from mockups): today's Rosary at the top, a
+  "For you" row (novenas in progress, the season's devotions, favorites), then six tiles:
+  Rosary (the four sets of mysteries, when each is prayed, and any set can be prayed today),
+  Chaplets, Stations, Litanies, Novenas (in progress and the ones whose nine days are now listed
+  first) and the Prayer book (one section at a time, with search across all of them). A kind
+  with a single devotion opens it directly.
 - **Native vs Pax's look** (decided with Ben from mockups): the verse panel is the native sheet;
   the tab bar, headers, switches, time picker, segmented choices and buttons stay Pax's own.
 - **Daily rhythm setting** (Me): Read · Pray · Study, or Read · Pray for people who don't want a

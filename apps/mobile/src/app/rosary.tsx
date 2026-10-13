@@ -1,7 +1,7 @@
 import { mysteriesForDay } from '@pax/liturgy';
 import { useTheme } from '@pax/tokens/react';
 import * as Haptics from 'expo-haptics';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, Pressable, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
@@ -15,6 +15,7 @@ import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
 import type { Prayer, RosaryMystery } from '@/data/types';
 import { MYSTERY_SET_NAMES, ordinal } from '@/lib/format';
+import { isMysterySet } from '@/lib/pray';
 import { rosarySteps, type RosaryStep } from '@/lib/rosary';
 import { useAppState } from '@/state/AppState';
 
@@ -23,7 +24,9 @@ export default function RosaryScreen() {
   const insets = useSafeAreaInsets();
   const content = useContent();
   const { today, progress, recordPrayer } = useAppState();
-  const set = today ? mysteriesForDay(today) : 'joyful';
+  // Today's set unless another was chosen on the mysteries page.
+  const params = useLocalSearchParams<{ set?: string }>();
+  const set = isMysterySet(params.set) ? params.set : today ? mysteriesForDay(today) : 'joyful';
   const [prayers, setPrayers] = useState<Record<string, Prayer>>({});
   const [mysteries, setMysteries] = useState<RosaryMystery[]>([]);
   const [index, setIndex] = useState(0);
