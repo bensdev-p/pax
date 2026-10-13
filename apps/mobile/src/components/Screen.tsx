@@ -28,10 +28,7 @@ export function Screen({
     <>
       {header}
       {scroll ? (
-        // "automatic" lets iOS keep content clear of the native tab bar it floats over.
-        <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[body, { paddingBottom: 32 }]}>
-          {children}
-        </ScrollView>
+        <ScrollView contentContainerStyle={[body, { paddingBottom: 32 }]}>{children}</ScrollView>
       ) : (
         <View style={[{ flex: 1 }, body]}>{children}</View>
       )}

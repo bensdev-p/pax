@@ -122,9 +122,7 @@ and no paid Apple account are needed until the widgets.
 ## What Phase 3 (Rhythm) adds so far
 
 - **Tabs**: Today · Pray · Study · Library · Me. Learn is now Study and Profile is now Me; the old
-  `/learn` and `/profile` links redirect. On trial: phones use the system tab bar (iOS: Liquid
-  Glass and SF Symbols; Android: Material 3), tinted with the day's color; web keeps Pax's own bar.
-  To go back, delete `src/app/(tabs)/_layout.tsx` and rename `_layout.web.tsx` to `_layout.tsx`.
+  `/learn` and `/profile` links redirect.
 - **Daily rhythm** replaces XP and reviews: three marks a day, **Read** (today's readings),
   **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
   day for the streak.
