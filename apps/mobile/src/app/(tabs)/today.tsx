@@ -1,4 +1,4 @@
-import { addDays, getDaySnapshots, mysteriesForDay, type DaySnapshot } from '@pax/liturgy';
+import { mysteriesForDay, type DaySnapshot } from '@pax/liturgy';
 import { tokens } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
@@ -16,7 +16,6 @@ import { Text } from '@/components/Text';
 import { WordForToday } from '@/components/WordForToday';
 import { useContent } from '@/data/content';
 import type { Saint } from '@/data/types';
-import { weekdayName } from '@/lib/calendar';
 import { cycleLine, dayLabel, MYSTERY_SET_NAMES, paxGreeting, paxMoodFor, shortName } from '@/lib/format';
 import { readingsOf, readParts } from '@/lib/readings';
 import { saintColor, saintForDay, type Celebration } from '@/lib/saints';
@@ -32,16 +31,7 @@ export default function TodayScreen() {
   useEffect(() => {
     if (!today) return;
     let cancelled = false;
-    void (async () => {
-      const own = await saintForDay(content, today);
-      if (own) return { ...own, ahead: null };
-      // No saint today: the next one this week, so the card always has a saint.
-      for (const day of await getDaySnapshots(addDays(today.date, 1), 6)) {
-        const next = await saintForDay(content, day);
-        if (next) return { ...next, ahead: day };
-      }
-      return null;
-    })().then((s) => {
+    void saintForDay(content, today).then((s) => {
       if (!cancelled) setSaint(s);
     });
     return () => {
@@ -91,17 +81,17 @@ export default function TodayScreen() {
  * the saint is the day's own celebration, the card is about them; on a weekday with an optional
  * memorial, the saint sits under the day. Tapping opens the saint's page.
  */
-/** The saint of the day, or (`ahead`) the next saint this week when today has none. */
-type FeastSaint = { saint: Saint; celebration: Celebration; ahead: DaySnapshot | null };
+/** The saint of the day, if today has one (a day without one shows just the day). */
+type FeastSaint = { saint: Saint; celebration: Celebration };
 
 function FeastCard({ day, saint }: { day: DaySnapshot; saint: FeastSaint | null }) {
   const t = useTheme();
   const advent = day.season === 'ADVENT';
-  const own = !!saint && !saint.celebration.optional && !saint.ahead;
+  const own = !!saint && !saint.celebration.optional;
   const palette = saint ? (t.locked ? t.accent : tokens.palettes[saintColor(saint.saint, saint.celebration)][t.scheme]) : t.accent;
   const feast = !!saint && saint.saint.kind !== 'saint' && saint.saint.kind !== 'saints';
   const open = saint
-    ? () => router.push({ pathname: '/saint/[key]', params: { key: saint.saint.romcal_key, date: (saint.ahead ?? day).date } })
+    ? () => router.push({ pathname: '/saint/[key]', params: { key: saint.saint.romcal_key, date: day.date } })
     : undefined;
 
   return (
@@ -162,9 +152,7 @@ function FeastCard({ day, saint }: { day: DaySnapshot; saint: FeastSaint | null 
           <SaintFrame saint={saint.saint} color={palette.accent} small />
           <View style={{ flex: 1, gap: 2 }}>
             <Text variant="label" caps color={palette.text}>
-              {saint.ahead
-                ? `Coming up · ${weekdayName(saint.ahead.date)}`
-                : `${feast ? 'Feast of the day' : 'Saint of the day'}${saint.celebration.optional ? ' · Optional memorial' : ''}`}
+              {`${feast ? 'Feast of the day' : 'Saint of the day'}${saint.celebration.optional ? ' · Optional memorial' : ''}`}
             </Text>
             <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
               {saint.saint.name}
