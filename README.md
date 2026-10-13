@@ -125,13 +125,6 @@ and no paid Apple account are needed until the widgets.
   `/learn` and `/profile` links redirect. On trial: phones use the system tab bar (iOS: Liquid
   Glass and SF Symbols; Android: Material 3), tinted with the day's color; web keeps Pax's own bar.
   To go back, delete `src/app/(tabs)/_layout.tsx` and rename `_layout.web.tsx` to `_layout.tsx`.
-- **Navigation bars** (on trial): on phones every pushed screen uses the system navigation bar
-  (iOS: back button naming the previous screen, large Nunito title that shrinks as you scroll;
-  Android: Material top app bar); subtitles sit under the title. Sheets and modals with a close
-  button, and the web, keep Pax's header. To go back, delete `src/components/Header.tsx` and
-  rename `Header.web.tsx` to `Header.tsx`.
-- Decided with Ben from the native mockups: switches, the time picker, segmented controls and
-  confirmations stay Pax's own; the verse panel is the native sheet.
 - **Daily rhythm** replaces XP and reviews: three marks a day, **Read** (today's readings),
   **Pray** (the Rosary or a devotion) and **Study** (a day of a reading plan). Any one counts the
   day for the streak.

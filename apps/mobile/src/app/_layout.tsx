@@ -3,7 +3,6 @@ import { SourceSerif4_400Regular, SourceSerif4_600SemiBold } from '@expo-google-
 import { ThemeProvider, useTheme } from '@pax/tokens/react';
 import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
-import { getFocusedRouteNameFromRoute } from 'expo-router/react-navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -13,8 +12,6 @@ import { addNotificationTapListener } from '@/notifications/reminders';
 import { AppStateProvider, useAppState } from '@/state/AppState';
 
 void SplashScreen.preventAutoHideAsync();
-
-const TAB_TITLES: Record<string, string> = { today: 'Today', pray: 'Pray', study: 'Study', library: 'Library', me: 'Me' };
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -71,11 +68,7 @@ function Navigator() {
     <>
       <StatusBar style={t.scheme === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: t.neutral.background } }}>
-        {/* Names the tab on iOS back buttons ("‹ Library") once screens use the native bar. */}
-        <Stack.Screen
-          name="(tabs)"
-          options={({ route }) => ({ title: TAB_TITLES[getFocusedRouteNameFromRoute(route) ?? 'today'] ?? 'Back' })}
-        />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="rosary" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="devotion/[slug]/pray" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="reminders" options={{ presentation: 'modal' }} />

@@ -151,7 +151,7 @@ remains the visual reference; design tokens live in `design/tokens.json`.
 | Fixed colors | Streak #FF9F1C; the rest follow the liturgical accent |
 | Icons | Filled, two-tone; never thin line icons (except back/close chevrons) |
 | Prayer and reading screens | Quieter: serif text, generous line height, no confetti |
-| Native behavior | iOS-native wherever Expo Go allows (Ben, Phase 3): system sheets with detents and grabber, native stack transitions and back swipe, native pickers, alerts and haptics. Pax's own look stays where it is the brand (raised components, Pax, liturgical colors). Decided: native verse sheet; native tab bar and navigation bars on trial; Pax's own switches, time picker, segmented choices and (no) confirmations |
+| Native behavior | iOS-native wherever Expo Go allows (Ben, Phase 3): system sheets with detents and grabber, native stack transitions and back swipe, native pickers, alerts and haptics. Pax's own look stays where it is the brand (raised components, Pax, liturgical colors) |
 
 ## Content sources and licensing
 

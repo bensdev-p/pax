@@ -1,67 +1,64 @@
 import { useTheme } from '@pax/tokens/react';
-import { Stack } from 'expo-router';
+import { router } from 'expo-router';
+import type { ReactNode } from 'react';
 import { Pressable, View } from 'react-native';
 
-import { HeaderBar, type HeaderProps } from './HeaderBar';
-import { ChevronIcon } from './Icons';
+import { BackIcon, ChevronIcon, CloseIcon } from './Icons';
 import { Text } from './Text';
 
-/**
- * Screen headers on phones are the system navigation bar (Ben, Phase 3, on trial): on iOS a back
- * button naming the previous screen, a large title that shrinks into a translucent bar as you
- * scroll; on Android a Material top app bar. Titles stay in Nunito. The subtitle (the native bar
- * has none) sits under the title at the top of the content. Sheets and modals with a close
- * button keep Pax's own header. To go back to Pax's headers everywhere, delete this file and
- * rename `Header.web.tsx` to `Header.tsx`.
- */
-export function Header(props: HeaderProps) {
+/** Back (or close) button, title and subtitle, as on the Daily readings canvas. */
+export function Header({
+  title,
+  subtitle,
+  close,
+  right,
+  onBack,
+  onTitlePress,
+  titleHint,
+}: {
+  title: string;
+  subtitle?: string;
+  close?: boolean;
+  right?: ReactNode;
+  onBack?: () => void;
+  /** Makes the title a button (with a small chevron), e.g. the reader's book and chapter. */
+  onTitlePress?: () => void;
+  titleHint?: string;
+}) {
   const t = useTheme();
-  if (!usesNativeHeader(props)) return <HeaderBar {...props} />;
-  const { title, subtitle, right, onTitlePress, titleHint } = props;
   return (
-    <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title,
-          // A tappable title (the reader's "Psalms 22 ⌄") stays small, like Apple Books.
-          headerLargeTitle: !onTitlePress,
-          headerLargeTitleShadowVisible: false,
-          headerShadowVisible: false,
-          headerTintColor: t.accent.accent,
-          headerStyle: { backgroundColor: t.neutral.background },
-          headerLargeStyle: { backgroundColor: t.neutral.background },
-          headerTitleStyle: { fontFamily: 'Nunito_900Black', color: t.neutral.text },
-          headerLargeTitleStyle: { fontFamily: 'Nunito_900Black', color: t.neutral.text },
-          headerBackTitleStyle: { fontFamily: 'Nunito_700Bold' },
-          headerRight: right ? () => right : undefined,
-          headerTitle: onTitlePress
-            ? () => (
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityHint={titleHint}
-                  onPress={onTitlePress}
-                  hitSlop={8}
-                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                  <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
-                    {title}
-                  </Text>
-                  <View style={{ transform: [{ rotate: '90deg' }] }}>
-                    <ChevronIcon size={14} color={t.neutral.textSubtle} />
-                  </View>
-                </Pressable>
-              )
-            : undefined,
-        }}
-      />
-      {subtitle ? (
-        <Text variant="small" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold', marginTop: -6 }}>
-          {subtitle}
-        </Text>
-      ) : null}
-    </>
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingTop: 8, paddingBottom: 8 }}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={close ? 'Close' : 'Back'}
+        hitSlop={8}
+        onPress={onBack ?? (() => (router.canGoBack() ? router.back() : router.replace('/today')))}
+        style={{ width: 44, height: 44, justifyContent: 'center' }}>
+        {close ? <CloseIcon color={t.neutral.textSubtle} /> : <BackIcon color={t.neutral.textSubtle} />}
+      </Pressable>
+      <Pressable
+        disabled={!onTitlePress}
+        onPress={onTitlePress}
+        accessibilityRole={onTitlePress ? 'button' : undefined}
+        accessibilityHint={titleHint}
+        style={({ pressed }) => ({ flex: 1, opacity: pressed ? 0.6 : 1 })}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <Text variant="title" accessibilityRole="header">
+            {title}
+          </Text>
+          {onTitlePress && title ? (
+            <View style={{ transform: [{ rotate: '90deg' }] }}>
+              <ChevronIcon size={16} color={t.neutral.textSubtle} />
+            </View>
+          ) : null}
+        </View>
+        {subtitle ? (
+          <Text variant="label" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
+            {subtitle}
+          </Text>
+        ) : null}
+      </Pressable>
+      {right}
+    </View>
   );
 }
-
-/** Sheets and modals (a close button) keep Pax's header; every other screen uses the native bar. */
-export const usesNativeHeader = (props: HeaderProps) => !props.close;
