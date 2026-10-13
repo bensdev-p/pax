@@ -366,3 +366,13 @@ export function JournalIcon({ size = 22 }: IconProps) {
     </Svg>
   );
 }
+
+/** A wooden cross (the Stations of the Cross). */
+export function CrossIcon({ size = 26 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Rect x="10" y="2" width="4.5" height="20" rx="1.5" fill="#8E5CF6" />
+      <Rect x="4.5" y="7" width="15.5" height="4.5" rx="1.5" fill="#6C46BB" />
+    </Svg>
+  );
+}
