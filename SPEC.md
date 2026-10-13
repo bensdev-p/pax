@@ -46,7 +46,7 @@ cards, Rosary card, readings list, tiles):
 
 1. **Header:** season chip and streak.
 2. **Feast card:** today's celebration, with the saint or feast of the day folded into it
-   (tap for the saint page). On a day with no saint, the next saint this week ("Coming up").
+   (tap for the saint page). A day with no saint shows just the day.
 3. **"Today with God":** one checklist card with the day's items, each checking off when done:
    - **Read:** today's Mass readings (opens the readings screen).
    - **Pray:** a novena day if one is in progress, otherwise the Pray tab (it names today's
@@ -260,5 +260,3 @@ Phases 1 and 2 and the first polish rounds are done. Next:
 - Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
   tapping that saint's quote on their page should open it there. Until then the quote stays as
   it is, with no link (an online-link version was tried and set aside).
-- Open: the "Coming up" saint on Today (shown on days without a saint). Kept for now; decide
-  later whether to cut it, since the word for today already fills the space.

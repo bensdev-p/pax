@@ -134,8 +134,7 @@ and no paid Apple account are needed until the widgets.
   readings), Pray (a novena day if one is in progress, otherwise the Pray tab) and Study (the
   next day of your plan, or a nudge to start one, which can be removed), each checking off when
   done and naming what was actually prayed; "A word for today" (a verse for the season one day,
-  a saint or Church Father the next, from `src/lib/dailyWord.ts`); and a short line from Pax. On
-  days without a saint, the feast card shows the next saint this week. The readings list,
+  a saint or Church Father the next, from `src/lib/dailyWord.ts`); and a short line from Pax. The readings list,
   Rosary card and tiles are one tap away.
 - **Bible reader**: tap the book and chapter at the top to open that book's chapters (the one
   you were reading is highlighted); back from there goes to the Bible's contents.
