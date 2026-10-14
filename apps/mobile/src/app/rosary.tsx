@@ -18,7 +18,7 @@ import { useContent } from '@/data/content';
 import type { Prayer, RosaryMystery } from '@/data/types';
 import { MYSTERY_SET_NAMES, ordinal } from '@/lib/format';
 import { isMysterySet } from '@/lib/pray';
-import { decadeProgress, prayerWords, rosarySteps, stepBack, type RosaryStep } from '@/lib/rosary';
+import { citeRuns, decadeProgress, prayerWords, rosarySteps, stepBack, type RosaryStep } from '@/lib/rosary';
 import { useAppState } from '@/state/AppState';
 
 /**
@@ -372,7 +372,10 @@ function MysteryCard({ step, bead, set }: { step: RosaryStep; bead: number; set:
   );
 }
 
-/** For praying on your own beads: one mystery at a time, with its ten verses to read along. */
+/**
+ * For praying on your own beads: one mystery at a time, its ten verses as one passage sized to
+ * fit the screen (Ben: no scrolling to see them), to read along while praying the decade.
+ */
 function MysteriesView({ mysteries, set, onDone }: { mysteries: RosaryMystery[]; set: string; onDone: () => void }) {
   const t = useTheme();
   const [index, setIndex] = useState(0);
@@ -382,35 +385,21 @@ function MysteriesView({ mysteries, set, onDone }: { mysteries: RosaryMystery[];
   return (
     <>
       <TopBar marks={mysteries.map((_, i) => (i <= index ? 1 : 0))} onBack={index > 0 ? () => setIndex(index - 1) : undefined} />
-      <ScrollView contentContainerStyle={{ padding: 16, gap: 14 }}>
-        <Animated.View key={m.slug} entering={FadeIn.duration(250)} style={{ gap: 14 }}>
-          <Card tinted radius={t.radius.card} contentStyle={{ padding: 16, gap: 6 }}>
-            <Text variant="label" caps color={t.accent.text}>
-              {ordinal(m.number)} {set} mystery · Fruit: {m.fruit}
-            </Text>
-            <Text variant="headline" accessibilityRole="header">
-              {m.title}
-            </Text>
-            <Text variant="scripture">{m.meditation}</Text>
-          </Card>
-          <Text variant="label" caps color={t.neutral.textMuted}>
-            A verse for each Hail Mary
+      <Animated.View key={m.slug} entering={FadeIn.duration(250)} style={{ flex: 1, padding: 16, paddingBottom: 0, gap: 12 }}>
+        {/* The verses carry the scene here, so the card leaves out the meditation to give them room. */}
+        <Card tinted radius={t.radius.card} contentStyle={{ paddingVertical: 12, paddingHorizontal: 16, gap: 2 }}>
+          <Text variant="label" caps color={t.accent.text}>
+            {ordinal(m.number)} {set} mystery
           </Text>
-          {m.beads.map((v, i) => (
-            <View key={v.ref} style={{ flexDirection: 'row', gap: 10 }}>
-              <Text variant="label" color={t.accent.text} style={{ width: 20, paddingTop: 4 }}>
-                {i + 1}
-              </Text>
-              <View style={{ flex: 1, gap: 2 }}>
-                <Text variant="scripture">{v.text}</Text>
-                <Text variant="label" color={t.neutral.textMuted}>
-                  {v.cite}
-                </Text>
-              </View>
-            </View>
-          ))}
-        </Animated.View>
-      </ScrollView>
+          <Text variant="headline" accessibilityRole="header">
+            {m.title}
+          </Text>
+          <Text variant="small" color={t.neutral.textMuted}>
+            Fruit: {m.fruit}
+          </Text>
+        </Card>
+        <FitPassage text={m.beads.map((v) => v.text).join(' ')} cite={citeRuns(m.beads)} />
+      </Animated.View>
       <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}>
         <RaisedButton
           label={last ? 'Amen' : 'Next mystery'}
@@ -421,6 +410,44 @@ function MysteriesView({ mysteries, set, onDone }: { mysteries: RosaryMystery[];
         />
       </View>
     </>
+  );
+}
+
+const PASSAGE_SIZES = [18, 17, 16, 15, 14, 13, 12];
+
+/** Scripture text that steps down in size until it fits the space left; scrolls only below 12 pt. */
+function FitPassage({ text, cite }: { text: string; cite: string }) {
+  const t = useTheme();
+  const [step, setStep] = useState(0);
+  // Either size can be measured first; whichever comes second decides.
+  const measured = useRef({ space: 0, content: 0 });
+  const size = PASSAGE_SIZES[step]!;
+  const check = () => {
+    const { space, content } = measured.current;
+    if (space && content > space && step + 1 < PASSAGE_SIZES.length) setStep(step + 1);
+  };
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ paddingBottom: 8 }}
+      onLayout={(e) => {
+        measured.current.space = e.nativeEvent.layout.height;
+        check();
+      }}>
+      <View
+        onLayout={(e) => {
+          measured.current.content = e.nativeEvent.layout.height;
+          check();
+        }}
+        style={{ gap: 6 }}>
+        <Text variant="scripture" style={{ fontSize: size, lineHeight: Math.round(size * 1.45) }}>
+          {text}
+        </Text>
+        <Text variant="label" color={t.neutral.textMuted}>
+          {cite}
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 

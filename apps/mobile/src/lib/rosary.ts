@@ -1,4 +1,4 @@
-import type { Prayer, RosaryMystery } from '@/data/types';
+import type { BeadVerse, Prayer, RosaryMystery } from '@/data/types';
 
 export type RosaryStep =
   | { kind: 'prayer'; slug: string; note?: string; mystery?: RosaryMystery }
@@ -65,4 +65,28 @@ export function prayerWords(
   if (!prayer) return { title: '', text: '', latin: false };
   if (latin && prayer.latin_text) return { title: prayer.latin_title ?? prayer.title, text: prayer.latin_text, latin: true };
   return { title: prayer.title, text: prayer.text, latin: false };
+}
+
+/** The bead verses' citations as one line: "Luke 23:33–34, 42–44, 46 · John 19:25–27, 30". */
+export function citeRuns(beads: Pick<BeadVerse, 'cite'>[]): string {
+  const groups = new Map<string, number[]>();
+  for (const { cite } of beads) {
+    const match = /^(.*) (\d+):(\d+)$/.exec(cite);
+    if (!match) continue;
+    const key = `${match[1]} ${match[2]}`;
+    groups.set(key, [...(groups.get(key) ?? []), Number(match[3])]);
+  }
+  return [...groups]
+    .map(([chapter, verses]) => {
+      const sorted = [...new Set(verses)].sort((a, b) => a - b);
+      const runs: string[] = [];
+      for (let i = 0; i < sorted.length; i++) {
+        let j = i;
+        while (j + 1 < sorted.length && sorted[j + 1] === sorted[j]! + 1) j++;
+        runs.push(j > i ? `${sorted[i]}–${sorted[j]}` : `${sorted[i]}`);
+        i = j;
+      }
+      return `${chapter}:${runs.join(', ')}`;
+    })
+    .join(' · ');
 }

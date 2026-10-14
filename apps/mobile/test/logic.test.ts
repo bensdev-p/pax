@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { computeStreak } from '@/data/streak';
 import { cycleLine, paxGreeting, paxMoodFor } from '@/lib/format';
-import { decadeProgress, prayerWords, rosarySteps, stepBack } from '@/lib/rosary';
+import { citeRuns, decadeProgress, prayerWords, rosarySteps, stepBack } from '@/lib/rosary';
 import { buildWidgetFeed } from '@/widgets/widgetFeed';
 import type { RosaryMystery } from '@/data/types';
 
@@ -73,6 +73,12 @@ describe('rosarySteps', () => {
     expect(stepBack(steps, firstBeads, 0)).toEqual({ index: firstBeads - 1, bead: 0 });
     expect(stepBack(steps, firstBeads + 1, 0)).toEqual({ index: firstBeads, bead: 9 });
     expect(stepBack(steps, 0, 0)).toEqual({ index: 0, bead: 0 });
+  });
+
+  it('sums up the bead verses in one citation line', () => {
+    const cites = ['Luke 23:33', 'Luke 23:34', 'Luke 23:42', 'Luke 23:43', 'John 19:25', 'John 19:26', 'John 19:27', 'Luke 23:44', 'John 19:30', 'Luke 23:46'];
+    expect(citeRuns(cites.map((cite) => ({ cite })))).toBe('Luke 23:33–34, 42–44, 46 · John 19:25–27, 30');
+    expect(citeRuns([{ cite: 'Psalm 131:8' }, { cite: '3 Kings 2:19' }])).toBe('Psalm 131:8 · 3 Kings 2:19');
   });
 
   it('prays in Latin only where Pax has the Latin', () => {

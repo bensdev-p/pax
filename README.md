@@ -202,8 +202,9 @@ and no paid Apple account are needed until the widgets.
     verses per mystery, in `pipeline/seed/rosary_mysteries.json`). The beads hang in an arc, the
     whole prayer is a tap target for the next bead, a firmer haptic ends each decade, and "Hide
     the words" folds the prayers to their first line (remembered, as is the language).
-  - **Mysteries only**, for praying on your own rosary: one mystery at a time with its ten verses
-    to read along.
+  - **Mysteries only**, for praying on your own rosary: one mystery at a time, its ten verses as
+    one passage with a single citation line, sized to fit the screen without scrolling (the text
+    steps down from 18 to 12 pt; only the longest mysteries scroll on an iPhone SE).
   - **Log it** counts a Rosary prayed away from the app for today's Pray mark and the streak.
 - The chaplets' beads hang in the same arc.
 
