@@ -22,18 +22,12 @@ const POSES = {
     dove: require('../../assets/images/pax/encouraging.png'),
     scarf: require('../../assets/images/pax/encouraging-scarf.png'),
   },
-} satisfies Record<string, Layers>;
-
-/** Which pose each mood shows. Celebrating and asleep borrow a pose until their own art is in. */
-const POSE_FOR: Record<PaxMood, keyof typeof POSES> = {
-  hello: 'hello',
-  happy: 'happy',
-  hint: 'hint',
-  praying: 'praying',
-  celebrating: 'encouraging',
-  encouraging: 'encouraging',
-  asleep: 'praying',
-};
+  celebrating: {
+    dove: require('../../assets/images/pax/celebrating.png'),
+    scarf: require('../../assets/images/pax/celebrating-scarf.png'),
+  },
+  asleep: { dove: require('../../assets/images/pax/asleep.png'), scarf: require('../../assets/images/pax/asleep-scarf.png') },
+} satisfies Record<PaxMood, Layers>;
 
 const LABELS: Record<PaxMood, string> = {
   hello: 'Pax the dove waving hello',
@@ -56,7 +50,7 @@ export function Pax({
   shadow?: boolean;
 }) {
   const t = useTheme();
-  const art: Layers = POSES[POSE_FOR[mood]];
+  const art: Layers = POSES[mood];
   const layer = { position: 'absolute', left: 0, top: 0, width: size, height: size } as const;
   // Each Pax needs his own gradient id.
   const shade = `paxShadow${useId().replace(/[^a-zA-Z0-9]/g, '')}`;

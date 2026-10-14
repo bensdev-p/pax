@@ -8,6 +8,10 @@ Each pose in design/pax/source/<pose>.png is a transparent PNG with the scarf in
   <pose>.png        the dove, with the scarf taken out
   <pose>-scarf.png  the scarf as a white mask, which the app tints with the day's accent color
 
+and, from source/icon.png (Pax with a book and a rosary on green), the app's icons in
+apps/mobile/assets/images/: icon.png (iOS), the Android adaptive icon's foreground, background and
+monochrome layers, the splash image, the notification icon and the web favicon.
+
 The scarf's soft edge is un-mixed: where a pixel is part magenta and part feather, the dove layer
 gets the feather color back and the mask gets the magenta share as its alpha, so the tinted scarf
 blends in without a pink fringe. Every pose keeps the source's scale (the art is drawn to one
@@ -73,6 +77,63 @@ def place(layer: Image.Image, box: tuple[int, int, int, int]) -> Image.Image:
     return canvas
 
 
+def key_out(icon: np.ndarray) -> np.ndarray:
+    """The icon's dove (with his book and rosary) lifted off its flat green, as RGBA. Edge pixels
+    are part green: alpha is how far a pixel is from the green, and its color is un-mixed."""
+    rgb = icon[..., :3].astype(float)
+    green = np.median(np.concatenate([rgb[:8].reshape(-1, 3), rgb[-8:].reshape(-1, 3)]), axis=0)
+    alpha = np.clip(np.linalg.norm(rgb - green, axis=-1) / 90.0, 0.0, 1.0)
+    alpha = np.where(alpha < 0.08, 0.0, alpha)
+    color = np.clip((rgb - (1 - alpha[..., None]) * green) / np.clip(alpha, 1e-6, 1)[..., None], 0, 255)
+    return np.dstack([color, alpha * 255])
+
+
+def fit(rgba: np.ndarray, size: int, height_share: float) -> Image.Image:
+    """Centers the figure in a square so it is `height_share` of the side tall."""
+    im = Image.fromarray(rgba.round().astype(np.uint8), "RGBA")
+    im = im.crop(im.getbbox())
+    scale = size * height_share / im.height
+    im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    canvas.paste(im, ((size - im.width) // 2, (size - im.height) // 2))
+    return canvas
+
+
+def silhouette(im: Image.Image) -> Image.Image:
+    alpha = np.asarray(im)[..., 3]
+    return Image.fromarray(np.dstack([np.full(alpha.shape + (3,), 255, np.uint8), alpha]), "RGBA")
+
+
+def icons() -> None:
+    path = SOURCE / "icon.png"
+    if not path.exists():
+        print("icon: no source yet, skipped")
+        return
+    images = ROOT / "apps/mobile/assets/images"
+    icon = Image.open(path).convert("RGB")
+    icon.resize((1024, 1024), Image.LANCZOS).save(images / "icon.png", optimize=True)
+    icon.resize((48, 48), Image.LANCZOS).save(images / "favicon.png", optimize=True)
+    dove = key_out(np.asarray(icon))
+    green = tuple(int(c) for c in np.median(np.asarray(icon)[:8].reshape(-1, 3), axis=0))
+    # Android crops the adaptive icon to a shape: keep him inside the middle two-thirds.
+    foreground = fit(dove, 1024, 0.6)
+    foreground.save(images / "android-icon-foreground.png", optimize=True)
+    Image.new("RGB", (1024, 1024), green).save(images / "android-icon-background.png", optimize=True)
+    silhouette(foreground).save(images / "android-icon-monochrome.png", optimize=True)
+    silhouette(fit(dove, 96, 0.8)).save(images / "notification-icon.png", optimize=True)
+    print(f"icon: written (green #{green[0]:02X}{green[1]:02X}{green[2]:02X})")
+
+
+def splash() -> None:
+    """The splash image: Pax saying hello, his scarf in Ordinary Time's green."""
+    dove = Image.open(OUT / "hello.png")
+    scarf = np.asarray(Image.open(OUT / "hello-scarf.png")).astype(float)
+    scarf[..., :3] = (0x24, 0x91, 0x3C)
+    dove.alpha_composite(Image.fromarray(scarf.astype(np.uint8), "RGBA"))
+    fit(np.asarray(dove).astype(float), 512, 0.9).save(ROOT / "apps/mobile/assets/images/splash-icon.png", optimize=True)
+    print("splash: written")
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for pose in POSES:
@@ -87,6 +148,8 @@ def main() -> None:
         for name, layer in ((pose, dove), (f"{pose}-scarf", scarf)):
             place(layer, bbox).save(OUT / f"{name}.png", optimize=True)
         print(f"{pose}: dove and scarf written")
+    icons()
+    splash()
 
 
 if __name__ == "__main__":

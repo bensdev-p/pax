@@ -133,10 +133,10 @@ encouraging, asleep.
 **Redrawn in Phase 4.** Ben chose a simpler dove (from three directions: a simpler dove, a little
 sheep, no mascot) and made the art in ChatGPT from `docs/mascot-brief.md`: a round white dove with
 a small crest, orange beak and feet, and a scarf in the day's liturgical color. Poses: hello,
-happy, hint, praying (new, for prayer screens), encouraging; celebrating and asleep are drawn and
-waiting to be added as files (until then they borrow encouraging and praying). The sources are in
-`design/pax/source/`; `design/pax/cut_pax.py` cuts each into the dove and a scarf mask the app
-tints. The new app icon (Pax with a book and a rosary on the accent green) is also drawn.
+happy, hint, praying (new, for prayer screens), encouraging, celebrating and asleep. The sources are
+in `design/pax/source/`; `design/pax/cut_pax.py` cuts each into the dove and a scarf mask the app
+tints, and makes the app icons from Ben's icon (Pax with a book and a rosary on green): iOS, the
+Android adaptive and monochrome layers, the notification icon, the splash image and the favicon.
 
 ## Liturgical theming (unchanged)
 
