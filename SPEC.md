@@ -115,21 +115,28 @@ Everything else (tiles, long readings list) moves one tap away.
 Pax stays: an original dove, the symbol of the Holy Spirit and of peace, which fits the
 companion better than it fit a quiz coach.
 
-**His look** (redrawn in October 2026 from Ben's approved character sheet,
-`design/pax-redesign/character-sheet.png`; this replaces the earlier glossy-eyed, blushing
+**His look** (October 2026: Ben's approved character sheet,
+`design/pax-redesign/character-sheet.png`, which replaces the earlier glossy-eyed, blushing
 design): a calmer, more natural dove. White and ivory plumage with restrained blue-grey shading
 and a soft blue-grey line; a smaller head on a longer pear-shaped body; layered birdlike wings
-and a long tapered tail; small dark oval eyes with a pin highlight, a small orange beak and
-small orange feet; no cheeks, eyebrows or mouth. He keeps the softened two-feather crest, the
-short scarf in the day's liturgical color (every palette, including black and theme locks) and
-the olive sprig tucked into it, in every pose. Drawn in `components/Pax.tsx` from shared parts;
-his colors are `color.pax` in `design/tokens.json`.
+and a long tapered tail; small dark oval eyes, a small orange beak and small orange feet; no
+cheeks, eyebrows or mouth. He keeps the softened two-feather crest, the short scarf in the day's
+liturgical color (every palette, including black and theme locks) and the olive sprig tucked
+into it, in every pose.
+
+**The art is the sheet itself**, not a redrawing. `design/pax-redesign/cut_poses.py` cuts each of
+the sheet's five poses out of it into `apps/mobile/assets/images/pax/` as four aligned layers: the
+dove, and his scarf as a mask, its folds and its highlights. `components/Pax.tsx` stacks them and
+tints the scarf with the day's accent and edge colors, so it keeps the sheet's shading in every
+palette, over a soft ground shadow (`neutral.paxShadow`). New or sharper poses from Ben drop in by
+adding them to `cut_poses.py`. `color.pax` in `design/tokens.json` keeps the sheet's palette for
+reference; the component doesn't use it.
 
 His role changes from coach to **quiet companion**: fewer appearances, short lines, calm on
-prayer screens, never guilt-driven. Expressions in use, all the same bird: hello (a modest
-lifted wing), happy (relaxed, smiling eyes), hint (a curious forward lean and head tilt),
-celebrating (both wings lifted a little, a small hop, no confetti), encouraging (the wing held
-out), asleep (wings folded, eyes closed, the sheet's peaceful pose).
+prayer screens, never guilt-driven. Expressions in use, all the same bird, each a pose from the
+sheet: hello and celebrating (the welcome pose, a wing lifted; the sheet has five poses for six
+moods), happy (the large standing figure), hint (the curious pose, leaning forward with a head
+tilt), encouraging (the wing held out), asleep (the peaceful pose, eyes closed).
 
 ## Liturgical theming (unchanged)
 
