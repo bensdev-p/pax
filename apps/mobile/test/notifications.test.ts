@@ -28,6 +28,8 @@ describe('planNotifications', () => {
       '17:30 streak_nudge',
       '21:15 evening_reminder',
     ]);
+    // The evening reminder invites the Examen and opens it.
+    expect(plan.find((n) => n.kind === 'evening_reminder')).toMatchObject({ url: 'paxapp://examen', body: expect.stringMatching(/Examen/) });
   });
 
   it('goes quiet for the rest of today once something is done, except the Angelus', async () => {

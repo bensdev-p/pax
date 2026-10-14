@@ -125,7 +125,7 @@ export default function DevotionPrayScreen() {
         </ScrollView>
       ) : (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Pax mood="hint" size={140} />
+          <Pax mood="praying" size={140} />
         </View>
       )}
 

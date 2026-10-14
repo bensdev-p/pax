@@ -52,6 +52,7 @@ export default function TodayScreen() {
     novenas,
     courses,
     studyInRhythm: settings.studyInRhythm,
+    hour: mood.hour,
   });
 
   return (
