@@ -206,6 +206,11 @@ and no paid Apple account are needed until the widgets.
     to read along.
   - **Log it** counts a Rosary prayed away from the app for today's Pray mark and the streak.
 - The chaplets' beads hang in the same arc.
+- **Pax, redrawn**: Ben's new art (made in ChatGPT from `docs/mascot-brief.md`), a simpler
+  dove whose scarf still takes the day's liturgical color. `design/pax/cut_pax.py` cuts each pose
+  in `design/pax/source/` into the dove and a tintable scarf mask
+  (`apps/mobile/assets/images/pax/`), un-mixing the scarf's soft edge so no magenta shows. A new
+  "praying" pose shows while prayers load.
 - **The Examen** (Ben chose layout A from mockups): five short steps after Saint Ignatius, one
   screen each (give thanks, ask for light, walk through the day, ask for mercy, look to
   tomorrow), each with a line of guidance and an "Ask yourself" question, then the Our Father. It

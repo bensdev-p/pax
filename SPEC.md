@@ -127,13 +127,16 @@ dove is a symbol of the Holy Spirit and of peace, which fits the companion bette
 quiz coach.
 
 His role changes from coach to **quiet companion**: fewer appearances, short lines, calm on
-prayer screens, never guilt-driven. Expressions in use: hello, happy, hint, celebrating,
+prayer screens, never guilt-driven. Expressions in use: hello, happy, hint, praying, celebrating,
 encouraging, asleep.
 
-**Redesign under way (Phase 4).** Ben wants a simpler dove (from three directions shown: a simpler
-dove, a little sheep, no mascot), but not the first mockup's style. The art is being made with an
-image generator from `docs/mascot-brief.md` (four style directions, then seven poses with a
-tintable scarf, then the app icon); the current Pax stays until it arrives.
+**Redrawn in Phase 4.** Ben chose a simpler dove (from three directions: a simpler dove, a little
+sheep, no mascot) and made the art in ChatGPT from `docs/mascot-brief.md`: a round white dove with
+a small crest, orange beak and feet, and a scarf in the day's liturgical color. Poses: hello,
+happy, hint, praying (new, for prayer screens), encouraging; celebrating and asleep are drawn and
+waiting to be added as files (until then they borrow encouraging and praying). The sources are in
+`design/pax/source/`; `design/pax/cut_pax.py` cuts each into the dove and a scarf mask the app
+tints. The new app icon (Pax with a book and a rosary on the accent green) is also drawn.
 
 ## Liturgical theming (unchanged)
 

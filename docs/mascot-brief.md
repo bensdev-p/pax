@@ -1,5 +1,8 @@
 # Pax mascot brief (for an image generator)
 
+_Done: Ben made the art from this brief (October 14, 2026). It lives in `design/pax/source/` and
+`design/pax/cut_pax.py` brings it into the app._
+
 October 2026. Ben wants a simpler dove than the current Pax, but not the style of the first
 mockup (canvas option A). The art is made in ChatGPT from the prompt below; Claude then brings
 it into the app.

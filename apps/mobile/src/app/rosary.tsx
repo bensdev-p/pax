@@ -104,7 +104,7 @@ export default function RosaryScreen() {
         body
       ) : (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Pax mood="hint" size={140} />
+          <Pax mood="praying" size={140} />
         </View>
       )}
     </View>
