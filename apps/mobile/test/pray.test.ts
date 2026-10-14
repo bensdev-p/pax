@@ -25,7 +25,7 @@ const novena = (slug: string, daysDone: number, lastPrayedOn: string | null = nu
   lastPrayedOn,
   reminderTime: null,
 });
-const prayer = (slug: string, category: string, text = ''): Prayer => ({ slug, title: slug, category, text, latin_text: null, sort_order: 0 });
+const prayer = (slug: string, category: string, text = ''): Prayer => ({ slug, title: slug, latin_title: null, category, text, latin_text: null, sort_order: 0 });
 
 describe('Pray hub', () => {
   it('puts novenas in progress first, then the season, then favorites, without repeats', () => {

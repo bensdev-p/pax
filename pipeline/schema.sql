@@ -123,6 +123,7 @@ CREATE TABLE saints (
 CREATE TABLE prayers (
   slug       TEXT PRIMARY KEY,
   title      TEXT NOT NULL,
+  latin_title TEXT,                      -- with latin_text: Ave Maria, Pater Noster
   category   TEXT NOT NULL,              -- essentials, daily, marian, eucharist, saints, departed, rosary
   text       TEXT NOT NULL,
   latin_text TEXT,
@@ -138,6 +139,7 @@ CREATE TABLE rosary_mysteries (
   scripture_ref     TEXT,                -- OSIS range
   scripture_display TEXT NOT NULL,
   meditation        TEXT NOT NULL,       -- own words
+  beads             TEXT NOT NULL,       -- JSON [{ref, cite, text}]: a verse for each Hail Mary (Douay)
   UNIQUE (mystery_set, number)
 ) WITHOUT ROWID;
 

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { computeStreak } from '@/data/streak';
 import { cycleLine, paxGreeting, paxMoodFor } from '@/lib/format';
-import { rosarySteps } from '@/lib/rosary';
+import { decadeProgress, prayerWords, rosarySteps, stepBack } from '@/lib/rosary';
 import { buildWidgetFeed } from '@/widgets/widgetFeed';
 import type { RosaryMystery } from '@/data/types';
 
@@ -56,6 +56,30 @@ describe('rosarySteps', () => {
     const hailMarys = steps.reduce((n, s) => n + (s.kind === 'beads' ? s.count : 0), 0);
     expect(hailMarys).toBe(53);
     expect(steps.at(-1)).toMatchObject({ kind: 'prayer', slug: 'sign-of-the-cross' });
+  });
+
+  const steps = rosarySteps([1, 2, 3, 4, 5].map((n) => ({ slug: `m${n}`, number: n, mystery_set: 'joyful' }) as RosaryMystery));
+  const firstBeads = steps.findIndex((s) => s.kind === 'beads' && s.count === 10);
+
+  it('fills the five decade marks as the decades are prayed', () => {
+    expect(decadeProgress(steps, 0, 0)).toEqual([0, 0, 0, 0, 0]);
+    // The mystery and the Our Father are done, and three Hail Marys: 5 of 14.
+    expect(decadeProgress(steps, firstBeads, 3)[0]).toBeCloseTo(5 / 14);
+    expect(decadeProgress(steps, steps.length - 1, 0)).toEqual([1, 1, 1, 1, 1]);
+  });
+
+  it('steps back one bead, then into the step before', () => {
+    expect(stepBack(steps, firstBeads, 4)).toEqual({ index: firstBeads, bead: 3 });
+    expect(stepBack(steps, firstBeads, 0)).toEqual({ index: firstBeads - 1, bead: 0 });
+    expect(stepBack(steps, firstBeads + 1, 0)).toEqual({ index: firstBeads, bead: 9 });
+    expect(stepBack(steps, 0, 0)).toEqual({ index: 0, bead: 0 });
+  });
+
+  it('prays in Latin only where Pax has the Latin', () => {
+    const ave = { title: 'Hail Mary', text: 'Hail Mary…', latin_title: 'Ave Maria', latin_text: 'Ave Maria…' };
+    expect(prayerWords(ave, true)).toEqual({ title: 'Ave Maria', text: 'Ave Maria…', latin: true });
+    expect(prayerWords(ave, false).title).toBe('Hail Mary');
+    expect(prayerWords({ ...ave, latin_title: null, latin_text: null }, true)).toMatchObject({ title: 'Hail Mary', latin: false });
   });
 });
 

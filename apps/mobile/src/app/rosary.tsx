@@ -8,7 +8,8 @@ import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Beads } from '@/components/Beads';
-import { CloseIcon, FlameIcon, RosaryIcon } from '@/components/Icons';
+import { Choice } from '@/components/Choice';
+import { CloseIcon, FlameIcon, RosaryIcon, UndoIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { PrayerText } from '@/components/PrayerText';
 import { Card, RaisedButton } from '@/components/Raised';
@@ -17,23 +18,30 @@ import { useContent } from '@/data/content';
 import type { Prayer, RosaryMystery } from '@/data/types';
 import { MYSTERY_SET_NAMES, ordinal } from '@/lib/format';
 import { isMysterySet } from '@/lib/pray';
-import { rosarySteps, type RosaryStep } from '@/lib/rosary';
+import { decadeProgress, prayerWords, rosarySteps, stepBack, type RosaryStep } from '@/lib/rosary';
 import { useAppState } from '@/state/AppState';
+
+/**
+ * The Rosary (chosen with Ben from mockups, Phase 4): a start page with the day's five mysteries,
+ * then each decade with its mystery kept on screen and a Douay verse for every Hail Mary. It can
+ * also walk through the mysteries alone (for praying on your own beads), or log a Rosary prayed
+ * away from the app. English or Latin.
+ */
+type Phase = { kind: 'start' } | { kind: 'beads' } | { kind: 'mysteries' } | { kind: 'done'; seconds: number | null };
 
 export default function RosaryScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const content = useContent();
-  const { today, progress, recordPrayer } = useAppState();
+  const { today, progress, recordPrayer, settings, updateSettings } = useAppState();
   // Today's set unless another was chosen on the mysteries page.
   const params = useLocalSearchParams<{ set?: string }>();
-  const set = isMysterySet(params.set) ? params.set : today ? mysteriesForDay(today) : 'joyful';
+  const todays = today ? mysteriesForDay(today) : 'joyful';
+  const set = isMysterySet(params.set) ? params.set : todays;
   const [prayers, setPrayers] = useState<Record<string, Prayer>>({});
   const [mysteries, setMysteries] = useState<RosaryMystery[]>([]);
-  const [index, setIndex] = useState(0);
-  const [bead, setBead] = useState(0);
-  const [finishedIn, setFinishedIn] = useState<number | null>(null);
-  const [startedAt] = useState(() => Date.now());
+  const [phase, setPhase] = useState<Phase>({ kind: 'start' });
+  const [startedAt, setStartedAt] = useState(0);
   const recorded = useRef(false);
 
   useEffect(() => {
@@ -41,7 +49,197 @@ export default function RosaryScreen() {
     void content.mysteries(set).then(setMysteries);
   }, [content, set]);
 
+  const finish = (timed: boolean) => {
+    if (Platform.OS !== 'web') void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    setPhase({ kind: 'done', seconds: timed ? Math.round((Date.now() - startedAt) / 1000) : null });
+    if (!recorded.current) {
+      recorded.current = true;
+      // A finished or logged Rosary counts the day for the streak (SPEC: Habit model).
+      void recordPrayer('rosary', 'The Rosary');
+    }
+  };
+
+  const begin = (kind: 'beads' | 'mysteries') => {
+    setStartedAt(Date.now());
+    setPhase({ kind });
+  };
+
+  const setName = MYSTERY_SET_NAMES[set];
+  let body: React.ReactNode;
+  if (phase.kind === 'done') {
+    return <Complete set={setName} seconds={phase.seconds} streak={progress?.currentStreak ?? 1} />;
+  } else if (phase.kind === 'start') {
+    body = (
+      <StartView
+        set={setName}
+        isToday={set === todays}
+        mysteries={mysteries}
+        latin={settings.rosaryLatin}
+        onLatin={(latin) => void updateSettings({ rosaryLatin: latin })}
+        onBegin={() => begin('beads')}
+        onMysteriesOnly={() => begin('mysteries')}
+        onLog={() => finish(false)}
+      />
+    );
+  } else if (phase.kind === 'beads') {
+    body = (
+      <BeadsView
+        mysteries={mysteries}
+        prayers={prayers}
+        set={setName}
+        latin={settings.rosaryLatin}
+        words={settings.rosaryWords}
+        onWords={(words) => void updateSettings({ rosaryWords: words })}
+        onDone={() => finish(true)}
+      />
+    );
+  } else {
+    body = <MysteriesView mysteries={mysteries} set={setName} onDone={() => finish(true)} />;
+  }
+
+  return (
+    // Padding from the window's insets: SafeAreaView can measure zero inside a full-screen modal on iOS.
+    <View style={{ flex: 1, backgroundColor: t.neutral.background, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      {mysteries.length ? (
+        body
+      ) : (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Pax mood="hint" size={140} />
+        </View>
+      )}
+    </View>
+  );
+}
+
+function TopBar({ marks, onBack, title }: { marks?: number[]; onBack?: () => void; title?: string }) {
+  const t = useTheme();
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12, minHeight: 44 }}>
+      <Pressable accessibilityRole="button" accessibilityLabel="Close" hitSlop={10} onPress={() => router.back()}>
+        <CloseIcon color={t.neutral.textSubtle} />
+      </Pressable>
+      {marks ? (
+        <View
+          accessibilityRole="progressbar"
+          accessibilityLabel="Decades"
+          accessibilityValue={{ min: 0, max: 5, now: marks.filter((m) => m >= 1).length }}
+          style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+          {marks.map((m, i) => (
+            <View key={i} style={{ flex: 1, height: 10, borderRadius: 5, backgroundColor: t.neutral.border, overflow: 'hidden' }}>
+              <View style={{ width: `${Math.round(m * 100)}%`, height: '100%', borderRadius: 5, backgroundColor: t.accent.accent }} />
+            </View>
+          ))}
+        </View>
+      ) : (
+        <Text variant="label" caps align="center" color={t.accent.text} style={{ flex: 1 }}>
+          {title ?? ''}
+        </Text>
+      )}
+      {onBack ? (
+        <Pressable accessibilityRole="button" accessibilityLabel="Back one" hitSlop={10} onPress={onBack}>
+          <UndoIcon color={t.neutral.textSubtle} />
+        </Pressable>
+      ) : (
+        <View style={{ width: 26 }} />
+      )}
+    </View>
+  );
+}
+
+function StartView({
+  set,
+  isToday,
+  mysteries,
+  latin,
+  onLatin,
+  onBegin,
+  onMysteriesOnly,
+  onLog,
+}: {
+  set: string;
+  isToday: boolean;
+  mysteries: RosaryMystery[];
+  latin: boolean;
+  onLatin: (latin: boolean) => void;
+  onBegin: () => void;
+  onMysteriesOnly: () => void;
+  onLog: () => void;
+}) {
+  const t = useTheme();
+  return (
+    <>
+      <TopBar />
+      <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
+        <View style={{ gap: 2 }}>
+          <Text variant="label" caps color={t.accent.text}>
+            {isToday ? 'Today’s mysteries' : 'The Rosary'}
+          </Text>
+          <Text variant="display" accessibilityRole="header">
+            The {set} Mysteries
+          </Text>
+        </View>
+        <Card contentStyle={{ padding: 16, gap: 10 }}>
+          {mysteries.map((m) => (
+            <View key={m.slug} style={{ flexDirection: 'row', gap: 10 }}>
+              <Text variant="bodyStrong" color={t.accent.text} style={{ width: 18, fontFamily: 'Nunito_900Black' }}>
+                {m.number}
+              </Text>
+              <View style={{ flex: 1 }}>
+                <Text variant="bodyStrong">{m.title}</Text>
+                <Text variant="small" color={t.neutral.textMuted}>
+                  Fruit: {m.fruit}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Card>
+        <View style={{ gap: 8 }}>
+          <Text variant="label" caps color={t.neutral.textMuted}>
+            Pray in
+          </Text>
+          <View accessibilityRole="radiogroup" style={{ flexDirection: 'row', gap: 8 }}>
+            <Choice label="English" selected={!latin} onPress={() => onLatin(false)} />
+            <Choice label="Latin" selected={latin} onPress={() => onLatin(true)} />
+          </View>
+        </View>
+      </ScrollView>
+      <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16, gap: 12 }}>
+        <RaisedButton label="Begin" onPress={onBegin} />
+        <RaisedButton kind="neutral" label="Mysteries only" onPress={onMysteriesOnly} />
+        <Text variant="small" align="center" color={t.neutral.textMuted}>
+          Mysteries only: for praying on your own rosary.
+        </Text>
+        <Pressable accessibilityRole="button" onPress={onLog} hitSlop={8} style={{ alignSelf: 'center', paddingVertical: 6 }}>
+          <Text variant="label" caps color={t.accent.text}>
+            I prayed it already · Log it
+          </Text>
+        </Pressable>
+      </View>
+    </>
+  );
+}
+
+function BeadsView({
+  mysteries,
+  prayers,
+  set,
+  latin,
+  words,
+  onWords,
+  onDone,
+}: {
+  mysteries: RosaryMystery[];
+  prayers: Record<string, Prayer>;
+  set: string;
+  latin: boolean;
+  words: boolean;
+  onWords: (words: boolean) => void;
+  onDone: () => void;
+}) {
+  const t = useTheme();
   const steps = useMemo(() => rosarySteps(mysteries), [mysteries]);
+  const [index, setIndex] = useState(0);
+  const [bead, setBead] = useState(0);
   const step = steps[index];
 
   const next = () => {
@@ -52,123 +250,195 @@ export default function RosaryScreen() {
     }
     setBead(0);
     if (index + 1 < steps.length) {
+      // A firmer tap at the end of each decade, felt without looking.
+      if (step?.kind === 'beads' && step.count === 10 && Platform.OS !== 'web') {
+        void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
       setIndex(index + 1);
     } else {
-      if (Platform.OS !== 'web') void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setFinishedIn(Math.round((Date.now() - startedAt) / 1000));
-      if (!recorded.current) {
-        recorded.current = true;
-        // A finished prayer counts the day for the streak (SPEC: Habit model).
-        void recordPrayer('rosary', 'The Rosary');
-      }
+      onDone();
     }
   };
 
-  if (finishedIn !== null) {
-    return <Complete set={MYSTERY_SET_NAMES[set]} seconds={finishedIn} streak={progress?.currentStreak ?? 1} />;
-  }
+  const back = () => {
+    const prev = stepBack(steps, index, bead);
+    setIndex(prev.index);
+    setBead(prev.bead);
+  };
 
-  const fraction = steps.length ? (index + (step?.kind === 'beads' ? bead / step.count : 0)) / steps.length : 0;
+  if (!step) return null;
+  const marks = decadeProgress(steps, index, bead);
+  const prayer = step.kind === 'mystery' ? null : prayerWords(prayers[step.slug], latin);
 
   return (
-    // Padding from the window's insets: SafeAreaView can measure zero inside a full-screen modal on iOS.
-    <View style={{ flex: 1, backgroundColor: t.neutral.background, paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12 }}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Close" hitSlop={8} onPress={() => router.back()}>
-          <CloseIcon color={t.neutral.textSubtle} />
-        </Pressable>
-        <View
-          accessibilityRole="progressbar"
-          accessibilityValue={{ min: 0, max: steps.length, now: index }}
-          style={{ flex: 1, height: t.size.progressBar, borderRadius: 8, backgroundColor: t.neutral.border, overflow: 'hidden' }}>
-          <View style={{ width: `${Math.max(4, fraction * 100)}%`, height: '100%', borderRadius: 8, backgroundColor: t.accent.accent }}>
-            <View style={{ position: 'absolute', top: 4, left: 8, right: 8, height: 4, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.3)' }} />
-          </View>
-        </View>
-      </View>
+    <>
+      <TopBar marks={marks} onBack={index > 0 || bead > 0 ? back : undefined} />
+      <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 16, gap: 14 }}>
+        {step.kind === 'mystery' || step.mystery ? (
+          <MysteryCard step={step} bead={bead} set={set} />
+        ) : step.note ? (
+          <Text variant="label" caps color={t.neutral.textMuted}>
+            {step.note}
+          </Text>
+        ) : null}
 
-      {step ? (
-        <ScrollView contentContainerStyle={{ padding: 16, gap: 14 }}>
-          <StepView step={step} prayers={prayers} bead={bead} set={MYSTERY_SET_NAMES[set]} />
-        </ScrollView>
-      ) : (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Pax mood="hint" size={140} />
-        </View>
-      )}
+        {step.kind === 'mystery' ? (
+          <Animated.View entering={FadeIn.duration(250)} style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
+            <Pax mood="hint" size={72} />
+            <View style={{ flex: 1, borderWidth: t.border.width, borderColor: t.neutral.border, borderRadius: t.radius.button, padding: 12 }}>
+              <Text variant="label" caps color={t.neutral.textMuted}>
+                Pax says
+              </Text>
+              <Text variant="body">Picture the scene for a moment before you begin. No rush.</Text>
+            </View>
+          </Animated.View>
+        ) : (
+          // The whole prayer is a tap target: the next bead without looking for the button.
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${prayer?.title ?? ''}. Next`}
+            onPress={next}
+            style={{ flexGrow: 1, gap: 10 }}>
+            <Animated.View key={`${index}`} entering={FadeIn.duration(200)} style={{ gap: 10 }}>
+              {step.kind === 'beads' ? <Beads count={step.count} current={bead} label={prayer?.title} /> : null}
+              <Text variant="title" accessibilityRole="header">
+                {prayer?.title}
+              </Text>
+              {words ? (
+                <PrayerText text={prayer?.text ?? ''} />
+              ) : (
+                <Text variant="scripture" color={t.neutral.textMuted}>
+                  {firstLine(prayer?.text ?? '')}
+                </Text>
+              )}
+            </Animated.View>
+          </Pressable>
+        )}
+
+        {step.kind !== 'mystery' ? (
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => onWords(!words)}
+            hitSlop={6}
+            style={{
+              alignSelf: 'flex-start',
+              borderWidth: t.border.width,
+              borderColor: t.neutral.border,
+              borderRadius: t.radius.chip,
+              paddingVertical: 8,
+              paddingHorizontal: 12,
+            }}>
+            <Text variant="label" caps color={t.neutral.textMuted}>
+              {words ? 'Hide the words' : 'Show the words'}
+            </Text>
+          </Pressable>
+        ) : null}
+      </ScrollView>
 
       <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}>
-        <RaisedButton label={buttonLabel(step, bead)} onPress={next} disabled={!step} />
+        <RaisedButton label={buttonLabel(step, bead, prayer?.title ?? '')} onPress={next} />
       </View>
-    </View>
+    </>
   );
 }
 
-function buttonLabel(step: RosaryStep | undefined, bead: number): string {
-  if (!step) return 'Loading';
-  if (step.kind === 'beads') return `Hail Mary · ${bead + 1} of ${step.count}`;
-  if (step.kind === 'mystery') return 'Begin the decade';
-  return 'Amen';
-}
-
-function StepView({ step, prayers, bead, set }: { step: RosaryStep; prayers: Record<string, Prayer>; bead: number; set: string }) {
+/** The decade's mystery stays on screen: its meditation, then a verse for each Hail Mary. */
+function MysteryCard({ step, bead, set }: { step: RosaryStep; bead: number; set: string }) {
   const t = useTheme();
-  if (step.kind === 'mystery') {
-    const m = step.mystery;
-    return (
-      <Animated.View entering={FadeIn.duration(250)} style={{ gap: 14 }}>
-        <Card tinted radius={t.radius.card} contentStyle={{ padding: 16, gap: 8 }}>
-          <Text variant="label" caps color={t.accent.text}>
-            {ordinal(m.number)} {set} mystery
+  const m = step.kind === 'mystery' ? step.mystery : step.mystery!;
+  const verse = step.kind === 'beads' ? m.beads[bead] : undefined;
+  return (
+    <Card tinted radius={t.radius.card} contentStyle={{ padding: 16, gap: 6 }}>
+      <Text variant="label" caps color={t.accent.text}>
+        {ordinal(m.number)} {set} mystery · Fruit: {m.fruit}
+      </Text>
+      <Text variant="headline">{m.title}</Text>
+      {verse ? (
+        <Animated.View key={verse.ref} entering={FadeIn.duration(200)} style={{ gap: 4 }}>
+          <Text variant="scripture">{verse.text}</Text>
+          <Text variant="label" color={t.neutral.textMuted}>
+            {verse.cite}
           </Text>
-          <Text variant="display">{m.title}</Text>
-          <Text variant="small" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
-            Fruit of the mystery: {m.fruit}
-          </Text>
+        </Animated.View>
+      ) : (
+        <View style={{ gap: 4 }}>
           <Text variant="scripture">{m.meditation}</Text>
           <Text variant="label" color={t.neutral.textMuted}>
             {m.scripture_display}
           </Text>
-        </Card>
-        <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
-          <Pax mood="hint" size={84} />
-          <View style={{ flex: 1, borderWidth: t.border.width, borderColor: t.neutral.border, borderRadius: t.radius.button, padding: 12 }}>
-            <Text variant="label" caps color={t.neutral.textMuted}>
-              Pax says
-            </Text>
-            <Text variant="body">Picture the scene for a moment before you begin. No rush.</Text>
-          </View>
         </View>
-      </Animated.View>
-    );
-  }
-
-  const prayer = prayers[step.slug];
-  return (
-    <Animated.View key={`${step.slug}-${step.mystery?.slug ?? ''}`} entering={FadeIn.duration(200)} style={{ gap: 14 }}>
-      {step.mystery ? (
-        <Text variant="label" caps color={t.accent.text}>
-          {ordinal(step.mystery.number)} decade · {step.mystery.title}
-        </Text>
-      ) : step.note ? (
-        <Text variant="label" caps color={t.neutral.textMuted}>
-          {step.note}
-        </Text>
-      ) : null}
-      <Text variant="display" accessibilityRole="header">
-        {prayer?.title ?? ''}
-      </Text>
-      {step.kind === 'beads' ? <Beads count={step.count} current={bead} /> : null}
-      <PrayerText text={prayer?.text ?? ''} />
-    </Animated.View>
+      )}
+    </Card>
   );
 }
 
-function Complete({ set, seconds, streak }: { set: string; seconds: number; streak: number }) {
+/** For praying on your own beads: one mystery at a time, with its ten verses to read along. */
+function MysteriesView({ mysteries, set, onDone }: { mysteries: RosaryMystery[]; set: string; onDone: () => void }) {
   const t = useTheme();
-  const minutes = Math.floor(seconds / 60);
-  const time = `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
+  const [index, setIndex] = useState(0);
+  const m = mysteries[index];
+  if (!m) return null;
+  const last = index + 1 >= mysteries.length;
+  return (
+    <>
+      <TopBar marks={mysteries.map((_, i) => (i <= index ? 1 : 0))} onBack={index > 0 ? () => setIndex(index - 1) : undefined} />
+      <ScrollView contentContainerStyle={{ padding: 16, gap: 14 }}>
+        <Animated.View key={m.slug} entering={FadeIn.duration(250)} style={{ gap: 14 }}>
+          <Card tinted radius={t.radius.card} contentStyle={{ padding: 16, gap: 6 }}>
+            <Text variant="label" caps color={t.accent.text}>
+              {ordinal(m.number)} {set} mystery · Fruit: {m.fruit}
+            </Text>
+            <Text variant="headline" accessibilityRole="header">
+              {m.title}
+            </Text>
+            <Text variant="scripture">{m.meditation}</Text>
+          </Card>
+          <Text variant="label" caps color={t.neutral.textMuted}>
+            A verse for each Hail Mary
+          </Text>
+          {m.beads.map((v, i) => (
+            <View key={v.ref} style={{ flexDirection: 'row', gap: 10 }}>
+              <Text variant="label" color={t.accent.text} style={{ width: 20, paddingTop: 4 }}>
+                {i + 1}
+              </Text>
+              <View style={{ flex: 1, gap: 2 }}>
+                <Text variant="scripture">{v.text}</Text>
+                <Text variant="label" color={t.neutral.textMuted}>
+                  {v.cite}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Animated.View>
+      </ScrollView>
+      <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}>
+        <RaisedButton
+          label={last ? 'Amen' : 'Next mystery'}
+          onPress={() => {
+            if (last) onDone();
+            else setIndex(index + 1);
+          }}
+        />
+      </View>
+    </>
+  );
+}
+
+function firstLine(text: string): string {
+  const line = text.split('\n').find((l) => l.trim()) ?? '';
+  return `${line.replace(/[,;:.]$/, '')}…`;
+}
+
+function buttonLabel(step: RosaryStep, bead: number, title: string): string {
+  if (step.kind === 'beads') return `${title} · ${bead + 1} of ${step.count}`;
+  if (step.kind === 'mystery') return 'Begin the decade';
+  return 'Amen';
+}
+
+function Complete({ set, seconds, streak }: { set: string; seconds: number | null; streak: number }) {
+  const t = useTheme();
   const insets = useSafeAreaInsets();
+  const time = seconds === null ? null : `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
   return (
     <View
       style={{
@@ -184,14 +454,16 @@ function Complete({ set, seconds, streak }: { set: string; seconds: number; stre
           <Pax mood="celebrating" size={200} />
         </Animated.View>
         <Text variant="display" align="center" accessibilityRole="header">
-          Rosary prayed!
+          {time ? 'Rosary prayed!' : 'Rosary logged'}
         </Text>
         <Text variant="bodyStrong" align="center" color={t.neutral.textMuted}>
-          You prayed the {set} Mysteries with Mary. Today counts toward your streak.
+          {time
+            ? `You prayed the ${set} Mysteries with Mary. Today counts toward your streak.`
+            : 'Thank you for praying. Today counts toward your streak.'}
         </Text>
-        <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 8, alignSelf: 'stretch' }}>
           <Stat color={t.accent.accent} labelColor={t.accent.onAccent} valueColor={t.accent.text} label="Decades" value="5" icon={<RosaryIcon size={20} />} />
-          <Stat color={t.game.xp} labelColor="#3B2A00" valueColor={t.game.xpText} label="Time" value={time} />
+          {time ? <Stat color={t.game.xp} labelColor="#3B2A00" valueColor={t.game.xpText} label="Time" value={time} /> : null}
           <Stat color={t.game.streak} labelColor="#FFFFFF" valueColor={t.game.streakText} label="Streak" value={String(Math.max(1, streak))} icon={<FlameIcon size={20} />} />
         </View>
       </View>

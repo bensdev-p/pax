@@ -62,6 +62,8 @@ function settingsOf(data: WebData): Settings {
     studyInRhythm: s.studyInRhythm ?? true,
     prayedToday: s.prayedToday ?? null,
     verseNumbering: s.verseNumbering ?? DEFAULT_SETTINGS.verseNumbering,
+    rosaryLatin: s.rosaryLatin ?? false,
+    rosaryWords: s.rosaryWords ?? true,
   };
 }
 

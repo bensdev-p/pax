@@ -1,6 +1,7 @@
 import type { ReadDb } from './db';
 import {
   parseJson,
+  type BeadVerse,
   type ContentStore,
   type Course,
   type CourseDay,
@@ -43,8 +44,10 @@ export function createContentStore(db: ReadDb, version: string): ContentStore {
     version,
     prayers: () => db.all<Prayer>('SELECT * FROM prayers ORDER BY sort_order'),
     prayer: (slug) => db.first<Prayer>('SELECT * FROM prayers WHERE slug = ?', [slug]),
-    mysteries: (set) =>
-      db.all<RosaryMystery>('SELECT * FROM rosary_mysteries WHERE mystery_set = ? ORDER BY number', [set]),
+    mysteries: async (set) =>
+      (await db.all<Row<RosaryMystery, 'beads'>>('SELECT * FROM rosary_mysteries WHERE mystery_set = ? ORDER BY number', [set])).map(
+        (row) => ({ ...row, beads: parseJson<BeadVerse[]>(row.beads) ?? [] }),
+      ),
     saint: async (key) => {
       const row = await db.first<Row<Saint, 'facts' | 'fathers'>>('SELECT * FROM saints WHERE romcal_key = ?', [key]);
       return row ? saintOf(row) : null;

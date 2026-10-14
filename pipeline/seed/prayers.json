@@ -4,6 +4,7 @@
   {
    "slug": "sign-of-the-cross",
    "title": "Sign of the Cross",
+   "latin_title": "Signum Crucis",
    "category": "essentials",
    "text": "In the name of the Father,\nand of the Son,\nand of the Holy Spirit.\nAmen.",
    "latin_text": "In nomine Patris,\net Filii,\net Spiritus Sancti.\nAmen."
@@ -11,6 +12,7 @@
   {
    "slug": "our-father",
    "title": "Our Father",
+   "latin_title": "Pater Noster",
    "category": "essentials",
    "text": "Our Father, who art in heaven,\nhallowed be thy name;\nthy kingdom come;\nthy will be done on earth as it is in heaven.\n\nGive us this day our daily bread;\nand forgive us our trespasses\nas we forgive those who trespass against us;\nand lead us not into temptation,\nbut deliver us from evil.\nAmen.",
    "latin_text": "Pater noster, qui es in caelis,\nsanctificetur nomen tuum.\nAdveniat regnum tuum.\nFiat voluntas tua, sicut in caelo et in terra.\n\nPanem nostrum quotidianum da nobis hodie,\net dimitte nobis debita nostra,\nsicut et nos dimittimus debitoribus nostris.\nEt ne nos inducas in tentationem,\nsed libera nos a malo.\nAmen."
@@ -18,6 +20,7 @@
   {
    "slug": "hail-mary",
    "title": "Hail Mary",
+   "latin_title": "Ave Maria",
    "category": "essentials",
    "text": "Hail Mary, full of grace,\nthe Lord is with thee.\nBlessed art thou among women,\nand blessed is the fruit of thy womb, Jesus.\n\nHoly Mary, Mother of God,\npray for us sinners,\nnow and at the hour of our death.\nAmen.",
    "latin_text": "Ave Maria, gratia plena,\nDominus tecum.\nBenedicta tu in mulieribus,\net benedictus fructus ventris tui, Iesus.\n\nSancta Maria, Mater Dei,\nora pro nobis peccatoribus,\nnunc et in hora mortis nostrae.\nAmen."
@@ -25,6 +28,7 @@
   {
    "slug": "glory-be",
    "title": "Glory Be",
+   "latin_title": "Gloria Patri",
    "category": "essentials",
    "text": "Glory be to the Father,\nand to the Son,\nand to the Holy Spirit.\nAs it was in the beginning,\nis now, and ever shall be,\nworld without end.\nAmen.",
    "latin_text": "Gloria Patri,\net Filio,\net Spiritui Sancto.\nSicut erat in principio,\net nunc, et semper,\net in saecula saeculorum.\nAmen."
@@ -32,6 +36,7 @@
   {
    "slug": "apostles-creed",
    "title": "Apostles' Creed",
+   "latin_title": "Symbolum Apostolorum",
    "category": "essentials",
    "text": "I believe in God,\nthe Father Almighty,\nCreator of heaven and earth;\n\nand in Jesus Christ, his only Son, our Lord;\nwho was conceived by the Holy Spirit,\nborn of the Virgin Mary,\nsuffered under Pontius Pilate,\nwas crucified, died, and was buried.\nHe descended into hell;\nthe third day he rose again from the dead;\nhe ascended into heaven,\nand sits at the right hand of God, the Father Almighty;\nfrom thence he shall come to judge the living and the dead.\n\nI believe in the Holy Spirit,\nthe holy Catholic Church,\nthe communion of saints,\nthe forgiveness of sins,\nthe resurrection of the body,\nand life everlasting.\nAmen.",
    "latin_text": "Credo in Deum Patrem omnipotentem,\nCreatorem caeli et terrae.\n\nEt in Iesum Christum, Filium eius unicum, Dominum nostrum,\nqui conceptus est de Spiritu Sancto,\nnatus ex Maria Virgine,\npassus sub Pontio Pilato,\ncrucifixus, mortuus, et sepultus,\ndescendit ad inferos,\ntertia die resurrexit a mortuis,\nascendit ad caelos,\nsedet ad dexteram Dei Patris omnipotentis,\ninde venturus est iudicare vivos et mortuos.\n\nCredo in Spiritum Sanctum,\nsanctam Ecclesiam catholicam,\nsanctorum communionem,\nremissionem peccatorum,\ncarnis resurrectionem,\nvitam aeternam.\nAmen."
@@ -39,27 +44,31 @@
   {
    "slug": "fatima-prayer",
    "title": "Fatima Prayer",
+   "latin_title": "O mi Iesu",
    "category": "rosary",
    "text": "O my Jesus, forgive us our sins,\nsave us from the fires of hell,\nlead all souls to heaven,\nespecially those most in need of thy mercy.\nAmen.",
-   "latin_text": null
+   "latin_text": "O mi Iesu, dimitte nobis debita nostra,\nlibera nos ab igne inferni,\nconduc in caelum omnes animas,\npraesertim illas quae maxime indigent misericordia tua.\nAmen."
   },
   {
    "slug": "hail-holy-queen",
    "title": "Hail, Holy Queen",
+   "latin_title": "Salve Regina",
    "category": "marian",
    "text": "Hail, holy Queen, Mother of mercy,\nour life, our sweetness and our hope.\nTo thee do we cry, poor banished children of Eve.\nTo thee do we send up our sighs,\nmourning and weeping in this valley of tears.\n\nTurn then, most gracious advocate,\nthine eyes of mercy toward us,\nand after this our exile,\nshow unto us the blessed fruit of thy womb, Jesus.\nO clement, O loving, O sweet Virgin Mary.\n\nV. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.",
-   "latin_text": "Salve, Regina, Mater misericordiae,\nvita, dulcedo, et spes nostra, salve.\nAd te clamamus, exsules filii Hevae.\nAd te suspiramus,\ngementes et flentes in hac lacrimarum valle.\n\nEia, ergo, advocata nostra,\nillos tuos misericordes oculos ad nos converte.\nEt Iesum, benedictum fructum ventris tui,\nnobis post hoc exsilium ostende.\nO clemens, O pia, O dulcis Virgo Maria."
+   "latin_text": "Salve, Regina, Mater misericordiae,\nvita, dulcedo, et spes nostra, salve.\nAd te clamamus, exsules filii Hevae.\nAd te suspiramus,\ngementes et flentes in hac lacrimarum valle.\n\nEia, ergo, advocata nostra,\nillos tuos misericordes oculos ad nos converte.\nEt Iesum, benedictum fructum ventris tui,\nnobis post hoc exsilium ostende.\nO clemens, O pia, O dulcis Virgo Maria.\n\nV. Ora pro nobis, sancta Dei Genetrix.\nR. Ut digni efficiamur promissionibus Christi."
   },
   {
    "slug": "rosary-closing-prayer",
    "title": "Closing Prayer of the Rosary",
+   "latin_title": "Oremus",
    "category": "rosary",
    "text": "Let us pray.\n\nO God, whose only begotten Son,\nby his life, death, and resurrection,\nhas purchased for us the rewards of eternal life;\ngrant, we beseech thee,\nthat meditating upon these mysteries\nof the Most Holy Rosary of the Blessed Virgin Mary,\nwe may imitate what they contain\nand obtain what they promise,\nthrough the same Christ our Lord.\nAmen.",
-   "latin_text": null
+   "latin_text": "Oremus.\n\nDeus, cuius Unigenitus\nper vitam, mortem et resurrectionem suam\nnobis salutis aeternae praemia comparavit:\nconcede, quaesumus,\nut haec mysteria sanctissimo beatae Mariae Virginis Rosario recolentes,\net imitemur quod continent,\net quod promittunt assequamur.\nPer eundem Christum Dominum nostrum.\nAmen."
   },
   {
    "slug": "memorare",
    "title": "Memorare",
+   "latin_title": "Memorare",
    "category": "marian",
    "text": "Remember, O most gracious Virgin Mary,\nthat never was it known\nthat anyone who fled to thy protection,\nimplored thy help,\nor sought thine intercession\nwas left unaided.\n\nInspired by this confidence,\nI fly unto thee, O Virgin of virgins, my Mother.\nTo thee do I come, before thee I stand,\nsinful and sorrowful.\n\nO Mother of the Word Incarnate,\ndespise not my petitions,\nbut in thy mercy hear and answer me.\nAmen.",
    "latin_text": "Memorare, O piissima Virgo Maria,\nnon esse auditum a saeculo,\nquemquam ad tua currentem praesidia,\ntua implorantem auxilia,\ntua petentem suffragia,\nesse derelictum.\n\nEgo tali animatus confidentia,\nad te, Virgo Virginum, Mater, curro,\nad te venio,\ncoram te gemens peccator assisto.\n\nNoli, Mater Verbi, verba mea despicere;\nsed audi propitia et exaudi.\nAmen."
@@ -67,6 +76,7 @@
   {
    "slug": "angelus",
    "title": "The Angelus",
+   "latin_title": "Angelus",
    "category": "marian",
    "text": "V. The Angel of the Lord declared unto Mary.\nR. And she conceived of the Holy Spirit.\nHail Mary…\n\nV. Behold the handmaid of the Lord.\nR. Be it done unto me according to thy word.\nHail Mary…\n\nV. And the Word was made flesh.\nR. And dwelt among us.\nHail Mary…\n\nV. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray.\n\nPour forth, we beseech thee, O Lord,\nthy grace into our hearts,\nthat we, to whom the Incarnation of Christ, thy Son,\nwas made known by the message of an angel,\nmay by his Passion and Cross\nbe brought to the glory of his Resurrection.\nThrough the same Christ our Lord.\nAmen.",
    "latin_text": "V. Angelus Domini nuntiavit Mariae.\nR. Et concepit de Spiritu Sancto.\nAve Maria…\n\nV. Ecce ancilla Domini.\nR. Fiat mihi secundum verbum tuum.\nAve Maria…\n\nV. Et Verbum caro factum est.\nR. Et habitavit in nobis.\nAve Maria…\n\nV. Ora pro nobis, sancta Dei Genetrix.\nR. Ut digni efficiamur promissionibus Christi.\n\nOremus.\n\nGratiam tuam, quaesumus, Domine,\nmentibus nostris infunde;\nut qui, Angelo nuntiante,\nChristi Filii tui incarnationem cognovimus,\nper passionem eius et crucem\nad resurrectionis gloriam perducamur.\nPer eundem Christum Dominum nostrum.\nAmen."
@@ -74,6 +84,7 @@
   {
    "slug": "saint-michael",
    "title": "Prayer to Saint Michael",
+   "latin_title": "Sancte Michael",
    "category": "daily",
    "text": "Saint Michael the Archangel,\ndefend us in battle.\nBe our protection against the wickedness\nand snares of the devil.\nMay God rebuke him, we humbly pray;\nand do thou, O Prince of the heavenly host,\nby the power of God,\ncast into hell Satan and all the evil spirits\nwho prowl about the world\nseeking the ruin of souls.\nAmen.",
    "latin_text": "Sancte Michael Archangele,\ndefende nos in proelio;\ncontra nequitiam et insidias diaboli\nesto praesidium.\nImperet illi Deus, supplices deprecamur:\ntuque, Princeps militiae caelestis,\nSatanam aliosque spiritus malignos,\nqui ad perditionem animarum\npervagantur in mundo,\ndivina virtute in infernum detrude.\nAmen."
@@ -81,6 +92,7 @@
   {
    "slug": "guardian-angel",
    "title": "Guardian Angel Prayer",
+   "latin_title": "Angele Dei",
    "category": "daily",
    "text": "Angel of God, my guardian dear,\nto whom God's love commits me here,\never this day be at my side,\nto light and guard, to rule and guide.\nAmen.",
    "latin_text": "Angele Dei,\nqui custos es mei,\nme, tibi commissum pietate superna,\nillumina, custodi,\nrege et guberna.\nAmen."
@@ -88,6 +100,7 @@
   {
    "slug": "morning-offering",
    "title": "Morning Offering",
+   "latin_title": null,
    "category": "daily",
    "text": "O Jesus,\nthrough the Immaculate Heart of Mary,\nI offer you my prayers, works, joys, and sufferings of this day\nfor all the intentions of your Sacred Heart,\nin union with the Holy Sacrifice of the Mass throughout the world,\nfor the salvation of souls,\nthe reparation of sins,\nthe reunion of all Christians,\nand in particular for the intentions of the Holy Father this month.\nAmen.",
    "latin_text": null
@@ -95,6 +108,7 @@
   {
    "slug": "come-holy-spirit",
    "title": "Come, Holy Spirit",
+   "latin_title": null,
    "category": "daily",
    "text": "Come, Holy Spirit,\nfill the hearts of thy faithful\nand kindle in them the fire of thy love.\n\nV. Send forth thy Spirit and they shall be created.\nR. And thou shalt renew the face of the earth.\n\nLet us pray.\n\nO God, who by the light of the Holy Spirit\ndidst instruct the hearts of the faithful,\ngrant that by the same Holy Spirit\nwe may be truly wise\nand ever enjoy his consolations.\nThrough Christ our Lord.\nAmen.",
    "latin_text": null
@@ -102,6 +116,7 @@
   {
    "slug": "act-of-contrition",
    "title": "Act of Contrition",
+   "latin_title": null,
    "category": "daily",
    "text": "O my God, I am heartily sorry\nfor having offended thee,\nand I detest all my sins\nbecause of thy just punishments,\nbut most of all because they offend thee, my God,\nwho art all good and deserving of all my love.\n\nI firmly resolve, with the help of thy grace,\nto sin no more\nand to avoid the near occasion of sin.\nAmen.",
    "latin_text": null
@@ -109,6 +124,7 @@
   {
    "slug": "regina-caeli",
    "title": "Regina Caeli",
+   "latin_title": "Regina Caeli",
    "category": "marian",
    "text": "Queen of Heaven, rejoice, alleluia.\nFor he whom you did merit to bear, alleluia,\nHas risen, as he said, alleluia.\nPray for us to God, alleluia.\n\nV. Rejoice and be glad, O Virgin Mary, alleluia.\nR. For the Lord has truly risen, alleluia.\n\nLet us pray.\n\nO God, who gave joy to the world\nthrough the resurrection of thy Son,\nour Lord Jesus Christ,\ngrant, we beseech thee,\nthat through the intercession of the Virgin Mary, his Mother,\nwe may obtain the joys of everlasting life.\nThrough the same Christ our Lord.\nAmen.",
    "latin_text": "Regina caeli, laetare, alleluia.\nQuia quem meruisti portare, alleluia,\nResurrexit, sicut dixit, alleluia.\nOra pro nobis Deum, alleluia.\n\nV. Gaude et laetare, Virgo Maria, alleluia.\nR. Quia surrexit Dominus vere, alleluia.\n\nOremus.\n\nDeus, qui per resurrectionem Filii tui,\nDomini nostri Iesu Christi,\nmundum laetificare dignatus es:\npraesta, quaesumus,\nut per eius Genetricem Virginem Mariam,\nperpetuae capiamus gaudia vitae.\nPer eundem Christum Dominum nostrum.\nAmen."
@@ -116,6 +132,7 @@
   {
    "slug": "grace-before-meals",
    "title": "Grace before meals",
+   "latin_title": "Benedic, Domine",
    "category": "daily",
    "text": "Bless us, O Lord,\nand these thy gifts,\nwhich we are about to receive from thy bounty,\nthrough Christ our Lord.\nAmen.",
    "latin_text": "Benedic, Domine, nos\net haec tua dona,\nquae de tua largitate sumus sumpturi.\nPer Christum Dominum nostrum.\nAmen."
@@ -123,6 +140,7 @@
   {
    "slug": "grace-after-meals",
    "title": "Grace after meals",
+   "latin_title": null,
    "category": "daily",
    "text": "We give thee thanks, almighty God,\nfor all thy benefits,\nwho livest and reignest for ever and ever.\nAmen.\n\nMay the souls of the faithful departed,\nthrough the mercy of God,\nrest in peace.\nAmen.",
    "latin_text": null
@@ -130,6 +148,7 @@
   {
    "slug": "eternal-rest",
    "title": "Eternal Rest",
+   "latin_title": "Requiem Aeternam",
    "category": "departed",
    "text": "Eternal rest grant unto them, O Lord,\nand let perpetual light shine upon them.\nMay they rest in peace.\nAmen.\n\nMay their souls and the souls of all the faithful departed,\nthrough the mercy of God,\nrest in peace.\nAmen.",
    "latin_text": "Requiem aeternam dona eis, Domine,\net lux perpetua luceat eis.\nRequiescant in pace.\nAmen."
@@ -137,6 +156,7 @@
   {
    "slug": "sub-tuum-praesidium",
    "title": "We Fly to Thy Patronage",
+   "latin_title": "Sub Tuum Praesidium",
    "category": "marian",
    "text": "We fly to thy patronage,\nO holy Mother of God.\nDespise not our petitions in our necessities,\nbut deliver us always from all dangers,\nO glorious and blessed Virgin.\nAmen.",
    "latin_text": "Sub tuum praesidium confugimus,\nSancta Dei Genetrix.\nNostras deprecationes ne despicias in necessitatibus,\nsed a periculis cunctis libera nos semper,\nVirgo gloriosa et benedicta.\nAmen."
@@ -144,6 +164,7 @@
   {
    "slug": "anima-christi",
    "title": "Anima Christi",
+   "latin_title": "Anima Christi",
    "category": "eucharist",
    "text": "Soul of Christ, sanctify me.\nBody of Christ, save me.\nBlood of Christ, inebriate me.\nWater from the side of Christ, wash me.\nPassion of Christ, strengthen me.\nO good Jesus, hear me.\nWithin thy wounds hide me.\nSuffer me not to be separated from thee.\nFrom the malicious enemy defend me.\nIn the hour of my death call me,\nAnd bid me come unto thee,\nThat with thy saints I may praise thee\nFor ever and ever.\nAmen.",
    "latin_text": "Anima Christi, sanctifica me.\nCorpus Christi, salva me.\nSanguis Christi, inebria me.\nAqua lateris Christi, lava me.\nPassio Christi, conforta me.\nO bone Iesu, exaudi me.\nIntra tua vulnera absconde me.\nNe permittas me separari a te.\nAb hoste maligno defende me.\nIn hora mortis meae voca me.\nEt iube me venire ad te,\nUt cum Sanctis tuis laudem te\nIn saecula saeculorum.\nAmen."
@@ -151,6 +172,7 @@
   {
    "slug": "spiritual-communion",
    "title": "Act of Spiritual Communion",
+   "latin_title": null,
    "category": "eucharist",
    "text": "My Jesus,\nI believe that thou art present in the Most Holy Sacrament.\nI love thee above all things,\nand I desire to receive thee into my soul.\n\nSince I cannot at this moment receive thee sacramentally,\ncome at least spiritually into my heart.\nI embrace thee as if thou wert already there\nand unite myself wholly to thee.\nNever permit me to be separated from thee.\nAmen.",
    "latin_text": null
@@ -158,6 +180,7 @@
   {
    "slug": "act-of-faith",
    "title": "Act of Faith",
+   "latin_title": null,
    "category": "essentials",
    "text": "O my God, I firmly believe\nthat thou art one God in three divine Persons,\nFather, Son, and Holy Spirit.\nI believe that thy divine Son became man and died for our sins,\nand that he will come to judge the living and the dead.\n\nI believe these and all the truths\nwhich the holy Catholic Church teaches,\nbecause thou hast revealed them,\nwho canst neither deceive nor be deceived.\nAmen.",
    "latin_text": null
@@ -165,6 +188,7 @@
   {
    "slug": "act-of-hope",
    "title": "Act of Hope",
+   "latin_title": null,
    "category": "essentials",
    "text": "O my God, relying on thy almighty power\nand infinite mercy and promises,\nI hope to obtain pardon of my sins,\nthe help of thy grace,\nand life everlasting,\nthrough the merits of Jesus Christ,\nmy Lord and Redeemer.\nAmen.",
    "latin_text": null
@@ -172,6 +196,7 @@
   {
    "slug": "act-of-love",
    "title": "Act of Love",
+   "latin_title": null,
    "category": "essentials",
    "text": "O my God, I love thee above all things,\nwith my whole heart and soul,\nbecause thou art all good and worthy of all love.\nI love my neighbor as myself for the love of thee.\nI forgive all who have injured me,\nand ask pardon of all whom I have injured.\nAmen.",
    "latin_text": null
@@ -179,6 +204,7 @@
   {
    "slug": "prayer-to-saint-joseph",
    "title": "Prayer to Saint Joseph",
+   "latin_title": null,
    "category": "saints",
    "text": "To thee, O blessed Joseph,\ndo we have recourse in our tribulation,\nand having implored the help of thy most holy Spouse,\nwe confidently invoke thy patronage also.\n\nThrough that charity which bound thee\nto the Immaculate Virgin Mother of God,\nand through the paternal love\nwith which thou didst embrace the Child Jesus,\nwe humbly beseech thee graciously to regard the inheritance\nwhich Jesus Christ has purchased by his Blood,\nand with thy power and strength\nto aid us in our necessities.\n\nO most watchful guardian of the Holy Family,\ndefend the chosen children of Jesus Christ.\nO most loving father,\nward off from us every contagion of error and corrupting influence.\nO our most mighty protector, be propitious to us\nand from heaven assist us in our struggle\nwith the power of darkness.\n\nAs once thou didst rescue the Child Jesus from deadly peril,\nso now protect God's holy Church\nfrom the snares of the enemy and from all adversity.\nShield, too, each one of us by thy constant protection,\nso that, supported by thy example and thy aid,\nwe may be able to live piously,\nto die in holiness,\nand to obtain eternal happiness in heaven.\nAmen.",
    "latin_text": null
@@ -186,6 +212,7 @@
   {
    "slug": "suscipe",
    "title": "Suscipe",
+   "latin_title": null,
    "category": "saints",
    "text": "Take, O Lord, and receive\nall my liberty,\nmy memory,\nmy understanding,\nand all my will,\nall that I have and possess.\n\nThou hast given all to me;\nto thee, O Lord, I return it.\nAll is thine;\ndispose of it wholly according to thy will.\nGive me thy love and thy grace,\nfor this is enough for me.\nAmen.",
    "latin_text": null
@@ -193,6 +220,7 @@
   {
    "slug": "prayer-of-saint-francis",
    "title": "Peace Prayer of Saint Francis",
+   "latin_title": null,
    "category": "saints",
    "text": "Lord, make me an instrument of your peace.\nWhere there is hatred, let me sow love;\nwhere there is injury, pardon;\nwhere there is doubt, faith;\nwhere there is despair, hope;\nwhere there is darkness, light;\nwhere there is sadness, joy.\n\nO Divine Master, grant that I may not so much seek\nto be consoled as to console;\nto be understood as to understand;\nto be loved as to love.\nFor it is in giving that we receive;\nit is in pardoning that we are pardoned;\nand it is in dying that we are born to eternal life.\nAmen.",
    "latin_text": null
@@ -200,6 +228,7 @@
   {
    "slug": "nicene-creed",
    "title": "Nicene Creed",
+   "latin_title": null,
    "category": "essentials",
    "text": "I believe in one God,\nthe Father almighty,\nmaker of heaven and earth,\nand of all things visible and invisible.\n\nAnd in one Lord Jesus Christ,\nthe only-begotten Son of God,\nborn of the Father before all ages;\nGod of God, Light of Light,\ntrue God of true God;\nbegotten, not made;\nof one substance with the Father,\nby whom all things were made.\n\nWho for us men and for our salvation\ncame down from heaven,\nand was incarnate by the Holy Spirit of the Virgin Mary,\nand was made man.\nHe was crucified also for us,\nsuffered under Pontius Pilate,\nand was buried.\nAnd on the third day he rose again\naccording to the Scriptures.\nHe ascended into heaven\nand sits at the right hand of the Father.\nHe will come again in glory\nto judge the living and the dead,\nand of his kingdom there will be no end.\n\nAnd in the Holy Spirit,\nthe Lord and giver of life,\nwho proceeds from the Father and the Son,\nwho together with the Father and the Son\nis adored and glorified,\nwho spoke through the prophets.\n\nAnd in one, holy, catholic and apostolic Church.\nI confess one baptism for the forgiveness of sins.\nAnd I await the resurrection of the dead,\nand the life of the world to come.\nAmen.",
    "latin_text": null

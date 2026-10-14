@@ -329,6 +329,24 @@ def month_days(romcal_days: dict) -> dict[str, str]:
 STEP_TYPES = {"prayer", "text", "repeat", "station", "litany", "day"}
 
 
+def bead_verses(mysteries: list[dict], bible) -> None:
+    """Resolves each mystery's ten `beads` refs to the Douay text and its Douay citation."""
+    books = {b.osis: b for b in bible.books}
+    verses = {v.ref: v for v in bible.verses}
+    for m in mysteries:
+        if len(m["beads"]) != 10:
+            raise SystemExit(f"mystery {m['slug']}: needs ten bead verses, has {len(m['beads'])}")
+        resolved = []
+        for ref in m["beads"]:
+            v = verses.get(ref)
+            if v is None:
+                raise SystemExit(f"mystery {m['slug']}: unknown bead verse {ref}")
+            name = "Psalm" if v.book == "Ps" else books[v.book].name_douay
+            text = v.text.replace("*", "").strip()
+            resolved.append({"ref": ref, "cite": f"{name} {v.douay_chapter}:{v.douay_verse}", "text": text})
+        m["beads"] = resolved
+
+
 def check_devotions(devotions: list[dict], prayer_slugs: set[str]) -> None:
     for d in devotions:
         where = f"devotion {d['slug']}"
@@ -439,6 +457,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
 
     check_unique(prayers, "slug", "prayer")
     check_unique(mysteries, "slug", "mystery")
+    bead_verses(mysteries, bible)
     check_unique([v.__dict__ for v in bible.verses], "ref", "verse")
     check_unique(saints, "romcal_key", "saint")
     check_unique(devotions, "slug", "devotion")
@@ -546,16 +565,16 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         ],
     )
     db.executemany(
-        "INSERT INTO prayers VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO prayers VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
-            (p["slug"], p["title"], p["category"], p["text"], p.get("latin_text"), i)
+            (p["slug"], p["title"], p.get("latin_title"), p["category"], p["text"], p.get("latin_text"), i)
             for i, p in enumerate(prayers)
         ],
     )
     db.executemany(
         "INSERT INTO rosary_mysteries VALUES (:slug, :mystery_set, :number, :title, :fruit,"
-        " :scripture_ref, :scripture_display, :meditation)",
-        mysteries,
+        " :scripture_ref, :scripture_display, :meditation, :beads)",
+        [{**m, "beads": json.dumps(m["beads"], ensure_ascii=False)} for m in mysteries],
     )
     for i, u in enumerate(learn["units"]):
         db.execute("INSERT INTO units VALUES (?, ?, ?, ?)", (u["slug"], u["ocia_stage"], u["title"], i))
@@ -631,10 +650,11 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     web = {
         "contentVersion": version,
         "prayers": [
-            {**{k: p.get(k) for k in ("slug", "title", "category", "text", "latin_text")}, "sort_order": i}
+            {**{k: p.get(k) for k in ("slug", "title", "latin_title", "category", "text", "latin_text")}, "sort_order": i}
             for i, p in enumerate(prayers)
         ],
-        "rosary_mysteries": mysteries,
+        # The bead verses stay in content.db; this file is bundled into the app's JavaScript.
+        "rosary_mysteries": [{k: v for k, v in m.items() if k != "beads"} for m in mysteries],
         # Keys for the web build's static pages (generateStaticParams).
         "saints": [s["romcal_key"] for s in saints],
         "devotions": [d["slug"] for d in devotions],

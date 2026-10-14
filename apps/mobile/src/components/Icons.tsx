@@ -190,6 +190,16 @@ export function CloseIcon({ size = 26, color = '#AFAFAF' }: IconProps) {
   );
 }
 
+/** Back one bead or step (the Rosary), drawn like the back chevron. */
+export function UndoIcon({ size = 26, color = '#AFAFAF' }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path d="M9 6L4 11l5 5" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M5 11h9a6 6 0 0 1 6 6v1" stroke={color} strokeWidth="3" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
 export function ChevronIcon({ size = 20, color = '#AFAFAF' }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">

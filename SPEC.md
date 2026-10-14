@@ -69,6 +69,11 @@ Everything else (tiles, long readings list) moves one tap away.
   asks", USCCB link.
 - **Devotions** (`/devotion/[slug]`, `/devotion/[slug]/pray`): one screen at a time like the
   Rosary; novenas track nine days and can remind daily.
+- **Rosary** (`/rosary`, redesigned in Phase 4, chosen from mockups): a start page (the five
+  mysteries, English or Latin, Begin, Mysteries only, Log it); each decade keeps its mystery on
+  screen with a Douay verse per Hail Mary; "Mysteries only" walks through the five mysteries for
+  praying on your own beads; "Log it" counts a Rosary prayed elsewhere. A quiet mode (dark,
+  words hidden, for night) was offered and may come later as a setting.
 - **Reading plans** (`/course/[slug]`, `/course/[slug]/[day]`): plan page with progress and
   reminder; day page with the full text, a word from the Fathers, Pax's question.
 - **Library**: reader, verse panel (notes, CCC, Fathers), Catechism outline, Fathers by author,
@@ -120,6 +125,11 @@ quiz coach.
 His role changes from coach to **quiet companion**: fewer appearances, short lines, calm on
 prayer screens, never guilt-driven. Expressions in use: hello, happy, hint, celebrating,
 encouraging, asleep.
+
+**Redesign under way (Phase 4).** Ben wants a simpler dove (from three directions shown: a simpler
+dove, a little sheep, no mascot), but not the first mockup's style. The art is being made with an
+image generator from `docs/mascot-brief.md` (four style directions, then seven poses with a
+tintable scarf, then the app icon); the current Pax stays until it arrives.
 
 ## Liturgical theming (unchanged)
 

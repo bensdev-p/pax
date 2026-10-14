@@ -1,7 +1,7 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 13, 2026 · matches user.db schema version 5 (the journal, highlights,
-bookmarks and favorites in `notes`, plus the rhythm and onboarding settings) and Supabase migrations
+_Last updated: October 14, 2026 · matches user.db schema version 5 (the journal, highlights,
+bookmarks and favorites in `notes`, plus the rhythm, onboarding and Rosary settings) and Supabase migrations
 through `20261012000000_journal_notes`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
@@ -41,7 +41,7 @@ the app.
 
 | Table | What it holds | Why |
 | --- | --- | --- |
-| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; whether you finished or skipped the welcome; the date of a streak you chose not to keep with grace days; which verse numbering your verse notes use (so Pax moves them once when a numbering fix ships) | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
+| `settings` | Light, dark or system appearance; a locked theme color, if you chose one; which content version is installed; the Bible book and chapter you last read; whether the full Church Fathers library is installed; which of today's readings you have read in the app; which prayers you finished today (such as the Rosary or a chaplet), replaced the next day; whether Study is part of your daily rhythm; whether you finished or skipped the welcome; the date of a streak you chose not to keep with grace days; which verse numbering your verse notes use (so Pax moves them once when a numbering fix ships); whether you pray the Rosary in English or Latin, and whether its prayers' words are shown | To show the app the way you asked, offer "Continue reading", check off today's readings and prayers, and not ask about the same missed days twice |
 | `daily_activity` | For each local date: whether you read the day's readings (Read), prayed the Rosary or a devotion (Pray), or read a day of a reading plan (Study), and whether you chose to cover the date with a grace day. An `xp` column from earlier versions keeps old values but is no longer added to or shown | To count your streak and show the calendar in Me |
 | `streaks` | Current and longest streak, last active date, grace days left this month | Same as above |
 | `notification_prefs` | Whether the morning reminder, evening reminder, streak nudges and Angelus are on, and the morning and evening times you picked | To schedule reminders |
