@@ -1,4 +1,4 @@
-import type { RosaryMystery } from '@/data/types';
+import type { Prayer, RosaryMystery } from '@/data/types';
 
 export type RosaryStep =
   | { kind: 'prayer'; slug: string; note?: string; mystery?: RosaryMystery }
@@ -29,4 +29,40 @@ export function rosarySteps(mysteries: RosaryMystery[]): RosaryStep[] {
     { kind: 'prayer', slug: 'sign-of-the-cross' },
   );
   return steps;
+}
+
+/** Steps of one decade, counting each Hail Mary: the mystery, Our Father, ten beads, Glory Be, Fatima. */
+const DECADE_UNITS = 14;
+
+/** How far through each of the five decades the Rosary is (0 to 1 each), for the progress marks. */
+export function decadeProgress(steps: RosaryStep[], index: number, bead: number): number[] {
+  const done = [0, 0, 0, 0, 0];
+  let decade = -1;
+  steps.forEach((step, i) => {
+    if (step.kind === 'mystery') decade++;
+    const inDecade = step.kind === 'mystery' || !!step.mystery;
+    if (!inDecade || decade < 0 || decade > 4 || i > index) return;
+    // Earlier steps count in full; the current one counts the Hail Marys already prayed.
+    const units = step.kind === 'beads' ? step.count : 1;
+    done[decade]! += i < index ? units : step.kind === 'beads' ? bead : 0;
+  });
+  return done.map((units) => Math.min(1, units / DECADE_UNITS));
+}
+
+/** One bead or one step back: from a decade's first Hail Mary back to the Our Father before it. */
+export function stepBack(steps: RosaryStep[], index: number, bead: number): { index: number; bead: number } {
+  if (bead > 0) return { index, bead: bead - 1 };
+  if (index === 0) return { index: 0, bead: 0 };
+  const prev = steps[index - 1]!;
+  return { index: index - 1, bead: prev.kind === 'beads' ? prev.count - 1 : 0 };
+}
+
+/** A prayer's title and text in Latin when asked for and Pax has it, otherwise in English. */
+export function prayerWords(
+  prayer: Pick<Prayer, 'title' | 'text' | 'latin_title' | 'latin_text'> | undefined,
+  latin: boolean,
+): { title: string; text: string; latin: boolean } {
+  if (!prayer) return { title: '', text: '', latin: false };
+  if (latin && prayer.latin_text) return { title: prayer.latin_title ?? prayer.title, text: prayer.latin_text, latin: true };
+  return { title: prayer.title, text: prayer.text, latin: false };
 }

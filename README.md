@@ -2,7 +2,7 @@
 
 A daily Catholic companion: read, pray and study with the Church, one day at a time. Phases 1
 to 3 are built (the Library, the companion features and the Rhythm: daily marks, the new Today,
-the journal); Phase 4 (Depth) is next. [SPEC.md](SPEC.md) is the plan (v2, Oct 12 2026), [CLAUDE.md](CLAUDE.md) is
+the journal); Phase 4 (Depth) is under way, starting with the new Rosary. [SPEC.md](SPEC.md) is the plan (v2, Oct 12 2026), [CLAUDE.md](CLAUDE.md) is
 the guide for Claude Code sessions, [docs/NEXT_SESSION.md](docs/NEXT_SESSION.md) is the prompt
 for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 
@@ -191,6 +191,21 @@ and no paid Apple account are needed until the widgets.
   build (`CORRECTIONS` in `pipeline/bible_drc.py`).
 - **Second tap to confirm** anything that can't be undone (deleting a journal entry, removing the
   Fathers download): the button turns red and says "Tap again…" for a few seconds.
+
+## What Phase 4 (Depth) adds so far
+
+- **The Rosary, redesigned** (Ben chose it from mockups): a start page with the day's five
+  mysteries, a choice of **English or Latin** (every prayer of the Rosary has its Latin), then
+  **Begin**, **Mysteries only** or **I prayed it already · Log it**.
+  - **Begin**: five decade marks at the top and a back-one-bead button. Each decade keeps its
+    mystery on screen, and every Hail Mary has its own Douay verse (a Scriptural Rosary: ten
+    verses per mystery, in `pipeline/seed/rosary_mysteries.json`). The beads hang in an arc, the
+    whole prayer is a tap target for the next bead, a firmer haptic ends each decade, and "Hide
+    the words" folds the prayers to their first line (remembered, as is the language).
+  - **Mysteries only**, for praying on your own rosary: one mystery at a time with its ten verses
+    to read along.
+  - **Log it** counts a Rosary prayed away from the app for today's Pray mark and the streak.
+- The chaplets' beads hang in the same arc.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 

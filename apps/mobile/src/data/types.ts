@@ -3,6 +3,8 @@ import type { Appearance, PaletteName } from '@pax/tokens';
 export interface Prayer {
   slug: string;
   title: string;
+  /** Ave Maria, Pater Noster: set where `latin_text` is. */
+  latin_title: string | null;
   category: 'essentials' | 'rosary' | 'marian' | 'daily' | string;
   text: string;
   latin_text: string | null;
@@ -18,6 +20,16 @@ export interface RosaryMystery {
   scripture_ref: string | null;
   scripture_display: string;
   meditation: string;
+  /** Ten Douay verses, one read with each Hail Mary (a Scriptural Rosary). */
+  beads: BeadVerse[];
+}
+
+export interface BeadVerse {
+  /** content.db verse key. */
+  ref: string;
+  /** Douay book name and numbering: "Psalm 131:8". */
+  cite: string;
+  text: string;
 }
 
 export interface SaintFact {
@@ -213,6 +225,10 @@ export interface Settings {
    * verse divisions were mapped (Phase 3), 2 after. Notes are moved once (state/renumber.ts).
    */
   verseNumbering: number;
+  /** The Rosary's prayers in Latin, where Pax has the Latin text. */
+  rosaryLatin: boolean;
+  /** False when the user hides the Rosary's prayer texts (they know them by heart). */
+  rosaryWords: boolean;
 }
 
 /** Prayers finished on one local date: 'rosary' or a devotion slug, with its title. */
@@ -328,6 +344,8 @@ export const DEFAULT_SETTINGS: Settings = {
   studyInRhythm: true,
   verseNumbering: 1,
   prayedToday: null,
+  rosaryLatin: false,
+  rosaryWords: true,
 };
 
 export function parseJson<T>(raw: string | null | undefined): T | null {

@@ -31,7 +31,7 @@ export default function PrayerScreen() {
   return (
     <Screen header={<Header
           title={prayer?.title ?? (prayer === null ? 'Prayer not found' : '')}
-          subtitle={prayer ? 'Traditional' : undefined}
+          subtitle={prayer ? (latin && prayer.latin_title) || 'Traditional' : undefined}
           right={prayer ? <FavoriteButton targetType="prayer" slug={prayer.slug} title={prayer.title} /> : undefined}
         />}>
       {prayer?.latin_text ? (

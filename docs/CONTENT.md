@@ -26,6 +26,7 @@ Add an object to `pipeline/seed/prayers.json`:
   "slug": "prayer-before-a-crucifix",
   "title": "Prayer before a Crucifix",
   "category": "eucharist",
+  "latin_title": "En Ego",
   "text": "Behold, O kind and most sweet Jesus…",
   "latin_text": "En ego, o bone et dulcissime Iesu…"
 }
@@ -36,7 +37,16 @@ Add an object to `pipeline/seed/prayers.json`:
   `apps/mobile/src/app/(tabs)/pray.tsx`.
 - Use `\n` for line breaks and `V.` / `R.` for versicles and responses.
 - `latin_text` is optional (`null`); when present, the prayer page shows an English/Latin switch.
+  Give it a `latin_title` too (Ave Maria, Pater Noster): the Latin Rosary uses it as the heading.
 - Order in the file is the order on the Pray tab.
+
+## The Rosary's verses
+
+Each mystery in `pipeline/seed/rosary_mysteries.json` has `beads`: ten verse refs, one read with
+each Hail Mary (a Scriptural Rosary). Refs are content.db keys (modern numbering, except where
+the Douay follows the Vulgate, as in Judith and the Song of Songs: look the verse up by its text
+in `bible_verses` and use the ref it has). The build fills in the Douay text and citation and
+stops on an unknown ref.
 
 ## A chaplet, litany, novena or the like
 

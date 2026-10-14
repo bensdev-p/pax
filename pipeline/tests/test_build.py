@@ -265,6 +265,21 @@ class BuildTest(unittest.TestCase):
         ).fetchall()
         self.assertIn(("hail-mary",), hits)
 
+    def test_rosary_beads_and_latin(self):
+        for slug, raw in self.db.execute("SELECT slug, beads FROM rosary_mysteries"):
+            beads = json.loads(raw)
+            self.assertEqual(len(beads), 10, slug)
+            self.assertTrue(all(b["text"] and "*" not in b["text"] for b in beads), slug)
+        # Douay names and numbering: Psalm 132:8 is Psalm 131:8 in the Douay.
+        beads = json.loads(self.db.execute("SELECT beads FROM rosary_mysteries WHERE slug='glorious-4-assumption'").fetchone()[0])
+        self.assertIn("Psalm 131:8", [b["cite"] for b in beads])
+        # Every prayer of the Rosary has its Latin.
+        for slug in ("sign-of-the-cross", "apostles-creed", "our-father", "hail-mary", "glory-be", "fatima-prayer", "hail-holy-queen", "rosary-closing-prayer"):
+            title, text = self.db.execute("SELECT latin_title, latin_text FROM prayers WHERE slug=?", (slug,)).fetchone()
+            self.assertTrue(title and text, slug)
+        with self.assertRaises(SystemExit):
+            build_content.bead_verses([{"slug": "m", "beads": ["Matt.99.1"] * 10}], build_content.bible_drc.parse(build_content.SOURCES / "drc1750"))
+
     def test_lectionary_json_matches_db(self):
         data = json.loads(self.paths["lectionary"].read_text())
         self.assertEqual(data["contentVersion"], self.result["version"])

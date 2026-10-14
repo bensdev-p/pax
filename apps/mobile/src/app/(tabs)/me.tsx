@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
+import { Choice } from '@/components/Choice';
 import { BellIcon, CloudIcon, JournalIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
@@ -234,31 +235,6 @@ function IconTile({ color, children }: { color: string; children: React.ReactNod
       }}>
       {children}
     </View>
-  );
-}
-
-function Choice({ label, selected, onPress }: { label: string; selected: boolean; onPress: () => void }) {
-  const t = useTheme();
-  return (
-    <Pressable
-      accessibilityRole="radio"
-      accessibilityState={{ selected }}
-      onPress={onPress}
-      style={{
-        flex: 1,
-        minHeight: 44,
-        borderRadius: t.radius.tile,
-        borderWidth: t.border.width,
-        borderColor: selected ? t.accent.accent : t.neutral.border,
-        backgroundColor: selected ? t.accent.tint : t.neutral.surface,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 10,
-      }}>
-      <Text variant="small" style={{ fontFamily: 'Nunito_900Black' }} color={selected ? t.accent.text : t.neutral.textMuted}>
-        {label}
-      </Text>
-    </Pressable>
   );
 }
 

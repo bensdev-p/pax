@@ -186,6 +186,8 @@ async function readSettings(db: SQLite.SQLiteDatabase): Promise<Settings> {
     studyInRhythm: map.studyInRhythm !== 'false',
     prayedToday: parseJson<PrayedToday>(map.prayedToday),
     verseNumbering: Number(map.verseNumbering) || DEFAULT_SETTINGS.verseNumbering,
+    rosaryLatin: map.rosaryLatin === 'true',
+    rosaryWords: map.rosaryWords !== 'false',
   };
 }
 
