@@ -147,22 +147,20 @@ export const tokens = {
     }
   },
   "pax": {
-    "body": "#F5F8FC",
-    "shade": "#E4ECF5",
-    "wing": "#DCE6F1",
-    "wingDeep": "#C5D3E3",
-    "belly": "#FFFFFF",
-    "eye": "#1E2633",
-    "beak": "#FFB347",
-    "beakDeep": "#F28C28",
-    "mouth": "#E0701B",
-    "tongue": "#FF7A8A",
-    "blush": "#FFB9C6",
-    "blushHappy": "#FFA3B5",
-    "feet": "#F28C28",
-    "olive": "#7FA650",
-    "oliveDeep": "#5E8A3A",
-    "oliveSeed": "#3F5F27"
+    "body": "#FDFDFB",
+    "shade": "#E7EDF4",
+    "wing": "#EEF2F7",
+    "feather": "#DCE4EE",
+    "line": "#BFCBDA",
+    "detail": "#C9D4E1",
+    "eye": "#232B36",
+    "beak": "#F3A052",
+    "beakDeep": "#DE7D33",
+    "feet": "#E8893A",
+    "olive": "#6E9A4B",
+    "oliveDeep": "#557E39",
+    "oliveLight": "#86AE62",
+    "oliveFruit": "#7E8F38"
   },
   "font": {
     "family": {

@@ -1,6 +1,7 @@
 # Starting the next Claude Code session (Phase 4: Depth)
 
-Where things stand (October 2026): Phases 1 to 3 are built and merged or ready to merge from
+Where things stand (October 2026): Pax the dove now uses the art from Ben's approved character
+sheet (`design/pax-redesign/character-sheet.png`; SPEC: Pax the mascot). Phases 1 to 3 are built and merged or ready to merge from
 `claude/stoic-goodall-o0cat0`. Ben is living with Phase 3 for two weeks (SPEC: Roadmap) and will
 relay anything he wants changed. README.md lists everything that exists.
 

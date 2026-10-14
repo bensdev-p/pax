@@ -189,6 +189,11 @@ and no paid Apple account are needed until the widgets.
   differently (John 6, Mark 8–9, Acts 7 and others; `pipeline/verse_map.py`). Notes on verses
   that moved were moved with them, once. 27 scanning slips in the Douay text are corrected in the
   build (`CORRECTIONS` in `pipeline/bible_drc.py`).
+- **Pax from Ben's approved character sheet** (`design/pax-redesign/character-sheet.png`): the
+  sheet's own art, cut into layers by `design/pax-redesign/cut_poses.py`, with the scarf tinted
+  in the day's color. A calmer, more natural dove with small dark eyes, layered wings and a long
+  tail, still with his olive sprig. Same six expressions, sizes and placements (SPEC: Pax the
+  mascot).
 - **Second tap to confirm** anything that can't be undone (deleting a journal entry, removing the
   Fathers download): the button turns red and says "Tap again…" for a few seconds.
 
