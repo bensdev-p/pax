@@ -1,7 +1,6 @@
 # Starting the next Claude Code session (Phase 4: Depth)
 
-Where things stand (October 2026): Pax the dove now uses the art from Ben's approved character
-sheet (`design/pax-redesign/character-sheet.png`; SPEC: Pax the mascot). Phases 1 to 3 are built and merged or ready to merge from
+Where things stand (October 2026): Phases 1 to 3 are built and merged or ready to merge from
 `claude/stoic-goodall-o0cat0`. Ben is living with Phase 3 for two weeks (SPEC: Roadmap) and will
 relay anything he wants changed. README.md lists everything that exists.
 
@@ -80,6 +79,9 @@ What Claude sets up (ask Ben before each native module, per CLAUDE.md):
 ## Open items carried over
 
 - Phase 3 gate: Ben's two weeks with the new Today. Expect small changes from it.
+- Mascot rework, later (Ben's call when). Two tries from Ben's new character sheet didn't look
+  right and were reverted: a vector redraw (commit 2d74888) and the sheet's art cut into layers
+  with a tinted scarf (b85745d, with `design/pax-redesign/cut_poses.py`). The sheet is in 2d74888.
 - FTS search hasn't been checked on a phone (it falls back to a word match).
 - Old Testament versification: Esther, Tobit, Sirach, Job 40–41 and Hosea 2's end follow the
   Vulgate (README: Known gaps). The New Testament is mapped.
