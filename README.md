@@ -206,6 +206,13 @@ and no paid Apple account are needed until the widgets.
     to read along.
   - **Log it** counts a Rosary prayed away from the app for today's Pray mark and the streak.
 - The chaplets' beads hang in the same arc.
+- **The Examen** (Ben chose layout A from mockups): five short steps after Saint Ignatius, one
+  screen each (give thanks, ask for light, walk through the day, ask for mercy, look to
+  tomorrow), each with a line of guidance and an "Ask yourself" question, then the Our Father. It
+  counts as Pray. At the end, an optional private "Write it down" (grateful for, tomorrow I'll ask
+  for) is saved to the journal under #examen only on a tap. Pax's own words, in
+  `src/lib/examen.ts`. It is a tile on Pray; from 6 PM Today's Pray row suggests it (unless a
+  novena day is waiting); and the evening reminder invites it and opens it.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 

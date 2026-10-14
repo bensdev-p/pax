@@ -72,6 +72,7 @@ function Navigator() {
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: t.neutral.background } }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="rosary" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
+        <Stack.Screen name="examen" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="devotion/[slug]/pray" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="reminders" options={{ presentation: 'modal' }} />
         <Stack.Screen name="journal/edit" options={{ presentation: 'modal' }} />

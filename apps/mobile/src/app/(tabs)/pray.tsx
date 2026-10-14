@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { BookIcon, CandleIcon, CrossIcon, PrayerCardIcon, RosaryIcon, ScrollIcon } from '@/components/Icons';
+import { BookIcon, CandleIcon, CrossIcon, MoonIcon, PrayerCardIcon, RosaryIcon, ScrollIcon } from '@/components/Icons';
 import { ForYouCard, WayTile } from '@/components/PrayBits';
 import { RaisedButton, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
@@ -101,13 +101,14 @@ export default function PrayScreen() {
         <Text variant="title">Ways to pray</Text>
         <View style={{ flexDirection: 'row', gap: 12 }}>
           <WayTile title="Rosary" subtitle="4 sets of mysteries" tint="#2FA4E7" icon={<RosaryIcon size={28} />} onPress={() => router.push('/mysteries')} />
+          <WayTile title="Examen" subtitle="Look back on the day" tint="#5B6CD9" icon={<MoonIcon size={28} />} onPress={() => router.push('/examen')} />
+        </View>
+        <View style={{ flexDirection: 'row', gap: 12 }}>
           <WayTile title="Chaplets" subtitle={titles(ofKind('chaplet')) || ' '} tint="#FF6B6B" icon={<PrayerCardIcon size={28} />} onPress={() => openKind('chaplet')} />
-        </View>
-        <View style={{ flexDirection: 'row', gap: 12 }}>
           <WayTile title="Stations" subtitle="of the Cross" tint="#8E5CF6" icon={<CrossIcon size={28} />} onPress={() => openKind('stations')} />
-          <WayTile title="Litanies" subtitle={`${ofKind('litany').length} litanies`} tint="#E86A9A" icon={<ScrollIcon />} onPress={() => openKind('litany')} />
         </View>
         <View style={{ flexDirection: 'row', gap: 12 }}>
+          <WayTile title="Litanies" subtitle={`${ofKind('litany').length} litanies`} tint="#E86A9A" icon={<ScrollIcon />} onPress={() => openKind('litany')} />
           <WayTile
             title="Novenas"
             subtitle={novenasGoing ? `${novenasGoing} in progress` : `${ofKind('novena').length} nine-day prayers`}
@@ -115,6 +116,8 @@ export default function PrayScreen() {
             icon={<CandleIcon size={28} />}
             onPress={() => openKind('novena')}
           />
+        </View>
+        <View style={{ flexDirection: 'row', gap: 12 }}>
           <WayTile title="Prayer book" subtitle={`${prayers.length} prayers`} tint="#58A445" icon={<BookIcon size={28} />} onPress={() => router.push('/prayers')} />
         </View>
       </View>

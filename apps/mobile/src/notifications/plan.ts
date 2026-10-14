@@ -103,7 +103,7 @@ export function planNotifications(
       plan.push({ kind, date: day.date, time, at: localDate(day.date, time), url, ...copy });
 
     if (prefs.morning.enabled && !done) add('morning_reminder', prefs.morning.time, morningCopy(day));
-    if (prefs.evening.enabled && !done) add('evening_reminder', prefs.evening.time, eveningCopy(day));
+    if (prefs.evening.enabled && !done) add('evening_reminder', prefs.evening.time, eveningCopy(day), 'paxapp://examen');
     if (prefs.angelus) {
       add('angelus', '12:00', {
         title: 'The Angelus',
@@ -130,10 +130,11 @@ function morningCopy(day: DaySnapshot) {
     : { title: 'Good morning from Pax', body: `It’s ${day.seasonName}. Two minutes with today’s readings?` };
 }
 
+/** The evening reminder invites the Examen and opens it. */
 function eveningCopy(day: DaySnapshot) {
   return isFeast(day)
-    ? { title: 'Still time today', body: `Today the Church celebrates ${day.name}. A short prayer before bed?` }
-    : { title: 'Still time today', body: 'A decade of the Rosary or today’s Gospel. I’ll keep you company.' };
+    ? { title: 'Still time today', body: `Today the Church celebrates ${day.name}. Five minutes to look back on the day with God?` }
+    : { title: 'Still time today', body: 'Five minutes with the Examen: look back on the day with God. I’ll keep you company.' };
 }
 
 /** Warm, never guilt-driven (SPEC rule 3). The last one is the sleepy night nudge. */

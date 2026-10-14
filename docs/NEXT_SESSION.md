@@ -2,8 +2,8 @@
 
 **Update, October 14, 2026 (Phase 4 started).** Ben chose the order: the Rosary redesign (built:
 README, "What Phase 4 adds so far"), then the Examen and other prayers and meditations, then the
-first writings course. OCIA stays later (it needs a priest or catechist). Decided: the Examen's
-optional "Write it down" saves a private journal entry tagged #examen. The mascot is being redrawn
+first writings course. OCIA stays later (it needs a priest or catechist). The Examen is built too
+(layout A; a Pray tile, Today's evening suggestion and the evening reminder lead to it). The mascot is being redrawn
 by Ben in ChatGPT from `docs/mascot-brief.md`; when the PNGs arrive, cut the magenta scarf into
 masks and replace `components/Pax.tsx`. Ben has paid for the Apple Developer Program and is
 waiting for approval; start the Apple developer track below once he says it's approved.

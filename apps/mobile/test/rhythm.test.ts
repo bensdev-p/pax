@@ -123,6 +123,12 @@ describe('Today with God checklist', () => {
     expect(study).toMatchObject({ title: 'Start a reading plan', optional: true });
   });
 
+  it('suggests the Examen from the evening, unless a novena day is waiting', () => {
+    expect(todayChecklist({ ...base, hour: 17 })[1]).toMatchObject({ title: 'Time to pray' });
+    expect(todayChecklist({ ...base, hour: 18 })[1]).toMatchObject({ title: 'The Examen', href: '/examen', done: false });
+    expect(todayChecklist({ ...base, hour: 21, novenas: [novena] })[1]).toMatchObject({ title: 'Novena to Saint Joseph' });
+  });
+
   it('leaves Study out when the user took it out, unless a plan is in progress', () => {
     expect(todayChecklist({ ...base, studyInRhythm: false }).map((i) => i.mark)).toEqual(['read', 'pray']);
     expect(todayChecklist({ ...base, studyInRhythm: false, courses: [plan] }).map((i) => i.mark)).toEqual(['read', 'pray', 'study']);

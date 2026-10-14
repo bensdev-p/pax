@@ -3,6 +3,7 @@ import type { Href } from 'expo-router';
 import type { CourseProgress, NovenaProgress, PrayedToday, Rhythm } from '@/data/types';
 
 import { isFinished, nextDay } from './courses';
+import { EVENING_HOUR } from './examen';
 import { NOVENA_DAYS } from './devotions';
 
 /** One row of the "Today with God" card (SPEC: Today, item 3). */
@@ -27,9 +28,9 @@ export function prayedRosaryToday(prayed: PrayedToday | null, date: string): boo
 
 /**
  * Read: today's readings. Pray: a novena day if one is in progress and not yet prayed today,
- * otherwise the Pray tab (the Rosary, chaplets, litanies). Study: the next day of a plan in
- * progress, or a quiet nudge to start one, left out when the user took Study out of their
- * rhythm. Each row checks off with its mark and says what was actually done.
+ * otherwise the Pray tab (the Rosary, chaplets, litanies), or from the evening the Examen. Study:
+ * the next day of a plan in progress, or a quiet nudge to start one, left out when the user took
+ * Study out of their rhythm. Each row checks off with its mark and says what was actually done.
  */
 export function todayChecklist(input: {
   date: string;
@@ -41,6 +42,8 @@ export function todayChecklist(input: {
   novenas: NovenaProgress[];
   courses: CourseProgress[];
   studyInRhythm: boolean;
+  /** The local hour: from the evening, Pray suggests the Examen. */
+  hour?: number;
 }): ChecklistItem[] {
   const { date, rhythm } = input;
 
@@ -68,7 +71,9 @@ export function todayChecklist(input: {
   if (!rhythm.pray) {
     pray = waiting
       ? { mark: 'pray', title: waiting.title, detail: `Day ${waiting.daysDone + 1} of ${NOVENA_DAYS}`, done: false, href: novenaHref(waiting.slug) }
-      : { mark: 'pray', title: 'Time to pray', detail: `The Rosary today: ${input.mysteries} Mysteries`, done: false, href: '/pray' };
+      : (input.hour ?? 0) >= EVENING_HOUR
+        ? { mark: 'pray', title: 'The Examen', detail: 'Five minutes to look back on the day with God', done: false, href: '/examen' }
+        : { mark: 'pray', title: 'Time to pray', detail: `The Rosary today: ${input.mysteries} Mysteries`, done: false, href: '/pray' };
   } else {
     // Name what was actually prayed (the Rosary only if it was the Rosary).
     const names = prayers.length ? prayers.map((p) => p.title) : novenas.filter((n) => n.lastPrayedOn === date).map((n) => n.title);

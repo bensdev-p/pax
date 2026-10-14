@@ -34,7 +34,7 @@ Learn · Library · Pray · Profile: "Learn" became "Study", prayer moved next t
 | Tab | Purpose | Holds |
 | --- | --- | --- |
 | Today | The day's rhythm | Feast and season, saint of the day, one "Today with God" checklist (readings, prayer, study), streak |
-| Pray | Prayer | Guided Rosary, chaplets, Stations of the Cross, litanies, novenas with day tracking, the prayer book, later the Examen |
+| Pray | Prayer | Guided Rosary, the nightly Examen, chaplets, Stations of the Cross, litanies, novenas with day tracking, the prayer book |
 | Study | Courses | Reading plans (Bible in a Year, Catechism in a Year, Mark, Psalms, Acts), later courses on the Fathers' and saints' writings and an OCIA course |
 | Library | Reference | Douay-Rheims Bible, Catechism index, Church Fathers, saints, full-text search, later highlights and bookmarks |
 | Me | You | Streak and calendar, journal, reminders, appearance, theme, data and privacy |
@@ -74,6 +74,10 @@ Everything else (tiles, long readings list) moves one tap away.
   screen with a Douay verse per Hail Mary; "Mysteries only" walks through the five mysteries for
   praying on your own beads; "Log it" counts a Rosary prayed elsewhere. A quiet mode (dark,
   words hidden, for night) was offered and may come later as a setting.
+- **Examen** (`/examen`, Phase 4, layout A chosen from mockups): five steps one screen at a
+  time, the Our Father, then an optional private "Write it down" saved to the journal (#examen)
+  only on a tap. A Pray tile; Today's Pray row suggests it from 6 PM; the evening reminder opens
+  it.
 - **Reading plans** (`/course/[slug]`, `/course/[slug]/[day]`): plan page with progress and
   reminder; day page with the full text, a word from the Fathers, Pax's question.
 - **Library**: reader, verse panel (notes, CCC, Fathers), Catechism outline, Fathers by author,
@@ -91,7 +95,7 @@ Everything else (tiles, long readings list) moves one tap away.
 - **Highlights (four colors), verse bookmarks and notes** from a long press on a verse in the
   Bible reader (a sheet over the page), listed in Library;
   favorite prayers and devotions in "For you" at the top of Pray (built in Phase 3).
-- **Examination of conscience** and a nightly **Examen**.
+- **Examination of conscience** (the nightly Examen is built).
 - **Study courses on the Fathers and saints:** guided reading of their own writings (for example
   the letters of Ignatius of Antioch, the Didache, Augustine's Confessions, Thérèse's Story of a
   Soul where public domain), built on the same course engine as the reading plans.

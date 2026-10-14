@@ -2,6 +2,7 @@ import { getDaySnapshots } from '@pax/liturgy';
 import { describe, expect, it } from 'vitest';
 
 import { computeStreak } from '@/data/streak';
+import { EXAMEN_STEPS, examenEntry } from '@/lib/examen';
 import { cycleLine, paxGreeting, paxMoodFor } from '@/lib/format';
 import { decadeProgress, prayerWords, rosarySteps, stepBack } from '@/lib/rosary';
 import { buildWidgetFeed } from '@/widgets/widgetFeed';
@@ -105,3 +106,17 @@ describe('paxMoodFor', () => {
     expect(paxMoodFor({ doneToday: true, hour: 23 })).toBe('happy');
   });
 });
+
+describe('Examen', () => {
+  it('has five steps, each with guidance and a question', () => {
+    expect(EXAMEN_STEPS).toHaveLength(5);
+    expect(EXAMEN_STEPS.every((s) => s.title && s.guide && s.question.endsWith('?'))).toBe(true);
+  });
+
+  it('writes down only what was filled in, and nothing when both are empty', () => {
+    expect(examenEntry('  Dinner with Mom ', '')).toBe('Grateful for: Dinner with Mom');
+    expect(examenEntry('A', 'B')).toBe('Grateful for: A\n\nTomorrow I’ll ask for: B');
+    expect(examenEntry(' ', '')).toBeNull();
+  });
+});
+
