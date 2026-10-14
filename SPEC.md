@@ -112,14 +112,24 @@ Everything else (tiles, long readings list) moves one tap away.
 
 ## Pax the mascot
 
-Pax stays: an original dove (big round head, pear-shaped body, blue-grey shading, glossy eyes,
-blush cheeks, a two-feather crest, a scarf in the day's liturgical color, an olive sprig). The
-dove is a symbol of the Holy Spirit and of peace, which fits the companion better than it fit a
-quiz coach.
+Pax stays: an original dove, the symbol of the Holy Spirit and of peace, which fits the
+companion better than it fit a quiz coach.
+
+**His look** (redrawn in October 2026 from Ben's approved character sheet,
+`design/pax-redesign/character-sheet.png`; this replaces the earlier glossy-eyed, blushing
+design): a calmer, more natural dove. White and ivory plumage with restrained blue-grey shading
+and a soft blue-grey line; a smaller head on a longer pear-shaped body; layered birdlike wings
+and a long tapered tail; small dark oval eyes with a pin highlight, a small orange beak and
+small orange feet; no cheeks, eyebrows or mouth. He keeps the softened two-feather crest, the
+short scarf in the day's liturgical color (every palette, including black and theme locks) and
+the olive sprig tucked into it, in every pose. Drawn in `components/Pax.tsx` from shared parts;
+his colors are `color.pax` in `design/tokens.json`.
 
 His role changes from coach to **quiet companion**: fewer appearances, short lines, calm on
-prayer screens, never guilt-driven. Expressions in use: hello, happy, hint, celebrating,
-encouraging, asleep.
+prayer screens, never guilt-driven. Expressions in use, all the same bird: hello (a modest
+lifted wing), happy (relaxed, smiling eyes), hint (a curious forward lean and head tilt),
+celebrating (both wings lifted a little, a small hop, no confetti), encouraging (the wing held
+out), asleep (wings folded, eyes closed, the sheet's peaceful pose).
 
 ## Liturgical theming (unchanged)
 
