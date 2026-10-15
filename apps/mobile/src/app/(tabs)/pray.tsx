@@ -19,6 +19,7 @@ import { forYou, type DevotionKind } from '@/lib/pray';
 import { prayedRosaryToday } from '@/lib/today';
 import { useAppState } from '@/state/AppState';
 import { useDevotions } from '@/state/devotions';
+import { useMyPrayers } from '@/state/myPrayers';
 import { useNotes } from '@/state/notes';
 
 /**
@@ -32,6 +33,7 @@ export default function PrayScreen() {
   const { devotions, featured } = useDevotions(today);
   const { notes: favorites } = useNotes({ kind: 'favorite' });
   const [prayers, setPrayers] = useState<Prayer[]>([]);
+  const { prayers: mine } = useMyPrayers();
   const set = today ? mysteriesForDay(today) : 'joyful';
   const date = today?.date ?? toIsoDate(new Date());
 
@@ -118,7 +120,7 @@ export default function PrayScreen() {
           />
         </View>
         <View style={{ flexDirection: 'row', gap: 12 }}>
-          <WayTile title="Prayer book" subtitle={`${prayers.length} prayers`} tint="#58A445" icon={<BookIcon size={28} />} onPress={() => router.push('/prayers')} />
+          <WayTile title="Prayer book" subtitle={`${prayers.length + mine.length} prayers`} tint="#58A445" icon={<BookIcon size={28} />} onPress={() => router.push('/prayers')} />
         </View>
       </View>
     </Screen>

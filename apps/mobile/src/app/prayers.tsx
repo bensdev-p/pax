@@ -39,7 +39,8 @@ export default function PrayersScreen() {
   const current = section === YOURS && !mine.length ? PRAYER_SECTIONS[0]!.category : section;
   const shown = filterPrayers(prayers ?? [], query, current);
   const searching = query.trim().length > 0;
-  const count = builtIn ? `${builtIn.length} prayers${mine.length ? ` · ${mine.length} of yours` : ''}` : undefined;
+  // The whole book, yours included.
+  const count = builtIn ? `${builtIn.length + mine.length} prayers${mine.length ? ` · ${mine.length} yours` : ''}` : undefined;
 
   const add = () =>
     router.push({ pathname: '/my-prayer', params: { section: current === YOURS ? PRAYER_SECTIONS[1]!.category : current } });
