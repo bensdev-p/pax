@@ -9,12 +9,12 @@ import { Header } from '@/components/Header';
 import { PrayerText } from '@/components/PrayerText';
 import { RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
+import { TapTwiceLink } from '@/components/TapTwiceLink';
 import { Text } from '@/components/Text';
 import { useContent } from '@/data/content';
 import type { Prayer } from '@/data/types';
 import { asPrayer, isMySlug, myIdOf } from '@/lib/myPrayers';
 import { PRAYER_SECTIONS } from '@/lib/pray';
-import { useTapTwice } from '@/lib/useTapTwice';
 import { myPrayers, useMyPrayers } from '@/state/myPrayers';
 
 /** Pre-renders every prayer page for the static web build. */
@@ -35,12 +35,6 @@ export default function PrayerScreen() {
   const { prayers: mine, loaded } = useMyPrayers();
   const added = own ? mine.find((p) => p.id === myIdOf(String(slug))) : undefined;
   const prayer = own ? (added ? asPrayer(added) : loaded ? null : undefined) : builtIn;
-  const deleting = useTapTwice(() => {
-    if (!added) return;
-    // Leave first, so this page doesn't show "Prayer not found" on its way out.
-    router.back();
-    void myPrayers.remove(added.id);
-  });
 
   useEffect(() => {
     if (own) return;
@@ -63,19 +57,20 @@ export default function PrayerScreen() {
         />}
       footer={
         added ? (
-          <View style={{ flexDirection: 'row', gap: 10, paddingHorizontal: 16, paddingTop: 12, paddingBottom: insets.bottom + 12 }}>
-            <RaisedButton
-              kind="neutral"
-              label="Edit"
-              style={{ flex: 1 }}
-              onPress={() => router.push({ pathname: '/my-prayer', params: { id: added.id } })}
-            />
-            <RaisedButton
-              kind={deleting.armed ? 'danger' : 'neutral'}
-              label={deleting.armed ? 'Tap again' : 'Delete'}
-              style={{ flex: 1 }}
-              onPress={deleting.press}
-            />
+          <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: insets.bottom + 8, gap: 4 }}>
+            <RaisedButton kind="neutral" label="Edit" onPress={() => router.push({ pathname: '/my-prayer', params: { id: added.id } })} />
+            <View style={{ alignItems: 'center' }}>
+              <TapTwiceLink
+                label="Delete"
+                armedLabel="Tap again to delete"
+                accessibilityLabel={`Delete ${added.title}`}
+                onConfirm={() => {
+                  // Leave first, so this page doesn't show "Prayer not found" on its way out.
+                  router.back();
+                  void myPrayers.remove(added.id);
+                }}
+              />
+            </View>
           </View>
         ) : undefined
       }>

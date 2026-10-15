@@ -2,7 +2,7 @@ import { withAlpha } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { FatherRow, FatherTile, pairs } from '@/components/FatherBits';
 import { FilterChip } from '@/components/FilterChip';
@@ -10,6 +10,7 @@ import { Header } from '@/components/Header';
 import { DownloadIcon } from '@/components/Icons';
 import { SectionLabel } from '@/components/LibraryBits';
 import { RaisedButton, RaisedSurface } from '@/components/Raised';
+import { TapTwiceLink } from '@/components/TapTwiceLink';
 import { Screen } from '@/components/Screen';
 import { SearchInput } from '@/components/SearchInput';
 import { Text } from '@/components/Text';
@@ -17,7 +18,6 @@ import { useFathersPack, useLibrary } from '@/data/content';
 import { PACK_SUPPORTED } from '@/data/fathersPack';
 import type { FatherAuthor } from '@/data/library';
 import { FATHER_ERAS, fathersInEra, mostQuoted, searchFathers, type EraKey } from '@/lib/fathers';
-import { useTapTwice } from '@/lib/useTapTwice';
 
 const openFather = (a: FatherAuthor) => router.push({ pathname: '/fathers/[author]', params: { author: a.slug, name: a.name } });
 
@@ -89,8 +89,6 @@ export default function FathersScreen() {
 /** The full library: one line once installed, a short offer before. */
 function PackCard({ pack, excerpts }: { pack: ReturnType<typeof useFathersPack>; excerpts: number }) {
   const t = useTheme();
-  // Removing it means downloading it all again, so it takes a second tap.
-  const removing = useTapTwice(() => void pack.remove());
   if (!PACK_SUPPORTED) {
     return (
       <Text variant="small" color={t.neutral.textMuted}>
@@ -115,17 +113,8 @@ function PackCard({ pack, excerpts }: { pack: ReturnType<typeof useFathersPack>;
         <Text variant="small" style={{ flex: 1, fontFamily: 'Nunito_800ExtraBold' }}>
           Full library installed{excerpts ? ` · ${excerpts.toLocaleString('en-US')} excerpts` : ''}
         </Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={removing.armed ? 'Tap again to remove the download' : 'Remove the download'}
-          hitSlop={8}
-          onPress={removing.press}
-          // Armed: a red pill, like the red buttons elsewhere that wait for a second tap.
-          style={{ borderRadius: t.radius.chip, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: removing.armed ? t.game.incorrect : 'transparent' }}>
-          <Text variant="label" caps color={removing.armed ? '#FFFFFF' : t.neutral.textMuted}>
-            {removing.armed ? 'Tap again to remove' : 'Remove'}
-          </Text>
-        </Pressable>
+        {/* Removing it means downloading it all again, so it takes a second tap. */}
+        <TapTwiceLink label="Remove" armedLabel="Tap again to remove" accessibilityLabel="Remove the download" onConfirm={() => void pack.remove()} />
       </View>
     );
   }

@@ -7,11 +7,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from '@/components/Header';
 import { TagChip } from '@/components/Journal';
 import { RaisedButton } from '@/components/Raised';
+import { TapTwiceLink } from '@/components/TapTwiceLink';
 import { Text } from '@/components/Text';
 import { userStore } from '@/data/userStore';
 import type { Note, NoteTarget } from '@/data/types';
 import { defaultTags, makeNote, normalizeTag, SUGGESTED_TAGS, tagsFrom } from '@/lib/notes';
-import { useTapTwice } from '@/lib/useTapTwice';
 import { notes } from '@/state/notes';
 
 const TARGETS: NoteTarget[] = ['verse', 'readings', 'course_day', 'entry'];
@@ -80,7 +80,6 @@ export default function JournalEditScreen() {
     if (existing) await notes.remove(existing.id);
     router.back();
   };
-  const deleting = useTapTwice(() => void remove());
 
   return (
     <KeyboardAvoidingView
@@ -159,7 +158,9 @@ export default function JournalEditScreen() {
       <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 12, gap: 10 }}>
         <RaisedButton label="Save" onPress={() => void save()} />
         {existing ? (
-          <RaisedButton kind={deleting.armed ? 'danger' : 'ghost'} label={deleting.armed ? 'Tap again to delete' : 'Delete entry'} onPress={deleting.press} />
+          <View style={{ alignItems: 'center' }}>
+            <TapTwiceLink label="Delete entry" armedLabel="Tap again to delete" onConfirm={() => void remove()} />
+          </View>
         ) : null}
       </View>
     </KeyboardAvoidingView>

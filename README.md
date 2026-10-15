@@ -190,8 +190,8 @@ and no paid Apple account are needed until the widgets.
   that moved were moved with them, once. 27 scanning slips in the Douay text are corrected in the
   build (`CORRECTIONS` in `pipeline/bible_drc.py`).
 - **Second tap to confirm** anything that can't be undone (deleting a journal entry or one of your
-  own prayers, removing the Fathers download): the first tap turns the button solid red and says
-  "Tap again…" for a few seconds (RaisedButton's `danger` kind).
+  own prayers, removing the Fathers download): a quiet text link whose words turn red and say "Tap
+  again…" for a few seconds (`components/TapTwiceLink.tsx`, modeled on the Fathers' Remove).
 
 ## What Phase 4 (Depth) adds so far
 
