@@ -189,8 +189,9 @@ and no paid Apple account are needed until the widgets.
   differently (John 6, Mark 8–9, Acts 7 and others; `pipeline/verse_map.py`). Notes on verses
   that moved were moved with them, once. 27 scanning slips in the Douay text are corrected in the
   build (`CORRECTIONS` in `pipeline/bible_drc.py`).
-- **Second tap to confirm** anything that can't be undone (deleting a journal entry, removing the
-  Fathers download): the button turns red and says "Tap again…" for a few seconds.
+- **Second tap to confirm** anything that can't be undone (deleting a journal entry or one of your
+  own prayers, removing the Fathers download): a quiet text link whose words turn red and say "Tap
+  again…" for a few seconds (`components/TapTwiceLink.tsx`, modeled on the Fathers' Remove).
 
 ## What Phase 4 (Depth) adds so far
 
@@ -216,7 +217,8 @@ and no paid Apple account are needed until the widgets.
 - **Your own prayers in the prayer book** (Ben chose layout A from mockups): "Add" opens a
   sheet for the title, who wrote it (optional), one of the book's sections, the prayer as typed
   or pasted, and optionally its Latin. It then sits in that section marked "Yours", with a
-  "Yours" chip listing all of them; its page has Edit, Delete (tap twice) and the star, so it can
+  "Yours" chip listing all of them, and both the book and its tile on Pray count it; its page has
+  Edit, Delete (tap twice) and the star, so it can
   show in "For you". Search finds it by title, author or words. Stored on the phone in user.db
   `my_prayers` (schema 6; `supabase/migrations/20261015000000_my_prayers.sql` mirrors it).
 - **The Examen** (Ben chose layout A from mockups): five short steps after Saint Ignatius, one
