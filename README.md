@@ -213,6 +213,12 @@ and no paid Apple account are needed until the widgets.
   makes the app icons from Ben's icon (Pax with a book and a rosary). Seven poses: hello, happy,
   hint, praying (new; shown while prayers load), encouraging, celebrating and asleep. The icons
   and splash show in a development build; Expo Go uses its own.
+- **Your own prayers in the prayer book** (Ben chose layout A from mockups): "Add" opens a
+  sheet for the title, who wrote it (optional), one of the book's sections, the prayer as typed
+  or pasted, and optionally its Latin. It then sits in that section marked "Yours", with a
+  "Yours" chip listing all of them; its page has Edit, Delete (tap twice) and the star, so it can
+  show in "For you". Search finds it by title, author or words. Stored on the phone in user.db
+  `my_prayers` (schema 6; `supabase/migrations/20261015000000_my_prayers.sql` mirrors it).
 - **The Examen** (Ben chose layout A from mockups): five short steps after Saint Ignatius, one
   screen each (give thanks, ask for light, walk through the day, ask for mercy, look to
   tomorrow), each with a line of guidance and an "Ask yourself" question, then the Our Father. It

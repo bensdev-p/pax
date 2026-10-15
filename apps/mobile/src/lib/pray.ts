@@ -3,6 +3,7 @@ import type { MysterySet } from '@pax/liturgy';
 import type { Devotion, Note, NovenaProgress, Prayer } from '@/data/types';
 
 import { NOVENA_DAYS } from './devotions';
+import { YOURS } from './myPrayers';
 
 /**
  * The Pray tab as a hub (decided with Ben, Phase 3): today's Rosary, "For you" (what you're in
@@ -99,12 +100,13 @@ export function forYou(input: {
   return items;
 }
 
-/** Prayers in a section, or matching a search (title or text, any section) when there is one. */
+/** Prayers in a section (or the user's own), or matching a search (title, author or text, any section). */
 export function filterPrayers(prayers: Prayer[], query: string, category: string): Prayer[] {
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-  if (!words.length) return prayers.filter((p) => p.category === category);
+  // The "Yours" chip lists the user's own prayers, whatever section they're filed under.
+  if (!words.length) return prayers.filter((p) => (category === YOURS ? p.mine : p.category === category));
   const hits = prayers.filter((p) => {
-    const hay = `${p.title} ${p.text}`.toLowerCase();
+    const hay = `${p.title} ${p.by ?? ''} ${p.text}`.toLowerCase();
     return words.every((w) => hay.includes(w));
   });
   // Prayers named for the search come before ones that only mention it.

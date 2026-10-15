@@ -8,6 +8,7 @@ import {
   type DayActivity,
   type NotificationPrefs,
   type CourseProgress,
+  type MyPrayer,
   type Note,
   type NovenaProgress,
   type Settings,
@@ -26,6 +27,7 @@ interface WebData {
   novenas?: Record<string, NovenaProgress>;
   courses?: Record<string, CourseProgress>;
   notes?: Record<string, Note>;
+  myPrayers?: Record<string, MyPrayer>;
 }
 
 const KEY = 'pax.user.v1';
@@ -160,6 +162,19 @@ export const userStore: UserStore = {
   async deleteNote(id) {
     const data = load();
     if (data.notes) delete data.notes[id];
+    save(data);
+  },
+  async getMyPrayers() {
+    return Object.values(load().myPrayers ?? {}).sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+  },
+  async saveMyPrayer(p) {
+    const data = load();
+    data.myPrayers = { ...data.myPrayers, [p.id]: p };
+    save(data);
+  },
+  async deleteMyPrayer(id) {
+    const data = load();
+    if (data.myPrayers) delete data.myPrayers[id];
     save(data);
   },
 };

@@ -1,8 +1,8 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 14, 2026 · matches user.db schema version 5 (the journal, highlights,
-bookmarks and favorites in `notes`, plus the rhythm, onboarding and Rosary settings) and Supabase migrations
-through `20261012000000_journal_notes`._
+_Last updated: October 15, 2026 · matches user.db schema version 6 (the journal, highlights,
+bookmarks and favorites in `notes`, your own prayers in `my_prayers`, plus the rhythm, onboarding
+and Rosary settings) and Supabase migrations through `20261015000000_my_prayers`._
 
 Pax is a personal app, still in development and not published. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
@@ -48,6 +48,7 @@ the app.
 | `course_progress` | For each reading plan you start (such as Bible in a Year): its name and length, the day you started, how many days you have read, the last date you read, and the reminder time you picked, if any | To show "Day 12 of 365", pick up where you left off, and remind you |
 | `novena_progress` | For each novena you start: its name, the day you started, how many of the nine days you have prayed, the last date you prayed it, and the reminder time you picked, if any | To show "Day 4 of 9" and remind you of the next day |
 | `notes` | Your journal: answers to Pax's questions (with the question), notes on verses and free entries (including what you choose to write down after the Examen, tagged #examen; nothing from the Examen is saved unless you tap Save), each with its tags and the time you wrote it. Also your highlights (verse and color), bookmarks (verse) and favorite prayers and devotions | To show your journal in Me, mark verses in the Bible reader and list your favorites in "For you" on the Pray tab |
+| `my_prayers` | Prayers you add to your prayer book: the title, who wrote it if you say, the section you file it under, the prayer and its Latin if you add it, and when you added or last changed it | To show them in your prayer book, beside Pax's own |
 | `lesson_progress`, `review_cards` | Empty for now. Later: finished lessons and scores for the OCIA course (spaced review may be dropped) | Learning progress |
 | `sync_queue` | A list of changed rows waiting to be uploaded. Nothing reads it yet | Prepared for future sync |
 
@@ -56,6 +57,8 @@ a date for that day's readings, a reading plan's day, or a prayer name), not by 
 **Your journal is private:** it stays on the phone, is not part of any widget or notification,
 and will be synced only if you turn sync on once it exists. Deleting an entry removes it from
 user.db (a deletion is noted in `sync_queue` so a future sync can delete it in the cloud too).
+**Your own prayers are private too**, kept the same way: on the phone, deleted with their star
+when you delete them, and synced only if you turn sync on.
 
 **Reminders.** If you turn on reminders, Pax asks your phone's permission first, on its own Pax
 screen and never at first launch. It then schedules the coming days' local notifications with the

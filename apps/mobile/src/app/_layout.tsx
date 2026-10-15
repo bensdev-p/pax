@@ -76,6 +76,7 @@ function Navigator() {
         <Stack.Screen name="devotion/[slug]/pray" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="reminders" options={{ presentation: 'modal' }} />
         <Stack.Screen name="journal/edit" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="my-prayer" options={{ presentation: 'modal' }} />
         <Stack.Screen name="welcome" options={{ presentation: 'fullScreenModal', gestureEnabled: false }} />
         <Stack.Screen name="prayer/[slug]" />
         {/* The native iOS sheet (Android: bottom sheet): opens at half height with the verse and its
