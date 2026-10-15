@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Devotion, NovenaProgress, Prayer } from '@/data/types';
+import { asPrayer, isMySlug, myPrayerFrom, YOURS } from '@/lib/myPrayers';
 import { makeNote } from '@/lib/notes';
 import { devotionLabel, filterPrayers, forYou, isDevotionKind, isMysterySet, sortDevotions } from '@/lib/pray';
 
@@ -87,3 +88,29 @@ describe('Prayer layout', () => {
     expect(prayerStanzas('Hail Mary, full of grace.')).toEqual([[{ marker: null, text: 'Hail Mary, full of grace.' }]]);
   });
 });
+
+describe('Your own prayers', () => {
+  const draft = { title: '  Breathe in Me ', by: ' Saint Augustine ', category: 'saints', text: '\nBreathe in me, O Holy Spirit,  \r\nthat my thoughts may all be holy.\n\n', latinText: ' ' };
+
+  it('tidies a draft into a prayer, and waits for a title and text', () => {
+    const mine = myPrayerFrom(draft, undefined, '2026-10-15T20:00:00Z')!;
+    expect(mine).toMatchObject({ title: 'Breathe in Me', by: 'Saint Augustine', category: 'saints', latinText: null, createdAt: '2026-10-15T20:00:00Z' });
+    expect(mine.text).toBe('Breathe in me, O Holy Spirit,\nthat my thoughts may all be holy.');
+    expect(myPrayerFrom({ ...draft, title: ' ' })).toBeNull();
+    expect(myPrayerFrom({ ...draft, text: '\n ' })).toBeNull();
+    // Editing keeps the id and when it was added.
+    const edited = myPrayerFrom({ ...draft, by: '' }, mine, '2026-10-16T08:00:00Z')!;
+    expect(edited).toMatchObject({ id: mine.id, by: null, createdAt: mine.createdAt, updatedAt: '2026-10-16T08:00:00Z' });
+  });
+
+  it('files them in their section beside the book’s own, and under Yours', () => {
+    const mine = asPrayer(myPrayerFrom(draft)!);
+    expect(isMySlug(mine.slug)).toBe(true);
+    const book = [prayer('suscipe', 'saints'), prayer('memorare', 'marian'), mine];
+    expect(filterPrayers(book, '', 'saints').map((p) => p.slug)).toEqual(['suscipe', mine.slug]);
+    expect(filterPrayers(book, '', YOURS)).toEqual([mine]);
+    // Search finds the author too.
+    expect(filterPrayers(book, 'augustine', 'marian')).toEqual([mine]);
+  });
+});
+

@@ -34,7 +34,7 @@ Learn · Library · Pray · Profile: "Learn" became "Study", prayer moved next t
 | Tab | Purpose | Holds |
 | --- | --- | --- |
 | Today | The day's rhythm | Feast and season, saint of the day, one "Today with God" checklist (readings, prayer, study), streak |
-| Pray | Prayer | Guided Rosary, the nightly Examen, chaplets, Stations of the Cross, litanies, novenas with day tracking, the prayer book |
+| Pray | Prayer | Guided Rosary, the nightly Examen, chaplets, Stations of the Cross, litanies, novenas with day tracking, the prayer book (with your own prayers) |
 | Study | Courses | Reading plans (Bible in a Year, Catechism in a Year, Mark, Psalms, Acts), later courses on the Fathers' and saints' writings and an OCIA course |
 | Library | Reference | Douay-Rheims Bible, Catechism index, Church Fathers, saints, full-text search, later highlights and bookmarks |
 | Me | You | Streak and calendar, journal, reminders, appearance, theme, data and privacy |
@@ -78,6 +78,11 @@ Everything else (tiles, long readings list) moves one tap away.
   time, the Our Father, then an optional private "Write it down" saved to the journal (#examen)
   only on a tap. A Pray tile; Today's Pray row suggests it from 6 PM; the evening reminder opens
   it.
+- **Your own prayers** (Phase 4, layout A chosen from mockups): "Add" in the prayer book opens a
+  sheet (title, an optional author, one of the book's sections, the prayer, optionally its
+  Latin). Each sits in its section marked "Yours", and a "Yours" chip lists them all; its page
+  has Edit and Delete, and the star works as for any prayer. Kept on the phone (`my_prayers`).
+  Pax doesn't ship the many prayers of the saints, Fathers and popes; people add the ones they use.
 - **Reading plans** (`/course/[slug]`, `/course/[slug]/[day]`): plan page with progress and
   reminder; day page with the full text, a word from the Fathers, Pax's question.
 - **Library**: reader, verse panel (notes, CCC, Fathers), Catechism outline, Fathers by author,
@@ -220,9 +225,10 @@ verse alongside; the second half of a verse the Douay splits is `John.6.51!b`), 
 `search_index` (FTS5), `content_meta`; `units`, `lessons`, `questions` exist for the future OCIA
 course and are empty.
 
-**user.db (schema v5):** `settings`, `daily_activity`, `streaks`, `notification_prefs`,
+**user.db (schema v6):** `settings`, `daily_activity`, `streaks`, `notification_prefs`,
 `novena_progress`, `course_progress`, `notes` (`kind`: journal, highlight, bookmark or favorite;
-journal entries keep Pax's question in `prompt` and their `tags`), `lesson_progress` and `review_cards` (unused; review cards may be dropped),
+journal entries keep Pax's question in `prompt` and their `tags`), `my_prayers` (prayers the user
+adds to the prayer book, shown as `mine-<id>`), `lesson_progress` and `review_cards` (unused; review cards may be dropped),
 `sync_queue`.
 
 Rules:

@@ -9,6 +9,26 @@ export interface Prayer {
   text: string;
   latin_text: string | null;
   sort_order: number;
+  /** Set on a prayer the user added (MyPrayer): who wrote it, if known. */
+  by?: string | null;
+  mine?: boolean;
+}
+
+/**
+ * A prayer the user added to their prayer book (user.db `my_prayers`), filed under one of the
+ * book's sections. It shows in the book as the Prayer `mine-<id>` (`asPrayer` in lib/myPrayers).
+ */
+export interface MyPrayer {
+  id: string;
+  title: string;
+  /** Who wrote it, if the user said: "Saint Augustine". */
+  by: string | null;
+  /** One of the prayer book's sections (PRAYER_SECTIONS). */
+  category: string;
+  text: string;
+  latinText: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface RosaryMystery {
@@ -330,6 +350,10 @@ export interface UserStore {
   getNotes(query?: NoteQuery): Promise<Note[]>;
   saveNote(note: Note): Promise<void>;
   deleteNote(id: string): Promise<void>;
+  /** Prayers the user added to their prayer book. */
+  getMyPrayers(): Promise<MyPrayer[]>;
+  saveMyPrayer(prayer: MyPrayer): Promise<void>;
+  deleteMyPrayer(id: string): Promise<void>;
 }
 
 export const DEFAULT_SETTINGS: Settings = {

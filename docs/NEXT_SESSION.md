@@ -4,7 +4,8 @@
 README, "What Phase 4 adds so far"), then the Examen and other prayers and meditations, then the
 first writings course. OCIA stays later (it needs a priest or catechist). The Examen is built too
 (layout A; a Pray tile, Today's evening suggestion and the evening reminder lead to it). Pax is redrawn from Ben's
-ChatGPT art: seven poses and the app icons (`design/pax/cut_pax.py`). Ben has paid for the Apple Developer Program and is
+ChatGPT art: seven poses and the app icons (`design/pax/cut_pax.py`). Users can add their own prayers to
+the prayer book (README). Ben has paid for the Apple Developer Program and is
 waiting for approval; start the Apple developer track below once he says it's approved.
 Still to ask: the examination of conscience's form, the first writings course, which plans.
 
@@ -99,4 +100,5 @@ What Claude sets up (ask Ben before each native module, per CLAUDE.md):
 - Web only: React hydration warning #418 when a page is opened by its address. Ben doesn't use
   the web build.
 - Sync and accounts stay off until Phase 5. The Supabase schema is applied through
-  `20261012000000_journal_notes`.
+  `20261012000000_journal_notes`; `20261015000000_my_prayers` (users' own prayers) is written but
+  not yet applied.

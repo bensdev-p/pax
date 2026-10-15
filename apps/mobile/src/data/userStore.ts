@@ -10,6 +10,7 @@ import {
   type ActivityKind,
   type DayActivity,
   type FathersPackInstall,
+  type MyPrayer,
   type NotificationPrefs,
   type CourseProgress,
   type Note,
@@ -142,6 +143,21 @@ const MIGRATIONS: string[] = [
   ALTER TABLE notes ADD COLUMN tags TEXT NOT NULL DEFAULT '[]';        -- JSON array of tags
   ALTER TABLE notes ADD COLUMN created_at TEXT;
   CREATE INDEX notes_target ON notes (user_id, target_type, target_key);
+  `,
+  // 6: prayers the user adds to their prayer book (Phase 4).
+  `
+  CREATE TABLE my_prayers (
+    user_id    TEXT NOT NULL DEFAULT 'local',
+    id         TEXT NOT NULL,             -- client-generated UUID
+    title      TEXT NOT NULL,
+    author     TEXT,                      -- "Saint Augustine", if given
+    category   TEXT NOT NULL,             -- a prayer book section: essentials, daily, marian…
+    text       TEXT NOT NULL,
+    latin_text TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (user_id, id)
+  ) WITHOUT ROWID;
   `,
 ];
 
@@ -479,7 +495,62 @@ export const userStore: UserStore = {
       await db.runAsync("INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('notes', ?, 'delete', ?)", id, now());
     });
   },
+
+  async getMyPrayers() {
+    const db = await userDb();
+    const rows = await db.getAllAsync<MyPrayerRow>(
+      "SELECT id, title, author, category, text, latin_text, created_at, updated_at FROM my_prayers WHERE user_id = 'local' ORDER BY title COLLATE NOCASE",
+    );
+    return rows.map((r) => ({
+      id: r.id,
+      title: r.title,
+      by: r.author,
+      category: r.category,
+      text: r.text,
+      latinText: r.latin_text,
+      createdAt: r.created_at,
+      updatedAt: r.updated_at,
+    }));
+  },
+
+  async saveMyPrayer(p: MyPrayer) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync(
+        `INSERT OR REPLACE INTO my_prayers (user_id, id, title, author, category, text, latin_text, created_at, updated_at)
+         VALUES ('local', ?, ?, ?, ?, ?, ?, ?, ?)`,
+        p.id,
+        p.title,
+        p.by,
+        p.category,
+        p.text,
+        p.latinText,
+        p.createdAt,
+        p.updatedAt,
+      );
+      await db.runAsync("INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('my_prayers', ?, 'upsert', ?)", p.id, now());
+    });
+  },
+
+  async deleteMyPrayer(id: string) {
+    const db = await userDb();
+    await db.withTransactionAsync(async () => {
+      await db.runAsync("DELETE FROM my_prayers WHERE user_id = 'local' AND id = ?", id);
+      await db.runAsync("INSERT INTO sync_queue (table_name, row_key, op, queued_at) VALUES ('my_prayers', ?, 'delete', ?)", id, now());
+    });
+  },
 };
+
+interface MyPrayerRow {
+  id: string;
+  title: string;
+  author: string | null;
+  category: string;
+  text: string;
+  latin_text: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 interface NoteRow {
   id: string;

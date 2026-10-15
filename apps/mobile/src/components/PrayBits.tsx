@@ -90,3 +90,15 @@ export function WayTile({ title, subtitle, tint, icon, onPress }: { title: strin
     </Card>
   );
 }
+
+/** Marks a prayer the user added to their prayer book. */
+export function YoursBadge() {
+  const t = useTheme();
+  return (
+    <View style={{ borderRadius: 8, backgroundColor: t.accent.tint, paddingHorizontal: 8, paddingVertical: 2 }}>
+      <Text variant="label" caps color={t.accent.text} style={{ fontSize: 11 }}>
+        Yours
+      </Text>
+    </View>
+  );
+}
