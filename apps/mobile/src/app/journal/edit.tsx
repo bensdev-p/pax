@@ -156,9 +156,11 @@ export default function JournalEditScreen() {
           </Text>
         </View>
       </ScrollView>
-      <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 12, gap: 4 }}>
+      <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 12, gap: 10 }}>
         <RaisedButton label="Save" onPress={() => void save()} />
-        {existing ? <RaisedButton kind="ghost" label={deleting.armed ? 'Tap again to delete' : 'Delete entry'} onPress={deleting.press} /> : null}
+        {existing ? (
+          <RaisedButton kind={deleting.armed ? 'danger' : 'ghost'} label={deleting.armed ? 'Tap again to delete' : 'Delete entry'} onPress={deleting.press} />
+        ) : null}
       </View>
     </KeyboardAvoidingView>
   );

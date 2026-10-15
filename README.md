@@ -189,8 +189,9 @@ and no paid Apple account are needed until the widgets.
   differently (John 6, Mark 8–9, Acts 7 and others; `pipeline/verse_map.py`). Notes on verses
   that moved were moved with them, once. 27 scanning slips in the Douay text are corrected in the
   build (`CORRECTIONS` in `pipeline/bible_drc.py`).
-- **Second tap to confirm** anything that can't be undone (deleting a journal entry, removing the
-  Fathers download): the button turns red and says "Tap again…" for a few seconds.
+- **Second tap to confirm** anything that can't be undone (deleting a journal entry or one of your
+  own prayers, removing the Fathers download): the first tap turns the button solid red and says
+  "Tap again…" for a few seconds (RaisedButton's `danger` kind).
 
 ## What Phase 4 (Depth) adds so far
 

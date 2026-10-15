@@ -99,7 +99,8 @@ function flexOf(style: StyleProp<ViewStyle>): ViewStyle | undefined {
   return flat?.flex !== undefined ? { flex: flat.flex } : undefined;
 }
 
-type ButtonKind = 'accent' | 'white' | 'neutral' | 'ghost';
+/** `danger`: red, for the second tap that deletes or removes something (useTapTwice). */
+type ButtonKind = 'accent' | 'white' | 'neutral' | 'ghost' | 'danger';
 
 /** Uppercase, weight 900 label on a solid fill with a 5 px raised edge. */
 export function RaisedButton({
@@ -139,6 +140,7 @@ export function RaisedButton({
     accent: { fill: t.accent.accent, edge: t.accent.edge, text: t.accent.onAccent, border: undefined },
     white: { fill: '#FFFFFF', edge: 'rgba(0,0,0,0.18)', text: t.accent.edge, border: undefined },
     neutral: { fill: t.neutral.surface, edge: t.neutral.border, text: t.neutral.textMuted, border: t.neutral.border },
+    danger: { fill: t.game.incorrect, edge: t.game.incorrectButton, text: '#FFFFFF', border: undefined },
   }[kind];
   const off = disabled
     ? { fill: t.neutral.locked, edge: t.neutral.border, text: t.neutral.textSubtle, border: undefined }

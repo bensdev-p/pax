@@ -70,7 +70,12 @@ export default function PrayerScreen() {
               style={{ flex: 1 }}
               onPress={() => router.push({ pathname: '/my-prayer', params: { id: added.id } })}
             />
-            <RaisedButton kind="neutral" label={deleting.armed ? 'Tap again' : 'Delete'} style={{ flex: 1 }} onPress={deleting.press} />
+            <RaisedButton
+              kind={deleting.armed ? 'danger' : 'neutral'}
+              label={deleting.armed ? 'Tap again' : 'Delete'}
+              style={{ flex: 1 }}
+              onPress={deleting.press}
+            />
           </View>
         ) : undefined
       }>

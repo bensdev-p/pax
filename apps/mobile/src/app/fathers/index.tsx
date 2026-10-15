@@ -115,8 +115,14 @@ function PackCard({ pack, excerpts }: { pack: ReturnType<typeof useFathersPack>;
         <Text variant="small" style={{ flex: 1, fontFamily: 'Nunito_800ExtraBold' }}>
           Full library installed{excerpts ? ` · ${excerpts.toLocaleString('en-US')} excerpts` : ''}
         </Text>
-        <Pressable accessibilityRole="button" accessibilityLabel={removing.armed ? 'Tap again to remove the download' : 'Remove the download'} hitSlop={8} onPress={removing.press}>
-          <Text variant="label" caps color={removing.armed ? t.game.incorrect : t.neutral.textMuted}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={removing.armed ? 'Tap again to remove the download' : 'Remove the download'}
+          hitSlop={8}
+          onPress={removing.press}
+          // Armed: a red pill, like the red buttons elsewhere that wait for a second tap.
+          style={{ borderRadius: t.radius.chip, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: removing.armed ? t.game.incorrect : 'transparent' }}>
+          <Text variant="label" caps color={removing.armed ? '#FFFFFF' : t.neutral.textMuted}>
             {removing.armed ? 'Tap again to remove' : 'Remove'}
           </Text>
         </Pressable>
