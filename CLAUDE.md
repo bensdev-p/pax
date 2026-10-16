@@ -7,8 +7,11 @@ explains how content is added; `docs/NEXT_SESSION.md` says where the work stands
 
 ## Working with Ben
 
-- Ben tests on his iPhone in **Expo Go**. He has no Mac and no paid Apple account yet.
-- **Use only libraries that run in Expo Go, and ask Ben before adding any native module.**
+- Ben has no Mac. His Apple Developer account is active (October 2026): Pax installs on his
+  iPhone through **TestFlight** (built by EAS in Expo's cloud) and gets JavaScript changes over the
+  air with `eas update` (`docs/IPHONE.md`). He still uses **Expo Go** for quick checks.
+- **Prefer libraries that run in Expo Go, and ask Ben before adding any native module.** A native
+  change needs `version` raised in `app.json` and a new build; say so when it does.
 - **Ask Ben before choosing anything not covered in `SPEC.md`.** Offer a recommended option. For
   a layout or look, show him mockups first (an Artifact with two or three options, phone-sized,
   in Pax's look, one marked recommended); he picks, then build it and send web screenshots.
@@ -19,7 +22,8 @@ explains how content is added; `docs/NEXT_SESSION.md` says where the work stands
 - Update `PRIVACY.md` in the same change as any data-model change (user.db, Supabase, widget
   feed).
 - After pulling, Ben runs `npm install` (from the repo root) when dependencies changed, then
-  `npm start -- --clear` (from the root) and reloads Expo Go. Mention this when it applies.
+  `npm start -- --clear` (from the root) and reloads Expo Go. Mention this when it applies, and
+  for his TestFlight build, `npx eas-cli@latest update --channel production` from `apps/mobile`.
 - Content written for Pax (saint bios, summaries, meditations) is in our own words; quotations
   only from Douay-Rheims or public-domain translations. Never copy Catechism, NABRE, RSV or ICEL
   text.
