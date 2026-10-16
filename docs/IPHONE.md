@@ -13,6 +13,7 @@ without a new build. Expo Go keeps working for quick checks. A development build
 | Bundle ID | `com.benbrunson.pax` | `app.json` |
 | App Group (widgets, later) | `group.com.benbrunson.pax` | `app.json` entitlements |
 | Build numbers | Kept by EAS and raised on every build | `eas.json` (`appVersionSource: remote`, `autoIncrement`) |
+| Expo project | `pax`, account Benfb03, ID `d16e0080-33a4-448b-8b29-6fe0e0c4dd9c` | `app.json` `extra.eas.projectId`, `updates.url` |
 | Update channel | `production` | `eas.json` |
 | Runtime version | The app's `version` (0.1.0) | `app.json` `runtimeVersion.policy: appVersion` |
 
@@ -25,9 +26,8 @@ change needs it.
 
 1. Pull, then from the repo root run `npm install` (expo-updates is new).
 2. Make a free account at [expo.dev](https://expo.dev) if you don't have one.
-3. On expo.dev, **Create a project** named `pax`. Open it and copy its **Project ID** (a long
-   code like `1a2b3c4d-…`) and your Expo **username**. Send both to Claude in the chat (they
-   aren't secret). Claude puts them in `app.json`, which also turns on over-the-air updates.
+3. ✓ Done (October 16): the Expo project `pax` exists and its ID is in `app.json`, which turns
+   on over-the-air updates. `owner` is left out on purpose: EAS uses the signed-in account.
 4. After pulling that change, in a terminal:
    ```sh
    cd apps/mobile
