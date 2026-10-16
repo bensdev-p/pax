@@ -271,11 +271,11 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
 
 | Decision | Value |
 | --- | --- |
-| App name | Pax (store name will need a subtitle, e.g. "Pax: Catholic Daily") |
+| App name | Pax on the home screen; "Pax: Pray, Read, Study" in the App Store and TestFlight (chosen by Ben) |
 | iOS bundle ID and Android package | `com.benbrunson.pax` |
 | URL scheme | `paxapp` |
 | iOS App Group | `group.com.benbrunson.pax` |
-| Apple Developer Program | Not yet; join for Phase 5 (or sooner for a standalone build on Ben's phone) |
+| Apple Developer Program | Joined (October 2026). TestFlight builds by EAS, JavaScript updates over the air (`docs/IPHONE.md`) |
 | Package manager | npm workspaces |
 | Readings translation | Douay-Rheims in the app; USCCB link for the official text |
 
@@ -292,9 +292,9 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
     most-quoted Fathers, one era at a time; a Father's page goes book → chapter → verse. Familiar
     names, with the other names kept ("also called").
   - Today tab (as mentioned earlier)
-- Considering joining the Apple Developer Program before Phase 5, so Pax can run as its own app
-  (TestFlight) instead of through Expo Go on the home network, and so widgets and notifications
-  can be built. If Ben enrolls, the EAS setup moves ahead of Phase 4 (see `docs/NEXT_SESSION.md`).
+- Joined the Apple Developer Program (October 2026), so Pax runs as its own app through
+  TestFlight, with over-the-air updates (`docs/IPHONE.md`). Widgets and a development build come
+  next on that track.
 - Once a saint's or Father's work is readable in the app, their quote opens it there. Done for
   Saint Ignatius (Phase 4): "Read it in context" under his quote opens Romans at chapter 4. Other
   saints' quotes stay unlinked until their works are in Pax.

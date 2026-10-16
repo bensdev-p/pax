@@ -16,7 +16,13 @@ for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 | `scripts` | `serve-web.mjs`: serves the web export for checking screens |
 | `design` | The Next Screens canvas and `tokens.json` |
 
-## Run it on your iPhone (Expo Go)
+## Run it on your iPhone
+
+**As its own app (TestFlight):** Pax builds in Expo's cloud and installs through TestFlight, then
+gets JavaScript changes over the air. Setup and the update command are in
+[`docs/IPHONE.md`](docs/IPHONE.md).
+
+**In Expo Go**, for quick checks:
 
 1. Install **Expo Go** from the App Store. It must support SDK 57, which the current App Store
    version does.
@@ -30,8 +36,9 @@ for the next one, and the privacy notice is in [PRIVACY.md](PRIVACY.md).
 
 Only modules bundled in Expo Go are used: expo-sqlite, expo-notifications, expo-haptics,
 expo-font, expo-web-browser, expo-file-system, expo-asset, react-native-reanimated,
-react-native-svg, and the router, screens and safe-area packages. No custom native code, so no Mac
-and no paid Apple account are needed until the widgets.
+react-native-svg, and the router, screens and safe-area packages, plus expo-updates for the
+TestFlight build's over-the-air updates (Expo Go ignores it). No custom native code, so no Mac is
+needed; the widgets will be the first custom native code.
 
 `npm run web -w @pax/mobile` runs the web version in a browser.
 
