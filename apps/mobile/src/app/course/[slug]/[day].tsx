@@ -16,9 +16,10 @@ import { Card, RaisedButton } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
 import { PaxQuestion } from '@/components/Journal';
 import { Text } from '@/components/Text';
+import { WritingChapterView } from '@/components/Writing';
 import { useContent, useLibrary } from '@/data/content';
 import { verseLabel, type CccParagraph, type FatherExcerpt, type LibraryStore, type VerseDetail } from '@/data/library';
-import type { Course, CourseDay, CourseUnit } from '@/data/types';
+import { isWritingUnit, type Course, type CourseDay, type CourseUnit, type Writing, type WritingChapter } from '@/data/types';
 import { afterReading, startCourse } from '@/lib/courses';
 import { openVerse } from '@/lib/libraryLinks';
 import { useAppState } from '@/state/AppState';
@@ -72,6 +73,7 @@ export default function CourseDayScreen() {
   const [father, setFather] = useState<{ excerpt: FatherExcerpt; ref: string } | null>(null);
   const [paragraphs, setParagraphs] = useState<CccParagraph[]>([]);
   const [cited, setCited] = useState<VerseDetail[]>([]);
+  const [writing, setWriting] = useState<{ work: Writing; chapters: WritingChapter[] }[]>([]);
   // Which day was just finished here; replacing the route with the next day clears it.
   const [finishedDay, setFinishedDay] = useState<string | null>(null);
   const today = toIsoDate(new Date());
@@ -85,8 +87,19 @@ export default function CourseDayScreen() {
     if (!day) return;
     let cancelled = false;
     void (async () => {
-      if (day.readings.length) {
-        const main = await loadText(library, day.readings);
+      // A writings plan: the day's chapters of a Father's own work.
+      const parts = day.readings.filter(isWritingUnit);
+      if (parts.length) {
+        const out: { work: Writing; chapters: WritingChapter[] }[] = [];
+        for (const u of parts) {
+          const found = await content.writing(u.work);
+          if (found) out.push({ work: found.work, chapters: found.chapters.filter((c) => c.number >= u.from && c.number <= u.to) });
+        }
+        if (!cancelled) setWriting(out);
+      }
+      const bible = day.readings.filter((u): u is CourseUnit => !isWritingUnit(u));
+      if (bible.length) {
+        const main = await loadText(library, bible);
         if (cancelled) return;
         setText(main);
         setWisdom(await loadText(library, day.wisdom));
@@ -116,7 +129,7 @@ export default function CourseDayScreen() {
     return () => {
       cancelled = true;
     };
-  }, [library, day]);
+  }, [library, content, day]);
 
   if (day === null) {
     return (
@@ -208,6 +221,29 @@ export default function CourseDayScreen() {
 
       {text.map((s) => (
         <Passage key={s.heading} heading={s.heading} verses={s.verses} />
+      ))}
+
+      {writing.map(({ work, chapters }) => (
+        <View key={work.slug} style={{ gap: 18 }}>
+          {chapters.map((c) => (
+            <WritingChapterView key={c.number} chapter={c} />
+          ))}
+          <View style={{ gap: 4 }}>
+            <Text variant="small" color={t.neutral.textSubtle}>
+              {work.translation}
+            </Text>
+            <Pressable
+              accessibilityRole="link"
+              accessibilityLabel={`Read the whole ${work.title}`}
+              onPress={() => router.push({ pathname: '/writing/[slug]', params: { slug: work.slug } })}
+              style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 4, opacity: pressed ? 0.6 : 1 })}>
+              <Text variant="label" caps color={t.accent.text}>
+                Read the whole letter
+              </Text>
+              <ChevronIcon size={16} color={t.accent.text} />
+            </Pressable>
+          </View>
+        </View>
       ))}
 
       {wisdom.length ? (

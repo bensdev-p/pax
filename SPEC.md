@@ -35,7 +35,7 @@ Learn · Library · Pray · Profile: "Learn" became "Study", prayer moved next t
 | --- | --- | --- |
 | Today | The day's rhythm | Feast and season, saint of the day, one "Today with God" checklist (readings, prayer, study), streak |
 | Pray | Prayer | Guided Rosary, the nightly Examen, chaplets, Stations of the Cross, litanies, novenas with day tracking, the prayer book (with your own prayers) |
-| Study | Courses | Reading plans (Bible in a Year, Catechism in a Year, Mark, Psalms, Acts), later courses on the Fathers' and saints' writings and an OCIA course |
+| Study | Courses | Reading plans (Bible in a Year, Catechism in a Year, Mark, Psalms, Acts), writings courses on the Fathers and saints (the Letters of Ignatius first), later an OCIA course |
 | Library | Reference | Douay-Rheims Bible, Catechism index, Church Fathers, saints, full-text search, later highlights and bookmarks |
 | Me | You | Streak and calendar, journal, reminders, appearance, theme, data and privacy |
 
@@ -101,9 +101,12 @@ Everything else (tiles, long readings list) moves one tap away.
   Bible reader (a sheet over the page), listed in Library;
   favorite prayers and devotions in "For you" at the top of Pray (built in Phase 3).
 - **Examination of conscience** (the nightly Examen is built).
-- **Study courses on the Fathers and saints:** guided reading of their own writings (for example
-  the letters of Ignatius of Antioch, the Didache, Augustine's Confessions, Thérèse's Story of a
-  Soul where public domain), built on the same course engine as the reading plans.
+- **Study courses on the Fathers and saints:** guided reading of their own writings, built on the
+  same course engine as the reading plans (kind `writings`). The first is built: **The Letters of
+  Ignatius**, the seven letters in 14 days (Ante-Nicene Fathers, 1885, the shorter authentic text
+  only), each letter a section, with Pax's intro and question each day; the letters can also be
+  read whole (`/writing/[slug]`). Next ideas: the Didache, Augustine's Confessions, Thérèse's
+  Story of a Soul where public domain.
 - **OCIA course:** lessons mapped to the rites, built on the course engine; quizzes optional.
 - **Ben's layout notes:** to be added (see the end of this spec).
 
@@ -189,6 +192,7 @@ Everything shipped is public domain, linked, or written for Pax.
 | Saints | Own-words bios for all 235 US-calendar celebrations | Quotes only from Douay or public-domain translations |
 | Prayers and devotions | Traditional public-domain texts; own-words meditations and novena prayers | No ICEL texts |
 | Reading plans | Day splits computed by `pipeline/courses.py`; daily texts written for Pax | |
+| Writings (Fathers' own works) | Ignatius's seven letters, Ante-Nicene Fathers vol. 1 (1885), via HistoricalChristianFaith's Writings-Database | Public domain; the shorter, authentic text only |
 
 Open before any public release:
 
@@ -291,6 +295,6 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
 - Considering joining the Apple Developer Program before Phase 5, so Pax can run as its own app
   (TestFlight) instead of through Expo Go on the home network, and so widgets and notifications
   can be built. If Ben enrolls, the EAS setup moves ahead of Phase 4 (see `docs/NEXT_SESSION.md`).
-- Later: once a saint's or Father's work is readable in the app (the Phase 4 writings courses),
-  tapping that saint's quote on their page should open it there. Until then the quote stays as
-  it is, with no link (an online-link version was tried and set aside).
+- Once a saint's or Father's work is readable in the app, their quote opens it there. Done for
+  Saint Ignatius (Phase 4): "Read it in context" under his quote opens Romans at chapter 4. Other
+  saints' quotes stay unlinked until their works are in Pax.

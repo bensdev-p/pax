@@ -13,6 +13,8 @@ import {
   type RosaryMystery,
   type Saint,
   type SaintFact,
+  type Writing,
+  type WritingChapter,
 } from './types';
 
 type Row<T, K extends keyof T> = Omit<T, K> & { [P in K]: string | null };
@@ -48,6 +50,15 @@ export function createContentStore(db: ReadDb, version: string): ContentStore {
       (await db.all<Row<RosaryMystery, 'beads'>>('SELECT * FROM rosary_mysteries WHERE mystery_set = ? ORDER BY number', [set])).map(
         (row) => ({ ...row, beads: parseJson<BeadVerse[]>(row.beads) ?? [] }),
       ),
+    writing: async (slug) => {
+      const work = await db.first<Writing>('SELECT * FROM writings WHERE slug = ?', [slug]);
+      if (!work) return null;
+      const chapters = await db.all<WritingChapter>(
+        'SELECT number, title, text FROM writing_chapters WHERE work_slug = ? ORDER BY number',
+        [slug],
+      );
+      return { work, chapters };
+    },
     saint: async (key) => {
       const row = await db.first<Row<Saint, 'facts' | 'fathers'>>('SELECT * FROM saints WHERE romcal_key = ?', [key]);
       return row ? saintOf(row) : null;

@@ -115,6 +115,9 @@ and no paid Apple account are needed until the widgets.
   is not ours to copy).
 - **Short courses**: Mark in 16 days, the Psalms in 30 days, and Acts in 28 days with links to
   the apostolic Fathers.
+- **The Letters of Ignatius** (Phase 4, the first writings course): the seven letters Saint
+  Ignatius of Antioch wrote on his way to martyrdom, in 14 days of about six minutes, each letter
+  a section, with Pax's intro and question each day. See the Phase 4 section below.
 - Start any day; days are read in order and a missed day simply waits. Each day read counts for
   the streak (Study), and each plan can have its own daily reminder.
 - The day splits are computed from verse and paragraph counts by `pipeline/courses.py`; the
@@ -207,6 +210,15 @@ and no paid Apple account are needed until the widgets.
     to read along.
   - **Log it** counts a Rosary prayed away from the app for today's Pray mark and the streak.
 - The chaplets' beads hang in the same arc.
+- **The Letters of Ignatius**, the first course on a Father's own writings (Ben chose Ignatius):
+  the seven letters in 14 days, split at chapter breaks (Ephesians in three days, Polycarp in
+  one, the rest in two), in the Ante-Nicene Fathers translation (1885). That edition prints a
+  shorter and a longer version of each letter; Pax keeps only the shorter, which is Ignatius's own
+  (`pipeline/writings.py`, sources in `pipeline/sources/writings/`). Each day shows its chapters
+  with the translation's headings, Pax's intro and question, and "Read the whole letter". Any
+  letter can be read whole at `/writing/[slug]`, and Saint Ignatius's quote on his page now has
+  "Read it in context", which opens Romans at chapter 4. content.db gains `writings` and
+  `writing_chapters`, and `saints.quote_ref`.
 - **Pax, redrawn**: Ben's new art (made in ChatGPT from `docs/mascot-brief.md`), a simpler
   dove whose scarf still takes the day's liturgical color. `design/pax/cut_pax.py` cuts each pose
   in `design/pax/source/` into the dove and a tintable scarf mask

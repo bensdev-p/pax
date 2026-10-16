@@ -33,6 +33,12 @@ excerpts whose source is a public-domain translation (Schaff's ANF/NPNF and simi
 historicalchristian.faith, New Advent, CCEL, Internet Archive). Excerpts without a source or from
 Google Books are dropped because they may be under copyright.
 
+## Writings (Phase 4)
+
+| Folder | Upstream | Commit | License | Used for |
+| --- | --- | --- | --- | --- |
+| `writings/ignatius/` | [HistoricalChristianFaith/Writings-Database](https://github.com/HistoricalChristianFaith/Writings-Database) `Ignatius of Antioch/Epistle to …html`, the seven letters, renamed (`ephesians.html` …) and otherwise unchanged | `5b34df9f5a43091b832b7dd1ec1776d4e6f691aa` (2026-10-16) | Public domain (the repository's README: "All works in this repo are in the public domain") | The Letters of Ignatius plan and reader. The translation is the Ante-Nicene Fathers vol. 1 (Roberts and Donaldson, 1885), which prints a shorter and a longer version of each letter side by side; `writings.py` keeps only the shorter text, which is Ignatius's own, and drops the footnotes |
+
 ## Prayers, devotions and saints (`seed/`)
 
 - `prayers.json`: traditional prayers in public-domain English wording (no ICEL texts). The

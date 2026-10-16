@@ -69,6 +69,8 @@ export interface Saint {
   bio: string | null;
   quote: string | null;
   quote_source: string | null;
+  /** "<writing slug>/<chapter>" when the quote's work can be read in Pax. */
+  quote_ref: string | null;
   facts: SaintFact[];
   /** Church Fathers library authors whose writings are this saint's. */
   fathers: string[];
@@ -115,10 +117,39 @@ export interface CourseUnit {
   to?: number;
 }
 
+/** Chapters `from`–`to` of a Father's work (writings); chapter 0 is its greeting. */
+export interface WritingUnit {
+  work: string;
+  from: number;
+  to: number;
+}
+
+export const isWritingUnit = (u: CourseUnit | WritingUnit): u is WritingUnit => 'work' in u;
+
+/** A Father's or saint's own work, read whole (content.db `writings`). */
+export interface Writing {
+  slug: string;
+  author_slug: string;
+  /** "Letter to the Romans". */
+  title: string;
+  /** "Romans". */
+  short_title: string;
+  translation: string;
+  sort_order: number;
+}
+
+export interface WritingChapter {
+  /** 0 is the greeting. */
+  number: number;
+  /** The translation's own heading: "Allow Me to Fall a Prey to the Wild Beasts". */
+  title: string;
+  text: string;
+}
+
 export interface Course {
   slug: string;
   title: string;
-  kind: 'bible' | 'catechism';
+  kind: 'bible' | 'catechism' | 'writings';
   summary: string;
   intro: string;
   days: number;
@@ -137,7 +168,8 @@ export interface CourseDay {
   intro: string | null;
   summary: string | null;
   question: string | null;
-  readings: CourseUnit[];
+  /** Douay chapters for Bible plans; chapters of a work for writings plans. */
+  readings: (CourseUnit | WritingUnit)[];
   wisdom: CourseUnit[];
   wisdom_label: string | null;
   ccc_first: number | null;
@@ -151,6 +183,8 @@ export interface ContentStore {
   prayers(): Promise<Prayer[]>;
   prayer(slug: string): Promise<Prayer | null>;
   mysteries(set: RosaryMystery['mystery_set']): Promise<RosaryMystery[]>;
+  /** A work with its chapters, in order. */
+  writing(slug: string): Promise<{ work: Writing; chapters: WritingChapter[] } | null>;
   saint(key: string): Promise<Saint | null>;
   saints(): Promise<Saint[]>;
   devotions(): Promise<Devotion[]>;

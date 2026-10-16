@@ -5,9 +5,10 @@ README, "What Phase 4 adds so far"), then the Examen and other prayers and medit
 first writings course. OCIA stays later (it needs a priest or catechist). The Examen is built too
 (layout A; a Pray tile, Today's evening suggestion and the evening reminder lead to it). Pax is redrawn from Ben's
 ChatGPT art: seven poses and the app icons (`design/pax/cut_pax.py`). Users can add their own prayers to
-the prayer book (README). Ben has paid for the Apple Developer Program and is
+the prayer book (README). The first writings course is built: The Letters of
+Ignatius (14 days); the Phase 4 gate is Ben finishing it. Ben has paid for the Apple Developer Program and is
 waiting for approval; start the Apple developer track below once he says it's approved.
-Still to ask: the examination of conscience's form, the first writings course, which plans.
+Still to ask: the examination of conscience's form (on hold), which plans.
 
 Where things stand (October 2026): Phases 1 to 3 are built and merged or ready to merge from
 `claude/stoic-goodall-o0cat0`. Ben is living with Phase 3 for two weeks (SPEC: Roadmap) and will
