@@ -4195,6 +4195,142 @@
      ]
     }
    ]
+  },
+  {
+   "slug": "ignatius-letters",
+   "title": "The Letters of Ignatius",
+   "kind": "writings",
+   "summary": "Seven letters from a bishop on his way to martyrdom, in two weeks",
+   "intro": "Around the year 107, Ignatius, bishop of Antioch, was arrested and taken under guard across Asia Minor to Rome, to die in the arena. On the way he wrote seven letters: to the churches that sent people to greet him, to the Christians of Rome, and to his friend Polycarp. They are some of the first Christian writings after the New Testament, and they still read like a letter from a friend: about unity with the bishop, the Eucharist, Christ truly made flesh, and his own longing to give his life. Read a few chapters a day for two weeks. The translation is the 1885 Ante-Nicene Fathers one, so expect “thee” and “ye”.",
+   "minutes": 6,
+   "sections": [
+    {
+     "name": "Letter to the Ephesians",
+     "intro": "Written from Smyrna to the church of Ephesus, whose bishop Onesimus had come to meet him. The longest letter: unity, the one Physician, and the Eucharist."
+    },
+    {
+     "name": "Letter to the Magnesians",
+     "intro": "Also from Smyrna, to a church with a young bishop, Damas. Be Christians in fact, not only in name, and live by the Lord’s Day."
+    },
+    {
+     "name": "Letter to the Trallians",
+     "intro": "To the church of Tralles, whose bishop Polybius visited him. A warning against those who said Christ only seemed to suffer."
+    },
+    {
+     "name": "Letter to the Romans",
+     "intro": "Sent ahead to the Christians of Rome, asking them not to save him. The most personal of the letters, and the most loved."
+    },
+    {
+     "name": "Letter to the Philadelphians",
+     "intro": "Written later, from Troas, to a church he had visited on the road. One Eucharist, one altar, one bishop."
+    },
+    {
+     "name": "Letter to the Smyrnaeans",
+     "intro": "Also from Troas, to the church that cared for him at Smyrna. Christ truly suffered and truly rose, and here the words “the Catholic Church” are first written down."
+    },
+    {
+     "name": "Letter to Polycarp",
+     "intro": "A short letter from one bishop to another: his friend Polycarp of Smyrna, who would himself die a martyr about fifty years later."
+    }
+   ],
+   "days": [
+    {
+     "title": "In Tune with the Bishop",
+     "intro": "Ignatius thanks the Ephesians for the friends they sent him. Watch for his picture of a church in harmony: the presbyters tuned to the bishop like strings to a harp, so that together they sing to the Father through Jesus Christ.",
+     "question": "Where could you bring a little more harmony this week: at home, at work, in your parish?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "ignatius_of_antioch_bishop",
+       "label": "Saint Ignatius of Antioch"
+      }
+     ]
+    },
+    {
+     "title": "The One Physician",
+     "intro": "Christ is the one Physician, both flesh and spirit, God come in the flesh. Watch for the believers as stones of the Father’s temple, lifted up by the cross with the Holy Spirit as the rope, and his plea to meet together often to give thanks to God.",
+     "question": "When someone is harsh with you, what would it look like to answer with gentleness, as he asks?"
+    },
+    {
+     "title": "The Medicine of Immortality",
+     "intro": "Better to be silent and be a Christian than to talk and not be one. Ignatius speaks of three mysteries hidden from the ruler of this world: Mary’s virginity, her giving birth, and the Lord’s death. He ends with the one bread that is “the medicine of immortality”.",
+     "question": "What would change if you received the Eucharist as medicine for eternal life?"
+    },
+    {
+     "title": "Not Only in Name",
+     "intro": "The Magnesians have a young bishop, and Ignatius asks them not to look down on his youth. Watch for the two coins, one stamped by God and one by the world, and the call to do nothing apart from the bishop, with one prayer, one mind and one hope.",
+     "question": "Which coin is stamped more clearly on your days, God’s or the world’s?"
+    },
+    {
+     "title": "Living by the Lord’s Day",
+     "intro": "The prophets themselves lived for Christ. Ignatius writes of Christians who no longer keep the Sabbath but live by the Lord’s Day, the day our life rose with him. Watch for his call to throw out the old, sour leaven.",
+     "question": "How could you make next Sunday more truly the Lord’s Day?"
+    },
+    {
+     "title": "Without These, No Church",
+     "intro": "Bishop, presbyters and deacons: Ignatius says that without them nothing can be called a Church. He holds back from writing heavenly things to people still young in the faith, and warns that false teaching is poison mixed with sweet wine.",
+     "question": "Who are the shepherds God has given you, and how could you pray for them by name?"
+    },
+    {
+     "title": "Truly Born, Truly Raised",
+     "intro": "Some said Christ only seemed to suffer. Ignatius answers again and again with “truly”: truly born, truly ate and drank, truly crucified, truly raised. If he only seemed to suffer, he asks, why am I in chains?",
+     "question": "Which of Christ’s “truly”s do you most need to hold on to today?"
+    },
+    {
+     "title": "The Wheat of God",
+     "intro": "Ignatius begs the Roman Christians not to use their influence to save him. Christianity, he says, is not a thing of silence only, but of greatness. Watch for the line that made him famous: “I am the wheat of God”.",
+     "question": "What would it mean for you to be “ground” into bread for others?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "ignatius_of_antioch_bishop",
+       "label": "Saint Ignatius of Antioch"
+      }
+     ]
+    },
+    {
+     "title": "Now I Begin to Be a Disciple",
+     "intro": "Bound to ten soldiers he calls leopards, he says he is only now beginning to be a disciple. Watch for the living water within him whispering “Come to the Father”, and his hunger for the bread of God, the flesh of Christ.",
+     "question": "What does “Come to the Father” sound like in your own heart?"
+    },
+    {
+     "title": "One Eucharist",
+     "intro": "To Philadelphia, a church he visited on the road. Flee division; there is one flesh of our Lord, one cup, one altar, as there is one bishop. Watch for how he takes refuge in the Gospel as in the flesh of Jesus.",
+     "question": "Where do you see division, and what small step toward unity could you take?"
+    },
+    {
+     "title": "Where Division Is, God Is Not",
+     "intro": "Ignatius remembers crying out among them by the Spirit: keep to the bishop, love unity, flee divisions. When some said they would not believe the Gospel unless they found it in the ancient Scriptures, he answered that for him Jesus Christ is all that is ancient: his cross, death and resurrection.",
+     "question": "If someone asked what your faith rests on, what in your life would point them to Christ?"
+    },
+    {
+     "title": "He Truly Rose",
+     "intro": "To Smyrna, his hosts. Ignatius sets out the faith almost like a creed: Christ of David’s line, born of the Virgin, baptized by John, nailed to the cross under Pontius Pilate, truly raised in the flesh. After the resurrection he said, “Handle me and see.”",
+     "question": "Ignatius says those who deny Christ care nothing for widows, orphans or the hungry. Who could you care for this week?"
+    },
+    {
+     "title": "The Catholic Church",
+     "intro": "Some stayed away from the Eucharist because they would not confess it is the flesh of our Savior. Watch for the first written use of a phrase we still say: wherever Jesus Christ is, there is the Catholic Church.",
+     "question": "What does belonging to the Catholic Church mean to you, in a sentence?"
+    },
+    {
+     "title": "Stand Firm Like an Anvil",
+     "intro": "Ignatius writes to his friend Polycarp, a young bishop: bear with everyone as the Lord bears with you, and stand firm like an anvil under the hammer. Watch for the Christian’s armor: baptism as weapons, faith as helmet, love as spear, patience as the whole suit.",
+     "question": "Which piece of that armor do you most need to put on this week?",
+     "see": [
+      {
+       "kind": "saint",
+       "key": "polycarp_of_smyrna_bishop",
+       "label": "Saint Polycarp"
+      },
+      {
+       "kind": "father",
+       "key": "polycarp-of-smyrna",
+       "label": "Polycarp of Smyrna"
+      }
+     ]
+    }
+   ]
   }
  ]
 }

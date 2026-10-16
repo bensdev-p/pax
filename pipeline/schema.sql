@@ -117,7 +117,27 @@ CREATE TABLE saints (
   quote_source TEXT,
   facts        TEXT NOT NULL DEFAULT '[]',-- JSON [{value, label}] x 3
   fathers      TEXT NOT NULL DEFAULT '[]',-- JSON list of father_authors slugs
-  month_day    TEXT                       -- MM-DD for fixed dates, NULL for movable feasts
+  month_day    TEXT,                      -- MM-DD for fixed dates, NULL for movable feasts
+  quote_ref    TEXT                       -- "<writings.slug>/<chapter>" when the quote's work is in the app
+) WITHOUT ROWID;
+
+-- A Father's or saint's own work, read whole (Phase 4 writings courses). Public-domain
+-- translations only; see pipeline/writings.py.
+CREATE TABLE writings (
+  slug         TEXT PRIMARY KEY,          -- e.g. ignatius-romans
+  author_slug  TEXT NOT NULL,             -- father_authors.slug
+  title        TEXT NOT NULL,             -- Letter to the Romans
+  short_title  TEXT NOT NULL,             -- Romans
+  translation  TEXT NOT NULL,
+  sort_order   INTEGER NOT NULL
+) WITHOUT ROWID;
+
+CREATE TABLE writing_chapters (
+  work_slug    TEXT NOT NULL,
+  number       INTEGER NOT NULL,          -- 0 is the greeting
+  title        TEXT NOT NULL,             -- the translation's own heading
+  text         TEXT NOT NULL,
+  PRIMARY KEY (work_slug, number)
 ) WITHOUT ROWID;
 
 CREATE TABLE prayers (
@@ -164,7 +184,7 @@ CREATE TABLE devotions (
 CREATE TABLE courses (
   slug       TEXT PRIMARY KEY,
   title      TEXT NOT NULL,
-  kind       TEXT NOT NULL,              -- bible, catechism
+  kind       TEXT NOT NULL,              -- bible, catechism, writings
   summary    TEXT NOT NULL,
   intro      TEXT NOT NULL,
   days       INTEGER NOT NULL,
@@ -182,7 +202,7 @@ CREATE TABLE course_days (
   intro       TEXT,                      -- Bible plans: what to watch for
   summary     TEXT,                      -- Catechism plan: the day's teaching in our words
   question    TEXT,
-  readings    TEXT NOT NULL DEFAULT '[]',-- JSON [{book, chapter, from?, to?}] in Douay chapters
+  readings    TEXT NOT NULL DEFAULT '[]',-- JSON [{book, chapter, from?, to?}] in Douay chapters, or [{work, from, to}] chapters of a writing
   wisdom      TEXT NOT NULL DEFAULT '[]',-- JSON, same shape: the day's Psalm or Proverbs
   wisdom_label TEXT,
   ccc_first   INTEGER,

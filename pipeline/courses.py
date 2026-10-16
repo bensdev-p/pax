@@ -62,6 +62,19 @@ class Unit:
 
 
 @dataclass
+class WritingUnit:
+    """Chapters first..last of a Father's work (writings.Work); chapter 0 is its greeting."""
+
+    work: str
+    short_title: str
+    first: int
+    last: int
+
+    def as_json(self) -> dict:
+        return {"work": self.work, "from": self.first, "to": self.last}
+
+
+@dataclass
 class Day:
     readings: list[Unit]
     section: str | None = None
@@ -196,9 +209,38 @@ def catechism_in_a_year(ccc_index: dict) -> list[Day]:
     return [Day([], ccc=(numbers[i], numbers[j - 1])) for i, j in ranges]
 
 
-def build_plans(verses, chapters: dict[str, int], ccc_index: dict) -> dict[str, list[Day]]:
+# Days for each of Ignatius's letters, about six minutes a day (12,100 words in 14 days).
+IGNATIUS_DAYS = {
+    "ignatius-ephesians": 3,
+    "ignatius-magnesians": 2,
+    "ignatius-trallians": 2,
+    "ignatius-romans": 2,
+    "ignatius-philadelphians": 2,
+    "ignatius-smyrnaeans": 2,
+    "ignatius-polycarp": 1,
+}
+
+
+def letters_plan(works, days_per_work: dict[str, int]) -> list[Day]:
+    """Each work in its own days, split at chapter breaks as evenly by words as possible.
+    The greeting goes with the first chapter; each work is a section, named by its title."""
+    out: list[Day] = []
+    for w in works:
+        days = days_per_work[w.slug]
+        chapters = [c for c in w.chapters if c.number > 0]
+        greeting = sum(c.words for c in w.chapters if c.number == 0)
+        weights = [c.words + (greeting if i == 0 else 0) for i, c in enumerate(chapters)]
+        for start, end in split(weights, days, max_per_day=len(chapters)):
+            first = 0 if start == 0 else chapters[start].number
+            out.append(Day([WritingUnit(w.slug, w.short_title, first, chapters[end - 1].number)], section=w.title))
+    return out
+
+
+def build_plans(verses, chapters: dict[str, int], ccc_index: dict, works=()) -> dict[str, list[Day]]:
     counts = chapter_verses(verses)
+    ignatius = [w for w in works if w.slug in IGNATIUS_DAYS]
     return {
+        "ignatius-letters": letters_plan(ignatius, IGNATIUS_DAYS),
         "bible-in-a-year": bible_in_a_year(counts, chapters),
         "catechism-in-a-year": catechism_in_a_year(ccc_index),
         "mark-in-16-days": one_chapter_a_day("Mark", 16, counts),
@@ -213,8 +255,13 @@ def psalm_number(douay: int) -> str:
     return str(douay) if modern == douay else f"{douay} ({modern})"
 
 
-def label(units: list[Unit], names: dict[str, str]) -> str:
-    """'Genesis 1–3', 'Psalm 22 (23)', 'Psalm 118 (119):1–32', 'Exodus 40; Leviticus 1–2'."""
+def label(units: list, names: dict[str, str]) -> str:
+    """'Genesis 1–3', 'Psalm 22 (23)', 'Psalm 118 (119):1–32', 'Exodus 40; Leviticus 1–2';
+    for a Father's work, 'Romans 1–5' (a greeting counts with chapter 1)."""
+    if units and isinstance(units[0], WritingUnit):
+        return "; ".join(
+            f"{u.short_title} {max(1, u.first)}" + (f"–{u.last}" if u.last > max(1, u.first) else "") for u in units
+        )
     parts: list[str] = []
     k = 0
     while k < len(units):

@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { createContentStore } from '@/data/contentStore';
 import type { SqlParam } from '@/data/db';
 import { createLibrary } from '@/data/library';
-import type { ContentStore, CourseProgress } from '@/data/types';
+import { isWritingUnit, type ContentStore, type CourseProgress, type CourseUnit } from '@/data/types';
 import { DAILY_WORDS } from '@/lib/dailyWord';
 import { afterReading, daysBehind, isFinished, nextDay, startCourse } from '@/lib/courses';
 import { courseReminder, planNotifications } from '@/notifications/plan';
@@ -27,7 +27,7 @@ beforeAll(() => {
 });
 
 describe('Reading plans in content.db', () => {
-  it('has the five plans with every day', async () => {
+  it('has the six plans with every day', async () => {
     const courses = await content.courses();
     expect(courses.map((c) => [c.slug, c.days])).toEqual([
       ['bible-in-a-year', 365],
@@ -35,6 +35,7 @@ describe('Reading plans in content.db', () => {
       ['mark-in-16-days', 16],
       ['psalms-in-30-days', 30],
       ['acts-in-28-days', 28],
+      ['ignatius-letters', 14],
     ]);
     for (const c of courses) expect(await content.courseDays(c.slug)).toHaveLength(c.days);
   });
@@ -44,7 +45,7 @@ describe('Reading plans in content.db', () => {
     for (let d = 1; d <= 365; d++) {
       const day = await content.courseDay('bible-in-a-year', d);
       expect(day?.wisdom).toHaveLength(1);
-      for (const u of day!.readings) {
+      for (const u of day!.readings as CourseUnit[]) {
         const key = `${u.book}.${u.chapter}`;
         expect(seen.has(key)).toBe(false);
         seen.add(key);
@@ -71,9 +72,46 @@ describe('Reading plans in content.db', () => {
   it('opens each Psalms day as Douay text', async () => {
     const lib = createLibrary(db);
     const day = await content.courseDay('psalms-in-30-days', 4);
-    const ch = await lib.chapter(day!.readings[0]!.book, day!.readings[0]!.chapter);
+    const unit = day!.readings[0] as CourseUnit;
+    const ch = await lib.chapter(unit.book, unit.chapter);
     expect(ch?.verses.length).toBeGreaterThan(0);
     expect(day?.label).toMatch(/^Psalms \d+–\d+ \(\d+–\d+\)$/);
+  });
+});
+
+describe('The Letters of Ignatius', () => {
+  it('reads all seven letters, every chapter once, in order', async () => {
+    const seen: string[] = [];
+    for (let d = 1; d <= 14; d++) {
+      const day = await content.courseDay('ignatius-letters', d);
+      for (const u of day!.readings) {
+        expect(isWritingUnit(u)).toBe(true);
+        if (!isWritingUnit(u)) continue;
+        for (let n = u.from; n <= u.to; n++) seen.push(`${u.work}/${n}`);
+      }
+    }
+    const all = await db.all<{ key: string }>("SELECT work_slug || '/' || number AS key FROM writing_chapters");
+    expect(seen.sort()).toEqual(all.map((r) => r.key).sort());
+    const first = await content.courseDay('ignatius-letters', 1);
+    expect(first).toMatchObject({ section: 'Letter to the Ephesians', label: 'Ephesians 1–6', title: 'In Tune with the Bishop' });
+  });
+
+  it('keeps the shorter, authentic text', async () => {
+    const romans = await content.writing('ignatius-romans');
+    expect(romans?.work).toMatchObject({ title: 'Letter to the Romans', short_title: 'Romans' });
+    expect(romans?.chapters.map((c) => c.number)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(romans?.chapters[4]?.text).toContain('I am the wheat of God, and let me be ground by the teeth of the wild beasts');
+    const smyrna = await content.writing('ignatius-smyrnaeans');
+    expect(smyrna?.chapters[8]?.text).toContain('wherever Jesus Christ is, there is the Catholic Church');
+    // The longer, later version has the heavenly host where Ignatius wrote of the Catholic Church.
+    expect(smyrna?.chapters[8]?.text).not.toContain('heavenly host');
+  });
+
+  it('opens Ignatius’s quote in his own letter', async () => {
+    const saint = await content.saint('ignatius_of_antioch_bishop');
+    expect(saint?.quote_ref).toBe('ignatius-romans/4');
+    const romans = await content.writing('ignatius-romans');
+    expect(romans?.chapters[4]?.text).toContain(saint!.quote!);
   });
 });
 

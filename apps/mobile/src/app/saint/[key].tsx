@@ -63,6 +63,9 @@ export default function SaintScreen() {
 
   const palette = t.locked || !saint ? t.accent : tokens.palettes[saintColor(saint, celebration)][t.scheme];
   const chip = saint ? rankChip(saint, celebration) : null;
+  // "ignatius-romans/4" → the letter, opened at chapter 4.
+  const [quoteWork, quoteChapter] = saint?.quote_ref?.split('/') ?? [];
+  const quoteLink = quoteWork && quoteChapter ? { slug: quoteWork, chapter: quoteChapter } : null;
   const isFeast = saint && saint.kind !== 'saint' && saint.kind !== 'saints';
   const when = celebration ? shortDate(celebration.date) : saint?.month_day ? shortDate(saint.month_day) : null;
   const label = [date === today && celebration ? (isFeast ? 'Feast of the day' : 'Saint of the day') : isFeast ? 'Feast' : 'Saint', when]
@@ -169,6 +172,18 @@ export default function SaintScreen() {
                   <Text variant="small" color={t.neutral.textMuted} style={{ fontFamily: 'Nunito_800ExtraBold' }}>
                     {saint.quote_source}
                   </Text>
+                ) : null}
+                {quoteLink ? (
+                  // The quote's own work is in Pax: open it at the chapter (SPEC: Ben's notes).
+                  <Pressable
+                    accessibilityRole="link"
+                    onPress={() => router.push({ pathname: '/writing/[slug]', params: quoteLink })}
+                    style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 4, opacity: pressed ? 0.6 : 1 })}>
+                    <Text variant="label" caps color={t.accent.text}>
+                      Read it in context
+                    </Text>
+                    <ChevronIcon size={16} color={t.accent.text} />
+                  </Pressable>
                 ) : null}
               </View>
             ) : null}

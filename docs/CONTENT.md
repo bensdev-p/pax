@@ -104,6 +104,15 @@ A plan has two halves:
 title. Once filled, the build refuses a count that doesn't match the split, so changing a split
 means re-checking the words.
 
+**A writings plan** (`kind: "writings"`) reads a Father's or saint's own work, chapter by chapter.
+The work's text comes first: vendor a public-domain translation under `pipeline/sources/writings/`
+with a NOTICE entry, and add a parser and an entry in `all_works()` in `pipeline/writings.py`
+(each chapter becomes a row of `writing_chapters`; chapter 0 is a greeting or preface). Then
+split it in `courses.py` like `letters_plan` (days per work, split at chapter breaks by words)
+and write the days as for a Bible plan. A saint's `quote_ref` (`"<work>/<chapter>"` in
+`saints.json`) makes their quote open in the work; the build checks the chapter exists. The
+works can also be read whole at `/writing/<slug>`.
+
 ## Church Fathers' names
 
 `pipeline/seed/fathers.json` gives a Father his familiar name (`"name": "Gregory the Great"`) and

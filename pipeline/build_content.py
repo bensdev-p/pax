@@ -29,6 +29,7 @@ import gzip
 
 import bible_drc
 import courses as course_plans
+import writings as writings_mod
 from verse_map import STANDARD_ALIASES, verse_map_rows
 
 PIPELINE = Path(__file__).resolve().parent
@@ -347,6 +348,14 @@ def bead_verses(mysteries: list[dict], bible) -> None:
         m["beads"] = resolved
 
 
+def check_quote_refs(saints: list[dict], works) -> None:
+    """A saint's quote_ref ("<work>/<chapter>") must name a chapter Pax has."""
+    chapters = {f"{w.slug}/{c.number}" for w in works for c in w.chapters}
+    for s in saints:
+        if s.get("quote_ref") and s["quote_ref"] not in chapters:
+            raise SystemExit(f"saint {s['romcal_key']}: quote_ref {s['quote_ref']} is not a chapter in pipeline/writings.py")
+
+
 def check_devotions(devotions: list[dict], prayer_slugs: set[str]) -> None:
     for d in devotions:
         where = f"devotion {d['slug']}"
@@ -402,7 +411,8 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
 
     inputs = [p for p in SEED.rglob("*.json")] + [p for p in SOURCES.rglob("*.json")]
     inputs += list(SOURCES.rglob("*.usfm")) + list(SOURCES.rglob("*.json.gz"))
-    inputs += [PIPELINE / n for n in ("schema.sql", "verse_map.py", "bible_drc.py", "courses.py")]
+    inputs += list(SOURCES.rglob("*.html"))
+    inputs += [PIPELINE / n for n in ("schema.sql", "verse_map.py", "bible_drc.py", "courses.py", "writings.py")]
     inputs += [Path(__file__).resolve()]
     version = content_version(inputs)
 
@@ -450,6 +460,8 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
     used_works = {p["work_slug"] for p in fathers_starter["passages"]}
     fathers_starter["works"] = [w for w in fathers_starter["works"] if w["slug"] in used_works]
     saints = load_json(SEED / "saints.json")["saints"]
+    works = writings_mod.all_works()
+    check_quote_refs(saints, works)
     devotions = load_json(SEED / "devotions.json")["devotions"]
     courses = load_json(SEED / "courses.json")["courses"]
     cross_refs = load_json(SEED / "cross_refs.json")["cross_refs"]
@@ -537,19 +549,27 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         if r in verse_refs
     ]
     db.executemany(
-        "INSERT INTO saints VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO saints VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
             (
                 s["romcal_key"], s["name"], s.get("kind", "saint"), s.get("subtitle"), s.get("dates"),
                 s.get("patronage"), s.get("summary"), s.get("bio"), s.get("quote"), s.get("quote_source"),
                 json.dumps(s.get("facts", []), ensure_ascii=False), json.dumps(s.get("fathers", [])),
-                feast_days.get(s["romcal_key"]),
+                feast_days.get(s["romcal_key"]), s.get("quote_ref"),
             )
             for s in saints
         ],
     )
     book_names = {b.osis: b.name for b in bible.books}
-    plans = course_plans.build_plans(bible.verses, {b.osis: b.chapters for b in bible.books}, ccc_index)
+    db.executemany(
+        "INSERT INTO writings VALUES (?, ?, ?, ?, ?, ?)",
+        [(w.slug, w.author_slug, w.title, w.short_title, writings_mod.TRANSLATION, i) for i, w in enumerate(works)],
+    )
+    db.executemany(
+        "INSERT INTO writing_chapters VALUES (?, ?, ?, ?)",
+        [(w.slug, c.number, c.title, c.text) for w in works for c in w.chapters],
+    )
+    plans = course_plans.build_plans(bible.verses, {b.osis: b.chapters for b in bible.books}, ccc_index, works)
     course_rows, day_rows = course_tables(courses, plans, book_names)
     db.executemany("INSERT INTO courses VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", course_rows)
     db.executemany("INSERT INTO course_days VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", day_rows)
@@ -659,6 +679,7 @@ def build(out_db: Path, out_lectionary: Path, out_web: Path, out_report: Path) -
         "saints": [s["romcal_key"] for s in saints],
         "devotions": [d["slug"] for d in devotions],
         "courses": {c["slug"]: len(plans[c["slug"]]) for c in courses},
+        "writings": [w.slug for w in works],
     }
     out_web.write_text(json.dumps(web, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 

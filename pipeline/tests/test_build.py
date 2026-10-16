@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import build_content  # noqa: E402
+import writings  # noqa: E402
 from extract_ccc import parse_refs  # noqa: E402
 from verse_map import douay_ref, douay_to_standard, english_to_standard, hebrew_to_vulgate_psalm, verse_map_rows  # noqa: E402
 
@@ -279,6 +280,21 @@ class BuildTest(unittest.TestCase):
             self.assertTrue(title and text, slug)
         with self.assertRaises(SystemExit):
             build_content.bead_verses([{"slug": "m", "beads": ["Matt.99.1"] * 10}], build_content.bible_drc.parse(build_content.SOURCES / "drc1750"))
+
+    def test_ignatius_letters(self):
+        # Seven letters, the shorter (authentic) text, with greetings and every chapter.
+        rows = self.db.execute("SELECT w.short_title, count(*) - 1 FROM writings w JOIN writing_chapters c ON c.work_slug = w.slug GROUP BY w.slug ORDER BY w.sort_order").fetchall()
+        self.assertEqual(rows, [("Ephesians", 21), ("Magnesians", 15), ("Trallians", 13), ("Romans", 10),
+                                ("Philadelphians", 11), ("Smyrnaeans", 13), ("Polycarp", 8)])
+        text = self.db.execute("SELECT text FROM writing_chapters WHERE work_slug = 'ignatius-smyrnaeans' AND number = 8").fetchone()[0]
+        self.assertIn("there is the Catholic Church", text)
+        self.assertNotIn("heavenly host", text)  # the longer, later version's wording
+        self.assertNotIn("<", text)
+        days = self.db.execute("SELECT count(*) FROM course_days WHERE course_slug = 'ignatius-letters'").fetchone()[0]
+        self.assertEqual(days, 14)
+        self.assertEqual(self.db.execute("SELECT quote_ref FROM saints WHERE romcal_key = 'ignatius_of_antioch_bishop'").fetchone()[0], "ignatius-romans/4")
+        with self.assertRaises(SystemExit):
+            build_content.check_quote_refs([{"romcal_key": "x", "quote_ref": "ignatius-romans/99"}], writings.all_works())
 
     def test_lectionary_json_matches_db(self):
         data = json.loads(self.paths["lectionary"].read_text())

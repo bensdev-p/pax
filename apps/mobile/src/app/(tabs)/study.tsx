@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { BookIcon, ChevronIcon, LockIcon } from '@/components/Icons';
+import { BookIcon, ChevronIcon, LockIcon, QuillIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card, RaisedButton, RaisedSurface } from '@/components/Raised';
 import { Screen } from '@/components/Screen';
@@ -110,7 +110,8 @@ export default function StudyScreen() {
                 width: 44,
                 height: 44,
                 borderRadius: t.radius.tile,
-                backgroundColor: c.kind === 'catechism' ? 'rgba(47,164,231,0.15)' : 'rgba(255,107,107,0.15)',
+                backgroundColor:
+                  c.kind === 'catechism' ? 'rgba(47,164,231,0.15)' : c.kind === 'writings' ? 'rgba(245,165,36,0.18)' : 'rgba(255,107,107,0.15)',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -118,6 +119,8 @@ export default function StudyScreen() {
                 <Text variant="small" color={t.scheme === 'dark' ? '#7CC6F2' : '#1E78B0'} style={{ fontFamily: 'Nunito_900Black' }}>
                   CCC
                 </Text>
+              ) : c.kind === 'writings' ? (
+                <QuillIcon />
               ) : (
                 <BookIcon />
               )}

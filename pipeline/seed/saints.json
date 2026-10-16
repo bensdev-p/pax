@@ -5080,7 +5080,7 @@
    "patronage": "The Church in the eastern Mediterranean",
    "summary": "An early bishop of Antioch whose letters, written on the road to martyrdom in Rome, are among the treasures of the early Church.",
    "bio": "Saint Ignatius was bishop of Antioch, one of the first great centers of the Church. Tradition counts him as the third bishop there, after Saint Peter and Evodius. Arrested and taken under guard to Rome to die in the arena, he wrote seven letters to churches along the way.\n\nThese letters are among the earliest Christian writings after the New Testament. They are full of love for the Eucharist, for the unity of the Church around its bishop, and for Christ, whom he longed to meet. He begged the Christians of Rome not to try to save him. He is the first known writer to call the Church “catholic.” He died in Rome around 107. Ignatius shows that the faith of the first Christians is the same faith we profess at Mass today.",
-   "quote": "I am the wheat of God, and am ground by the teeth of the wild beasts, that I may be found the pure bread of Christ.",
+   "quote": "I am the wheat of God, and let me be ground by the teeth of the wild beasts, that I may be found the pure bread of Christ.",
    "quote_source": "Letter to the Romans 4",
    "facts": [
     {
@@ -5098,7 +5098,8 @@
    ],
    "fathers": [
     "ignatius-of-antioch"
-   ]
+   ],
+   "quote_ref": "ignatius-romans/4"
   },
   {
    "romcal_key": "luke_evangelist",
