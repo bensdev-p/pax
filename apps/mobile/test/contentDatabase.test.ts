@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { createContentLoader, validateContentDatabase } from '../src/data/contentDatabase';
+import { createContentLoader, staleContentFiles, validateContentDatabase } from '../src/data/contentDatabase';
 
 const bundledPath = new URL('../assets/content/content.db', import.meta.url);
 const version = new DatabaseSync(bundledPath, { readOnly: true });
@@ -115,5 +115,17 @@ describe('native content database startup', () => {
     const load = createContentLoader({ version: bundledVersion, open: async () => db, replace });
     await expect(load()).rejects.toThrow('close failed');
     expect(replace).not.toHaveBeenCalled();
+  });
+});
+
+describe('old content files', () => {
+  it('lists other content versions and the legacy content.db, never the current file or user.db', () => {
+    const stale = staleContentFiles(
+      ['content-2026.10.15.db', 'content-2026.10.15.db-wal', 'content-2026.10.16.db', 'content-2026.10.16.db-shm', 'content-2026.10.16.db.tmp', 'notes.txt'],
+      ['content.db', 'content.db-journal', 'user.db', 'user.db-wal', 'pax-content'],
+      'content-2026.10.16.db',
+    );
+    expect(stale.contentDir).toEqual(['content-2026.10.15.db', 'content-2026.10.15.db-wal']);
+    expect(stale.sqliteDir).toEqual(['content.db', 'content.db-journal']);
   });
 });
