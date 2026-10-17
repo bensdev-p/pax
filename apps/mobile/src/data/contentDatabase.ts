@@ -73,3 +73,20 @@ class InvalidContentError extends Error {
     super('The installed content database needs to be restored.');
   }
 }
+
+const SIDECARS = ['', '-wal', '-shm', '-journal', '.tmp'];
+
+/**
+ * Content files left by earlier versions, each about 30 MB: copies in `pax-content/` for other
+ * content versions, and the legacy `content.db` from before the versioned files (TestFlight 0.1.0).
+ * Only content files are named; user.db and anything else in the folders are never touched.
+ */
+export function staleContentFiles(contentDir: string[], sqliteDir: string[], current: string): { contentDir: string[]; sqliteDir: string[] } {
+  const keep = new Set(SIDECARS.map((s) => `${current}${s}`));
+  const versioned = /^content-.+\.db(-wal|-shm|-journal|\.tmp)?$/;
+  const legacy = new Set(SIDECARS.map((s) => `content.db${s}`));
+  return {
+    contentDir: contentDir.filter((name) => versioned.test(name) && !keep.has(name)),
+    sqliteDir: sqliteDir.filter((name) => legacy.has(name)),
+  };
+}

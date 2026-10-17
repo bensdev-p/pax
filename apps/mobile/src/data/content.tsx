@@ -9,7 +9,7 @@ import { RaisedButton } from '@/components/Raised';
 import { Text } from '@/components/Text';
 
 import { ContentStores } from './contentContext';
-import { createContentLoader } from './contentDatabase';
+import { createContentLoader, staleContentFiles } from './contentDatabase';
 import { detectFts, type ReadDb, type SqlParam } from './db';
 
 export { useContent, useFathersPack, useLibrary } from './contentContext';
@@ -59,9 +59,27 @@ const loadDatabase = createContentLoader({
   },
 });
 
+/** Deletes earlier content copies once the current one has checked out. Best effort. */
+function removeStaleContent() {
+  try {
+    const dir = contentDirectory();
+    const sqliteDir = dir.parentDirectory;
+    const stale = staleContentFiles(
+      dir.list().map((entry) => entry.name),
+      sqliteDir.list().map((entry) => entry.name),
+      DATABASE_NAME,
+    );
+    for (const name of stale.contentDir) new File(dir, name).delete();
+    for (const name of stale.sqliteDir) new File(sqliteDir, name).delete();
+  } catch (error) {
+    console.warn('Pax could not remove old content files:', error);
+  }
+}
+
 let loading: Promise<ReadDb> | null = null;
 function loadContent(): Promise<ReadDb> {
   loading ??= loadDatabase().then(async (sqlite) => {
+    removeStaleContent();
     const base = {
       all: <T,>(sql: string, params: SqlParam[] = []) => sqlite.getAllAsync<T>(sql, params),
       first: async <T,>(sql: string, params: SqlParam[] = []) => (await sqlite.getFirstAsync<T>(sql, params)) ?? null,

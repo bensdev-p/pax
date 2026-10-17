@@ -106,7 +106,8 @@ ended up empty wasn't pinned down. The fix, `src/data/content.tsx` and
 `src/data/contentDatabase.ts` (tested in `test/contentDatabase.test.ts`):
 
 - The content lives in `<SQLite folder>/pax-content/content-<contentVersion>.db`, one file per
-  content version. The old `content.db` is left alone (cleaning up old copies is still to do).
+  content version. Once the current file checks out, Pax deletes copies for other content
+  versions and the old `content.db` (about 30 MB each; `staleContentFiles`).
 - On every launch Pax opens that file and checks it: the content tables exist, `content_meta`
   matches the bundled version, and `PRAGMA quick_check` is ok. If not, it closes it and copies the
   bundled database in again (through a staging file), then checks once more.
