@@ -42,7 +42,7 @@ export default function LibraryScreen() {
     const gospel = today?.readings?.gospel;
     if (!gospel) return;
     let cancelled = false;
-    (async () => {
+    void (async () => {
       const out: FeastChip[] = [{ label: gospel, onPress: () => void openCitation(library, gospel) }];
       const refs = citationRefs(gospel);
       for (const ref of refs) {
