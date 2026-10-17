@@ -8,7 +8,10 @@ ChatGPT art: seven poses and the app icons (`design/pax/cut_pax.py`). Users can 
 the prayer book (README). The first writings course is built: The Letters of
 Ignatius (14 days); the Phase 4 gate is Ben finishing it. Ben's Apple Developer account is approved: the TestFlight
 build with over-the-air updates is set up (`docs/IPHONE.md`; eas.json, expo-updates). The Expo
-project ID is in `app.json`; next is Ben's first `eas build --auto-submit` (docs/IPHONE.md step 4). Widgets and a development build come after.
+project ID is in `app.json`. Ben's first TestFlight build (0.1.0 (1)) crashed on launch: the phone opened an empty
+content database (`no such table: content_meta`). The fix (`src/data/contentDatabase.ts`, made with ChatGPT's
+help and published over the air) installs and checks the content file itself; see docs/IPHONE.md, "Content
+database on the phone". Pax now runs from TestFlight. Widgets and a development build come after.
 Still to ask: the examination of conscience's form (on hold), which plans.
 
 Where things stand (October 2026): Phases 1 to 3 are built and merged or ready to merge from
