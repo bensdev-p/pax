@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pax",
     "slug": "pax",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "paxapp",
@@ -12,9 +12,7 @@
       "bundleIdentifier": "com.benbrunson.pax",
       "supportsTablet": false,
       "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.com.benbrunson.pax"
-        ]
+        "com.apple.security.application-groups": ["group.com.benbrunson.pax"]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -51,6 +49,78 @@
         {
           "icon": "./assets/images/notification-icon.png",
           "color": "#24913C"
+        }
+      ],
+      [
+        "expo-widgets",
+        {
+          "bundleIdentifier": "com.benbrunson.pax.widgets",
+          "groupIdentifier": "group.com.benbrunson.pax",
+          "widgets": [
+            {
+              "name": "PaxToday",
+              "displayName": "Today",
+              "description": "Your streak and today's Read, Pray and Study.",
+              "ios": {
+                "supportedFamilies": [
+                  "systemSmall",
+                  "systemLarge",
+                  "accessoryCircular",
+                  "accessoryRectangular",
+                  "accessoryInline"
+                ],
+                "contentMarginsDisabled": true
+              }
+            },
+            {
+              "name": "PaxPrayer",
+              "displayName": "Prayer",
+              "description": "A prayer for this hour of the day, or today's Rosary.",
+              "ios": {
+                "supportedFamilies": ["systemSmall", "accessoryRectangular"],
+                "contentMarginsDisabled": true,
+                "configuration": {
+                  "title": "Prayer",
+                  "description": "Choose what the widget shows.",
+                  "parameters": {
+                    "mode": {
+                      "title": "Show",
+                      "type": "enum",
+                      "default": "now",
+                      "values": [
+                        {
+                          "name": "A prayer for this hour",
+                          "value": "now"
+                        },
+                        {
+                          "name": "Today's Rosary",
+                          "value": "rosary"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "PaxWord",
+              "displayName": "Word for today",
+              "description": "The verse or saying from the Today screen.",
+              "ios": {
+                "supportedFamilies": ["systemMedium"],
+                "contentMarginsDisabled": true
+              }
+            },
+            {
+              "name": "PaxWeek",
+              "displayName": "Week",
+              "description": "This week's liturgical colors, your streak and the next feast.",
+              "ios": {
+                "supportedFamilies": ["systemMedium"],
+                "contentMarginsDisabled": true
+              }
+            }
+          ]
         }
       ]
     ],

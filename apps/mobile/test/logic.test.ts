@@ -5,7 +5,6 @@ import { computeStreak } from '@/data/streak';
 import { EXAMEN_STEPS, examenEntry } from '@/lib/examen';
 import { cycleLine, paxGreeting, paxMoodFor } from '@/lib/format';
 import { decadeProgress, prayerWords, rosarySteps, stepBack } from '@/lib/rosary';
-import { buildWidgetFeed } from '@/widgets/widgetFeed';
 import type { RosaryMystery } from '@/data/types';
 
 describe('computeStreak', () => {
@@ -19,31 +18,6 @@ describe('computeStreak', () => {
   it('tracks the longest run, across month and year boundaries', () => {
     const run = ['2025-12-30', '2025-12-31', '2026-01-01', '2026-01-02', '2026-10-07'];
     expect(computeStreak(run, '2026-10-07')).toEqual({ current: 1, longest: 4 });
-  });
-});
-
-describe('widget feed', () => {
-  it('carries 14 days with deep links and a Pax mood timeline', async () => {
-    const days = await getDaySnapshots('2026-10-17', 14);
-    const feed = buildWidgetFeed(
-      days,
-      { date: '2026-10-17', currentStreak: 12, doneToday: false, rhythm: { read: false, pray: false, study: false } },
-      new Date('2026-10-17T08:00:00Z'),
-    );
-    expect(feed.days).toHaveLength(14);
-    expect(feed.days[0]).toMatchObject({ key: 'ignatius_of_antioch_bishop', color: 'red', isMartyr: true, readingCount: 3, url: 'paxapp://today' });
-    expect(feed.paxTimeline.filter((e) => e.at.startsWith('2026-10-17')).map((e) => e.mood)).toEqual([
-      'asleep',
-      'hello',
-      'encouraging',
-      'asleep',
-    ]);
-  });
-
-  it('switches Pax to happy once today is done', async () => {
-    const days = await getDaySnapshots('2026-10-17', 1);
-    const feed = buildWidgetFeed(days, { date: '2026-10-17', currentStreak: 13, doneToday: true, rhythm: { read: true, pray: false, study: false } });
-    expect(feed.paxTimeline.slice(1).every((e) => e.mood === 'happy')).toBe(true);
   });
 });
 

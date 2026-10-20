@@ -4,6 +4,10 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "preview": {
+      "channel": "preview",
+      "autoIncrement": true
+    },
     "production": {
       "channel": "production",
       "autoIncrement": true
@@ -11,6 +15,11 @@
   },
   "submit": {
     "production": {
+      "ios": {
+        "appName": "Pax: Pray, Read, Study"
+      }
+    },
+    "preview": {
       "ios": {
         "appName": "Pax: Pray, Read, Study"
       }

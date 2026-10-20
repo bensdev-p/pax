@@ -14,7 +14,6 @@ import {
 } from '@/data/types';
 import { courseReminder, novenaReminder } from '@/notifications/plan';
 import { rescheduleReminders } from '@/notifications/reminders';
-import { writeWidgetFeed } from '@/widgets/widgetFeed';
 
 interface AppStateValue {
   ready: boolean;
@@ -66,15 +65,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setProgress(nextProgress);
     setNovenas(nextNovenas);
     setCourses(nextCourses);
-    const feed = await getDaySnapshots(date, 14);
-    await writeWidgetFeed(feed, {
-      date,
-      currentStreak: nextProgress.currentStreak,
-      doneToday: nextProgress.doneToday,
-      rhythm: nextProgress.rhythm,
-    });
+    // The widgets follow these through useWidgetSync (widgets/useWidgetSync.ts).
     const prefs = prefsRef.current;
     if (opts.reschedule && prefs) {
+      const feed = await getDaySnapshots(date, 14);
       const daily = [...nextNovenas.map(novenaReminder), ...nextCourses.map(courseReminder)];
       await rescheduleReminders(prefs, feed, { today: date, doneToday: nextProgress.doneToday, daily });
     }

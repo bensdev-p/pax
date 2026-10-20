@@ -1,26 +1,72 @@
-# Pax on your iPhone (TestFlight and over-the-air updates)
+# Pax on your iPhone (TestFlight, the App Store and over-the-air updates)
 
 Decided with Ben (October 2026, Apple Developer Program approved): Pax installs on his iPhone as
 a real app through **TestFlight**, built in Expo's cloud (EAS Build; no Mac needed). After that,
 JavaScript changes reach the installed app **over the air** (`eas update`, through expo-updates)
-without a new build. Expo Go keeps working for quick checks. A development build
-(expo-dev-client) comes later, with the widgets.
+without a new build. Expo Go keeps working for quick checks (without the widgets).
+
+Version 1.0.0 adds the home-screen widgets and goes to the **App Store**, while development
+carries on. Two update channels keep the public app safe from work in progress:
+
+| Build | Built with | Update channel | Who has it |
+| --- | --- | --- | --- |
+| TestFlight | `--profile preview` | `preview` | Ben and his testers |
+| App Store | `--profile production` | `production` | Everyone |
+
+Changes go to `preview` first; once they look right on Ben's phone, the same commit is published
+to `production`.
 
 | Setting | Value | Where |
 | --- | --- | --- |
 | Name on the home screen | Pax | `app.json` `name` |
-| Name in the App Store and TestFlight | Pax: Pray, Read, Study | `eas.json` `submit.production.ios.appName` |
+| Name in the App Store and TestFlight | Pax: Pray, Read, Study | `eas.json` `submit.*.ios.appName` |
 | Bundle ID | `com.benbrunson.pax` | `app.json` |
-| App Group (widgets, later) | `group.com.benbrunson.pax` | `app.json` entitlements |
+| Widget extension | `com.benbrunson.pax.widgets` | `app.json` `expo-widgets` plugin |
+| App Group (shared with the widgets) | `group.com.benbrunson.pax` | `app.json` entitlements and plugin |
 | Build numbers | Kept by EAS and raised on every build | `eas.json` (`appVersionSource: remote`, `autoIncrement`) |
 | Expo project | `pax`, account Benfb03, ID `d16e0080-33a4-448b-8b29-6fe0e0c4dd9c` | `app.json` `extra.eas.projectId`, `updates.url` |
-| Update channel | `production` | `eas.json` |
-| Runtime version | The app's `version` (0.1.0) | `app.json` `runtimeVersion.policy: appVersion` |
+| Update channels | `preview` (TestFlight), `production` (App Store) | `eas.json` |
+| Runtime version | The app's `version` (1.0.0) | `app.json` `runtimeVersion.policy: appVersion` |
 
 **When a new build is needed:** an over-the-air update only reaches builds of the same app
 `version`. Anything native (a new native package, the icon or splash, permissions, `app.json`
-`ios` settings) needs `version` raised (0.1.0 → 0.2.0) and a new build. Claude says so when a
-change needs it.
+`ios` settings, adding a widget or changing a widget's sizes or options) needs `version` raised
+(1.0.0 → 1.1.0) and a new build; for the App Store, that build goes through Apple's review.
+Changes to what a widget shows or how it is laid out are JavaScript and go over the air. Claude
+says when a change needs a build.
+
+## Version 1.0.0: widgets and the App Store (Ben, on your computer)
+
+The 0.1.0 TestFlight build won't receive updates any more (they are made for 1.0.0 now), so
+start with step 1.
+
+1. Pull, then from the repo root run `npm install` (expo-widgets and @expo/ui are new).
+2. Build the TestFlight version on the `preview` channel:
+   ```sh
+   cd apps/mobile
+   npx eas-cli@latest build --platform ios --profile preview --auto-submit
+   ```
+   EAS notices the new widget extension and asks to set up its certificate and provisioning
+   profile (and the App Group for it): answer **yes** each time, as on the first build.
+3. When Apple emails that the build is ready, update Pax from TestFlight. Your progress, notes
+   and settings stay (they live in the app's data, which an update keeps).
+4. Open Pax once (the widgets get their content from the app), then add widgets: long-press the
+   home screen → **Edit** → **Add Widget** → **Pax**. For the Lock Screen: long-press it →
+   **Customize** → **Lock Screen** → tap the widget area → **Pax**. To switch the Prayer widget
+   between "A prayer for this hour" and "Today's Rosary", long-press it → **Edit Widget**.
+5. Live with it for a few days. Fixes come over the air on `preview` (below).
+6. When you're happy, build the App Store version on the `production` channel:
+   ```sh
+   npx eas-cli@latest build --platform ios --profile production --auto-submit
+   ```
+7. In [App Store Connect](https://appstoreconnect.apple.com) → **Apps → Pax: Pray, Read, Study →
+   App Store** tab, fill in the listing: subtitle, description, keywords, screenshots (6.9-inch
+   iPhone), support URL and privacy policy URL, category, age rating, App Privacy, price (Free)
+   and, under Business, the EU trader status. Claude can draft the text and the privacy and
+   support pages.
+8. Under **Build**, pick the newest 1.0.0 build, choose **Manually release this version**, and
+   **Add for Review** → **Submit**. Review usually takes one to three days. Once approved, press
+   **Release** when you're ready.
 
 ## One-time setup (Ben, on your computer)
 
@@ -45,17 +91,28 @@ change needs it.
 
 ## Every update after that
 
-When Claude pushes JavaScript changes:
+When Claude pushes JavaScript changes, send them to your TestFlight build first:
 
 ```sh
 git pull
 npm install          # only when Claude says dependencies changed
 cd apps/mobile
-npx eas-cli@latest update --channel production --message "What changed"
+npx eas-cli@latest update --channel preview --message "What changed"
 ```
 
 Then open Pax on the phone, close it fully (swipe it away), and open it again: it downloads the
 update on the first open and uses it from the next one.
+
+Once Pax is in the App Store and a set of changes looks right on your phone, publish the same
+commit to everyone:
+
+```sh
+npx eas-cli@latest update --channel production --message "What changed"
+```
+
+A change that needs a new build (Claude says so) goes: raise `version`, build with
+`--profile preview` and check it, then build with `--profile production` and submit it for review
+in App Store Connect as a new version.
 
 ## Optional: let Claude run builds and updates
 
@@ -75,11 +132,13 @@ that export:
 ```sh
 cd ~/pax/apps/mobile
 npx expo export --platform ios --no-bytecode --dump-assetmap --output-dir dist-ios-update --max-workers 2
-npx eas-cli@latest update --channel production --environment production --platform ios \
+npx eas-cli@latest update --channel preview --environment production --platform ios \
   --skip-bundler --input-dir dist-ios-update --message "What changed"
 ```
 
-The phone still runs Hermes; it compiles the JavaScript when it loads it, so the first launch of
+For the App Store build, publish the same export with `--channel production`. (`--environment
+production` names the set of EAS environment variables, not the channel.) The phone still runs
+Hermes; it compiles the JavaScript when it loads it, so the first launch of
 an update may be a little slower. Builds (`eas build`) run in Expo's cloud and aren't affected.
 Use `npx eas-cli@latest`, never `npx eas` (that fetches an unrelated package).
 

@@ -1,5 +1,15 @@
 # Starting the next Claude Code session (Phase 4: Depth)
 
+**Update, October 20, 2026 (widgets and the App Store).** After a round of TestFlight testing, Ben
+decided to put Pax in the App Store now and keep developing. Version 1.0.0 adds iPhone widgets
+(look A, "Pax cards", chosen from mockups: Today, Prayer, Word for today, Week; README, Widgets)
+and splits updates into a `preview` channel (TestFlight) and `production` (App Store). Next for
+Ben: build 1.0.0 on `preview`, try the widgets, then build on `production` and submit
+(`docs/IPHONE.md`, "Version 1.0.0"). Claude offered to draft the App Store text, a privacy policy
+page and a support page, and to make 6.9-inch screenshots. Widget layouts are only checked by
+running them against real data in a stand-in for the widget runtime; the TestFlight build is
+their first real test, so expect small layout fixes (they go over the air).
+
 **Update, October 14, 2026 (Phase 4 started).** Ben chose the order: the Rosary redesign (built:
 README, "What Phase 4 adds so far"), then the Examen and other prayers and meditations, then the
 first writings course. OCIA stays later (it needs a priest or catechist). The Examen is built too
@@ -11,7 +21,7 @@ build with over-the-air updates is set up (`docs/IPHONE.md`; eas.json, expo-upda
 project ID is in `app.json`. Ben's first TestFlight build (0.1.0 (1)) crashed on launch: the phone opened an empty
 content database (`no such table: content_meta`). The fix (`src/data/contentDatabase.ts`, made with ChatGPT's
 help and published over the air) installs and checks the content file itself; see docs/IPHONE.md, "Content
-database on the phone". Pax now runs from TestFlight. Widgets and a development build come after.
+database on the phone". Pax now runs from TestFlight. Widgets are built (October 20, above).
 Still to ask: the examination of conscience's form (on hold), which plans.
 
 Where things stand (October 2026): Phases 1 to 3 are built and merged or ready to merge from
@@ -83,12 +93,11 @@ What Claude sets up (ask Ben before each native module, per CLAUDE.md):
 - `expo-dev-client` for a development build (Expo Go stops being the way Ben runs Pax).
 - `expo-updates` with a runtime version policy, so JavaScript changes reach Ben's phone over the
   air (`eas update`) without a new build or his home network.
-- Then widgets: an iOS widget target (for example with `@bacons/apple-targets`) reading the feed
-  `src/widgets/widgetFeed.ts` already writes (14 days of DaySnapshots plus today's rhythm) through
-  the App Group. Widgets are native Swift code: show Ben mockups first.
+- Widgets: done (October 20) with expo-widgets, which writes a week of timeline entries through
+  the App Group (`src/widgets/`); no Swift to write. Android widgets are still to come.
 - Notifications today are local (`expo-notifications`) and already work; remote push would need
   an APNs key and is not needed yet.
-- PRIVACY.md: the widget feed is already described; check it again when widgets ship.
+- PRIVACY.md describes what the widgets share (updated October 20).
 
 ## Open items carried over
 
