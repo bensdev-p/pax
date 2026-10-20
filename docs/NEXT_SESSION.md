@@ -10,6 +10,14 @@ page and a support page, and to make 6.9-inch screenshots. Widget layouts are on
 running them against real data in a stand-in for the widget runtime; the TestFlight build is
 their first real test, so expect small layout fixes (they go over the air).
 
+**Update, October 21, 2026 (App Store listing drafted).** `docs/APP_STORE.md` has every App Store
+Connect field (text checked against Apple's limits, category, age rating, App Privacy answers,
+review notes), seven 6.9-inch screenshots are in `design/app-store/screenshots/` (taken from the
+web build with sample data, captioned in Pax's look; plain versions beside them), and `site/` holds
+the home, privacy policy and support pages, published by `.github/workflows/pages.yml` once Ben
+turns on GitHub Pages. Waiting on Ben: a support email for `site/support.html`, and his choices of
+category and countries (US only recommended).
+
 **Update, October 21, 2026 (first TestFlight notes on 1.0.0).** Ben's notes, all done: the Cloud
 row is gone from Me; the splash stays up until the library opens (no spinner after it) and has a
 dark version; the small Today widget's filled chips drop the checkmark that pushed the label off

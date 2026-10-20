@@ -62,8 +62,9 @@ start with step 1.
 7. In [App Store Connect](https://appstoreconnect.apple.com) → **Apps → Pax: Pray, Read, Study →
    App Store** tab, fill in the listing: subtitle, description, keywords, screenshots (6.9-inch
    iPhone), support URL and privacy policy URL, category, age rating, App Privacy, price (Free)
-   and, under Business, the EU trader status. Claude can draft the text and the privacy and
-   support pages.
+   and, under Business, the EU trader status. Everything to paste is drafted in
+   [`docs/APP_STORE.md`](APP_STORE.md), with screenshots in `design/app-store/screenshots/` and
+   the privacy and support pages in `site/` (published by GitHub Pages).
 8. Under **Build**, pick the newest 1.0.0 build, choose **Manually release this version**, and
    **Add for Review** → **Submit**. Review usually takes one to three days. Once approved, press
    **Release** when you're ready.

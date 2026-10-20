@@ -14,7 +14,8 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 
 - Today, everything Pax knows about you stays on your phone. No personal data is sent to a server.
   The only request to Pax's backend is the optional Church Fathers download, which carries no
-  personal data.
+  personal data; checking for app updates sends Expo the app version and a random installation
+  ID (see "App updates").
 - Pax has no ads, no analytics and no tracking SDKs.
 - Your OCIA stage is religious information. Pax will treat it as sensitive data: asked for only
   with your clear consent, visible only to you, and never used for anything except choosing your
@@ -148,9 +149,14 @@ to your phone's share sheet. Pax sends nothing itself; you choose the app and th
 the public-domain translation it came from, each in an in-app browser. Those sites' own privacy
 policies apply there. Pax sends them nothing except the request for that page.
 
-**While in development.** Pax currently runs inside Expo Go, Expo's development app, which has its
-own privacy policy. Fonts and all content are bundled with the app and are not fetched from
-Google or any other server at runtime.
+**App updates.** When Pax opens, it asks Expo's update service (EAS Update) whether a newer
+version of its JavaScript is available, and downloads it if so. That request carries the app's
+version, the update it is running, the platform (iOS) and a random installation ID that the
+update library creates on the phone; like any web request, it reveals your IP address to Expo.
+Expo uses these to deliver updates and to count how many installs have each one. The ID is not
+linked to you or to anything you do in Pax, and nothing you store in Pax is sent. Fonts and all
+content are bundled with the app and are not fetched from Google or any other server at runtime.
+(In Expo Go, Expo's development app, Expo's own privacy policy applies.)
 
 ## How to delete your data
 
