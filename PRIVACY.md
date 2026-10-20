@@ -13,8 +13,8 @@ widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
 ## The short version
 
 - Today, everything Pax knows about you stays on your phone. No personal data is sent to a server.
-  The only network request to Pax's backend is an anonymous check that the cloud database is
-  reachable (shown under Me → Cloud).
+  The only request to Pax's backend is the optional Church Fathers download, which carries no
+  personal data.
 - Pax has no ads, no analytics and no tracking SDKs.
 - Your OCIA stage is religious information. Pax will treat it as sensitive data: asked for only
   with your clear consent, visible only to you, and never used for anything except choosing your
@@ -95,9 +95,7 @@ Fathers download.
 ## What Pax stores in Supabase (the cloud)
 
 **Nothing yet.** The cloud tables below exist in `supabase/migrations/` so they are ready for
-sync, but the app does not sign in or upload anything in this version. When Me opens, the
-app asks Supabase, without signing in, whether these tables exist. That request carries the app's
-public key and no personal data; like any web request, it reveals your IP address to Supabase. This section describes
+sync, but the app does not sign in, upload anything or contact these tables in this version. This section describes
 what will be stored once sync is switched on, and that change will update this notice first.
 
 | Table | What it will hold | Why |

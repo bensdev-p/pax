@@ -10,6 +10,13 @@ page and a support page, and to make 6.9-inch screenshots. Widget layouts are on
 running them against real data in a stand-in for the widget runtime; the TestFlight build is
 their first real test, so expect small layout fixes (they go over the air).
 
+**Update, October 21, 2026 (first TestFlight notes on 1.0.0).** Ben's notes, all done: the Cloud
+row is gone from Me; the splash stays up until the library opens (no spinner after it) and has a
+dark version; the small Today widget's filled chips drop the checkmark that pushed the label off
+center; the widget gallery shows a sample instead of "Open Pax to fill this widget". The dark
+splash is native, so it needs a new build (still 1.0.0, not yet released); the rest goes over the
+air.
+
 **Update, October 14, 2026 (Phase 4 started).** Ben chose the order: the Rosary redesign (built:
 README, "What Phase 4 adds so far"), then the Examen and other prayers and meditations, then the
 first writings course. OCIA stays later (it needs a priest or catechist). The Examen is built too

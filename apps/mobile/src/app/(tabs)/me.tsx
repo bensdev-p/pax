@@ -1,18 +1,16 @@
 import { PALETTE_NAMES, paletteLabel, tokens, type Appearance, type PaletteName } from '@pax/tokens';
 import { useTheme } from '@pax/tokens/react';
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { Choice } from '@/components/Choice';
-import { BellIcon, CloudIcon, JournalIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
+import { BellIcon, JournalIcon, CheckIcon, ChevronIcon, FlameIcon, MoonIcon, PaletteIcon, ShieldIcon } from '@/components/Icons';
 import { Pax } from '@/components/Pax';
 import { Card } from '@/components/Raised';
 import { RhythmCalendar } from '@/components/RhythmCalendar';
 import { Screen } from '@/components/Screen';
 import { Text } from '@/components/Text';
 import { GRACE_DAYS_PER_MONTH } from '@/data/types';
-import { checkCloud, type CloudStatus } from '@/lib/cloudStatus';
 import { formatTime } from '@/notifications/plan';
 import { useAppState } from '@/state/AppState';
 import { useNotes } from '@/state/notes';
@@ -29,16 +27,6 @@ export default function MeScreen() {
 
   const { notes: journal } = useNotes({ kind: 'journal' });
   const journalCount = journal.filter((n) => n.body?.trim()).length;
-  const [cloud, setCloud] = useState<CloudStatus>('checking');
-  useEffect(() => {
-    void checkCloud().then(setCloud);
-  }, []);
-  const cloudLine = {
-    checking: 'Checking…',
-    ready: 'Connected. Sync isn’t switched on yet.',
-    'schema-missing': 'Connected, but the database tables aren’t set up yet.',
-    offline: 'Can’t reach Supabase right now.',
-  }[cloud];
 
   const reminderLine = (() => {
     const p = notificationPrefs;
@@ -128,20 +116,6 @@ export default function MeScreen() {
           </Text>
         </View>
         <ChevronIcon color={t.neutral.textSubtle} />
-      </Card>
-
-      <Card contentStyle={rowStyle}>
-        <IconTile color="#2FA4E7">
-          <CloudIcon />
-        </IconTile>
-        <View style={{ flex: 1 }}>
-          <Text variant="bodyStrong" style={{ fontFamily: 'Nunito_900Black' }}>
-            Cloud
-          </Text>
-          <Text variant="small" color={t.neutral.textMuted}>
-            {cloudLine}
-          </Text>
-        </View>
       </Card>
 
       <Card contentStyle={[rowStyle, { flexDirection: 'column', alignItems: 'stretch', gap: 12 }]}>

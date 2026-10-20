@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ContentProvider } from '@/data/content';
 import { addNotificationTapListener } from '@/notifications/reminders';
@@ -30,13 +30,24 @@ export default function RootLayout() {
   );
 }
 
+/** If the library takes this long to open, the splash gives way to a spinner. */
+const SPLASH_FALLBACK_MS = 10_000;
+
 function Root({ fontsLoaded }: { fontsLoaded: boolean }) {
   const { ready, today, settings, updateSettings } = useAppState();
+  const [contentSettled, setContentSettled] = useState(false);
   const loaded = ready && fontsLoaded;
 
+  // Pax's splash stays up until the library is open too, so the app appears in one step.
   useEffect(() => {
-    if (loaded) void SplashScreen.hideAsync();
-  }, [loaded]);
+    if (!loaded) return;
+    if (contentSettled) {
+      void SplashScreen.hideAsync();
+      return;
+    }
+    const fallback = setTimeout(() => void SplashScreen.hideAsync(), SPLASH_FALLBACK_MS);
+    return () => clearTimeout(fallback);
+  }, [loaded, contentSettled]);
 
   if (!loaded) return null;
   return (
@@ -46,7 +57,8 @@ function Root({ fontsLoaded }: { fontsLoaded: boolean }) {
       appearance={settings.appearance}>
       <ContentProvider
         installedVersion={settings.contentVersion}
-        onInstalled={(contentVersion) => void updateSettings({ contentVersion })}>
+        onInstalled={(contentVersion) => void updateSettings({ contentVersion })}
+        onSettled={() => setContentSettled(true)}>
         <Navigator />
       </ContentProvider>
     </ThemeProvider>

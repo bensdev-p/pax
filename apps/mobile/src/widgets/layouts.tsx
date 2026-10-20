@@ -38,19 +38,39 @@ import type { PrayerWidgetProps, TodayWidgetProps, WeekWidgetProps, WordWidgetPr
  * gallery until Pax has been opened once.
  */
 
-const PaxToday = (props: TodayWidgetProps, environment: WidgetEnvironment) => {
+const PaxToday = (given: TodayWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const FILL = 9999;
   const family = environment.widgetFamily;
   const rounded = (size: number, weight: 'bold' | 'heavy' | 'black' = 'heavy') => font({ design: 'rounded', size, weight });
 
-  if (!props.colors) {
-    return (
-      <VStack modifiers={[containerBackground('#FFFFFF', 'widget'), padding({ all: 14 }), widgetURL('paxapp://today')]}>
-        <Text modifiers={[rounded(14), foregroundStyle('#3C3C3C')]}>Open Pax to fill this widget.</Text>
-      </VStack>
-    );
-  }
+  const SAMPLE_COLORS = {
+    light: { accent: '#24913C', edge: '#1B6E2E', onAccent: '#FFFFFF', tint: '#E5F2E8', text: '#1B6E2E', surface: '#FFFFFF', surfaceMuted: '#F7F7F7', border: '#E5E5E5', divider: '#ECECEC', ink: '#3C3C3C', inkMuted: '#6B6B6B', streak: '#FF9F1C', streakText: '#F08A00' },
+    dark: { accent: '#2EA84A', edge: '#238038', onAccent: '#FFFFFF', tint: '#173726', text: '#77C689', surface: '#17222A', surfaceMuted: '#1D2A33', border: '#2E3D47', divider: '#24323B', ink: '#EEF2F5', inkMuted: '#A3B1BA', streak: '#FF9F1C', streakText: '#F08A00' },
+  };
+  // The widget gallery shows the widget before Pax has filled it: a sample day in Pax's green.
+  const today = environment.date ?? new Date();
+  const props: TodayWidgetProps = given.colors
+    ? given
+    : {
+        scheme: 'system',
+        colors: SAMPLE_COLORS,
+        weekday: ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'][today.getDay()]!,
+        dateLabel: `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][today.getMonth()]} ${today.getDate()}`,
+        streak: 7,
+        rhythm: { read: true, pray: false, study: false },
+        marks: ['read', 'pray', 'study'],
+        title: 'Today with God',
+        subtitle: 'Read · Pray · Study',
+        inline: 'Pax',
+        items: [
+          { title: 'Today’s readings', detail: 'Read', done: true, url: 'paxapp://readings' },
+          { title: 'Time to pray', detail: 'The Rosary today', done: false, url: 'paxapp://pray' },
+          { title: 'A reading plan', detail: 'Day 9 of 14', done: false, url: 'paxapp://study' },
+        ],
+        pax: { line: 'There’s still time to pray with today’s readings.', image: null },
+        url: 'paxapp://today',
+      };
   const scheme = props.scheme === 'system' ? (environment.colorScheme === 'dark' ? 'dark' : 'light') : props.scheme;
   const c = props.colors[scheme];
   const label = (text: string) => (
@@ -170,12 +190,10 @@ const PaxToday = (props: TodayWidgetProps, environment: WidgetEnvironment) => {
         {props.marks.map((mark) => (
           <ZStack key={mark} modifiers={[frame({ maxWidth: FILL, height: 30 })]}>
             <RoundedRectangle cornerRadius={10} modifiers={[foregroundStyle(props.rhythm[mark] ? c.accent : c.surfaceMuted)]} />
-            <HStack spacing={2}>
-              {props.rhythm[mark] ? <Image systemName="checkmark" size={9} color={c.onAccent} /> : null}
-              <Text modifiers={[rounded(10, 'black'), foregroundStyle(props.rhythm[mark] ? c.onAccent : c.inkMuted), lineLimit(1), minimumScaleFactor(0.7)]}>
-                {names[mark]}
-              </Text>
-            </HStack>
+            {/* The filled chip marks it done: no checkmark, so the label stays centered and whole. */}
+            <Text modifiers={[rounded(10, 'black'), foregroundStyle(props.rhythm[mark] ? c.onAccent : c.inkMuted), lineLimit(1), minimumScaleFactor(0.7), padding({ horizontal: 4 })]}>
+              {names[mark]}
+            </Text>
           </ZStack>
         ))}
       </HStack>
@@ -183,19 +201,31 @@ const PaxToday = (props: TodayWidgetProps, environment: WidgetEnvironment) => {
   );
 };
 
-const PaxPrayer = (props: PrayerWidgetProps, environment: WidgetEnvironment<{ mode?: string }>) => {
+const PaxPrayer = (given: PrayerWidgetProps, environment: WidgetEnvironment<{ mode?: string }>) => {
   'widget';
   const FILL = 9999;
   const family = environment.widgetFamily;
   const rounded = (size: number, weight: 'bold' | 'heavy' | 'black' = 'heavy') => font({ design: 'rounded', size, weight });
 
-  if (!props.colors) {
-    return (
-      <VStack modifiers={[containerBackground('#FFFFFF', 'widget'), padding({ all: 14 }), widgetURL('paxapp://pray')]}>
-        <Text modifiers={[rounded(14), foregroundStyle('#3C3C3C')]}>Open Pax to fill this widget.</Text>
-      </VStack>
-    );
-  }
+  const SAMPLE_COLORS = {
+    light: { accent: '#24913C', edge: '#1B6E2E', onAccent: '#FFFFFF', tint: '#E5F2E8', text: '#1B6E2E', surface: '#FFFFFF', surfaceMuted: '#F7F7F7', border: '#E5E5E5', divider: '#ECECEC', ink: '#3C3C3C', inkMuted: '#6B6B6B', streak: '#FF9F1C', streakText: '#F08A00' },
+    dark: { accent: '#2EA84A', edge: '#238038', onAccent: '#FFFFFF', tint: '#173726', text: '#77C689', surface: '#17222A', surfaceMuted: '#1D2A33', border: '#2E3D47', divider: '#24323B', ink: '#EEF2F5', inkMuted: '#A3B1BA', streak: '#FF9F1C', streakText: '#F08A00' },
+  };
+  // The widget gallery shows the widget before Pax has filled it: a sample in Pax's green.
+  const props: PrayerWidgetProps = given.colors
+    ? given
+    : {
+        scheme: 'system',
+        colors: SAMPLE_COLORS,
+        now: {
+          when: 'Morning',
+          title: 'Morning Offering',
+          line: 'O Jesus, through the Immaculate Heart of Mary, I offer you my prayers, works, joys, and sufferings of this day.',
+          next: 'Next: The Angelus at noon',
+          url: 'paxapp://prayer/morning-offering',
+        },
+        rosary: { title: 'Glorious Mysteries', detail: 'Today’s Rosary', prayed: false, url: 'paxapp://rosary' },
+      };
   const rosary = environment.configuration?.mode === 'rosary';
   const scheme = props.scheme === 'system' ? (environment.colorScheme === 'dark' ? 'dark' : 'light') : props.scheme;
   const c = props.colors[scheme];
@@ -258,18 +288,26 @@ const PaxPrayer = (props: PrayerWidgetProps, environment: WidgetEnvironment<{ mo
   );
 };
 
-const PaxWord = (props: WordWidgetProps, environment: WidgetEnvironment) => {
+const PaxWord = (given: WordWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const FILL = 9999;
   const rounded = (size: number, weight: 'bold' | 'heavy' | 'black' = 'heavy') => font({ design: 'rounded', size, weight });
 
-  if (!props.colors) {
-    return (
-      <VStack modifiers={[containerBackground('#FFFFFF', 'widget'), padding({ all: 14 }), widgetURL('paxapp://today')]}>
-        <Text modifiers={[rounded(14), foregroundStyle('#3C3C3C')]}>Open Pax to fill this widget.</Text>
-      </VStack>
-    );
-  }
+  const SAMPLE_COLORS = {
+    light: { accent: '#24913C', edge: '#1B6E2E', onAccent: '#FFFFFF', tint: '#E5F2E8', text: '#1B6E2E', surface: '#FFFFFF', surfaceMuted: '#F7F7F7', border: '#E5E5E5', divider: '#ECECEC', ink: '#3C3C3C', inkMuted: '#6B6B6B', streak: '#FF9F1C', streakText: '#F08A00' },
+    dark: { accent: '#2EA84A', edge: '#238038', onAccent: '#FFFFFF', tint: '#173726', text: '#77C689', surface: '#17222A', surfaceMuted: '#1D2A33', border: '#2E3D47', divider: '#24323B', ink: '#EEF2F5', inkMuted: '#A3B1BA', streak: '#FF9F1C', streakText: '#F08A00' },
+  };
+  // The widget gallery shows the widget before Pax has filled it: a sample in Pax's green.
+  const props: WordWidgetProps = given.colors
+    ? given
+    : {
+        scheme: 'system',
+        colors: SAMPLE_COLORS,
+        label: 'A verse for today',
+        text: 'Thy word is a lamp to my feet, and a light to my paths.',
+        source: 'Psalm 118:105 · Douay-Rheims',
+        url: 'paxapp://today',
+      };
   const scheme = props.scheme === 'system' ? (environment.colorScheme === 'dark' ? 'dark' : 'light') : props.scheme;
   const c = props.colors[scheme];
   return (
@@ -286,18 +324,39 @@ const PaxWord = (props: WordWidgetProps, environment: WidgetEnvironment) => {
   );
 };
 
-const PaxWeek = (props: WeekWidgetProps, environment: WidgetEnvironment) => {
+const PaxWeek = (given: WeekWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const FILL = 9999;
   const rounded = (size: number, weight: 'bold' | 'heavy' | 'black' = 'heavy') => font({ design: 'rounded', size, weight });
 
-  if (!props.colors) {
-    return (
-      <VStack modifiers={[containerBackground('#FFFFFF', 'widget'), padding({ all: 14 }), widgetURL('paxapp://today')]}>
-        <Text modifiers={[rounded(14), foregroundStyle('#3C3C3C')]}>Open Pax to fill this widget.</Text>
-      </VStack>
-    );
-  }
+  const SAMPLE_COLORS = {
+    light: { accent: '#24913C', edge: '#1B6E2E', onAccent: '#FFFFFF', tint: '#E5F2E8', text: '#1B6E2E', surface: '#FFFFFF', surfaceMuted: '#F7F7F7', border: '#E5E5E5', divider: '#ECECEC', ink: '#3C3C3C', inkMuted: '#6B6B6B', streak: '#FF9F1C', streakText: '#F08A00' },
+    dark: { accent: '#2EA84A', edge: '#238038', onAccent: '#FFFFFF', tint: '#173726', text: '#77C689', surface: '#17222A', surfaceMuted: '#1D2A33', border: '#2E3D47', divider: '#24323B', ink: '#EEF2F5', inkMuted: '#A3B1BA', streak: '#FF9F1C', streakText: '#F08A00' },
+  };
+  // The widget gallery shows the widget before Pax has filled it: this week, in Pax's green.
+  const today = environment.date ?? new Date();
+  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7));
+  const props: WeekWidgetProps = given.colors
+    ? given
+    : {
+        scheme: 'system',
+        colors: SAMPLE_COLORS,
+        header: 'ORDINARY TIME',
+        streak: 7,
+        days: ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((letter, i) => {
+          const day = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+          const offset = i - ((today.getDay() + 6) % 7);
+          return {
+            letter,
+            day: day.getDate(),
+            dot: { light: '#24913C', dark: '#2EA84A' },
+            done: offset < 0 ? true : offset === 0 ? false : null,
+            today: offset === 0,
+          };
+        }),
+        next: null,
+        url: 'paxapp://today',
+      };
   const scheme = props.scheme === 'system' ? (environment.colorScheme === 'dark' ? 'dark' : 'light') : props.scheme;
   const c = props.colors[scheme];
   return (
