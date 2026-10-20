@@ -270,6 +270,10 @@ build, and Expo Go simply leaves them out. No custom native code to write, so no
   the library has opened, so the app appears in one step; a spinner shows only if opening takes
   longer than 10 seconds.
 
+- **Website** (`site/`): a home page, the public privacy policy (kept in step with `PRIVACY.md`)
+  and a support page, published to GitHub Pages by `.github/workflows/pages.yml`. The App Store
+  listing text and screenshots are in `docs/APP_STORE.md` and `design/app-store/`.
+
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 
 ## Decisions made with Ben during Phase 1

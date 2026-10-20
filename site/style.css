@@ -1,0 +1,77 @@
+/* Pax's public pages (GitHub Pages): Pax's colors and type from design/tokens.json. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --muted-surface: #f7f7f7;
+  --border: #e5e5e5;
+  --text: #3c3c3c;
+  --muted: #6b6b6b;
+  --accent: #24913c;
+  --accent-edge: #1b6e2e;
+  --accent-text: #1b6e2e;
+  --tint: #e5f2e8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10171c;
+    --surface: #17222a;
+    --muted-surface: #1d2a33;
+    --border: #2e3d47;
+    --text: #eef2f5;
+    --muted: #a3b1ba;
+    --accent: #2ea84a;
+    --accent-edge: #238038;
+    --accent-text: #77c689;
+    --tint: #173726;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', ui-rounded, system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.6;
+}
+main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+header.top { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+header.top img { width: 44px; height: 44px; border-radius: 10px; }
+header.top a { color: var(--text); text-decoration: none; font-weight: 900; font-size: 20px; }
+nav { margin-left: auto; display: flex; gap: 16px; font-size: 15px; }
+nav a { color: var(--accent-text); text-decoration: none; font-weight: 800; }
+h1 { font-weight: 900; font-size: 32px; line-height: 1.2; margin: 0 0 8px; }
+h2 { font-weight: 900; font-size: 21px; margin: 32px 0 8px; }
+p, li { color: var(--text); }
+.lede { color: var(--muted); font-size: 18px; margin-top: 0; }
+.updated { color: var(--muted); font-size: 14px; }
+a { color: var(--accent-text); }
+.card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 5px;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin: 16px 0;
+}
+.card.tint { background: var(--tint); border-color: transparent; }
+.card h2 { margin-top: 0; }
+.hero { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero img { width: 120px; height: 120px; }
+.hero div { flex: 1 1 280px; }
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 12px 20px;
+  border-radius: 14px;
+  box-shadow: inset 0 -4px 0 var(--accent-edge);
+}
+ul { padding-left: 22px; }
+footer { color: var(--muted); font-size: 14px; margin-top: 48px; }
