@@ -60,10 +60,16 @@ vatican.va carry no personal data.
 
 ## 4. Version 1.0 page (App Store tab → iOS App → 1.0 Prepare for Submission)
 
-**Screenshots: iPhone 6.9" display.** Upload these seven, in order, from
-`design/app-store/screenshots/` (1320 × 2868, captioned in Pax's look). Plain versions without
-captions are in `design/app-store/screenshots/plain/` if you prefer those. Apple uses the 6.9"
-set for smaller iPhones too, and Pax is iPhone-only, so no iPad screenshots are needed.
+**Screenshots.** App Store Connect asks for the size of the slot it shows:
+
+- **6.1"/6.3" slot** (the one Ben's App Store Connect showed): upload from
+  `design/app-store/screenshots/6.3-inch/` (1206 × 2622).
+- **6.9" slot** (under "View All Sizes in Media Manager", if shown): upload from
+  `design/app-store/screenshots/` (1320 × 2868).
+
+Each folder has the seven captioned screenshots, with plain versions in its `plain/` folder. One
+set is enough: Apple scales it for the other iPhone sizes. Pax is iPhone-only, so no iPad
+screenshots are needed. Upload them in this order:
 
 1. `1-today.png` — Pray with the Church, every day
 2. `2-rosary.png` — The Rosary, one bead at a time
