@@ -1,5 +1,5 @@
 import { Asset } from 'expo-asset';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import initSqlJs from 'sql.js/dist/sql-wasm-browser.js';
 
 import { ContentStores } from './contentContext';
@@ -42,15 +42,24 @@ function loadContent(): Promise<ReadDb> {
 }
 
 export function ContentProvider({
+  onSettled,
   children,
 }: {
   installedVersion: string | null;
   onInstalled: (version: string) => void;
+  onSettled: () => void;
   children: ReactNode;
 }) {
   const [db, setDb] = useState<ReadDb | null>(null);
+  const settledCallback = useRef(onSettled);
   useEffect(() => {
-    void loadContent().then(setDb);
+    settledCallback.current = onSettled;
+  }, [onSettled]);
+  useEffect(() => {
+    void loadContent().then((content) => {
+      setDb(content);
+      settledCallback.current();
+    });
   }, []);
   if (!db) return null;
   return (

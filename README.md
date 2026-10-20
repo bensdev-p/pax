@@ -265,6 +265,10 @@ build, and Expo Go simply leaves them out. No custom native code to write, so no
     while Pax is closed. Layouts are in `src/widgets/layouts.tsx`: each is compiled to a string
     and run inside the widget, so it can only use `@expo/ui/swift-ui` and must not reference
     anything outside its own function. Layout changes ship over the air like any JavaScript.
+    Before Pax has filled a widget (in the widget gallery), it shows a sample in Pax's green.
+- **Opening the app**: Pax's splash (white, or dark when the phone is in dark mode) stays up until
+  the library has opened, so the app appears in one step; a spinner shows only if opening takes
+  longer than 10 seconds.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 
@@ -322,4 +326,4 @@ How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](
   iOS and Android, but they were not run on a phone while being built. The web build was tested in
   a browser.
 - Supabase: the app is connected to the project but doesn't sign in or sync yet. Apply the
-  schema as described in `supabase/README.md`; Me → Cloud confirms it.
+  schema as described in `supabase/README.md`.

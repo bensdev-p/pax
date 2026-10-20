@@ -92,13 +92,19 @@ function loadContent(): Promise<ReadDb> {
   return loading;
 }
 
+/**
+ * Opens content.db. While it loads, the native splash screen (Pax) stays up: `onSettled` tells
+ * the root layout when it can hide it, once the library is open or has failed.
+ */
 export function ContentProvider({
   installedVersion,
   onInstalled,
+  onSettled,
   children,
 }: {
   installedVersion: string | null;
   onInstalled: (version: string) => void;
+  onSettled: () => void;
   children: ReactNode;
 }) {
   const t = useTheme();
@@ -107,17 +113,24 @@ export function ContentProvider({
   const [attempt, setAttempt] = useState(0);
   const [initialVersion] = useState(installedVersion);
   const installedCallback = useRef(onInstalled);
-  useEffect(() => { installedCallback.current = onInstalled; }, [onInstalled]);
+  const settledCallback = useRef(onSettled);
+  useEffect(() => {
+    installedCallback.current = onInstalled;
+    settledCallback.current = onSettled;
+  }, [onInstalled, onSettled]);
 
   useEffect(() => {
     let cancelled = false;
     void loadContent().then((content) => {
       if (cancelled) return;
       setDb(content);
+      settledCallback.current();
       if (initialVersion !== BUNDLED.contentVersion) installedCallback.current(BUNDLED.contentVersion);
     }).catch((err: unknown) => {
       console.error('Pax content database failed to load:', err);
-      if (!cancelled) setError(err instanceof Error ? err : new Error(String(err)));
+      if (cancelled) return;
+      setError(err instanceof Error ? err : new Error(String(err)));
+      settledCallback.current();
     });
     return () => { cancelled = true; };
   }, [attempt, initialVersion]);
@@ -131,6 +144,7 @@ export function ContentProvider({
       </View>
     );
   }
-  if (!db) return <ActivityIndicator style={{ flex: 1 }} color={t.accent.accent} />;
+  // Hidden behind the splash screen; seen only if loading outlasts the root layout's fallback.
+  if (!db) return <ActivityIndicator style={{ flex: 1, backgroundColor: t.neutral.background }} color={t.accent.accent} />;
   return <ContentStores db={db} version={BUNDLED.contentVersion}>{children}</ContentStores>;
 }

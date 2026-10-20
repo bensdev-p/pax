@@ -2,8 +2,8 @@
 
 Schema for Pax's cloud data. Project: `wufwcvokotpdyvttcuga` (URL and anon key in
 `apps/mobile/app.json` under `extra.supabase`). Phase 1 defines the tables only: the app does not
-sign in or sync yet, so nothing is stored in Supabase today. Me → Cloud shows whether the app
-can reach the project and whether the tables exist.
+sign in or sync yet, so nothing is stored in Supabase today. (A "Cloud" status row in Me was
+removed before the App Store release, October 2026.)
 
 ## Applying the schema
 
