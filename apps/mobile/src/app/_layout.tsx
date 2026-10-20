@@ -11,6 +11,7 @@ import { ContentProvider } from '@/data/content';
 import { addNotificationTapListener } from '@/notifications/reminders';
 import { AppStateProvider, useAppState } from '@/state/AppState';
 import { useVerseRenumbering } from '@/state/renumber';
+import { useWidgetSync } from '@/widgets/useWidgetSync';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -55,6 +56,7 @@ function Root({ fontsLoaded }: { fontsLoaded: boolean }) {
 function Navigator() {
   const t = useTheme();
   useVerseRenumbering();
+  useWidgetSync();
 
   // A tapped notification opens the screen it links to (paxapp://today, paxapp://prayer/angelus),
   // including the tap that launched the app. Registered here so the navigator already exists.

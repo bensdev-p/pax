@@ -1,10 +1,11 @@
 # Pax privacy notice (draft)
 
-_Last updated: October 15, 2026 · matches user.db schema version 6 (the journal, highlights,
+_Last updated: October 20, 2026 · matches user.db schema version 6 (the journal, highlights,
 bookmarks and favorites in `notes`, your own prayers in `my_prayers`, plus the rhythm, onboarding
-and Rosary settings) and Supabase migrations through `20261015000000_my_prayers`._
+and Rosary settings), Supabase migrations through `20261015000000_my_prayers`, and the iPhone
+widgets (version 1.0.0)._
 
-Pax is a personal app, still in development and not published. This notice describes what it
+Pax is in development; version 1.0.0 is being prepared for the App Store. This notice describes what it
 stores, why, who can see it, and how to delete it. **It must be updated in the same change as any
 edit to the data model** (`apps/mobile/src/data/userStore.ts`, `supabase/migrations/`, or the
 widget feed in `apps/mobile/src/widgets/widgetFeed.ts`).
@@ -71,11 +72,17 @@ day's feast or Gospel (for example, "Today the Church celebrates Saint Ignatius 
 the novena you are praying (for example, "Novena to Saint Joseph · Day 4"), and can appear on
 your lock screen. Turning reminders off in Me cancels them all.
 
-**Widgets (not built yet).** When home-screen widgets arrive, Pax will copy the next 14 days of
-the liturgical calendar, your current streak, and which of today's Read, Pray and Study marks are done into storage that only Pax
-and its own widgets can read (the iOS App Group `group.com.benbrunson.pax`, or Android app
-storage). Widgets show this on your home and lock screen, where anyone holding your phone can see
-it. In Expo Go, Pax writes nothing for widgets.
+**Widgets (iPhone).** So its home-screen and Lock Screen widgets are ready whenever you add one,
+Pax copies what they show into storage that only Pax and its own widgets can read (the iOS App Group
+`group.com.benbrunson.pax`), for the next seven days: each day's name, liturgical color, saint
+and Mass reading citations; your current streak; which of today's Read, Pray and Study marks are
+done, and which days of this week you kept; whether you prayed today's Rosary; the novena or
+reading plan you are on and which day (for example, "Letters of Ignatius · Day 9 of 14"); the day's
+"word for today"; and pictures of Pax. Nothing leaves the phone. The copy is replaced each time Pax
+opens or you finish something, and is deleted with the app. Widgets show this on your home and
+Lock Screen, where anyone holding your phone can see it; remove a widget to stop showing it. Your
+journal, notes and your own prayers are never part of a widget. In Expo Go and on the web, Pax
+writes nothing for widgets.
 
 **On the web.** The web version keeps the same settings, activity, reminder choices, last
 reading position, today's readings check marks, novenas and reading plans in progress, and your
@@ -149,8 +156,8 @@ Google or any other server at runtime.
 
 ## How to delete your data
 
-- **Everything on your phone:** delete the Pax app. That removes user.db, content.db and every
-  scheduled reminder.
+- **Everything on your phone:** delete the Pax app. That removes user.db, content.db, the
+  widgets' copy and every scheduled reminder.
 - **Reminders only:** Me → Reminders → Turn off reminders. You can also revoke notification
   permission in your phone's Settings.
 - **A novena:** open it under Pray and tap Stop this novena (or Clear, once finished). That

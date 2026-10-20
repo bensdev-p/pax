@@ -37,8 +37,9 @@ gets JavaScript changes over the air. Setup and the update command are in
 Only modules bundled in Expo Go are used: expo-sqlite, expo-notifications, expo-haptics,
 expo-font, expo-web-browser, expo-file-system, expo-asset, react-native-reanimated,
 react-native-svg, and the router, screens and safe-area packages, plus expo-updates for the
-TestFlight build's over-the-air updates (Expo Go ignores it). No custom native code, so no Mac is
-needed; the widgets will be the first custom native code.
+TestFlight build's over-the-air updates (Expo Go ignores it). The home-screen widgets use
+expo-widgets and @expo/ui, which aren't in Expo Go: they show only in the TestFlight and App Store
+build, and Expo Go simply leaves them out. No custom native code to write, so no Mac is needed.
 
 `npm run web -w @pax/mobile` runs the web version in a browser.
 
@@ -70,9 +71,7 @@ needed; the widgets will be the first custom native code.
   scheduled ahead and rescheduled when the app opens or something is finished.
 - **Theme**: the accent follows the day's liturgical color (a martyr's memorial turns a weekday
   red; Gaudete and Laetare are rose). It can be locked to one color in Me.
-- **Widget feed**: `writeWidgetFeed(snapshots, progress)` builds the 14-day feed and the Pax mood
-  timeline behind a `WidgetFeedWriter` interface. In Expo Go the writer does nothing; an App Group
-  writer replaces it with the first EAS development build.
+- **Widgets**: see "Widgets" under Phase 4 below.
 
 ## What Phase 2 (Library) adds
 
@@ -247,6 +246,25 @@ needed; the widgets will be the first custom native code.
   for) is saved to the journal under #examen only on a tap. Pax's own words, in
   `src/lib/examen.ts`. It is a tile on Pray; from 6 PM Today's Pray row suggests it (unless a
   novena day is waiting); and the evening reminder invites it and opens it.
+
+- **Widgets** (iPhone, version 1.0.0; Ben chose look A, "Pax cards", from mockups): white cards
+  (dark in dark mode) with Pax's raised bottom edge, the day's color and the orange streak.
+  - *Today* (small): the streak and the Read · Pray · Study marks. Large: the day, the saint, the
+    "Today with God" rows and Pax's line for the hour. On the Lock Screen: the streak (circle), the
+    saint and marks (rectangle), and the saint beside the date (inline).
+  - *Prayer* (small, and Lock Screen rectangle): long-press → Edit Widget → Show chooses "A prayer
+    for this hour" (Morning Offering from 5 AM, the Angelus at noon or the Regina Caeli in Easter
+    Time, the Divine Mercy Chaplet at 3 PM, the Examen from 6 PM, the Hail, Holy Queen from 10 PM)
+    or "Today's Rosary" (the day's mysteries, marked once prayed).
+  - *Word for today* (medium): the same verse, saint or Father as the Today screen.
+  - *Week* (medium): Monday to Sunday in their liturgical colors, the days kept, and the next
+    solemnity ("All Saints · Sunday, Nov 1 · in 12 days").
+  - Each widget opens the matching screen. The app writes a week of timeline entries whenever it
+    opens or something is finished (`src/widgets/widgetFeed.ts`, tested in
+    `test/widgets.test.ts`), so the widgets keep turning over at midnight and through the day
+    while Pax is closed. Layouts are in `src/widgets/layouts.tsx`: each is compiled to a string
+    and run inside the widget, so it can only use `@expo/ui/swift-ui` and must not reference
+    anything outside its own function. Layout changes ship over the air like any JavaScript.
 
 How to add prayers, devotions, saints or reading plans: see [`docs/CONTENT.md`](docs/CONTENT.md).
 

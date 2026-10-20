@@ -213,10 +213,12 @@ Open before any public release:
   (migrations, RLS) but not switched on.
 - **Notifications:** scheduled on the phone (morning/evening reminders, nudges, Angelus, novena
   and plan reminders), at most 60 pending, rescheduled on open and after anything finished.
-- **Widgets:** a 14-day DaySnapshot feed is written behind an interface that does nothing in
-  Expo Go; real widgets need an EAS build.
-- **Constraints:** develop in Expo Go on Ben's iPhone, no Mac. Use only libraries that run in Expo
-  Go; ask Ben before adding any native module. Run `npx expo install` for dependencies (with
+- **Widgets (built, October 2026):** iPhone home-screen and Lock Screen widgets through
+  expo-widgets (Today, Prayer, Word for today, Week; look A chosen with Ben). The app writes a week
+  of timeline entries into the App Group; Expo Go leaves them out. Android widgets later.
+- **Constraints:** Ben has no Mac: Pax builds in Expo's cloud for TestFlight and the App Store,
+  and Expo Go is still used for quick checks. Prefer libraries that run in Expo Go; ask Ben before
+  adding any native module. Run `npx expo install` for dependencies (with
   `EXPO_OFFLINE=1` in the cloud sandbox).
 
 ## Data model (as built)
@@ -265,7 +267,7 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
 | 2.5 Companion ✓ | Saint of the day, today's readings, devotions and novenas, reading plans | Done |
 | 3. Rhythm ✓ (built) | New tabs (Today · Pray · Study · Library · Me), Today redesign, habit model (streak + Read · Pray · Study, grace days decided), onboarding, journal, highlights and bookmarks, Ben's layout notes | You use the new Today every day for two weeks |
 | 4. Depth | Examen and examination of conscience, Fathers' and saints' writings courses, more plans, OCIA course on the course engine | One new course finished end to end |
-| 5. Ship | Apple Developer account, EAS builds, widgets, sync and accounts (with deletion), store listing, TestFlight for the OCIA group | Licensing and content review done |
+| 5. Ship | Apple Developer account ✓, EAS builds ✓, widgets ✓ (iPhone), App Store listing (version 1.0.0, under way), sync and accounts (with deletion), TestFlight for the OCIA group | Licensing and content review done |
 
 ## Project decisions
 
@@ -276,6 +278,9 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
 | URL scheme | `paxapp` |
 | iOS App Group | `group.com.benbrunson.pax` |
 | Apple Developer Program | Joined (October 2026). TestFlight builds by EAS, JavaScript updates over the air (`docs/IPHONE.md`) |
+| Update channels | `preview` for the TestFlight build, `production` for the App Store build: changes are tested on `preview` first, then published to `production` (decided with Ben, October 2026) |
+| First App Store version | 1.0.0, with the widgets, shipped before sync and accounts; development continues and updates go out over the air or as new versions |
+| Widgets | Look A, "Pax cards" (Ben chose from mockups): Today, Prayer (a prayer for the hour, or today's Rosary), Word for today (the same word as Today), Week; iPhone first |
 | Package manager | npm workspaces |
 | Readings translation | Douay-Rheims in the app; USCCB link for the official text |
 
@@ -293,8 +298,8 @@ way; Phase 4 is next (see `docs/NEXT_SESSION.md`).
     names, with the other names kept ("also called").
   - Today tab (as mentioned earlier)
 - Joined the Apple Developer Program (October 2026), so Pax runs as its own app through
-  TestFlight, with over-the-air updates (`docs/IPHONE.md`). Widgets and a development build come
-  next on that track.
+  TestFlight, with over-the-air updates (`docs/IPHONE.md`). Widgets are built (October 2026);
+  next, Pax goes to the App Store as version 1.0.0 while development continues.
 - Once a saint's or Father's work is readable in the app, their quote opens it there. Done for
   Saint Ignatius (Phase 4): "Read it in context" under his quote opens Romans at chapter 4. Other
   saints' quotes stay unlinked until their works are in Pax.
